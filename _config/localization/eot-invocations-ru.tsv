@@ -1,0 +1,4 @@
+# EraOfTrials, EoT_DT_InvocationsByReligion — имя религии строкой Str (у прочих религий там FText, их переводит .locres). 2026-10-28:
+# официальное русское имя игры (CRC32 исходника в ru-.locres пака игры: «Джеббал Саг», 4 строки игры). План 36 п. 14, баг 64 п. 20.
+# Применение: третьей парой к рецепту EraOfTrials — <этот файл> EoT_DT_InvocationsByReligion.
+Jhebbal Sag	Джеббал Саг

@@ -1,0 +1,5 @@
+# Player Ignores Follower Collision, PIFC_WBP_SettingsWindow — KRINIK MODIFIED (KUMM bugs/64 п. 20, 2026-10-26)
+# Кнопки и заголовок окна настроек — тексты без ключа (TextProperty None), .locres их не видит.
+Close	Закрыть
+Reset to defaults	По умолчанию
+Mod settings	Настройки мода

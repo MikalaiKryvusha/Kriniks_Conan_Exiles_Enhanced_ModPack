@@ -1,0 +1,54 @@
+# JaarFishing, DT_FishRanges — названия рыб в таблице дальностей (план 36 п. 14, баг 64 п. 20). 2026-10-27 19:4x, [NOT-TESTED]:
+# русский взят из уже переведённых карточек (dm-fish-ru.tsv по номеру строки dm-fish-worklist.tsv) — 51 из 51, имена не расходятся.
+# Применение: patch-mod-asset.py build JaarFishing DT_FishRanges <work> <этот файл>; KRINIK MODIFIED.
+Abyssal Burbot	Глубинный налим
+Ancient Bichir	Древний многопёр
+Ancient of the Deep	Древний из глубин
+Arctic Char	Арктический голец
+Arctic Grayling	Арктический хариус
+Arctic Pike	Полярная щука
+Arid Moonfish	Пустынная луна-рыба
+Black Lamprey	Чёрная минога
+Butterfly Fish	Рыба-бабочка
+Common Carp	Обыкновенный карп
+Common Catfish	Обыкновенный сом
+Common Eel	Речной угорь
+Common Trout	Обыкновенная форель
+Desert Perch	Пустынный окунь
+Fjord Fera	Фьордовая фера
+Frog Fish	Рыба-лягушка
+Frozen Sturgeon	Ледяной осётр
+Ghost Fish	Рыба-призрак
+Glacier Perch	Ледниковый окунь
+Golden Koi	Золотой кои
+Golden Piranha	Золотая пиранья
+Golden Ray	Золотой скат
+Green Tench	Зелёный линь
+Ice Leviathan	Ледяной левиафан
+Ice Trout	Ледяная форель
+King of Rivers	Король рек
+Mire Carp	Трясинный карп
+Mire Gulper	Трясинный глотатель
+Mist Loach	Туманный вьюн
+Nocturnal Char	Ночной голец
+Northern Salmon	Северный лосось
+Old Boot	Старый сапог
+Pale Darter	Бледная уклейка
+Plague Serpent	Чумной змей
+Putrid Piranha	Гнилая пиранья
+River Perch	Речной окунь
+River Serpent	Речной змей
+Royal Grouper	Королевский групер
+Sand Dragon	Песчаный дракон
+Sand Moray	Песчаная мурена
+Silver Salmon	Серебристый лосось
+Snow Cod	Снежная треска
+Solar Eel	Солнечный угорь
+Stone Roach	Каменная плотва
+Styx Carp	Карп Стикса
+Swamp Catfish	Болотный сом
+Swamp Spawn	Болотное отродье
+Viper Fish	Рыба-гадюка
+Wet Branch	Мокрая ветка
+Whiskered King	Усатый король
+Winter Smelt	Зимняя корюшка

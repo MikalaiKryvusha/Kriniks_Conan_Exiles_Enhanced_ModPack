@@ -1,0 +1,7 @@
+# Hosav's Custom UI, кнопка «Настройки интерфейса» в хабе (W_UI_SettingsButton) — KRINIK MODIFIED (2026-10-26, KUMM bugs/64 п. 2, 16; план 35 Б3, Б7)
+# 1) Опрос хаба заглушён: в графе событий Delay 3.0 по кругу + IsModuleActive(CharacterInventory) — кнопка жила на всех вкладках и появлялась
+#    через ≤3 с. Видимость ставит KrinikPauseGameInMenu 0.7.0 по событию XCS_Panel (вкладка «Снаряжение»).
+# 2) Кнопка на линии нижней панели хаба (владелец: «кнопку настройка интерфейса поравнять в нижнем баре»): нижнее поле оверлея 20 → 13.
+flt:ExecuteUbergraph_W_UI_SettingsButton	3.0	1000000000.0
+prop:OverlaySlot_0/Padding/Bottom	13
+bool:ExecuteUbergraph_W_UI_SettingsButton@4	False	True

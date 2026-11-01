@@ -1,0 +1,5 @@
+# Запуск 3 — p.Chaos.EnableAsyncInitBody=1 в ini до запуска (README)
+#read p.Chaos.EnableAsyncInitBody p.SkeletalMeshComponent.EnableAsyncInitBody
+q3-warmup
+q3-B1
+q3-B2

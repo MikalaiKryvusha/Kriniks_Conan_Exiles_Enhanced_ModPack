@@ -1,0 +1,39 @@
+{
+ "ok": true,
+ "steps": [
+  "sound: <Object '/Game/Mods/KrinikConanArchery/S_ChargeFull.S_ChargeFull' (0x00000166CB1EBE00) Class 'SoundWave'>",
+  "fov notify 0..7.050 on track 14: <Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_FieldOfViewChangeForDuration_C_1' (0x00000167D37E28A0) Class 'BP_FieldOfViewChangeForDuration_C'>",
+  "sound notify at 1.813: <Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_2' (0x00000167C0CA2A00) Class 'AnimNotify_PlaySound'>"
+ ],
+ "fov_track": "14",
+ "saved_montage": true,
+ "saved_sound": true,
+ "events_after": [
+  "BP_CancelDodgeWindow @-0.000 dur 7.300",
+  "BP_AttackRotationSet @0.000 dur 7.050",
+  "BP_FieldOfViewChangeForDuration @0.000 dur 7.050",
+  "bow_secondary_draw @0.067 dur 0.000",
+  "PickArrow @0.243 dur 0.000",
+  "sfx_impact_wood_sharp_generic_Cue @0.404 dur 0.000",
+  "sfx_bow_charge_Cue @0.418 dur 0.000",
+  "sfx_footstep_foley_skin_Cue @0.432 dur 0.000",
+  "BP_SetChargeHold @0.517 dur 1.333",
+  "BP_PowerCharge @0.552 dur 1.280",
+  "sfx_crossbow_charge_lo_Cue @0.936 dur 0.000",
+  "PlaySound @1.813 dur 0.000",
+  "sfx_sword_sching_tale_soft_shiny_Cue @1.833 dur 0.000",
+  "bow_secondary_loop @1.833 dur 0.000",
+  "BP_SetChargeHold @1.851 dur 3.963",
+  "sfx_footstep_foley_skin_Cue @2.317 dur 0.000",
+  "sfx_crossbow_charge_lo_Cue @2.941 dur 0.000",
+  "ProjectileAttack @5.865 dur 0.000",
+  "sfx_swish_slow_heavy_cloth_Cue @5.903 dur 0.000",
+  "sfx_BowSpecialShot @5.933 dur 0.000",
+  "sfx_bow_fire @5.958 dur 0.000",
+  "sfx_bow_swoosh_Cue @6.024 dur 0.000",
+  "sfx_crossbow_fire_Cue @6.030 dur 0.000",
+  "foley @6.135 dur 0.000",
+  "BP_QueueWindow @6.346 dur 0.704",
+  "bow_secondary_settle @6.843 dur 0.000"
+ ]
+}

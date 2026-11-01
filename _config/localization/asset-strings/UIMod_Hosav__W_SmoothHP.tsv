@@ -1,0 +1,51 @@
+# Hosav's Custom UI, W_SmoothHP (верхний HUD) — KRINIK MODIFIED (2026-10-26)
+# Владелец ≈15:30: «можем в HUD переделать на две колонки?»; ≈15:50: «давай температуру перенесем вниз левой колонки, а вес — вниз правой колонки».
+# Было три колонки в два ряда (77: броня · урон · температура; 102: еда · вода · вес). Стало две колонки в три ряда (77 · 102 · 127; фон HUD — до 149):
+# колонка 1 (значок −240, текст −220): урон, броня, температура; колонка 2 (значок −10, текст 10 — место второй колонки по слову владельца
+# ≈15:06 «вторую колонку … немного левее»): еда, вода, вес. Шкалы еды и воды (Overlay_*Progress) едут со своими значками.
+# опыт: значок-яблочко «XP» сжат до нуля, цифры встают на его место (≈15:33 «и убрать яблочко XP, а написать текстом Опыт:»;
+# слово перед цифрами — переводом шаблона строки, интервью #003 строки 299–300; с 2026-10-28 «XP:» — «в моде худа замени "Опыт" на "XP"»)
+prop:CanvasPanelSlot_16/LayoutData/Offsets/Right	0
+prop:CanvasPanelSlot_16/LayoutData/Offsets/Bottom	0
+# строка опыта левее на 10 (было −240), дальше от «Здоровье снижено…» (2026-10-28 22:3x «двинуть XP и всю эту строку с опытом левее можно, даль
+# больше расстояния до снижения здоровья»; KUMM bugs/64 п. 33 b). −260 (кадр 4K 22:52): «X» лёг на верхний правый край ромба уровня — шов; −250
+prop:CanvasPanelSlot_17/LayoutData/Offsets/Left	-250
+# урон — колонка 1, ряд 77
+prop:CanvasPanelSlot_12/LayoutData/Offsets/Left	-240
+prop:CanvasPanelSlot_13/LayoutData/Offsets/Left	-220
+# броня — колонка 1, ряд 102
+prop:CanvasPanelSlot_8/LayoutData/Offsets/Top	102
+prop:CanvasPanelSlot_10/LayoutData/Offsets/Top	102
+# температура — колонка 1, ряд 127
+prop:CanvasPanelSlot_9/LayoutData/Offsets/Left	-240
+prop:CanvasPanelSlot_9/LayoutData/Offsets/Top	127
+prop:CanvasPanelSlot_11/LayoutData/Offsets/Left	-220
+prop:CanvasPanelSlot_11/LayoutData/Offsets/Top	127
+# еда — колонка 2, ряд 77
+prop:CanvasPanelSlot_22/LayoutData/Offsets/Left	-10
+prop:CanvasPanelSlot_22/LayoutData/Offsets/Top	77
+prop:CanvasPanelSlot_35/LayoutData/Offsets/Left	-10
+prop:CanvasPanelSlot_35/LayoutData/Offsets/Top	77
+prop:CanvasPanelSlot_23/LayoutData/Offsets/Left	10
+prop:CanvasPanelSlot_23/LayoutData/Offsets/Top	77
+# вода — колонка 2, ряд 102
+prop:CanvasPanelSlot_24/LayoutData/Offsets/Left	-10
+prop:CanvasPanelSlot_33/LayoutData/Offsets/Left	-10
+prop:CanvasPanelSlot_25/LayoutData/Offsets/Left	10
+# вес — колонка 2, ряд 127
+prop:CanvasPanelSlot_20/LayoutData/Offsets/Left	-10
+prop:CanvasPanelSlot_20/LayoutData/Offsets/Top	127
+prop:CanvasPanelSlot_21/LayoutData/Offsets/Left	10
+prop:CanvasPanelSlot_21/LayoutData/Offsets/Top	127
+# стрелки-указатели уровня у голода и жажды (красные пары ◀ ▶ у значков) — бегунки вертикальных ползунков Slider_Food / Slider_Water,
+# картинка ColorSliderThumb_White 7×30; размер 0 — бегунок не рисуется (2026-10-28 20:3x «в моде ХУДа убрать стрелочки-указатели уровня у голода и жады»)
+prop:Slider_Food/WidgetStyle/NormalThumbImage/ImageSize/X	0
+prop:Slider_Food/WidgetStyle/NormalThumbImage/ImageSize/Y	0
+prop:Slider_Water/WidgetStyle/NormalThumbImage/ImageSize/X	0
+prop:Slider_Water/WidgetStyle/NormalThumbImage/ImageSize/Y	0
+# мерцание красным голода, жажды, перегруза — вчетверо медленнее: скорость PlayAnimation (NoFood, NoWater, OverEncumbered_Weight) 1.0 → 0.25 (0.5 — 2026-10-28; ещё вдвое — слово владельца 2026-10-29 «мерчание голода и перегрузки и жады в Худ ещё в 2 раза медленнее»);
+# в этих функциях других констант 1.0 нет (kismet-trace 2026-10-28: по две, обе в слоте скорости) («а мерчание красным голода, жажды, перегруза - в два раза медленнее»)
+# 2026-10-30 ≈14:23 — на 20 % быстрее: 0.25 → 0.30 («мерцать голодом, жаждой и весом нужно на 20% быстрее»); тусклое мерцание от порога — Lua KrinikConanUI:HudBlink (KUMM план 36 W36)
+flt:Progress_Food	1.0	0.30
+flt:Progress_Drink	1.0	0.30
+flt:Get_WeightText	1.0	0.30

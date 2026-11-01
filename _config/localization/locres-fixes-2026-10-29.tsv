@@ -1,0 +1,4 @@
+# old translation<TAB>new translation — applied by _config/devkit/locres-set-tr.py to Game/ru/Game.locres; sources (KUMM interview #003 rows 299–300) edited the same move
+# XP: thin space U+2009 between «P» and the colon — KUMM bugs/64 item 33 (a) «XP и двоеточие слиплись»
+# row 300 (short form) is not in the compiled file (0 entries 2026-10-29) - only its source in interview #003 is edited
+XP: {xpCurrent}{suffix1} / {xpMax}{suffix2} ({xpNeeded}{suffix3})	XP : {xpCurrent}{suffix1} / {xpMax}{suffix2} ({xpNeeded}{suffix3})

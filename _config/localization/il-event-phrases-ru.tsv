@@ -1,0 +1,26 @@
+# Ironlight-Core, IL_DT_EventPhrases — журнал поселения (план 36 п. 14, баг 64 п. 20). Черновик 2026-10-27 19:4x, [NOT-TESTED]: в ассет не внесён.
+# Пол поселенца {name} неизвестен — без глаголов прошедшего времени (методичка русского, п. 9); вставки {item}, {need} — после двоеточия,
+# в именительном. Применение: patch-mod-asset.py build Ironlight-Core IL_DT_EventPhrases <work> <этот файл>; KRINIK MODIFIED.
+{name} delivered {count}x {item} to {storage}.	{name} относит {item} ×{count} в «{storage}».
+{name} has died.	Смерть: {name}.
+{name} will be remembered.	{name} не забудут.
+{name} grudgingly ate {item}.	{name} нехотя ест: {item}.
+{name} choked down some {item}.	{name} с трудом проглатывает: {item}.
+{name} loved the {item} - delicious!	{name} в восторге: {item} — объедение!
+A feast! {name} praised the {item}.	Пир! {name} хвалит: {item}.
+{name} ate {item}.	{name} ест: {item}.
+{name} enjoyed some {item}.	{name} с удовольствием ест: {item}.
+{name} had a meal of {item}.	{name} обедает: {item}.
+{name} joined the settlement.	{name} теперь живёт в поселении.
+{name} now calls this place home.	{name} называет это место домом.
+{name} left the settlement.	{name} уходит из поселения.
+{name} advanced to rank {count} in {need}.	{name}: {need} — ранг {count}.
+{name} grew more skilled in {need} (rank {count}).	{name} набирается опыта: {need}, ранг {count}.
+{name} is running low on {need}.	{name}: на исходе {need}.
+{name} moved into {item}.	{name} заселяется: {item}.
+{name} claimed a bed: {item}.	{name} занимает кровать: {item}.
+{name} is doing well ({need} restored).	{name} в порядке: {need} восполнено.
+{name} sold an item at the market stall.	{name} продаёт вещь за рыночным прилавком.
+{name} made a good sale at the stall.	{name} выгодно торгует за прилавком.
+{name} is starving.	{name} голодает.
+{name} is well fed.	{name}: голод утолён.

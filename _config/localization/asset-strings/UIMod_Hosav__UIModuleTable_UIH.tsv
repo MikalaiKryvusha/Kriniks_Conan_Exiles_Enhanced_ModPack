@@ -1,0 +1,2 @@
+enum:HosavUIsettings/Category	EGUIModuleCategory::Popup	EGUIModuleCategory::Modal
+enum:HosavUIsettings/FullscreenGUIAction	EFullscreenGUIAction::Close	EFullscreenGUIAction::None

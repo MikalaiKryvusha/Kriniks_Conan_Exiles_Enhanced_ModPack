@@ -1,0 +1,5 @@
+# повтор кандидата «без ткани» (A-B-A вместе с q1)
+#read p.ClothPhysics
+q3b-warmup
+q3b-nocloth	exec p.ClothPhysics 0
+q3b-A6	exec p.ClothPhysics 1

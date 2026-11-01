@@ -1,0 +1,57 @@
+# Exiles Fishing, панель настройки сервера (W_EFT_Panel) — тексты элементов без ключа перевода (FText «None»): .locres их не видит,
+# правятся в ассете (_config/devkit/patch-mod-asset.py, KUMM bugs/64 п. 7). Термины — как в переводе мода (dm-fish-ru.tsv): «Хлам»,
+# «Обычная…Мифическая», «Мастерство рыбака», «Крючок с зазубриной», «Умеренный климат». Числа-заглушки («1.00», «0.00 %») код перезаписывает — не трогаем.
+# английский	русский
+Profile name	Имя профиля
+FOOD BUFFS	ЭФФЕКТЫ ЕДЫ
+CUSTOM  ·  DROP WEIGHT PER FISH	СВОЁ  ·  ЧАСТОТА КАЖДОЙ РЫБЫ
+DIFFICULTY	СЛОЖНОСТЬ
+FINE TUNING	ТОЧНАЯ НАСТРОЙКА
+SIMULATOR	РАСЧЁТ УЛОВА
+Server-wide fishing difficulty for every player.  Vanilla = the original game, Easy = the most relaxed.	Сложность рыбалки на сервере для всех игроков. «Ваниль» — как в исходной игре, «Легко» — самая мягкая.
+EXILES FISHING  ·  SERVER TUNING	EXILES FISHING  ·  НАСТРОЙКА СЕРВЕРА
+Apply to server	Применить на сервере
+Warm	Тепло
+Temperate	Умеренно
+Cold	Холод
+Swamp	Болото
+Close	Закрыть
+Custom	Своё
+Barbed Hook	Крючок с зазубриной
+Mythic hour	Мифический час
+Dawn	Рассвет
+Day	День
+Dusk	Закат
+Night	Ночь
+—  empty  —	—  пусто  —
+Delete	Удалить
+Load	Загрузить
+Save	Сохранить
+Reset to Vanilla	Сбросить на ваниль
+Press Custom to edit the drop weight of each fish (higher = more frequent).	Нажмите «Своё», чтобы задать частоту каждой рыбы (больше — чаще).
+Catch focus pushes the odds towards fish at the player's level (Easy: T6 about 5 %, T7 about 4 % at most). Rarity, biomes, baits and day / night are kept.	Фокус улова сдвигает шансы к рыбе уровня игрока (на «Легко» T6 — около 5 %, T7 — не больше 4 %). Редкость, места, наживка, день и ночь сохраняются.
+Per hour (estimate): -	В час (оценка): -
+Catch focus (at-level fish)	Фокус улова
+Level tolerance	Допуск по уровню
+Mythic (T7) rarity	Мифические (T7)
+Bite wait  ×	Ожидание клёва  ×
+Fight difficulty  ×	Вываживание  ×
+Fish speed  ×	Скорость рыбы  ×
+Catch zone  ×	Зона поимки  ×
+Food buff potency	Сила эффектов еды
+Easy	Легко
+Relaxed	Спокойно
+Seasoned	Строже
+Vanilla	Ваниль
+PROFILES	ПРОФИЛИ
+Fishing Power: 60	Мастерство рыбака: 60
+Exact chance per catch for the fisher chosen above. Per hour = estimate.	Точный шанс одного улова для выбранного выше рыбака. «В час» — оценка.
+Changes are only sent when you press Apply.	Изменения уходят на сервер только по кнопке «Применить на сервере».
+T1 Junk	T1 Хлам
+T2 Common	T2 Обычная
+T3 Uncommon	T3 Необычная
+T4 Rare	T4 Редкая
+T5 Epic	T5 Эпическая
+T6 Legendary	T6 Легенд.
+T7 Mythic	T7 Мифич.
+Average bite wait: -	Среднее ожидание клёва: -

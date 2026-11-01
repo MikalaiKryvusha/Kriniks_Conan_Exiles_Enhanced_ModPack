@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Сборка Krinik — Conan Exiles Enhanced 2.2.3</title>
+<style>
+  @page { size: A4; margin: 14mm 13mm 15mm 13mm; }
+  :root {
+    --ink: #22201c; --muted: #6b6359; --line: #d9cfbf; --paper: #fbf8f2;
+    --bronze: #9a5b1e; --bronze-soft: #f1e4d2; --ours: #2f5d50; --ours-soft: #e1eee9;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body { margin: 0; color: var(--ink); background: #fff; font: 10.2pt/1.42 "Segoe UI", Arial, sans-serif; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; color: var(--ink); }
+  h2 { font-size: 16pt; margin: 18pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid var(--bronze); break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 11pt 0 4pt; color: var(--bronze); break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  code, kbd { font-family: Consolas, "Cascadia Mono", monospace; font-size: 9pt; }
+  kbd { display: inline-block; padding: 0 4pt; border: 1px solid #b9ad9a; border-bottom-width: 2px; border-radius: 3pt;
+        background: #fff; line-height: 1.35; white-space: nowrap; }
+  .muted { color: var(--muted); }
+
+  .cover { background: var(--paper); border: 1px solid var(--line); border-left: 6px solid var(--bronze);
+           padding: 16pt 18pt 14pt; margin-bottom: 10pt; }
+  .cover .kicker { letter-spacing: .14em; text-transform: uppercase; font-size: 8.5pt; color: var(--bronze); font-weight: 600; }
+  .cover h1 { font-size: 25pt; margin: 4pt 0 2pt; }
+  .cover .sub { font-size: 11pt; color: var(--muted); margin-bottom: 10pt; }
+  .stats { display: flex; gap: 8pt; }
+  .stat { flex: 1; background: #fff; border: 1px solid var(--line); padding: 6pt 8pt; }
+  .stat b { display: block; font: 700 17pt Georgia, serif; color: var(--bronze); }
+  .stat span { font-size: 8.5pt; color: var(--muted); }
+
+  .steps { counter-reset: s; margin: 0; padding: 0; list-style: none; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 6pt 26pt; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 18pt; height: 18pt; border-radius: 50%;
+                      background: var(--bronze); color: #fff; font: 700 9.5pt/18pt Georgia, serif; text-align: center; }
+  .note { background: var(--bronze-soft); border-left: 3px solid var(--bronze); padding: 5pt 8pt; margin: 6pt 0; break-inside: avoid; }
+
+  table { width: 100%; border-collapse: collapse; margin: 3pt 0 8pt; break-inside: auto; }
+  th { text-align: left; font-size: 8.5pt; letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+       border-bottom: 1.5px solid var(--ink); padding: 3pt 5pt; }
+  td { border-bottom: 1px solid var(--line); padding: 4pt 5pt; vertical-align: top; }
+  tr { break-inside: avoid; }
+  td.k { white-space: nowrap; width: 1%; }
+  td.name { width: 27%; font-weight: 600; }
+  td.name small { display: block; font-weight: 400; color: var(--muted); font-size: 8pt; }
+  .use { color: var(--bronze); font-weight: 500; }
+
+  .ours { border: 1px solid #b9d3c9; background: var(--ours-soft); padding: 7pt 9pt; margin: 0 0 6pt; break-inside: avoid; }
+  .ours h3 { color: var(--ours); margin: 0 0 3pt; }
+  .tag { display: inline-block; font-size: 7.5pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+         padding: 1pt 5pt; border-radius: 8pt; vertical-align: 1pt; margin-left: 4pt; }
+  .tag.o { background: var(--ours); color: #fff; }
+  .numpad { float: right; margin: 0 0 4pt 10pt; border-collapse: separate; border-spacing: 2pt; width: auto; }
+  .numpad td { border: 1px solid #9fbeb2; background: #fff; width: 30pt; height: 22pt; text-align: center; padding: 1pt;
+               font: 700 10pt Consolas, monospace; color: var(--ours); }
+  .numpad td small { display: block; font: 6.5pt "Segoe UI", sans-serif; color: var(--muted); }
+  .cols { columns: 2; column-gap: 14pt; }
+  .cols > * { break-inside: avoid; }
+  .group { break-inside: avoid; }
+  .group table { margin-bottom: 4pt; }
+  footer { margin-top: 14pt; padding-top: 5pt; border-top: 1px solid var(--line); font-size: 8pt; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<section class="cover">
+  <div class="kicker">Conan Exiles Enhanced · сборка модов · версия 1.0.0</div>
+  <h1>Сборка Krinik для версии 2.2.3</h1>
+  <div class="sub">Что сборка даёт игроку, как её поставить и как всем этим пользоваться</div>
+  <div class="stats">
+    <div class="stat"><b>50</b><span>позиций в сборке</span></div>
+    <div class="stat"><b>43</b><span>мода из Мастерской и Nexus</span></div>
+    <div class="stat"><b>5</b><span>эксклюзивных модов сборки</span></div>
+    <div class="stat"><b>10 000</b><span>уровней героя вместо 60</span></div>
+  </div>
+</section>
+
+<h2>Что даёт сборка</h2>
+<div class="cols">
+  <p><b>Камера как в Обливионе.</b> Строго за спиной, а не из-за плеча, с ракурсом «сверху вниз» и плавным зумом — подстраивается с цифрового блока и запоминается.</p>
+  <p><b>Прокачка без потолка.</b> 10 000 уровней вместо 60, очко атрибута на каждом уровне, а Проворство делает героя быстрее и прыгучее — как в старых «Свитках».</p>
+  <p><b>Спокойный инвентарь.</b> Пока открыт инвентарь или крафт, мир почти замирает; рюкзак раскладывается по сундукам одной клавишей, строить и крафтить можно из сундуков всей базы.</p>
+  <p><b>Армия и свита.</b> До 100 спутников, вербовка боссов, рабы до 50 уровня, полоски здоровья свиты и проход сквозь своих в дверях и на лестницах.</p>
+  <p><b>Живой мир и быт.</b> Настоящая рыбалка на 60 видов рыбы, скотный двор, пивоварня, таверны с посетителями со всего мира, возвращённая крепость для осады.</p>
+  <p><b>Тысячи новых вещей.</b> Оружие с новыми связками ударов, броня, перевоплощения, классы и руны, больше 3 000 украшений, новые причёски и лица народов Говарда.</p>
+  <p><b>Новый интерфейс.</b> HUD Hosav на 50+ настроек, мини-карта с меткой твоего трупа, счётчик урона, подсветка добычи, подписи на сундуках.</p>
+  <p><b>Готовая графика под 4K.</b> DLSS, предел 141 кадр/с, высокая дальность, тени и листва, интерфейс 110 %, без заставок при запуске.</p>
+</div>
+
+<h2>Установка</h2>
+<ol class="steps">
+  <li><b>Поставь чистую игру 2.2.3</b> (билд <code>CL-378132</code>). Запускать её до установки сборки не нужно. Под другую версию игры сборку не ставь: моды сварены под 2.2.x.</li>
+  <li><b>Распакуй архив сборки</b> куда угодно — например, рядом с папкой игры.</li>
+  <li><b>Запусти <code>install.cmd</code>.</b> Он найдёт игру сам, если архив лежит внутри её папки, или спросит путь — укажи папку, где лежит <code>ConanSandbox.exe</code>. Скрипт разложит моды, проверит каждый файл и в конце напишет итог: <code>50/50 mods … 0 missing</code> — всё на месте.</li>
+  <li><b>Запусти игру.</b> Первый запуск собирает шейдеры — на экране загрузки идёт обратный счёт «Осталось: 4 906…», это 3–4 минуты, не зависание. Дальше — «Продолжить» или новая игра.</li>
+</ol>
+<div class="note"><b>Что ещё лежит в архиве:</b> настройки сборки — графика под 4K (DLSS, предел 141 кадр/с, высокая дальность, тени и листва), интерфейс 110 %, правила мира — и настройки модов: интерфейс Hosav, мини-карта, полоски спутников, окно урона. Сохранений персонажа в архиве нет. На мониторе меньше 4K поправь разрешение в меню игры.</div>
+<p><b>Удалить сборку:</b> <code>Deploy-ModPack.ps1 -Remove -PackDir pack -GameDir "&lt;папка игры&gt;"</code>. Заставки, которые сборка убирает, при этом удаляются, а не возвращаются — держи чистую копию игры отдельно.</p>
+
+<h2>Шпаргалка клавиш</h2>
+<table>
+  <tr><th>Клавиша</th><th>Что делает</th><th>Мод</th></tr>
+  <tr><td class="k"><kbd>NumLock</kbd></td><td>Включить один раз за сессию — без него цифровой блок шлёт стрелки, и камера не слушается. В игре на NumLock висит автобег.</td><td>камера</td></tr>
+  <tr><td class="k"><kbd>Num 5</kbd></td><td>Камера строго за спиной</td><td>ConanCameraControl</td></tr>
+  <tr><td class="k"><kbd>Num 8</kbd><kbd>2</kbd><kbd>4</kbd><kbd>6</kbd><kbd>9</kbd><kbd>3</kbd></td><td>Камера дальше/ближе · влево/вправо · выше/ниже</td><td>ConanCameraControl</td></tr>
+  <tr><td class="k"><kbd>Num 7</kbd><kbd>1</kbd></td><td>Ось взгляда выше/ниже — ракурс «сверху вниз», как в Обливионе</td><td>ConanCameraControl</td></tr>
+  <tr><td class="k"><kbd>Num +</kbd><kbd>−</kbd></td><td>Дистанция до героя</td><td>ConanCameraControl</td></tr>
+  <tr><td class="k"><kbd>Num /</kbd> · <kbd>Num 0</kbd></td><td>Запомнить посадку камеры · вернуть запомненную</td><td>ConanCameraControl</td></tr>
+  <tr><td class="k"><kbd>Shift</kbd>+<kbd>L</kbd></td><td>Разложить рюкзак по ближним сундукам; наведи на рецепт — подтянет ингредиенты из ящиков вокруг</td><td>PackRat Helper</td></tr>
+  <tr><td class="k"><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>То же, но спросит, на сколько крафтов тянуть</td><td>PackRat Helper</td></tr>
+  <tr><td class="k"><kbd>Shift</kbd>+<kbd>V</kbd></td><td>Меню арсенала: классы, руны, спавнер боссов</td><td>Enhanced Armory and Arsenal</td></tr>
+  <tr><td class="k"><kbd>Shift</kbd>+<kbd>End</kbd></td><td>Общая панель настроек модов (в ней — настройки строительства)</td><td>ModControlPanel</td></tr>
+  <tr><td class="k">держать <kbd>F1</kbd></td><td>Мышь на игровом экране: двигать мини-карту, окно урона, полоски спутников; <kbd>+</kbd>/<kbd>−</kbd> — зум карты</td><td>Minimap · Damage Meter · Proximity Party</td></tr>
+  <tr><td class="k"><kbd>Esc</kbd></td><td>Меню игры — время почти замирает; там же список всех модов с версиями</td><td>пауза · Simple Modlist</td></tr>
+  <tr><td class="k"><kbd>F10</kbd> / <kbd>Insert</kbd></td><td>Консоль. <code>dc proxyparty</code> — настройки полосок спутников, <code>dc PIFCSettings</code> — настройки прохода сквозь рабов</td><td>игра</td></tr>
+</table>
+
+<h2>Эксклюзивные моды сборки</h2>
+<p class="muted">Написаны специально для этой сборки, больше их нигде нет. Работают через загрузчик UE4SS — он ставится вместе с ними, отдельно ничего делать не нужно.</p>
+
+<div class="ours">
+  <table class="numpad">
+    <tr><td>7<small>ось ↑</small></td><td>8<small>дальше</small></td><td>9<small>выше</small></td></tr>
+    <tr><td>4<small>влево</small></td><td>5<small>за спину</small></td><td>6<small>вправо</small></td></tr>
+    <tr><td>1<small>ось ↓</small></td><td>2<small>ближе</small></td><td>3<small>ниже</small></td></tr>
+  </table>
+  <h3>Камера за спиной <span class="tag o">эксклюзив</span></h3>
+  <p><b>ConanCameraControl.</b> Держит камеру строго за спиной вместо вида из-за плеча, забирает у игры зум колесом (без рывков и без отлёта), переживает смерть героя. Стоит «обливионская» посадка.</p>
+  <p class="use">Как пользоваться: цифровой блок при включённом NumLock — раскладка на рисунке. С <kbd>Ctrl</kbd> те же клавиши двигают ось вращения, а не камеру; <kbd>Ctrl</kbd>+<kbd>5</kbd> — вернуть штатный ракурс игры. Всё запоминается само.</p>
+</div>
+
+<div class="ours">
+  <h3>Пауза в меню <span class="tag o">эксклюзив</span></h3>
+  <p><b>KrinikPauseGameInMenu.</b> Пока открыт инвентарь, меню с вкладками или крафт, мир почти замирает: время идёт в 33 раза медленнее, а в меню <kbd>Esc</kbd> почти стоит.</p>
+  <p class="use">Как пользоваться: само. Закрыл меню — время пошло.</p>
+</div>
+
+<div class="ours">
+  <h3>Прыткость от Проворства <span class="tag o">эксклюзив</span></h3>
+  <p><b>KrinikOblivionLocomotion.</b> Как в Обливионе: каждое очко Проворства прибавляет 3 см/с к бегу, спринту и силе прыжка — высота и дальность прыжка растут сами.</p>
+  <p class="use">Как пользоваться: само. Вкладывай очки в Проворство — герой станет быстрее.</p>
+</div>
+
+<div class="ours">
+  <h3>Уровни без потолка <span class="tag o">эксклюзив</span></h3>
+  <p><b>KrinikLevelUncapped.</b> 10 000 уровней вместо 60. Каждый уровень стоит 500 × √уровень опыта: второй — 707, сотый — 5 000. За каждый уровень — очко атрибута; очки знаний — по родной формуле, втрое больше на каждом десятом уровне. Множитель опыта в правилах мира — 1: кривая сама держит темп.</p>
+  <p class="use">Как пользоваться: само. Шкала опыта в интерфейсе показывает новую цену уровня.</p>
+</div>
+
+<div class="ours">
+  <h3>Проверка сборки <span class="tag o">эксклюзив</span></h3>
+  <p><b>ConanModPackStatus.</b> При каждом запуске проверяет, что загрузились все 43 мода, и пишет итог в журнал. Ещё убирает окно «Играть без подключения», которое у этой версии всплывает при каждом входе.</p>
+  <p class="use">Как пользоваться: само.</p>
+</div>
+
+<div class="group"><h2>Моды из Мастерской и Nexus</h2>
+<p class="muted">Порядок в разделах — по смыслу. Порядок загрузки сборка задаёт сама; менять его в меню модов игры не нужно.</p>
+
+<h3>Интерфейс и удобство</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">Hosav's Custom UI<small>Мастерская · 2.5.4</small></td><td>Новый интерфейс на 50+ настроек, вдохновлён Black Desert. <span class="use">Настраивается в игре; настройки сборки уже в архиве.</span></td></tr>
+  <tr><td class="name">Simple Minimap</td><td>Мини-карта со своими метками сверх лимита; показывает твой труп с любого расстояния, кровать и спальник. <span class="use">Держи F1, чтобы двигать карту; +/− — зум; скрыть — кнопка в правом верхнем углу.</span></td></tr>
+  <tr><td class="name">Simple Modlist</td><td>Список включённых модов с версиями прямо в меню Esc; можно выделить и скопировать.</td></tr>
+  <tr><td class="name">The Damage Meter</td><td>Урон и ДПС в реальном времени — твой, спутников, других игроков; журнал на 1000 событий. <span class="use">Окно двигается при удержанном F1.</span></td></tr>
+  <tr><td class="name">Proximity Party</td><td>Полоски здоровья ближних спутников, как партия в MMO, до 15 штук. <span class="use">Настройки — консоль, <code>dc proxyparty</code>.</span></td></tr>
+  <tr><td class="name">Lore &amp; Loot Highlight</td><td>Контур на всём, что можно взять; сундуки с добычей — своим цветом.</td></tr>
+  <tr><td class="name">Thrall_Peeper</td><td>Имя раба видно, когда наводишь на него прицел.</td></tr>
+  <tr><td class="name">Extended Thrall Stats</td><td>Панель раба и питомца: множители урона, прибавка за очко атрибута, настоящее имя. Открывается с задержкой в доли секунды — это норма.</td></tr>
+  <tr><td class="name">ModControlPanel</td><td>Общее окно настроек модов. <span class="use">Shift+End.</span></td></tr>
+</table></div>
+
+<div class="group"><h3>Инвентарь и сундуки</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">PackRat Helper</td><td>Рассовывает рюкзак по сундукам, где такие вещи уже лежат; тянет ингредиенты для крафта и материалы для стройки из ящиков вокруг. <span class="use">Shift+L, с Ctrl — спросит количество.</span></td></tr>
+  <tr><td class="name">Inventory Compactor</td><td>Кнопка «уплотнить» в инвентаре: убирает дыры, собирает стаки; точное деление стака. <span class="use">Кнопка в инвентаре и в круговом меню любого контейнера.</span></td></tr>
+  <tr><td class="name">Organizer Sorting Chest</td><td>Сундук-сортировщик: кладёшь добычу — он сам раскладывает её по соседним сундукам по образцу. <span class="use">Радиус — в круговом меню сундука.</span></td></tr>
+  <tr><td class="name">Chest Labels</td><td>Имя, данное сундуку, написано прямо на нём. <span class="use">Включается в круговом меню сундука.</span></td></tr>
+  <tr><td class="name">Storage Reach Expanded</td><td>Строить и крафтить из сундуков можно со всей базы: радиус 4 000 → 15 000.</td></tr>
+</table></div>
+
+<div class="group"><h3>Строительство и быт</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">Less Building Placement Restrictions</td><td>Снимает ванильные «здесь строить нельзя» на ровном месте. <span class="use">Настройки — в ModControlPanel (Shift+End).</span></td></tr>
+  <tr><td class="name">Beyond Decor: Rustic Edition</td><td>Больше 3 000 деревенских украшений: спальня, кухня, гостиная, сад, рынок. Открываются в знаниях.</td></tr>
+  <tr><td class="name">Ancient Civilization</td><td>Постройки древней подгорной цивилизации со своей производственной цепочкой: мельница, печь, горн и свои материалы.</td></tr>
+  <tr><td class="name">Emberlight</td><td>Ролевой быт: стойла и разведение животных, святилища, огороды, пивоварня, таверны с артистами и купальни.</td></tr>
+</table></div>
+
+<div class="group"><h3>Оружие, броня, бой</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">Highmane's Arsenal</td><td>2 000+ предметов: сотни видов оружия с новыми связками движений, 500+ украшений, универсальные верстаки. Самый большой мод сборки.</td></tr>
+  <tr><td class="name">Enhanced Armory and Arsenal</td><td>700+ оружия, 350+ брони, питомцы, перевоплощения, классы со своим опытом, руны-перки, спавнер боссов. <span class="use">Меню — Shift+V.</span></td></tr>
+  <tr><td class="name">MSCasaDesFlores — Weapons &amp; Armors</td><td>Мечи, топоры, копья, семь луков, стрелы, щиты; открываются с 55 по 120 уровень.</td></tr>
+  <tr><td class="name">More Katanas</td><td>Новые тиры катан, одноручные варианты с вакидзаси в левой руке.</td></tr>
+  <tr><td class="name">Immersive Warriors Enhanced</td><td>Новые атаки и комбо для катаны, меча, двуручника и рукопашной; анимации усталости, еды и питья. <span class="use">Боевую часть можно выключить в колесе эмоций.</span> Автор предупреждает: кинематографическая камера ломает его анимации.</td></tr>
+  <tr><td class="name">LegitReligious</td><td>У религиозных алтарей — эпическая броня и оружие; рецепты открывает благословение твоего бога.</td></tr>
+  <tr><td class="name">Corpse Stripper</td><td>С NPC и боссов всегда падает всё надетое снаряжение.</td></tr>
+</table></div>
+
+<div class="group"><h3>Рабы и спутники</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">My Absolutely Unnecessary Thrall Army</td><td>До 100 спутников. Автор честно предупреждает о нагрузке на кадры и о толкучке на тропах.</td></tr>
+  <tr><td class="name">Bosses My New Besties</td><td>Боссов, минибоссов и уникальных NPC можно оглушить и завербовать. Если пойдут просадки — эта пара первые подозреваемые.</td></tr>
+  <tr><td class="name">EAA Lv50 Thralls</td><td>Рабы растут до 50 уровня вместо 20, два лишних перка (на 35 и 50).</td></tr>
+  <tr><td class="name">Player Ignores Follower Collision</td><td>Проходишь сквозь своих спутников — в дверях, на лестнице, в драке. Для остальных они по-прежнему препятствие. <span class="use">Настройки — консоль, <code>dc PIFCSettings</code>.</span></td></tr>
+  <tr><td class="name">Diverse Barkeeps</td><td>В клетках тюремщика трактирщики девяти народов с равным шансом, а не почти всегда замориец.</td></tr>
+  <tr><td class="name">Better Tavern PATRONS</td><td>В твою таверну заходит почти любой раб игры, шансы ролей заданы числами.</td></tr>
+</table></div>
+
+<div class="group"><h3>Мир и ресурсы</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">Al-Merayah Reborn</td><td>Возвращает вырезанную Funcom разрушаемую крепость с NPC — её можно осаждать.</td></tr>
+  <tr><td class="name">Exiles Fishing</td><td>Настоящая рыбалка: заброс, вываживание, 60 видов рыбы в четырёх биомах, семь степеней редкости, четыре удочки.</td></tr>
+  <tr><td class="name">Automatic Fish Trap</td><td>Ловушки, которые ловят рыбу и моллюсков сами, плюс глубоководная. Знания Auto Fisher и Auto Deep Sea Fisher.</td></tr>
+  <tr><td class="name">Resource Stimulus Package</td><td>Камни дают железо, кристалл и серу; железные жилы — кристалл и лёд; с трупов падает больше.</td></tr>
+  <tr><td class="name">Reliable Meteor Showers</td><td>Когда звёздного металла на карте осталось пять узлов или меньше, метеоритный дождь приходит раньше. В остальное время ничего не меняет.</td></tr>
+</table></div>
+
+<div class="group"><h3>Внешность</h3>
+<table>
+  <tr><th>Мод</th><th>Что делает · как пользоваться</th></tr>
+  <tr><td class="name">Edit Appearance</td><td>Редактор внешности персонажа прямо в игре.</td></tr>
+  <tr><td class="name">Heritage</td><td>Люди мира выглядят как народы Говарда: переделаны все расы, 162 именных персонажа получили постоянные лица.</td></tr>
+  <tr><td class="name">Ostavar: Salon</td><td>Около 60 женских и 50 мужских причёсок, часть с физикой волос.</td></tr>
+  <tr><td class="name">Hair We Go</td><td>Ещё набор причёсок; работает в одиночной игре.</td></tr>
+  <tr><td class="name">True (Hair) Colors</td><td>Насыщенная палитра цветов волос и бород вместо блёклой родной.</td></tr>
+  <tr><td class="name">MSCasaDesFlores — Nails Station</td><td>58 вариантов ногтей и причёски для женских персонажей. <span class="use">Станция — в знаниях мебельщика, ногти — Броня → Nails Arts.</span></td></tr>
+</table></div>
+
+<div class="group"><h3>Прочее</h3>
+<table>
+  <tr><td class="name">No-Intro-Splash</td><td>Без заставок при запуске: игра сразу открывает главное меню.</td></tr>
+</table></div>
+
+<h2>Правила мира в сборке</h2>
+<div class="cols">
+  <p><b>Добыча ×2</b>, <b>восстановление ресурсов ×2</b>, множитель опыта <b>1</b> — темп задаёт кривая уровней сборки.</p>
+  <p><b>Графика:</b> 3840×2160, DLSS, предел 141 кадр/с, VSync выключен, дальность, тени и листва на высоком; интерфейс 110 %.</p>
+</div>
+
+<div class="group"><h2>Что знать заранее</h2>
+<ul>
+  <li><b>Не вошли два мода</b>: Doubled Storage Size — автор удалил его из Мастерской; PauseGame — не пересобран под 2.2.x. Паузу делает эксклюзивный мод сборки.</li>
+  <li><b>Тени от листвы пальм мерцают</b> — так было и на 2.1.1, переезд на новую версию этого не убрал.</li>
+  <li><b>Антивирус может ругаться на <code>dwmapi.dll</code></b> в папке игры — это загрузчик UE4SS для эксклюзивных модов сборки, так он устроен.</li>
+  <li><b>Моды принадлежат своим авторам.</b> Архив — для личной установки, не для публикации и перепродажи.</li>
+</ul>
+
+<footer>Сборка Krinik 1.0.0 · Conan Exiles Enhanced 2.2.3 (CL-378132) · UE4SS 3.0.1 build 1152 · собрана 02.10.2026 движком KUMM</footer></div>
+</body>
+</html>

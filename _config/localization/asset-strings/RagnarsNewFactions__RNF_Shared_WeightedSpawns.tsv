@@ -1,0 +1,19 @@
+# KRINIK MODIFIED, Ragnar's New Factions (KUMM план 36 п. 2): ряды взвешенного списка спавна, чьих таблиц спавна в паке нет.
+# Журнал игры: «USpawnTableLibrary::SpawnNPC - could not find SpawnTable with ID: RNF_NPC_WadaiFlesheaters_Smelter2» — место в лагере
+# остаётся пустым. 2026-10-26 их вес ставился в 0; 2026-10-29 ряды убраны совсем, и сверка всей таблицы с RnF_SpawnDataTable нашла ещё три.
+#
+# Плавильщики Wadai: группу RNF_Wadai_Crafter зовут RNF_Distro_WeightedSpawns (DarfariArtisan_Random) и RNF_Weighted_ThrallCages
+# (RNF_LowEnd_RandomThralls); у пяти фракций плавильщики Smelter1–4 есть, у Wadai таблиц нет ни под каким именем. Ряды убраны — жребий
+# выбирает другого ремесленника Wadai (алхимик, бронник, кузнец, плотник, повар, кожевник).
+delrow:6132335
+delrow:6132336
+delrow:6132337
+delrow:6132338
+# Алхимик пиктов 4-го уровня: таблицы RNF_NPC_PictishHunters_Alchemist4 нет, а RNF_NPC_PictishHunters_Alchemist4_Yagnja есть, и её не зовёт
+# ни один взвешенный список — ряд указывает на неё (группу RNF_Pictish_Crafter зовут Distro и ThrallCages, промах — 1 бросок из 112).
+fname:6132346/SpawnTableID	RNF_NPC_PictishHunters_Alchemist4	RNF_NPC_PictishHunters_Alchemist4_Yagnja
+# Опечатка автора: пробел в конце имени таблицы элитного пирата («RNF_EliteWarriors_Pirate »); таблица RNF_EliteWarriors_Pirate есть.
+fname:6132480/SpawnTableID	RNF_EliteWarriors_Pirate 	RNF_EliteWarriors_Pirate
+# Босс Zingaran: таблицы RNF_NPC_ZingaranConquerors_Boss нет ни под каким именем, группу RNF_ZingaranConquerors_Boss (один этот ряд) не зовёт
+# никто — ни RNF, ни RNF NPC Distribution. Ряд мёртвый, убран.
+delrow:6132132

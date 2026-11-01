@@ -1,0 +1,10 @@
+# Ссылки автора сборки. Одна строка — одна ссылка, в таком виде:
+#   "Текст до ссылки"[Видимый текст ссылки](адрес)
+# В ридми и в лаунчере строка станет «Текст до ссылки: Видимый текст ссылки», и видимый текст будет кликабельным.
+# Короткий текст для лаунчера (ридми пишет длинный) — вторыми кавычками через черту: "Длинный текст"|"Коротко"[Видимый текст](адрес).
+# Почта — адресом mailto:. Пустые строки и строки с решёткой в начале пропускаются.
+# После правки пересобрать: двойной щелчок по «build_docs_and_launcher.cmd» в корне сборки.
+
+"Почта"[kotkrinik@yandex.ru](mailto:kotkrinik@yandex.ru)
+"Личные сообщения на PlayGround"|"PlayGround"[users.playground.ru/4580431](https://users.playground.ru/4580431/)
+"Публичный репозиторий сборки на GitHub"|"GitHub"[github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack)

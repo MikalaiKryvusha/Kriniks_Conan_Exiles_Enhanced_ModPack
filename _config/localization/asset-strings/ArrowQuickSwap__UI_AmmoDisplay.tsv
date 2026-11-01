@@ -1,0 +1,7 @@
+# Arrow Quick Swap, the arrow-choice window (UI_AmmoDisplay) — KRINIK MODIFIED (2026-10-29, KUMM bugs/64 item 29)
+# The owner 2026-10-26: «в момент натяжения в прицеле справа на экране словно виджет выбора стрел на мгновение появляется и исчезает».
+# Cause (kismet-trace 2026-10-29): AQS_Actor_Component.UpdateDisplayUI on CharacterSubState 16 (aiming) does AddToViewport(AmmoUI); the window is
+# born opaque — its Reveal animation drives CanvasPanel_32.RenderOpacity, but the asset stores no RenderOpacity (class default 1.0) — and stays
+# until the mod hides it. Cycling arrows calls HideDisplay then RevealDisplay (the animation sets the opacity itself), so a window born at 0 shows
+# exactly when arrows are cycled and never on a plain draw.
+addprop:CanvasPanel_32/RenderOpacity	0

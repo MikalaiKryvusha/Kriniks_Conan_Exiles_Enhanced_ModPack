@@ -1,0 +1,11 @@
+# Our Russian over vanilla game strings (target Exiles_UI), applied by _config/devkit/vanilla-override.py after every Game.locres rebuild.
+# namespace<TAB>key<TAB>text ; \n is a line break. KUMM bugs/64 item 36: the corpse prompt breaks before «или» (owner 2026-10-29).
+# 2026-10-30 20:0x, centred (the owner «строчки центрируй», «да, верно» on the mock-up): the row keeps only line 2; line 1 «Разделайте труп и получите ресурсы» is KrinikConanUI's own centred line T_CorpseLine1 above the row (kit pak + krinik_ui_fixes.lua). Before:
+# ON again 2026-10-30 18:4x with the layout variant: KrinikConanUI's kit pak puts the row's Icon and PostText at the BOTTOM (W_ActionTutorial, plan 36 W6) — line 2 reads «или нажмите [E], чтобы забрать предметы». (OFF 2026-10-29 00:3x: the break alone hung «или нажмите» left of the icon, between the lines.)
+# ON again 2026-10-30 21:1x (20:4x OFF was a false inference — bug 70)
+	DA4E821B4EE35B69F5E9128CF11CB58F	или нажмите {0}, чтобы забрать предметы
+# The hold suffix «(удерживайте)» shortened to «(удерж.)» — the quick-loot row «Забрать все (удерживайте)» is too long (`[OWNER]` «длинное (удерживайте) можно и нужно сократить до (удерж.)» · 2026-10-30 08:32); all variants of the suffix the same way
+	3658664B42990F18287AEDB1EE255323	(удерж.)
+	E8F7E29E4844DA34EA4A5CA05CFA6270	(удерж.)
+	A8A43D4843ACE9EF70BEE2B0BC92C6B0	(Удерж.)
+	BE62DFA34354D1AFD6DA959A6DBFC18B	Удалить (удерж.)

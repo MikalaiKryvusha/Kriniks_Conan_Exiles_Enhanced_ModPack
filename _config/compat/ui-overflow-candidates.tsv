@@ -1,0 +1,101 @@
+# Короткие подписи интерфейса, где русский длиннее английского в 1,3+ раза (KUMM bugs/64 п. 13). Опись для обхода окон: проверить кадром,
+# укоротить или растянуть кнопку в ассете только то, что действительно вылезает. Порядок: доля длины по убыванию.
+# доля	номер	мод	ассет	английский	русский
+2.8	4556	minimap	SM_UI_Tutorial	Hold	Удерживайте
+2.5	4838	lbpr	BP_BuildingBase	Outer Face	Внешняя сторона постройки
+2.5	105	dm	DN_UI_DmgWidget	Done	Нанесённый
+2.4	4542	minimap	SM_UI_Settings	Alpha	Прозрачность
+2.3	12307	highmane	W_acs_WardrobeLayout_Jewellery	Anklet	Ножной браслет
+2.3	4595	modlist	SML_UI_ModList	Toggle Modlist	Показать или скрыть список модов
+2.2	47	dm	DN_UI_SettingsWindow	Save	Сохранить
+2.2	19975	eaa	BP_EAA_Access	Deny	Запретить
+2.2	4903	eaa50	TLI_W_PetStatsPanel	Range	Дальний бой
+2.2	4902	eaa50	TLI_W_PetStatsPanel	Melee	Ближний бой
+2.2	20171	eaa	BP_EAA_Template	Guide	Руководство
+2.0	7544	emberlight	W_BreathingMeterEmber	Breath:	Запас воздуха:
+2.0	7450	emberlight	DT_HortiDecoPrimaryButtonsTable	Fern I	Папоротник I
+2.0	71	dm	DN_UI_SettingsWindow	Opacity	Непрозрачность
+2.0	52	dm	DN_UI_SettingsWindow	Donate	Пожертвовать
+2.0	4756	lbpr	W_LBPRMenu	Placeables	Размещаемые предметы
+2.0	4621	packrat	PR_MainMenu	Main Key	Основная клавиша
+1.9	31	dm	DN_UI_DmgWidget	Hold F1 to interact	Удерживайте F1, чтобы управлять окном
+1.9	5165	editapp	IdeaPoet_EdAp_W_UI_EA_FaceDetails	Eyes Spacing:	Расстояние между глазами:
+1.9	5204	editapp	IdeaPoet_EdAp_W_UI_EA_Makeup	Warpaint:	Боевая раскраска:
+1.9	4484	arrowswap	WBP_ArrowEntry	Item Name	Название Предмета
+1.9	4552	minimap	SM_UI_Settings	Move Journey Down	Сместить панель путешествия вниз
+1.9	7451	emberlight	DT_HortiDecoPrimaryButtonsTable	Fern II	Папоротник II
+1.8	1821	ambush	W_Ambush_AdminOptions	Admin Options	Настройки администратора
+1.8	19951	eaa	W_ContainerInfo	Hold {0} for more options	Удерживайте {0}, чтобы открыть список действий
+1.8	4787	lbpr	W_LBPR_Tab_Placeables	Placeable Options	Настройки размещаемых предметов
+1.8	4600	modctl	W_CP	mode: admin	режим: администратор
+1.8	5188	editapp	IdeaPoet_EdAp_W_UI_EA_General	Inner Iris	Внутренняя радужка
+1.8	23	dm	DN_UI_DmgWidget	Toggle Combat Log	Показать или скрыть журнал боя
+1.8	4460	pickup	Pickup+_Widget_AdminSettings	Draw Debug-Line for Admin	Рисовать отладочную линию для администратора
+1.8	4501	minimap	SM_UI_Minimap	Move Minimap	Переместить миникарту
+1.7	4631	packrat	W_MCP_InputSelector	Press Key	Нажмите клавишу
+1.6	5199	editapp	IdeaPoet_EdAp_W_UI_EA_Makeup	Warpaint Dyes:	Цвета боевой раскраски:
+1.6	5166	editapp	IdeaPoet_EdAp_W_UI_EA_FaceDetails	Chin Width:	Ширина подбородка:
+1.6	4784	lbpr	W_LBPR_Tab_Building	Allow Building Info	Показывать сведения о постройке
+1.6	4755	lbpr	W_LBPRMenu	* Admin Settings	* Настройки администратора
+1.6	4607	modctl	W_MCP_SettingsWidget	Delete Save Data	Удалить сохраненные данные
+1.6	19950	eaa	W_ContainerInfo	No owner	Нет владельца
+1.6	4585	proxparty	PrP_UI_Settings	Max Tracked: 	Макс. отслеживаемых: 
+1.6	7412	emberlight	DT_HortiDecoPrimaryButtonsTable	Small Tree	Небольшое дерево
+1.6	7417	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree V	Обгоревшее дерево V
+1.6	7380	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree I	Обгоревшее дерево I
+1.6	4513	minimap	SM_UI_MapClickOptions	Share marker	Поделиться маркером
+1.6	4891	thrallstats	W_ETSPetStatsPanel	Grit Armor Bonus	Бонус к броне от выдержки
+1.6	19981	eaa	BP_EAA_Adminmenu	Bossspawner Access	Доступ к призывателям боссов
+1.6	12308	highmane	W_acs_WardrobeLayout_Jewellery	Toe Nails	Ногти на ногах
+1.6	12114	highmane	BP_HA_RepairEquipment_DoT_Base	Acid Burn	Кислотный ожог
+1.5	7429	emberlight	DT_HortiDecoPrimaryButtonsTable	Small Arbor	Небольшая пергола
+1.5	7197	emberlight	W_AnimalPen	ADD ANIMALS	ДОБАВИТЬ ЖИВОТНЫХ
+1.5	4462	pickup	Pickup+_Widget_AdminSettings	Save & Exit	Сохранить и выйти
+1.5	7418	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree VI	Обгоревшее дерево VI
+1.5	7383	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree IV	Обгоревшее дерево IV
+1.5	7381	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree II	Обгоревшее дерево II
+1.5	4897	eaa50	TLI_W_PetStatsPanel	Bonus HP per Vita	Здоровье за очко живучести
+1.5	7546	emberlight	W_DecoGUI	CLICK & DRAG TO ROTATE	ЗАЖМИТЕ И ТЯНИТЕ, ЧТОБЫ ПОВЕРНУТЬ
+1.5	7472	emberlight	DT_HortiDecoSecondaryButtonTable	Frosted Ring	Заиндевелое кольцо
+1.5	7471	emberlight	DT_HortiDecoSecondaryButtonTable	Stone Ring	Каменное кольцо
+1.5	7419	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree VII	Обгоревшее дерево VII
+1.5	7391	emberlight	DT_HortiDecoPrimaryButtonsTable	Ebony Tree	Эбеновое дерево
+1.5	7382	emberlight	DT_HortiDecoPrimaryButtonsTable	Burnt Tree III	Обгоревшее дерево III
+1.5	5191	editapp	IdeaPoet_EdAp_W_UI_EA_General	Outer Iris	Внешняя радужка
+1.5	5178	editapp	IdeaPoet_EdAp_W_UI_EA_FaceDetails	Jaw Width:	Ширина челюсти:
+1.5	5149	editapp	IdeaPoet_EdAp_W_UI_EA_BodyDetails	Body Hair:	Волосы на теле:
+1.5	3177	ridingthralls	WO_RT_StableRegisterWidget	Assign Rider	Назначить всадника
+1.5	20170	eaa	BP_EAA_Template	Get Emotes	Получить эмоции
+1.5	20169	eaa	BP_EAA_Template	Bossspawner Glossary	Справочник призывателей боссов
+1.5	7213	emberlight	W_AnimalPen	Too many breeding animals	Слишком много животных-производителей
+1.5	1817	ambush	W_Ambush_AdminOptions	Maximum Spawn Distance:	Максимальное расстояние появления:
+1.5	5221	editapp	IdeaPoet_EdAp_W_UI_Settings	Male Preview:	Просмотр (мужчина):
+1.5	3174	ridingthralls	WO_RT_StableRegisterWidget	One Per Mount	Каждому свой скакун
+1.5	5218	editapp	IdeaPoet_EdAp_W_UI_Settings	Owners Only	Только владельцы
+1.5	4699	compactor	IC_UI_StackSplit	Split stack	Разделить стопку
+1.4	4767	lbpr	W_LBPR_Tab_Building	Building Options	Настройки строительства
+1.4	4510	minimap	SM_UI_MapClickOptions	+Add marker here	+Поставить маркер здесь
+1.4	1818	ambush	W_Ambush_AdminOptions	Minimum Spawn Distance:	Минимальное расстояние появления:
+1.4	4847	lbpr	BP_BuildingBase	Failed to place building	Не получилось разместить постройку
+1.4	4461	pickup	Pickup+_Widget_AdminSettings	Spawn Thrall Naked	Раб появляется без одежды
+1.4	7416	emberlight	DT_HortiDecoPrimaryButtonsTable	Banana Tree I	Банановое дерево I
+1.4	4892	thrallstats	W_ETSPetStatsPanel	Vitality Health Bonus	Бонус к здоровью от живучести
+1.4	7469	emberlight	DT_HortiDecoPrimaryButtonsTable	Volcano Flower I	Вулканический цветок I
+1.4	6660	almerayah	AMR_UI_AdminSettings	Archer respawn time	Время возрождения: лучники
+1.4	4507	minimap	SM_UI_AddMarker	Always Show on Minimap	Всегда показывать на миникарте
+1.4	4895	thrallstats	W_ETSPetStatsPanel	Max Strength Damage Bonus	Максимальный бонус к урону от силы
+1.4	4890	thrallstats	W_ETSPetStatsPanel	Max Agility Damage Bonus 	Макс. бонус к урону от проворства 
+1.4	7745	emberlight	W_AnimalPen	BREEDING STOCK	ПЛЕМЕННОЕ ПОГОЛОВЬЕ
+1.4	1795	ambush	W_MCP_DropDownText	Click For Help	Нажмите для справки
+1.4	7470	emberlight	DT_HortiDecoPrimaryButtonsTable	Volcano Flower II	Вулканический цветок II
+1.4	4619	packrat	PR_MainMenu	Amount Dialog Key	Клавиша окна количества
+1.4	26	dm	DN_UI_DmgWidget	Clear Damage Data	Стереть данные об уроне
+1.3	6662	almerayah	AMR_UI_AdminSettings	Bailey NPC respawn time	Время возрождения: внешний двор
+1.3	5167	editapp	IdeaPoet_EdAp_W_UI_EA_FaceDetails	Left Eye Veins:	Сосуды левого глаза:
+1.3	4509	minimap	SM_UI_AddMarker	Add New Map Marker	Добавить маркер на карту
+1.3	4508	minimap	SM_UI_AddMarker	Save Clientside	Сохранять на клиенте
+1.3	43	dm	DN_UI_SettingsWindow	Click to change color	Щёлкните, чтобы сменить цвет
+1.3	5168	editapp	IdeaPoet_EdAp_W_UI_EA_FaceDetails	Right Eye Veins:	Сосуды правого глаза:
+1.3	4544	minimap	SM_UI_Settings	Show coordinates	Показывать координаты
+1.3	20486	eaa	BP_EAA_Famemenu	Not needed Level	Недостаточный уровень
+1.3	1797	ambush	W_AmbushWidget_AdminAndUser	Restore Defaults	Стандартные Настройки

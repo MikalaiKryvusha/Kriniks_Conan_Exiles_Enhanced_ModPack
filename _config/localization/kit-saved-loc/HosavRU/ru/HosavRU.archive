@@ -1,0 +1,2842 @@
+{
+ "FormatVersion": 2,
+ "Namespace": "",
+ "Children": [
+  {
+   "Source": {
+    "Text": "SERVER FPS"
+   },
+   "Translation": {
+    "Text": "FPS СЕРВЕРА"
+   },
+   "Key": "74252724499562FC4EA3D1A48582707B"
+  },
+  {
+   "Source": {
+    "Text": "UNAVAILABLE"
+   },
+   "Translation": {
+    "Text": "НЕДОСТУПЕН"
+   },
+   "Key": "A9C4743141A3C3154BDC509251646343"
+  },
+  {
+   "Source": {
+    "Text": "Remove"
+   },
+   "Translation": {
+    "Text": "Удалить"
+   },
+   "Key": "BA75424747B63E116678DCA7D33469A5"
+  },
+  {
+   "Source": {
+    "Text": "UI Settings"
+   },
+   "Translation": {
+    "Text": "Настройки интерфейса"
+   },
+   "Key": "476184294DE48E8EFDBDF2850BEEF4BF"
+  },
+  {
+   "Source": {
+    "Text": "Crippled"
+   },
+   "Translation": {
+    "Text": "Увечье"
+   },
+   "Key": "1EA0F89F483056314A3AE18B90D826F8"
+  },
+  {
+   "Source": {
+    "Text": "FuncomDefault"
+   },
+   "Translation": {
+    "Text": "Как в игре"
+   },
+   "Key": "DF93F7414211121F3D14098CB627E40A"
+  },
+  {
+   "Source": {
+    "Text": "Imperial"
+   },
+   "Translation": {
+    "Text": "Фаренгейт (°F)"
+   },
+   "Key": "076DCCCE4CC8A30928C6ADBC2C3A0E71"
+  },
+  {
+   "Source": {
+    "Text": "Metric"
+   },
+   "Translation": {
+    "Text": "Цельсий (°C)"
+   },
+   "Key": "7E4F8CB948C8364851F68C928565D3A6"
+  },
+  {
+   "Source": {
+    "Text": "Server Name : \n\nServer IP :\n\nServer Time : \n\nLocal Time :"
+   },
+   "Translation": {
+    "Text": "Сервер: \n\nIP сервера:\n\nВремя сервера: \n\nМестное время:"
+   },
+   "Key": "E87C9E4C4CE25547D706998207599D75"
+  },
+  {
+   "Source": {
+    "Text": "Disabled In Trial"
+   },
+   "Translation": {
+    "Text": "Отключено в пробной версии"
+   },
+   "Key": "53CB8C75420C18F5C644EFACF64C83D4"
+  },
+  {
+   "Source": {
+    "Text": "Party Manager"
+   },
+   "Translation": {
+    "Text": "Управление группой"
+   },
+   "Key": "72B3BDF3426E2018CEBFB0B009046383"
+  },
+  {
+   "Source": {
+    "Text": "Player Party"
+   },
+   "Translation": {
+    "Text": "Группа игроков"
+   },
+   "Key": "9DB2753949D39BCBD8C791B96BD2FFFB"
+  },
+  {
+   "Source": {
+    "Text": "Hosav's UI  Party Manager"
+   },
+   "Translation": {
+    "Text": "Группы — интерфейс Hosav"
+   },
+   "Key": "2363F1EF40C1659006BCA0B0C95D90F3"
+  },
+  {
+   "Source": {
+    "Text": "Disband Follower Party"
+   },
+   "Translation": {
+    "Text": "Распустить группу спутников"
+   },
+   "Key": "48F3767C41AF5D8D4D912A8D71E4533B"
+  },
+  {
+   "Source": {
+    "Text": "Admin : All players can invite players outside of clan"
+   },
+   "Translation": {
+    "Text": "Админ: все могут приглашать игроков вне клана"
+   },
+   "Key": "A51619E940DF649E330EE79C9F579060"
+  },
+  {
+   "Source": {
+    "Text": "Personal : Can be invited to party"
+   },
+   "Translation": {
+    "Text": "Личное: меня можно приглашать в группу"
+   },
+   "Key": "2D6537A948A1EB0BDFE53E81CF46A3F4"
+  },
+  {
+   "Source": {
+    "Text": "Leave Player Party"
+   },
+   "Translation": {
+    "Text": "Покинуть группу игроков"
+   },
+   "Key": "41D4F946452A3842CAADD083583F2656"
+  },
+  {
+   "Source": {
+    "Text": "Personal : Players outside of clan can invite you"
+   },
+   "Translation": {
+    "Text": "Личное: игроки вне клана могут меня приглашать"
+   },
+   "Key": "053A80D148E5B8BA95DA03A89EB2DF96"
+  },
+  {
+   "Source": {
+    "Text": "Follower Party"
+   },
+   "Translation": {
+    "Text": "Группа спутников"
+   },
+   "Key": "D1CE36594E344BFD60574EA64ECAF27A"
+  },
+  {
+   "Source": {
+    "Text": "Small"
+   },
+   "Translation": {
+    "Text": "Мелкий"
+   },
+   "Key": "20AD5FFC40C6D5ACD04F2DABBA47635B"
+  },
+  {
+   "Source": {
+    "Text": "Medium"
+   },
+   "Translation": {
+    "Text": "Средняя"
+   },
+   "Key": "4BD07138451E84F235CE6C931C5DD13C"
+  },
+  {
+   "Source": {
+    "Text": "Large"
+   },
+   "Translation": {
+    "Text": "Крупный"
+   },
+   "Key": "0D6BB3BD49D7628698606BA2B363677B"
+  },
+  {
+   "Source": {
+    "Text": "Top"
+   },
+   "Translation": {
+    "Text": "Сверху"
+   },
+   "Key": "9115EA654D4A1A9E0C13B582DF2017C3"
+  },
+  {
+   "Source": {
+    "Text": "Middle"
+   },
+   "Translation": {
+    "Text": "Посередине"
+   },
+   "Key": "C02C013D4F59C03A0954C68B758D869F"
+  },
+  {
+   "Source": {
+    "Text": "Bottom"
+   },
+   "Translation": {
+    "Text": "Снизу"
+   },
+   "Key": "27A66D95427FADDB20D2C1AE62450C3B"
+  },
+  {
+   "Source": {
+    "Text": "FPS"
+   },
+   "Translation": {
+    "Text": "FPS"
+   },
+   "Key": "6F366EAA40FBF74C2088F29B739F0EA8"
+  },
+  {
+   "Source": {
+    "Text": "No longer supported, I recommend checking out Xevyr's Minimap"
+   },
+   "Translation": {
+    "Text": "Больше не поддерживается — советую мини-карту от Xevyr"
+   },
+   "Key": "102F3B81412D98C18DAE85AA5982FA3F"
+  },
+  {
+   "Source": {
+    "Text": "Hosav's UI Settings"
+   },
+   "Translation": {
+    "Text": "Настройки интерфейса Hosav"
+   },
+   "Key": "6F9C1A324641B6E8C2CACF9EF7E82989"
+  },
+  {
+   "Source": {
+    "Text": "Healthbar Settings"
+   },
+   "Translation": {
+    "Text": "Полоса здоровья"
+   },
+   "Key": "F11306E04C61093FF06228B857B1A101"
+  },
+  {
+   "Source": {
+    "Text": "Staminabar Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет полосы выносливости"
+   },
+   "Key": "61B6AD544A7BA49ED83694A39C99BD77"
+  },
+  {
+   "Source": {
+    "Text": " - If the server is PVE, this can be enabled to see nearby players stamina."
+   },
+   "Translation": {
+    "Text": "— На PvE-сервере показывает выносливость игроков рядом"
+   },
+   "Key": "D3262D2840F870D8EB8C22B3E3612C01"
+  },
+  {
+   "Source": {
+    "Text": " - Replaces the vanilla target healthbar with my custom version which you can change the looks of with below settings"
+   },
+   "Translation": {
+    "Text": "— Заменяет стандартную полосу здоровья цели на мою, вид настраивается ниже"
+   },
+   "Key": "F4B94E8542459F4FA2EC9DBA09D1DF0A"
+  },
+  {
+   "Source": {
+    "Text": " - Shows player and thrall party when you have invited or been invited to one."
+   },
+   "Translation": {
+    "Text": "— Показывает группу игроков и рабов, когда вы пригласили кого-то или приглашены сами"
+   },
+   "Key": "C929F4A5486A837795C60FBC4B58E5F0"
+  },
+  {
+   "Source": {
+    "Text": " - Change what buff information to show/hide"
+   },
+   "Translation": {
+    "Text": "— Какие сведения об эффектах показывать"
+   },
+   "Key": "27799A0A443E40226EC790A30CD72B5B"
+  },
+  {
+   "Source": {
+    "Text": " - Other settings for the UI that is not neccessarily connected to the custom UI (like the hotbar)"
+   },
+   "Translation": {
+    "Text": "— Прочие настройки интерфейса, не связанные напрямую с моим (например, панель быстрого доступа)"
+   },
+   "Key": "62ED21644924B79268AF15A0D9F6EC21"
+  },
+  {
+   "Source": {
+    "Text": " - Instead of the vanilla HUD, you can use my custom UI with loads of customisable options below"
+   },
+   "Translation": {
+    "Text": "— Вместо стандартного интерфейса можно включить мой, с множеством настроек ниже"
+   },
+   "Key": "CD4FAB6942925777A77F709F9A31766B"
+  },
+  {
+   "Source": {
+    "Text": " - An always accurate display of damage the enemy/ally has taken in their healthbar."
+   },
+   "Translation": {
+    "Text": "— Точное отображение полученного врагом или союзником урона на его полосе здоровья"
+   },
+   "Key": "3E10DBDB417167E694E0B3B4EE473852"
+  },
+  {
+   "Source": {
+    "Text": " - more options for the custom UI to customize what elements you want to have enabled or change. "
+   },
+   "Translation": {
+    "Text": "— Дополнительные настройки моего интерфейса: какие элементы показывать и как"
+   },
+   "Key": "3BF448B94C5E47B88DA241BB0CFE01BB"
+  },
+  {
+   "Source": {
+    "Text": " - Shows a compass in my custom UI that shows N, W, E and S and which direction the player is facing"
+   },
+   "Translation": {
+    "Text": "— Компас в моём интерфейсе: стороны света и направление взгляда"
+   },
+   "Key": "5122D59D4A23CA02CABCF18F0F4AB2EB"
+  },
+  {
+   "Source": {
+    "Text": "- Will disable all the IQoL UI Elements on your in-game HUD"
+   },
+   "Translation": {
+    "Text": "— Отключает все элементы IQoL на игровом экране"
+   },
+   "Key": "66ABDCE24F130B858042D29A23C305A7"
+  },
+  {
+   "Source": {
+    "Text": "Combat Settings"
+   },
+   "Translation": {
+    "Text": "Бой"
+   },
+   "Key": "3EE05D1648288882307D99A057EA9B06"
+  },
+  {
+   "Source": {
+    "Text": "- Will make your hotbar invisible unless you are in your inventory"
+   },
+   "Translation": {
+    "Text": "— Панель быстрого доступа видна только в инвентаре"
+   },
+   "Key": "E0AF3F5842DC27E1E0F39C82168F9553"
+  },
+  {
+   "Source": {
+    "Text": " - When crafting, will show how many seconds are left before the item is finished crafting (CURRENTLY DISABLED TO INVESTIGATE AN ISSUE)"
+   },
+   "Translation": {
+    "Text": "— При создании предмета показывает, сколько секунд осталось (СЕЙЧАС ОТКЛЮЧЕНО: ИЩЕТСЯ ОШИБКА)"
+   },
+   "Key": "7291F5D940167C0904AACDBE0B8CF6C2"
+  },
+  {
+   "Source": {
+    "Text": "- Set the size of your hotbar"
+   },
+   "Translation": {
+    "Text": "— Размер панели быстрого доступа"
+   },
+   "Key": "3F3D9627446D9304A34F9AAD5A3411B1"
+  },
+  {
+   "Source": {
+    "Text": " - Will move the HUD down just above the hotbar by default, if hotbar only in inventory is enabled, the HUD will move even further down."
+   },
+   "Translation": {
+    "Text": "— Опускает интерфейс к панели быстрого доступа; если панель показывается только в инвентаре — опускает ещё ниже"
+   },
+   "Key": "5AE1EF2A4E47B11C21EACA90D2569F9C"
+  },
+  {
+   "Source": {
+    "Text": " - If you want a visible black background for your HUD so it is easier to see, you can increase the opacity."
+   },
+   "Translation": {
+    "Text": "— Чтобы интерфейс лучше читался, можно добавить чёрную подложку: увеличьте непрозрачность"
+   },
+   "Key": "9C70000D429918D5E71F61B1B4ECDFF4"
+  },
+  {
+   "Source": {
+    "Text": " - Show Server FPS, current player amount and your Ping to the server"
+   },
+   "Translation": {
+    "Text": "— FPS сервера, число игроков и ваш пинг"
+   },
+   "Key": "B405B899493C592D4D402081EE1FB9F6"
+  },
+  {
+   "Source": {
+    "Text": " - Show in-game time"
+   },
+   "Translation": {
+    "Text": "— Игровое время"
+   },
+   "Key": "6640146945E801FCA82EA48E988E8FCC"
+  },
+  {
+   "Source": {
+    "Text": " - If you have AoC, having this enabled will show your faction icon just below your level bar"
+   },
+   "Translation": {
+    "Text": "— Если стоит AoC, под полосой уровня появится значок вашей фракции"
+   },
+   "Key": "0E58F01146ABDB83A9E4FEBE3DCB176C"
+  },
+  {
+   "Source": {
+    "Text": " - Show what armor type you have, how much armor and the % damage reduction"
+   },
+   "Translation": {
+    "Text": "— Тип доспехов, их значение и % снижения урона"
+   },
+   "Key": "85D1C021465E0B01BF8BF7AF879C694A"
+  },
+  {
+   "Source": {
+    "Text": " - Show weapon damage, armor penetration and total damage after calculating your stats"
+   },
+   "Translation": {
+    "Text": "— Урон оружия, пробитие доспехов и итоговый урон с учётом характеристик"
+   },
+   "Key": "B9354AAE41DB4377C32F8AA6E882948C"
+  },
+  {
+   "Source": {
+    "Text": "Custom Personal UI"
+   },
+   "Translation": {
+    "Text": "Свой личный интерфейс"
+   },
+   "Key": "1FF30B2C482F3496157D5586E8270072"
+  },
+  {
+   "Source": {
+    "Text": " - Show temperature in Temperature type set above"
+   },
+   "Translation": {
+    "Text": "— Температура в единицах, выбранных выше"
+   },
+   "Key": "A81EFCE146FFE5719423FAA4154EEC04"
+  },
+  {
+   "Source": {
+    "Text": " - Show how much weight you have right now out of the max and how many % encumbered you are."
+   },
+   "Translation": {
+    "Text": "— Текущий вес из максимального и % перегруза"
+   },
+   "Key": "550CA09A4D2AA03DB22D6CB956610C92"
+  },
+  {
+   "Source": {
+    "Text": " - Show how much food you have and how much time is left until it runs out"
+   },
+   "Translation": {
+    "Text": "— Запас еды и сколько времени он продержится"
+   },
+   "Key": "DD545808465EFA303B7FC9A839A25832"
+  },
+  {
+   "Source": {
+    "Text": " - Show how much water you have and how much time is left until it runs out"
+   },
+   "Translation": {
+    "Text": "— Запас воды и сколько времени он продержится"
+   },
+   "Key": "F6C9FA014BDB5A3FBB22CCA262DE2D7B"
+  },
+  {
+   "Source": {
+    "Text": " - Set the font size of water, food, armor info etc in the HUD"
+   },
+   "Translation": {
+    "Text": "— Размер шрифта подписей: вода, еда, доспехи и прочее"
+   },
+   "Key": "3ED06C98405C0728FA02D88353C008B9"
+  },
+  {
+   "Source": {
+    "Text": " - Show how much health is reduced (more accurate than vanilla) from corruption"
+   },
+   "Translation": {
+    "Text": "— На сколько скверна снизила здоровье (точнее, чем в игре)"
+   },
+   "Key": "3E6ADBD040B3ACF5E30B62AFDE6A43DA"
+  },
+  {
+   "Source": {
+    "Text": " - Setup what will show up when targeting someone"
+   },
+   "Translation": {
+    "Text": "— Что показывать при наведении на цель"
+   },
+   "Key": "F8C60F8641F7688229E32784534CA9E4"
+  },
+  {
+   "Source": {
+    "Text": " - Disabling this will disable any healthbars showing up in combat"
+   },
+   "Translation": {
+    "Text": "— Если выключить, в бою не будет никаких полос здоровья"
+   },
+   "Key": "C3BFFA6C4DCC0B282B93528747CBAD9C"
+  },
+  {
+   "Source": {
+    "Text": " - If you want to remove the Bazaar button from the tab screen in your inventory etc. Not all of us even wanna see that."
+   },
+   "Translation": {
+    "Text": "— Убирает кнопку «Базар» с вкладок инвентаря. Не всем она нужна"
+   },
+   "Key": "25C860354A532FC5C89D24898CED04D2"
+  },
+  {
+   "Source": {
+    "Text": " - Show how much Shelter you have with a progress bar and percentage."
+   },
+   "Translation": {
+    "Text": "— Укрытие полосой и в процентах"
+   },
+   "Key": "D8286D394BFEDCD757C40D9B186F21F2"
+  },
+  {
+   "Source": {
+    "Text": "Custom Target UI"
+   },
+   "Translation": {
+    "Text": "Свой интерфейс цели"
+   },
+   "Key": "6094289145A7FBD45A2DA6BB1A2E90DC"
+  },
+  {
+   "Source": {
+    "Text": " - Set the color of the same text as mentioned above and their respective icons "
+   },
+   "Translation": {
+    "Text": "— Цвет тех же подписей и их значков"
+   },
+   "Key": "87A128424919CCFAF07BB5BC759A0CAA"
+  },
+  {
+   "Source": {
+    "Text": "Kill XP Feedback"
+   },
+   "Translation": {
+    "Text": "Опыт за убийство"
+   },
+   "Key": "5314330E40015D815A637B91CB60A61A"
+  },
+  {
+   "Source": {
+    "Text": "- Will show amount of experience you get when you kill someone or something."
+   },
+   "Translation": {
+    "Text": "— Показывает, сколько опыта дало убийство"
+   },
+   "Key": "F750D50443125E1F464385A693F1579F"
+  },
+  {
+   "Source": {
+    "Text": "Kill XP Feedback Background"
+   },
+   "Translation": {
+    "Text": "Фон уведомления об опыте"
+   },
+   "Key": "39EF59A546CAEB43EC0691A8990682A5"
+  },
+  {
+   "Source": {
+    "Text": "- Will show or hide the blood background for XP Feedback"
+   },
+   "Translation": {
+    "Text": "— Кровавый фон уведомления об опыте"
+   },
+   "Key": "880FA5034BA9A90558B637ACF1602A66"
+  },
+  {
+   "Source": {
+    "Text": "Kill XP Feedback Names"
+   },
+   "Translation": {
+    "Text": "Имя убитого в уведомлении"
+   },
+   "Key": "4D1289FA431AE1B708CD51818DCFE517"
+  },
+  {
+   "Source": {
+    "Text": "- Will show or hide the name of the killed enemy for XP Feedback"
+   },
+   "Translation": {
+    "Text": "— Имя убитого врага в уведомлении об опыте"
+   },
+   "Key": "09EC9C86458DA9AEEDB7F4BBD3915765"
+  },
+  {
+   "Source": {
+    "Text": "Kill XP Feedback Amount"
+   },
+   "Translation": {
+    "Text": "Число опыта в уведомлении"
+   },
+   "Key": "9045538C4DBCB145785C63BA3AF2E9DD"
+  },
+  {
+   "Source": {
+    "Text": "- Will show or hide the amount of XP for the XP Feedback"
+   },
+   "Translation": {
+    "Text": "— Число опыта в уведомлении"
+   },
+   "Key": "F980A1794570C00AD7E10C957514891C"
+  },
+  {
+   "Source": {
+    "Text": "Kill XP Feedback Sound"
+   },
+   "Translation": {
+    "Text": "Звук уведомления об опыте"
+   },
+   "Key": "351D4ADF4049F778DF537D9365ED6BA4"
+  },
+  {
+   "Source": {
+    "Text": "Stamina Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета выносливости"
+   },
+   "Key": "FCCBB2C44FCCB56313A80383B7A625D6"
+  },
+  {
+   "Source": {
+    "Text": "- Will enable or disable a low volume sound when the XP feedback shows up."
+   },
+   "Translation": {
+    "Text": "— Тихий звук при появлении уведомления об опыте"
+   },
+   "Key": "E52A771B4D88475293BB0B9EC12E35F9"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Icons"
+   },
+   "Translation": {
+    "Text": "Значки индикатора урона"
+   },
+   "Key": "87CA810C49D13BC2EB402B935040323B"
+  },
+  {
+   "Source": {
+    "Text": " - Enables or Disables Icons for the Damage Indicator"
+   },
+   "Translation": {
+    "Text": "— Значки в индикаторе урона"
+   },
+   "Key": "0C1D62BF49C7526A19CC5AA63744ED20"
+  },
+  {
+   "Source": {
+    "Text": "Simplistic Damage Indicator"
+   },
+   "Translation": {
+    "Text": "Упрощённый индикатор урона"
+   },
+   "Key": "DDA373994736BEE228E952AABCB1BF07"
+  },
+  {
+   "Source": {
+    "Text": " - With Simplistic Enabled you will only see how much damage you dealt. With it off you will see who you damaged as well."
+   },
+   "Translation": {
+    "Text": "— В упрощённом виде показывается только урон; в полном — ещё и кому он нанесён"
+   },
+   "Key": "3695228E4AFCCA84701188828B0DF517"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator for Follower (Left)"
+   },
+   "Translation": {
+    "Text": "Индикатор урона спутника (слева)"
+   },
+   "Key": "1767CCAA4B7529B2CB11768807A3A226"
+  },
+  {
+   "Source": {
+    "Text": " - Shows MMO Type Damage Indicator that pops up on the screen as your thrall does damage. "
+   },
+   "Translation": {
+    "Text": "— Индикатор урона в духе MMO: всплывает, когда бьёт ваш раб"
+   },
+   "Key": "38E10F4749AC9DAF893E019F164E40D9"
+  },
+  {
+   "Source": {
+    "Text": "Follower Damage Indicator Icons"
+   },
+   "Translation": {
+    "Text": "Значки индикатора урона спутника"
+   },
+   "Key": "D293D9DF4ADAEF64EF997084260BB89B"
+  },
+  {
+   "Source": {
+    "Text": " - Enables or Disables Icons for the Follower Damage Indicator"
+   },
+   "Translation": {
+    "Text": "— Значки в индикаторе урона спутника"
+   },
+   "Key": "0B09137A4E133821A87304BCABCCF197"
+  },
+  {
+   "Source": {
+    "Text": "Follower Simplistic Damage Indicator"
+   },
+   "Translation": {
+    "Text": "Упрощённый индикатор урона спутника"
+   },
+   "Key": "0234A3CE4816DD62188B4FB72AB51966"
+  },
+  {
+   "Source": {
+    "Text": "Mount Settings"
+   },
+   "Translation": {
+    "Text": "Скакун"
+   },
+   "Key": "1C6FFDAC40C9507C2A76A791EC38EE3F"
+  },
+  {
+   "Source": {
+    "Text": " - With Simplistic Enabled you will only see how much damage your follower dealt. With it off you will see who your follower damaged as well."
+   },
+   "Translation": {
+    "Text": "— В упрощённом виде показывается только урон спутника; в полном — ещё и кому он нанесён"
+   },
+   "Key": "DE0079AF4861D46D3EA35691C698DD34"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Log (Lower Right)"
+   },
+   "Translation": {
+    "Text": "Журнал урона (справа внизу)"
+   },
+   "Key": "07A501D5424127719EFE068D1C86EE81"
+  },
+  {
+   "Source": {
+    "Text": " - Shows MMO Type Damage Indicator that pops up on the screen as you or your thrall takes damage."
+   },
+   "Translation": {
+    "Text": "— Индикатор урона в духе MMO: всплывает, когда бьют вас или вашего раба"
+   },
+   "Key": "00AE449342A531B7C8C522863C5EBF40"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Log Icons"
+   },
+   "Translation": {
+    "Text": "Значки журнала урона"
+   },
+   "Key": "38B778CD4D70A18890A7E8A2CB40FC5C"
+  },
+  {
+   "Source": {
+    "Text": " - Enables or Disables Icons for the Damage Indicator Log"
+   },
+   "Translation": {
+    "Text": "— Значки в журнале урона"
+   },
+   "Key": "8C66EA9642E39B488F5D94A2D8B7202B"
+  },
+  {
+   "Source": {
+    "Text": "Simplistic Damage Indicator Log"
+   },
+   "Translation": {
+    "Text": "Упрощённый журнал урона"
+   },
+   "Key": "EE66A2854E76957C2F120988252AFE11"
+  },
+  {
+   "Source": {
+    "Text": " - With Simplistic Enabled you will only see how much damage you or your follower took. With it disabled you can discern if you or your follower was the one to take damage."
+   },
+   "Translation": {
+    "Text": "— В упрощённом виде показывается только полученный урон; в полном видно, кто его получил — вы или спутник"
+   },
+   "Key": "39C8A6444BDB4301265F04834A3DEBBE"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета индикатора урона"
+   },
+   "Key": "819C6E7043A970D3247951A9DAA1612B"
+  },
+  {
+   "Source": {
+    "Text": "Follower Damage Indicator Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета индикатора урона спутника"
+   },
+   "Key": "9DACF2C5400CBC14504CF8A6861D179B"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Log Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета журнала урона"
+   },
+   "Key": "8354502D4C34B856A233BC8A6110F828"
+  },
+  {
+   "Source": {
+    "Text": "SOME FEATURES MAY NOT YET BE IMPLEMENTED OR BE WIP"
+   },
+   "Translation": {
+    "Text": "НЕКОТОРЫЕ ВОЗМОЖНОСТИ ЕЩЁ НЕ ГОТОВЫ"
+   },
+   "Key": "74D876D64E1CFBCD624787B462123A78"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Follower Log Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета журнала урона спутника"
+   },
+   "Key": "391A36854F2B5CE05B8246A911958E5E"
+  },
+  {
+   "Source": {
+    "Text": "Use Float Damage"
+   },
+   "Translation": {
+    "Text": "Всплывающий урон"
+   },
+   "Key": "33D83F3C415C3E709426928567063DDF"
+  },
+  {
+   "Source": {
+    "Text": " - Shows a more traditional screen popup, that is dynamically placed depending on damaged character's position. (Disables Damage Other Damage Indicator)"
+   },
+   "Translation": {
+    "Text": "— Привычные всплывающие цифры над тем, кого ударили (отключает индикатор урона справа)"
+   },
+   "Key": "7B369BAA4721D617BA1E209BB23A2254"
+  },
+  {
+   "Source": {
+    "Text": "Minimap Show Local Time"
+   },
+   "Translation": {
+    "Text": "Местное время на мини-карте"
+   },
+   "Key": "D61A221A481E68D83A8D7882C0BD4CBF"
+  },
+  {
+   "Source": {
+    "Text": "Select Healthbar Position "
+   },
+   "Translation": {
+    "Text": "Положение полосы здоровья"
+   },
+   "Key": "05EA640C4DAF66B76CA839A0EB9F9ABC"
+  },
+  {
+   "Source": {
+    "Text": "Minimap Custom Position : "
+   },
+   "Translation": {
+    "Text": "Своё положение мини-карты:"
+   },
+   "Key": "F845A24C4BF6B5D7CD004F8AA946BFFD"
+  },
+  {
+   "Source": {
+    "Text": "Centered UI Custom Position : "
+   },
+   "Translation": {
+    "Text": "Своё положение центрального блока:"
+   },
+   "Key": "C740DC434D09E72D4C0CD28A5BEF001C"
+  },
+  {
+   "Source": {
+    "Text": "Mount Healthbar Visbillity"
+   },
+   "Translation": {
+    "Text": "Показывать здоровье скакуна"
+   },
+   "Key": "386A78D0453E2A605046E1B87F63CE35"
+  },
+  {
+   "Source": {
+    "Text": "Mount Healthbar Values"
+   },
+   "Translation": {
+    "Text": "Значения Здоровья скакуна"
+   },
+   "Key": "BFC7154947B11C29289E369DDA5D2606"
+  },
+  {
+   "Source": {
+    "Text": "Mount Healthbar Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет здоровья скакуна"
+   },
+   "Key": "2DCB9710403DA850849C89A251CB4D24"
+  },
+  {
+   "Source": {
+    "Text": "Healthbar Visbillity"
+   },
+   "Translation": {
+    "Text": "Показывать полосу здоровья"
+   },
+   "Key": "3C7AEC6B4F85E4B03AA859BDD15F8A90"
+  },
+  {
+   "Source": {
+    "Text": "Mount Health Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета здоровья скакуна"
+   },
+   "Key": "444C5DDF468AB86F9C64A1859B34774E"
+  },
+  {
+   "Source": {
+    "Text": "Mount Endurancebar Visibillity"
+   },
+   "Translation": {
+    "Text": "Показывать выносливость скакуна"
+   },
+   "Key": "7D16E71041E2CDF9B9AF26A8B6C20512"
+  },
+  {
+   "Source": {
+    "Text": "Mount Endurancebar Values"
+   },
+   "Translation": {
+    "Text": "Значения Выносливости скакуна"
+   },
+   "Key": "6AFD8DE74DAD8ADAE341E8BF770EE794"
+  },
+  {
+   "Source": {
+    "Text": "Mount Endurancebar Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет выносливости скакуна"
+   },
+   "Key": "6018B2C74E73563DDFA631AAE5DD6BA6"
+  },
+  {
+   "Source": {
+    "Text": "Mount Endurance Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета выносливости скакуна"
+   },
+   "Key": "47F1760D4D621122502A6DAF6E71FECD"
+  },
+  {
+   "Source": {
+    "Text": "Mount Level Display"
+   },
+   "Translation": {
+    "Text": "Уровень скакуна"
+   },
+   "Key": "F6930B80427D4477070D3DA23579FCA7"
+  },
+  {
+   "Source": {
+    "Text": "Mount Level Background"
+   },
+   "Translation": {
+    "Text": "Фон уровня скакуна"
+   },
+   "Key": "696B02C6475D7FA300A57793E694C80A"
+  },
+  {
+   "Source": {
+    "Text": "Additional HUD Settings"
+   },
+   "Translation": {
+    "Text": "Настройки дополнительного HUD"
+   },
+   "Key": "098D08F34DF23CFB83825EAC4E9B47E5"
+  },
+  {
+   "Source": {
+    "Text": "Armor Values"
+   },
+   "Translation": {
+    "Text": "Значения Брони"
+   },
+   "Key": "1734BCBB42ECC4D407CB6A99742CBBAE"
+  },
+  {
+   "Source": {
+    "Text": "Damage Values"
+   },
+   "Translation": {
+    "Text": "Значения Урона"
+   },
+   "Key": "449106DB45D87C2CE40A749FCF65F706"
+  },
+  {
+   "Source": {
+    "Text": "Healthbar Values"
+   },
+   "Translation": {
+    "Text": "Значения Здоровья"
+   },
+   "Key": "ED72D864490C7F9925AE8A91CD888A6B"
+  },
+  {
+   "Source": {
+    "Text": "Weight Values"
+   },
+   "Translation": {
+    "Text": "Значения Веса"
+   },
+   "Key": "0CE29CB9472A1C2B249004903F4188C9"
+  },
+  {
+   "Source": {
+    "Text": "Food Values"
+   },
+   "Translation": {
+    "Text": "Значения Еды"
+   },
+   "Key": "7AB5195744A74085AF694596BBFCF8D1"
+  },
+  {
+   "Source": {
+    "Text": "Water Values"
+   },
+   "Translation": {
+    "Text": "Значения Воды"
+   },
+   "Key": "376BACE24363587A8DDCE0BF1CB17803"
+  },
+  {
+   "Source": {
+    "Text": "Corruption Values "
+   },
+   "Translation": {
+    "Text": "Значения Скверны"
+   },
+   "Key": "3764800D49BF97CA15C8A79A72CF5EE1"
+  },
+  {
+   "Source": {
+    "Text": "Experience Settings"
+   },
+   "Translation": {
+    "Text": "Опыт"
+   },
+   "Key": "45EDFF41465917095C02D9B5ACF6DB86"
+  },
+  {
+   "Source": {
+    "Text": "Current Level"
+   },
+   "Translation": {
+    "Text": "Текущий уровень"
+   },
+   "Key": "D2D6E05B4FEF0220918B85A9C440BDF0"
+  },
+  {
+   "Source": {
+    "Text": "Experience Amount"
+   },
+   "Translation": {
+    "Text": "Опыт числом"
+   },
+   "Key": "8F06FE13444FC4A051AD608FB6F88565"
+  },
+  {
+   "Source": {
+    "Text": "Experience Percentage"
+   },
+   "Translation": {
+    "Text": "Опыт в процентах"
+   },
+   "Key": "878029A046A207E405523F94394FAA57"
+  },
+  {
+   "Source": {
+    "Text": "Experience Progress Indicator"
+   },
+   "Translation": {
+    "Text": "Полоса опыта"
+   },
+   "Key": "4A71D8624EAD72AD7E894C9072E65525"
+  },
+  {
+   "Source": {
+    "Text": "Experience Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета опыта"
+   },
+   "Key": "7551A2844CF25043728E0285C274DAD0"
+  },
+  {
+   "Source": {
+    "Text": "Healthbar Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет полосы здоровья"
+   },
+   "Key": "D22D441049F8CB9D0C0384851EE444FF"
+  },
+  {
+   "Source": {
+    "Text": "Experience Progress Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет полосы опыта"
+   },
+   "Key": "59DA740046E4B865FB94BCA41C028769"
+  },
+  {
+   "Source": {
+    "Text": "Temperature Values"
+   },
+   "Translation": {
+    "Text": "Значения Температуры"
+   },
+   "Key": "49C1AA624C89CAC35D020CA8561F2CAC"
+  },
+  {
+   "Source": {
+    "Text": "Mount Level Background Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет фона уровня скакуна"
+   },
+   "Key": "17CDAE6E43F5F5C1B8100B88C9A589EF"
+  },
+  {
+   "Source": {
+    "Text": "Mount Background Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета фона скакуна"
+   },
+   "Key": "3E9221AD4DD5FDAFA5BE8F930372FC10"
+  },
+  {
+   "Source": {
+    "Text": "Detail Font/Icons Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет подписей и значков"
+   },
+   "Key": "C45E01834E2EA24AF3BD33B0FFC03C91"
+  },
+  {
+   "Source": {
+    "Text": "Health Numeric Text"
+   },
+   "Translation": {
+    "Text": "Здоровье числом"
+   },
+   "Key": "02CFB0804599F16FDCCEFC8F91D249F7"
+  },
+  {
+   "Source": {
+    "Text": "Font Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета шрифта"
+   },
+   "Key": "9D2DDF374A08E65A6C2507BB32994EB4"
+  },
+  {
+   "Source": {
+    "Text": "Consider helping me out by donating : "
+   },
+   "Translation": {
+    "Text": "Поддержать автора:"
+   },
+   "Key": "1AAA4D93414A225A0C6E998898A38095"
+  },
+  {
+   "Source": {
+    "Text": "   Donate   "
+   },
+   "Translation": {
+    "Text": "Пожертвовать"
+   },
+   "Key": "B03442994316B090768A4098EE612CFB"
+  },
+  {
+   "Source": {
+    "Text": "Consciousness Percentage"
+   },
+   "Translation": {
+    "Text": "Сознание в процентах"
+   },
+   "Key": "78E1196C476597B05B7172B72167F9B0"
+  },
+  {
+   "Source": {
+    "Text": "Health Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета здоровья"
+   },
+   "Key": "179A4EA24F2B612EE78932BADFB94573"
+  },
+  {
+   "Source": {
+    "Text": "Target Level"
+   },
+   "Translation": {
+    "Text": "Уровень цели"
+   },
+   "Key": "D82C7A1F4AD1759137D4F097D394F38F"
+  },
+  {
+   "Source": {
+    "Text": "Target Health Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет здоровья цели"
+   },
+   "Key": "088061BD4ECFC97B8BB1D3A3AF98E312"
+  },
+  {
+   "Source": {
+    "Text": "Target Healthbar Enabled"
+   },
+   "Translation": {
+    "Text": "Полоса здоровья цели"
+   },
+   "Key": "AF592F544ACD47287DA2B98C40BFE720"
+  },
+  {
+   "Source": {
+    "Text": "Target Health Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета здоровья цели"
+   },
+   "Key": "CC55113042456CA0A5F829A3EFECCB13"
+  },
+  {
+   "Source": {
+    "Text": "Target Consciousness Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет сознания цели"
+   },
+   "Key": "761A320B422B9F979F20C2A9FFCB8734"
+  },
+  {
+   "Source": {
+    "Text": "Target Consciousness Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета сознания цели"
+   },
+   "Key": "B57E5D864EDFA92A157E46BFBAE7B0E3"
+  },
+  {
+   "Source": {
+    "Text": "Target Level Background Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет фона уровня цели"
+   },
+   "Key": "3AAC64234A1BAE42E6744F902F43C6FF"
+  },
+  {
+   "Source": {
+    "Text": "Target Level Background Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета фона уровня цели"
+   },
+   "Key": "55821358442395A4D5EEC4B12DDBC057"
+  },
+  {
+   "Source": {
+    "Text": "Personal UI Settings :"
+   },
+   "Translation": {
+    "Text": "Настройки личного интерфейса:"
+   },
+   "Key": "BEB5E26A48DE4218481094B02FCB45DD"
+  },
+  {
+   "Source": {
+    "Text": "Other Settings"
+   },
+   "Translation": {
+    "Text": "Прочее"
+   },
+   "Key": "0271FAC644B6931C381A59AB80CFED79"
+  },
+  {
+   "Source": {
+    "Text": "Close"
+   },
+   "Translation": {
+    "Text": "Закрыть"
+   },
+   "Key": "1E22D1704AC4EF42A8EFB4B87B951EA5"
+  },
+  {
+   "Source": {
+    "Text": "Buff Settings"
+   },
+   "Translation": {
+    "Text": "Эффекты"
+   },
+   "Key": "4AE69B6447267B73F84F57B6B1F2FD90"
+  },
+  {
+   "Source": {
+    "Text": "Buffs in UI"
+   },
+   "Translation": {
+    "Text": "Эффекты на экране"
+   },
+   "Key": "FCCE889E422E6707578064BB82CA09B4"
+  },
+  {
+   "Source": {
+    "Text": "Buff Timer"
+   },
+   "Translation": {
+    "Text": "Таймер эффектов"
+   },
+   "Key": "764DA8744F46245AFEB2E8B221D69C9E"
+  },
+  {
+   "Source": {
+    "Text": "Buff Description"
+   },
+   "Translation": {
+    "Text": "Описание эффектов"
+   },
+   "Key": "317C1F3C4418C3D060BC85B85AD55828"
+  },
+  {
+   "Source": {
+    "Text": "Crafting Time in Seconds"
+   },
+   "Translation": {
+    "Text": "Время создания в секундах"
+   },
+   "Key": "0AF9014B4648691BD86CB2899A1B3BE9"
+  },
+  {
+   "Source": {
+    "Text": "Disable IQoL Hooks"
+   },
+   "Translation": {
+    "Text": "Отключить элементы IQoL"
+   },
+   "Key": "5F6CFE8A419C4C6C1A9600B7115BF675"
+  },
+  {
+   "Source": {
+    "Text": "This option disables all HUD elements from IQoL. REMEMBER TO LOAD THIS MOD AFTER IQoL IF YOU USE IQoL"
+   },
+   "Translation": {
+    "Text": "Отключает все элементы IQoL на экране. ЕСЛИ ИСПОЛЬЗУЕТЕ IQoL — ГРУЗИТЕ ЭТОТ МОД ПОСЛЕ НЕГО"
+   },
+   "Key": "E66B664C48BD0CE205DA209693667197"
+  },
+  {
+   "Source": {
+    "Text": "Hotbar Only In Inventory"
+   },
+   "Translation": {
+    "Text": "Панель быстрого доступа только в инвентаре"
+   },
+   "Key": "5DF27501469F199C46F10282F3F1C30A"
+  },
+  {
+   "Source": {
+    "Text": "PvE Player Stamina"
+   },
+   "Translation": {
+    "Text": "Выносливость игроков на PvE"
+   },
+   "Key": "BBEAF11445BB1CC06A6576AC35FF2771"
+  },
+  {
+   "Source": {
+    "Text": "In-Game Time of Day"
+   },
+   "Translation": {
+    "Text": "Игровое время суток"
+   },
+   "Key": "B7A64A204A307CD34A6D3FBFFFF43178"
+  },
+  {
+   "Source": {
+    "Text": "Age of Calamitious Faction Emblem on HUD"
+   },
+   "Translation": {
+    "Text": "Эмблема фракции Age of Calamitous на экране"
+   },
+   "Key": "EC3CB51A4C5881C3988D4B884A5A8148"
+  },
+  {
+   "Source": {
+    "Text": "Staminabar Settings"
+   },
+   "Translation": {
+    "Text": "Полоса выносливости"
+   },
+   "Key": "3F40B69A4BDD4DEE71B45D97A29C2B03"
+  },
+  {
+   "Source": {
+    "Text": "Shelter Percentage"
+   },
+   "Translation": {
+    "Text": "Укрытие в процентах"
+   },
+   "Key": "1B2FD5FC43F00E6B493ED3A212A0E170"
+  },
+  {
+   "Source": {
+    "Text": "Target AoC Faction Visibillity"
+   },
+   "Translation": {
+    "Text": "Фракция AoC у цели"
+   },
+   "Key": "BE9D29F447E595B5AF3B589BF3C2EF1A"
+  },
+  {
+   "Source": {
+    "Text": "Centered UI Stats / Custom Position"
+   },
+   "Translation": {
+    "Text": "Показатели по центру / своё положение"
+   },
+   "Key": "CA02233D4CF287995B89A690F58E2A56"
+  },
+  {
+   "Source": {
+    "Text": "Health and Stamina/Endurance Text Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет текста здоровья и выносливости"
+   },
+   "Key": "AD57C37E44026A6E1AC24C9ECEEB959A"
+  },
+  {
+   "Source": {
+    "Text": "Health and Stamina/Endurance Text Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета текста здоровья и выносливости"
+   },
+   "Key": "22B70A21444F3834E3B9CCA93A5B0B89"
+  },
+  {
+   "Source": {
+    "Text": "Save"
+   },
+   "Translation": {
+    "Text": "Сохранить"
+   },
+   "Key": "46AA6F2149D70E2A9A997BB5A1325710"
+  },
+  {
+   "Source": {
+    "Text": "Select Detail Font Size "
+   },
+   "Translation": {
+    "Text": "Размер шрифта подписей"
+   },
+   "Key": "E8CDD4C8458B39C1A39A3BA457629E0A"
+  },
+  {
+   "Source": {
+    "Text": "Select Hotbar Size "
+   },
+   "Translation": {
+    "Text": "Размер панели быстрого доступа"
+   },
+   "Key": "902F04E1449D614534DFA8A560AB1C9C"
+  },
+  {
+   "Source": {
+    "Text": "Show health lost in enemy healthbar"
+   },
+   "Translation": {
+    "Text": "Показывать потерянное здоровье врага"
+   },
+   "Key": "D9DA8BA74C617AF809B95E932FCFE6A9"
+  },
+  {
+   "Source": {
+    "Text": "Corruption Bar Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет полосы скверны"
+   },
+   "Key": "5981F8FB454C31ADDBB3018FE3959780"
+  },
+  {
+   "Source": {
+    "Text": "Staminabar Visbillity"
+   },
+   "Translation": {
+    "Text": "Показывать полосу выносливости"
+   },
+   "Key": "0EC5E7684B08DC7B586BE6B7567AC5B7"
+  },
+  {
+   "Source": {
+    "Text": "Corruption Bar Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета полосы скверны"
+   },
+   "Key": "5B74BB9A4E6D1C6CBC7017B4C23C1504"
+  },
+  {
+   "Source": {
+    "Text": "Compass"
+   },
+   "Translation": {
+    "Text": "Компас"
+   },
+   "Key": "814ED8B54ABB2918C847F1AA2F823573"
+  },
+  {
+   "Source": {
+    "Text": "Compass Background Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет фона компаса"
+   },
+   "Key": "017059564DAD71AC8432AE8765D1D44D"
+  },
+  {
+   "Source": {
+    "Text": "Minimap"
+   },
+   "Translation": {
+    "Text": "Мини-карта"
+   },
+   "Key": "AF4C742849D4C7564226858DFB3DB568"
+  },
+  {
+   "Source": {
+    "Text": "Compass Background Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета фона компаса"
+   },
+   "Key": "83D40EBD495BFCE2247FD4ACF94E3B88"
+  },
+  {
+   "Source": {
+    "Text": "Temperature Type "
+   },
+   "Translation": {
+    "Text": "Тип температуры"
+   },
+   "Key": "9B92182B49A82DA85E52918039854390"
+  },
+  {
+   "Source": {
+    "Text": "Select Minimap Position "
+   },
+   "Translation": {
+    "Text": "Положение мини-карты"
+   },
+   "Key": "7817E3D24F4BA287401329ABCF63A7AB"
+  },
+  {
+   "Source": {
+    "Text": "Party UI Settings"
+   },
+   "Translation": {
+    "Text": "Группа"
+   },
+   "Key": "FF9F2F244690F94D37A4238A40E9B37B"
+  },
+  {
+   "Source": {
+    "Text": "Minimap Border"
+   },
+   "Translation": {
+    "Text": "Рамка мини-карты"
+   },
+   "Key": "E2FDA80143CC34050E95F88EAAD56E6F"
+  },
+  {
+   "Source": {
+    "Text": "Ally Names"
+   },
+   "Translation": {
+    "Text": "Имена союзников"
+   },
+   "Key": "415CD44E4F9C37FE48EADAAA36A8EF89"
+  },
+  {
+   "Source": {
+    "Text": "Staminabar Values"
+   },
+   "Translation": {
+    "Text": "Значения Выносливости"
+   },
+   "Key": "D47DB4A7499A0CE7FF1161B6EEC3E538"
+  },
+  {
+   "Source": {
+    "Text": "Ally Health"
+   },
+   "Translation": {
+    "Text": "Здоровье союзников"
+   },
+   "Key": "691074E44E3ED9F70890E1A7FFB7E4BA"
+  },
+  {
+   "Source": {
+    "Text": "Ally Health Custom Color"
+   },
+   "Translation": {
+    "Text": "Свой цвет здоровья союзников"
+   },
+   "Key": "D324858B4B84C3FFA22FA0A1C501B631"
+  },
+  {
+   "Source": {
+    "Text": "Ally Health Color Picker"
+   },
+   "Translation": {
+    "Text": "Выбор цвета здоровья союзников"
+   },
+   "Key": "5483655149BA1D16B6E905B39BB02387"
+  },
+  {
+   "Source": {
+    "Text": "Show Party UI in HUD "
+   },
+   "Translation": {
+    "Text": "Показывать группу на экране"
+   },
+   "Key": "D53DD7194E739901A1E8C49C87D6EE3E"
+  },
+  {
+   "Source": {
+    "Text": "Bazaar Enabled"
+   },
+   "Translation": {
+    "Text": "Кнопка «Базар»"
+   },
+   "Key": "DF19771049B081E4CE6124B69521EF41"
+  },
+  {
+   "Source": {
+    "Text": "Minimap Border Color Picker "
+   },
+   "Translation": {
+    "Text": "Выбор цвета рамки мини-карты"
+   },
+   "Key": "E2D1361A45CB6F8FBC49B392D418B2E2"
+  },
+  {
+   "Source": {
+    "Text": "- Will automatically be disabled with gamepad input to prevent input issues."
+   },
+   "Translation": {
+    "Text": "— При игре с геймпада отключается само, чтобы не мешать вводу"
+   },
+   "Key": "D51DADEC4127F1323487A89640D8335C"
+  },
+  {
+   "Source": {
+    "Text": "- Shows the AoC Faction of your target"
+   },
+   "Translation": {
+    "Text": "— Фракция AoC у цели"
+   },
+   "Key": "B52378194DFA02DC64F0278BE290B5D7"
+  },
+  {
+   "Source": {
+    "Text": " - Shows MMO Type Damage Indicator that pops up on the screen as you do damage. "
+   },
+   "Translation": {
+    "Text": "— Индикатор урона в духе MMO: всплывает, когда бьёте вы"
+   },
+   "Key": "E9C2E05B4D66E4FAA34CEBA2280AE276"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator (Right)"
+   },
+   "Translation": {
+    "Text": "Индикатор урона (справа)"
+   },
+   "Key": "FF16168F48841591E17ECFAA7BDB27D3"
+  },
+  {
+   "Source": {
+    "Text": "Server Info"
+   },
+   "Translation": {
+    "Text": "Сведения о сервере"
+   },
+   "Key": "1421E42640AF8A771097A8A925CD03F4"
+  },
+  {
+   "Source": {
+    "Text": "Link color wheel with value"
+   },
+   "Translation": {
+    "Text": "Связать круг цвета с яркостью"
+   },
+   "Key": "D3CDE01C4B522843F8B116B40091EB81"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Simple"
+   },
+   "Translation": {
+    "Text": "Выбор цвета"
+   },
+   "Key": "DCC042FE4C8BBA44E1772DBE48585EF8"
+  },
+  {
+   "Source": {
+    "Text": "Alpha"
+   },
+   "Translation": {
+    "Text": "Прозрачность"
+   },
+   "Key": "064629B244FE55D71A47428E18D6FA95"
+  },
+  {
+   "Source": {
+    "Text": "Saturation"
+   },
+   "Translation": {
+    "Text": "Насыщенность"
+   },
+   "Key": "D0C462764B14667D8FCC6ABA3288C5AD"
+  },
+  {
+   "Source": {
+    "Text": "Value"
+   },
+   "Translation": {
+    "Text": "Яркость"
+   },
+   "Key": "E419A15E4089AA873A186782BD980C59"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Simple"
+   },
+   "Translation": {
+    "Text": "Выбор цвета"
+   },
+   "Key": "42D8C2C841EC95320E235E804AE99EC6"
+  },
+  {
+   "Source": {
+    "Text": "OK"
+   },
+   "Translation": {
+    "Text": "ОК"
+   },
+   "Key": "EFAC0BA0410633177E00E1AC7FC1DDA2"
+  },
+  {
+   "Source": {
+    "Text": "Cancel"
+   },
+   "Translation": {
+    "Text": "Отмена"
+   },
+   "Key": "A8C66EBD414B2D0C37C277AD10A42B6D"
+  },
+  {
+   "Source": {
+    "Text": "Click to restore old color"
+   },
+   "Translation": {
+    "Text": "Нажмите, чтобы вернуть старый цвет"
+   },
+   "Key": "EEAC844B47F280444012EC82A428269F"
+  },
+  {
+   "Source": {
+    "Text": "Random Color"
+   },
+   "Translation": {
+    "Text": "Случайный цвет"
+   },
+   "Key": "6BF4005549875E7B183269A8D6014C54"
+  },
+  {
+   "Source": {
+    "Text": "Healthbar Color"
+   },
+   "Translation": {
+    "Text": "Цвет полосы здоровья"
+   },
+   "Key": "7E7CEE2F42105B11388511BDB7D64CA1"
+  },
+  {
+   "Source": {
+    "Text": "Hexadecimal Value"
+   },
+   "Translation": {
+    "Text": "Шестнадцатеричный код"
+   },
+   "Key": "F24C16FB4EB5F285D633B38CB9CCB666"
+  },
+  {
+   "Source": {
+    "Text": "Saturation"
+   },
+   "Translation": {
+    "Text": "Насыщенность"
+   },
+   "Key": "83636CCF4E05558A237D2BA2FC0BEE55"
+  },
+  {
+   "Source": {
+    "Text": "Value"
+   },
+   "Translation": {
+    "Text": "Яркость"
+   },
+   "Key": "14F8E1624BA490CDDE757AAA7230E6B8"
+  },
+  {
+   "Source": {
+    "Text": "Alpha Channel"
+   },
+   "Translation": {
+    "Text": "Канал прозрачности"
+   },
+   "Key": "82F4BF9A4CB7F37F2A17CDAEE7CC7ABD"
+  },
+  {
+   "Source": {
+    "Text": "HUE"
+   },
+   "Translation": {
+    "Text": "ТОН"
+   },
+   "Key": "EB7D397641AE4F61185ABB9D9AC747A4"
+  },
+  {
+   "Source": {
+    "Text": "Blue Channel"
+   },
+   "Translation": {
+    "Text": "Синий канал"
+   },
+   "Key": "81B31DD048DBB90F1557668E4C26A4AF"
+  },
+  {
+   "Source": {
+    "Text": "Green Channel"
+   },
+   "Translation": {
+    "Text": "Зелёный канал"
+   },
+   "Key": "9CA8A3724249076156EB3DB56CB38C9D"
+  },
+  {
+   "Source": {
+    "Text": "Red Channel"
+   },
+   "Translation": {
+    "Text": "Красный канал"
+   },
+   "Key": "2E7D8F6F428D77729385F3880102F600"
+  },
+  {
+   "Source": {
+    "Text": "Saturation"
+   },
+   "Translation": {
+    "Text": "Насыщенность"
+   },
+   "Key": "522C803B47606031ED616297BC6FC4F5"
+  },
+  {
+   "Source": {
+    "Text": "Value"
+   },
+   "Translation": {
+    "Text": "Яркость"
+   },
+   "Key": "837FE6F447200D9A168E898752247120"
+  },
+  {
+   "Source": {
+    "Text": "New"
+   },
+   "Translation": {
+    "Text": "Новый"
+   },
+   "Key": "2A9A916C457E0E8DAA46B3911DD68A89"
+  },
+  {
+   "Source": {
+    "Text": "Old"
+   },
+   "Translation": {
+    "Text": "Старый"
+   },
+   "Key": "9A63DA5448910C22A768349669AC980B"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Health Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы здоровья"
+   },
+   "Key": "5C5010BF48C137C9CD2E3B88E42B7D5E"
+  },
+  {
+   "Source": {
+    "Text": "OK"
+   },
+   "Translation": {
+    "Text": "ОК"
+   },
+   "Key": "EC4017E1494D5DB9AA20F3912D373B7B"
+  },
+  {
+   "Source": {
+    "Text": "Cancel"
+   },
+   "Translation": {
+    "Text": "Отмена"
+   },
+   "Key": "71EFCE1B436006413361988B202675B6"
+  },
+  {
+   "Source": {
+    "Text": "Hex:"
+   },
+   "Translation": {
+    "Text": "Hex:"
+   },
+   "Key": "71E1F75D41363826AEE078A154CA3EF5"
+  },
+  {
+   "Source": {
+    "Text": "Nearby Ally Health Color"
+   },
+   "Translation": {
+    "Text": "Цвет здоровья союзников рядом"
+   },
+   "Key": "9E93F0F743436AF8522D798F3C3869D1"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "1FEAD20742D53B2A1CAB848914AFC323"
+  },
+  {
+   "Source": {
+    "Text": "Compass Background Color"
+   },
+   "Translation": {
+    "Text": "Цвет фона компаса"
+   },
+   "Key": "D1D928824FE8229EE5AD05BDE20A8E72"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "5FF86D97472CBA36B508ABBB322AAD0E"
+  },
+  {
+   "Source": {
+    "Text": "Corruption Bar Color"
+   },
+   "Translation": {
+    "Text": "Цвет полосы скверны"
+   },
+   "Key": "519117984DEAAAB043E6F98809E447DA"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "59414ECB4478E514097A6BA21FB0262D"
+  },
+  {
+   "Source": {
+    "Text": "Details Font Color"
+   },
+   "Translation": {
+    "Text": "Цвет шрифта подписей"
+   },
+   "Key": "0698A5074F01C5007BE24FB418153169"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "F5B432CE41C7026B3EC919BE13FECB56"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Color"
+   },
+   "Translation": {
+    "Text": "Цвет индикатора урона"
+   },
+   "Key": "2EF67C3441EF2D84D69D11910DFD4697"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "9AA5CE0C47605642C047FA93301CDB96"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Follower"
+   },
+   "Translation": {
+    "Text": "Цвет индикатора урона спутника"
+   },
+   "Key": "C06D708B49E82991032E2E941A470491"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "951E6B1E423C50641AA81EBD3D668FC1"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Log"
+   },
+   "Translation": {
+    "Text": "Цвет журнала урона"
+   },
+   "Key": "25D6720D4E26F4EEA3D3E790C2CB36E4"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "169D80894C6A72CC4AD8A7A69A39A449"
+  },
+  {
+   "Source": {
+    "Text": "Damage Indicator Log for Follower"
+   },
+   "Translation": {
+    "Text": "Цвет журнала урона спутника"
+   },
+   "Key": "4842EA9D4BEBECCCC68AC3AD4F7BB226"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "1BCCF110493E9D751E22779AA7E76EF6"
+  },
+  {
+   "Source": {
+    "Text": "Experience Progress Color"
+   },
+   "Translation": {
+    "Text": "Цвет полосы опыта"
+   },
+   "Key": "A676666144E0E453A1730789C56E2EBB"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Stamina Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости"
+   },
+   "Key": "1EC7B92F45BC23DC9CF377A28F416B04"
+  },
+  {
+   "Source": {
+    "Text": "Minimap Border Color"
+   },
+   "Translation": {
+    "Text": "Цвет рамки мини-карты"
+   },
+   "Key": "61ED52A5411230B2FAA5C9BAF7512E1A"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "B7855BEC442C55803E421B9E67471E6B"
+  },
+  {
+   "Source": {
+    "Text": "Mount Endurance Color"
+   },
+   "Translation": {
+    "Text": "Цвет выносливости скакуна"
+   },
+   "Key": "1C842DD142155700F8AC70BDD3A100F7"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "2B7BF8754AA1115C2E7548B0CEC42C2B"
+  },
+  {
+   "Source": {
+    "Text": "Mount Health Color"
+   },
+   "Translation": {
+    "Text": "Цвет здоровья скакуна"
+   },
+   "Key": "BB8AF02C434C783967D1159A95E40F0F"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Health Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы здоровья скакуна"
+   },
+   "Key": "5A8D0F3E47DC6D7E28038890F5ECD20F"
+  },
+  {
+   "Source": {
+    "Text": "Mount Level Background Color"
+   },
+   "Translation": {
+    "Text": "Цвет фона уровня скакуна"
+   },
+   "Key": "559026784B2A6126F131B396418A012E"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "1C22D5694B72123CF723B08C2F73A285"
+  },
+  {
+   "Source": {
+    "Text": "Staminabar Color"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости"
+   },
+   "Key": "C2B38996419B4266AD44C1A09CEBB68C"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Stamina Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости"
+   },
+   "Key": "81A8FF4349573472034FD18FD5F285B5"
+  },
+  {
+   "Source": {
+    "Text": "Health/Stamina/Endurance Color"
+   },
+   "Translation": {
+    "Text": "Цвет здоровья и выносливости"
+   },
+   "Key": "8BBD50364F47CD882A3EF89F2116FAD2"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "3323E20B417CCC2111FAA7827FC0C5A2"
+  },
+  {
+   "Source": {
+    "Text": "Target Health Color"
+   },
+   "Translation": {
+    "Text": "Цвет здоровья цели"
+   },
+   "Key": "A616538B4EC43AB17CF21FB70EAC9B4E"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "3118DE2247D3360D5B93EEB637CF07CC"
+  },
+  {
+   "Source": {
+    "Text": "Target Level Background Color"
+   },
+   "Translation": {
+    "Text": "Цвет фона уровня цели"
+   },
+   "Key": "E874D901440935C7DC8D298C3ADD2410"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "ED4D426846563848990D2B84F4AA32E3"
+  },
+  {
+   "Source": {
+    "Text": "Target Consciousness Color"
+   },
+   "Translation": {
+    "Text": "Цвет сознания цели"
+   },
+   "Key": "0498395047EE1566E8345DBB6788D22F"
+  },
+  {
+   "Source": {
+    "Text": "Color Picker Mount Endurance Bar"
+   },
+   "Translation": {
+    "Text": "Цвет полосы выносливости скакуна"
+   },
+   "Key": "AFD3D11C40CFCCA39C93299BE480565D"
+  },
+  {
+   "Source": {
+    "Text": "Regain 5 health every 10 seconds"
+   },
+   "Translation": {
+    "Text": "Восстанавливает 5 здоровья каждые 10 секунд"
+   },
+   "Key": "B73C48F14E948419D833AC911427E7F9"
+  },
+  {
+   "Source": {
+    "Text": "Gamepad Input detected, disabling Minimap to prevent input issues."
+   },
+   "Translation": {
+    "Text": "Обнаружен геймпад — мини-карта отключена, чтобы не мешать управлению."
+   },
+   "Key": "9200301E44FF95986A0B7D9CEF1F0C11"
+  },
+  {
+   "Source": {
+    "Text": "Add Thrall to Party"
+   },
+   "Translation": {
+    "Text": "Добавить раба в отряд"
+   },
+   "Key": "EC06FCE145276849ACD4909879B945A7"
+  },
+  {
+   "Source": {
+    "Text": "Invite Player To Party"
+   },
+   "Translation": {
+    "Text": "Пригласить игрока в отряд"
+   },
+   "Key": "043A1F274078918E15E2C2B48EF1F74F"
+  },
+  {
+   "Source": {
+    "Text": "Remove Thrall from Party "
+   },
+   "Translation": {
+    "Text": "Убрать раба из отряда"
+   },
+   "Key": "7B7DF1C143E1AD291391289BA732B40D"
+  },
+  {
+   "Source": {
+    "Text": "Remove Player from Party"
+   },
+   "Translation": {
+    "Text": "Убрать игрока из отряда"
+   },
+   "Key": "451CE13B4EF7DF3C1C6A88A48125A750"
+  },
+  {
+   "Source": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} dps "
+   },
+   "Translation": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} ур/с"
+   },
+   "Key": "41AD14CD49AE290E872B70B16395A47E"
+  },
+  {
+   "Source": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} dps "
+   },
+   "Translation": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} ур/с"
+   },
+   "Key": "CDC6B36047BADDDC06095BA3E4735003"
+  },
+  {
+   "Source": {
+    "Text": "Max"
+   },
+   "Translation": {
+    "Text": "Макс"
+   },
+   "Key": "88CCE01348FF72400A1FDEAF6F8C9086"
+  },
+  {
+   "Source": {
+    "Text": "Light"
+   },
+   "Translation": {
+    "Text": "Лёгкая"
+   },
+   "Key": "749B29D143D79A29C0398E884959AA93"
+  },
+  {
+   "Source": {
+    "Text": "{armortype} / {armor}{suffix} / {damagereduction}% dr "
+   },
+   "Translation": {
+    "Text": "{armortype} / {armor}{suffix} / {damagereduction}% сниж."
+   },
+   "Key": "BB05EFA646F3500342540DAAC85EC01D"
+  },
+  {
+   "Source": {
+    "Text": "Medium"
+   },
+   "Translation": {
+    "Text": "Средняя"
+   },
+   "Key": "DB7952D841B17CEDC63273806A0CEFBD"
+  },
+  {
+   "Source": {
+    "Text": "Heavy"
+   },
+   "Translation": {
+    "Text": "Тяжёлая"
+   },
+   "Key": "0BB7ED214986587E6633F7B84F54F3CD"
+  },
+  {
+   "Source": {
+    "Text": "Health reduced by {hp} / {percenthp}%"
+   },
+   "Translation": {
+    "Text": "Здоровье снижено на {hp} / {percenthp}%"
+   },
+   "Key": "7A7044DC445F303FA086A8A24D0A2739"
+  },
+  {
+   "Source": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} total"
+   },
+   "Translation": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} всего"
+   },
+   "Key": "BDF5DC7F4DCB0F0B83BE62BE1D90B1C6"
+  },
+  {
+   "Source": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} total"
+   },
+   "Translation": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} всего"
+   },
+   "Key": "BE1DFA2D48B035125A60ECACE12CB8FF"
+  },
+  {
+   "Source": {
+    "Text": "Light"
+   },
+   "Translation": {
+    "Text": "Лёгкая"
+   },
+   "Key": "BE1E55E642AB54A7143B6A83768B3C1E"
+  },
+  {
+   "Source": {
+    "Text": "Medium"
+   },
+   "Translation": {
+    "Text": "Средняя"
+   },
+   "Key": "20B00C964C426212A07CB3B0230DF50C"
+  },
+  {
+   "Source": {
+    "Text": "Heavy"
+   },
+   "Translation": {
+    "Text": "Тяжёлая"
+   },
+   "Key": "E1D63A6C45A4BB0FB7BCF8972CC9AF1D"
+  },
+  {
+   "Source": {
+    "Text": "Health reduced by {hp} / {percenthp}%"
+   },
+   "Translation": {
+    "Text": "Здоровье снижено на {hp} / {percenthp}%"
+   },
+   "Key": "1FBF4A394BF0100686896D86D0B905E4"
+  },
+  {
+   "Source": {
+    "Text": "DEAD"
+   },
+   "Translation": {
+    "Text": "МЁРТВ"
+   },
+   "Key": "563851614A44653F208973B2057E9302"
+  },
+  {
+   "Source": {
+    "Text": "bonus damage"
+   },
+   "Translation": {
+    "Text": "доп. урон"
+   },
+   "Key": "C044DA4F425EB4D971CC6BBAB29D2025"
+  },
+  {
+   "Source": {
+    "Text": "damage"
+   },
+   "Translation": {
+    "Text": "урон"
+   },
+   "Key": "CC802D57479C285658DF6593BBA0894F"
+  },
+  {
+   "Source": {
+    "Text": " {0} {dmg} to {1} "
+   },
+   "Translation": {
+    "Text": "{0} {dmg} по {1}"
+   },
+   "Key": "C174A5774D85BD08C03A0983BECEEE69"
+  },
+  {
+   "Source": {
+    "Text": "bonus damage"
+   },
+   "Translation": {
+    "Text": "доп. урон"
+   },
+   "Key": "0C258CF04CFC07E80BD2B1B5E7F0C948"
+  },
+  {
+   "Source": {
+    "Text": "damage"
+   },
+   "Translation": {
+    "Text": "урон"
+   },
+   "Key": "7A429A654E055DF847C80CBF2CBE721A"
+  },
+  {
+   "Source": {
+    "Text": "you"
+   },
+   "Translation": {
+    "Text": "вам"
+   },
+   "Key": "9F8A97474079EE7426F4C3AC622618CD"
+  },
+  {
+   "Source": {
+    "Text": "your Follower"
+   },
+   "Translation": {
+    "Text": "вашему спутнику"
+   },
+   "Key": "8EC1F92D42A4CC51434EB9ACE1A51316"
+  },
+  {
+   "Source": {
+    "Text": " {0} {dmg} to {1} "
+   },
+   "Translation": {
+    "Text": "{0} {dmg} по {1}"
+   },
+   "Key": "655F54824F97D33CB60473B0D9358D4E"
+  },
+  {
+   "Source": {
+    "Text": "bonus damage"
+   },
+   "Translation": {
+    "Text": "доп. урон"
+   },
+   "Key": "65F6C0AF424091E58077FD8A44542CC2"
+  },
+  {
+   "Source": {
+    "Text": "damage"
+   },
+   "Translation": {
+    "Text": "урон"
+   },
+   "Key": "C3D6B9634671D91EAA7B8A9847B4BA7A"
+  },
+  {
+   "Source": {
+    "Text": " Follower - {0} {damage} to {1} "
+   },
+   "Translation": {
+    "Text": "Спутник — {0} {damage} по {1}"
+   },
+   "Key": "25B865264955645F66ED27BD69075DA9"
+  },
+  {
+   "Source": {
+    "Text": "Your follower party is already full"
+   },
+   "Translation": {
+    "Text": "Отряд спутников уже полон"
+   },
+   "Key": "B028B2FB477B34FB55069889A799752E"
+  },
+  {
+   "Source": {
+    "Text": "Follower party disbanded"
+   },
+   "Translation": {
+    "Text": "Отряд спутников распущен"
+   },
+   "Key": "0671236E43B9AE368F2F1E8D4E127B56"
+  },
+  {
+   "Source": {
+    "Text": "Wait a bit before sending another invite"
+   },
+   "Translation": {
+    "Text": "Подождите, прежде чем звать снова"
+   },
+   "Key": "401E4F6F414C4CB6AA1EC5AE431144EC"
+  },
+  {
+   "Source": {
+    "Text": "Admin has not enabled the option to invite any players outside your clan"
+   },
+   "Translation": {
+    "Text": "Админ не разрешил приглашать игроков вне клана"
+   },
+   "Key": "8479956A42ECB1F3B717A9878B9F2B3A"
+  },
+  {
+   "Source": {
+    "Text": "Player is unavailable"
+   },
+   "Translation": {
+    "Text": "Игрок недоступен"
+   },
+   "Key": "38AB84A6410343D9438F26A66182EFAD"
+  },
+  {
+   "Source": {
+    "Text": "Player party disbanded"
+   },
+   "Translation": {
+    "Text": "Отряд игроков распущен"
+   },
+   "Key": "750AB91541D225DA02A39FACAC32BC00"
+  },
+  {
+   "Source": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} total"
+   },
+   "Translation": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} всего"
+   },
+   "Key": "2E8B783842FFB5D56094948F81E64567"
+  },
+  {
+   "Source": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} total"
+   },
+   "Translation": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} всего"
+   },
+   "Key": "660B0037454059D53C4454BBE30C3471"
+  },
+  {
+   "Source": {
+    "Text": "Light"
+   },
+   "Translation": {
+    "Text": "Лёгкая"
+   },
+   "Key": "9FFC9C9A4F5069A3E6527A98514AE65F"
+  },
+  {
+   "Source": {
+    "Text": "Medium"
+   },
+   "Translation": {
+    "Text": "Средняя"
+   },
+   "Key": "546426D54DDF1F2F839AACB596074989"
+  },
+  {
+   "Source": {
+    "Text": "Heavy"
+   },
+   "Translation": {
+    "Text": "Тяжёлая"
+   },
+   "Key": "675273A649E6834CDD3BC7A04D165E7E"
+  },
+  {
+   "Source": {
+    "Text": "Health reduced by {hp} / {percenthp}%"
+   },
+   "Translation": {
+    "Text": "Здоровье снижено на {hp} / {percenthp}%"
+   },
+   "Key": "51ED0C1646B009CB8DC35595F662E4A1"
+  },
+  {
+   "Source": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} total"
+   },
+   "Translation": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} всего"
+   },
+   "Key": "71A0935E430344146D9339B87B4E8143"
+  },
+  {
+   "Source": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} total"
+   },
+   "Translation": {
+    "Text": "{damage}{suffix1} / {arrmorpen}% / {damagetotal}{suffix2} всего"
+   },
+   "Key": "AC3B01E544BB8E1EBDF56F96B75363E8"
+  },
+  {
+   "Source": {
+    "Text": "Light"
+   },
+   "Translation": {
+    "Text": "Лёгкая"
+   },
+   "Key": "081876874E78853F831684A9F7EBE6BF"
+  },
+  {
+   "Source": {
+    "Text": "Medium"
+   },
+   "Translation": {
+    "Text": "Средняя"
+   },
+   "Key": "693F9FB548A64F0EF5703A950B452C3B"
+  },
+  {
+   "Source": {
+    "Text": "Heavy"
+   },
+   "Translation": {
+    "Text": "Тяжёлая"
+   },
+   "Key": "D90DB6614D249AC964DEB9AB8E66E0B8"
+  },
+  {
+   "Source": {
+    "Text": "Health reduced by {hp} / {percenthp}%"
+   },
+   "Translation": {
+    "Text": "Здоровье снижено на {hp} / {percenthp}%"
+   },
+   "Key": "69C1A9494A72D364DDE50C9E912CB8E6"
+  },
+  {
+   "Source": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} total"
+   },
+   "Translation": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} всего"
+   },
+   "Key": "E44FD1FE4F392AAF3B7C2491EB21FB01"
+  },
+  {
+   "Source": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} total"
+   },
+   "Translation": {
+    "Text": "{damage} / {arrmorpen}% / {damagetotal} всего"
+   },
+   "Key": "44FC423D4DEBA92BDBD47D8CFCF8C60C"
+  },
+  {
+   "Source": {
+    "Text": "Light"
+   },
+   "Translation": {
+    "Text": "Лёгкая"
+   },
+   "Key": "61E3A2C045F330935734ACB1F056D7AE"
+  },
+  {
+   "Source": {
+    "Text": "Medium"
+   },
+   "Translation": {
+    "Text": "Средняя"
+   },
+   "Key": "1EFB08DF43946E6C02150DA0FDCAFC4B"
+  },
+  {
+   "Source": {
+    "Text": "Heavy"
+   },
+   "Translation": {
+    "Text": "Тяжёлая"
+   },
+   "Key": "9947024440D760C292CD70BB6F6AD9EE"
+  },
+  {
+   "Source": {
+    "Text": "Health reduced by {hp} / {percenthp}%"
+   },
+   "Translation": {
+    "Text": "Здоровье снижено на {hp} / {percenthp}%"
+   },
+   "Key": "8FC211FE4AF25D06AC86998BD9CF72DA"
+  }
+ ],
+ "Subnamespaces": []
+}

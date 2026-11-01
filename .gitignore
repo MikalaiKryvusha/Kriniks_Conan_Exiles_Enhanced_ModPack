@@ -1,0 +1,77 @@
+# Библиотека скачанного (моды, тулкиты, архивы) лежит ВНЕ сборки — см. "library"
+# в modpack.json — и в git не входит вовсе. Это чужие файлы, их всегда можно
+# скачать заново. Здесь версионируется только сделанное руками: манифест,
+# конфиги и _unpacked/ с распакованными и пропатченными модами.
+
+# Мусор ОС и редакторов.
+Thumbs.db
+desktop.ini
+.vscode/
+
+# Логи и временные выгрузки разведки.
+*.log
+_scratch/
+
+# Промежуточная папка загрузок (торрент, Nexus). Здесь чужие файлы весом в сотни
+# мегабайт; в историю они не идут.
+_incoming/
+
+# Сырые снимки экрана для страницы мода. В историю идёт ГОТОВОЕ — подписанные
+# .jpg, которые и уедут на Nexus, — а не исходники: серия в родных 3840 весит
+# под полтораста мегабайт, переснимается она не в последний раз, и каждый заход
+# оставлял бы в истории новую сотню мегабайт почти неотличимых картинок.
+# Пересъёмка стоит одного прогона, история — навсегда.
+_unpacked/*/nexus-screenshots/*.png
+
+# Копии, которые снимает deploy-config.py перед каждой раскаткой. Их смысл -
+# откатиться в пределах сессии; эталон "как было до нас" живёт в _config/vanilla/
+# и версионируется. Две копии одного факта - пара, а пару лучше удалить.
+_config/backup/
+
+# Python bytecode кэш приборов съёмки
+__pycache__/
+
+# Кандидаты логотипа в 4096: три почти одинаковых кадра по 5 МБ. В историю
+# идёт лист выбора, а после слова владельца — ОДИН выбранный под финальным
+# именем. Пересобрать любой из них стоит одного прогона logo.py.
+_unpacked/*/nexus-logo/logo-?.jpg
+
+# Пробные наборы подписей (podpisannye-A/B/C) — черновики под выбор буквы.
+# В историю уедет ОДИН одобренный набор, прямо в nexus-screenshots/.
+_unpacked/*/nexus-screenshots/podpisannye-*/
+
+# Сборочные артефакты пробного мода-перевода (паки, staged): пересобираются make-loc-mod.py.
+_unpacked/HosavRU/build/
+
+# Наш мод уровней: пак (5,9 МБ) — продукт сборки, пересобирается одной командой
+# _config/devkit/build-level-mod.py из архива MrS в библиотеке и генераторов таблиц.
+_unpacked/KrinikConanGameplay/*.pak
+# Наш мод лука: пак — продукт кита, пересобирается _config/devkit/kit-archery-edit.py + kit-buildmod.py KrinikConanArchery
+_unpacked/KrinikConanArchery/*.pak
+
+# апскейл обложки 6688x3764, 38 МБ - исходник лежит у владельца, в git только веб-версия
+docs/guide/*-cover-4x.png
+
+# Сырьё Мастерской Steam (описания и комментарии чужих модов) - _config/workshop-catalog.py; выводы - в docs/
+_catalog/
+
+# Ванильные ассеты игры, извлечённые retoc по идентификатору пакета (_config/devkit/package-id.py) - файлы Funcom, в git не кладём
+_config/devkit/_vanilla/
+
+# Кандидаты звука полного натяжения - выход _config/sound-prep.py по чужим бесплатным звукам; в историю идёт только выбранный
+_config/sounds/charge-full-candidates/
+_config/sounds/charge-full-15-soft/
+_config/sounds/charge-full-quieter/
+_config/sounds/charge-full-synth/
+_config/sounds/charge-full-synth-short/
+_config/sounds/charge-full-synth-soft/
+_config/sounds/charge-full-synth-tender/
+_config/sounds/charge-full-synth-round/
+_config/sounds/charge-full-synth-fastsoft/
+_config/sounds/charge-full-compare/
+# Наш мод интерфейса (до 2026-10-30 — KrinikUIFixes): пак — продукт кита, пересобирается _config/devkit/kit-conanui-edit.py + kit-buildmod.py KrinikConanUI
+_unpacked/KrinikConanUI/*.pak
+
+# Лаунчер: exe и BuildInfo.g.cs собирает _config/release/build-docs.py из исходника и author_links.txt — в историю идёт исходник.
+_config/launcher/bin/
+_config/launcher/BuildInfo.g.cs

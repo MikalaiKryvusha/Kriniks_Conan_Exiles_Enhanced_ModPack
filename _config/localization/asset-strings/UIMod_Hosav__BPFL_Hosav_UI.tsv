@@ -1,0 +1,3 @@
+int:TextOverflowPrevention_Numbers	10	100
+int:TextOverflowPrevention_Numbers	10000	100000
+dbl:TextOverflowPrevention_Numbers	100.0	10.0

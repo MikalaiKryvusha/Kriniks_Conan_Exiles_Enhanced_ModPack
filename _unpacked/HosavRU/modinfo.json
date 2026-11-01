@@ -1,0 +1,20 @@
+{
+  "name": "Hosav UI - Russian overlay (KUMM experiment)",
+  "description": "Russian strings for Hosav's Custom UI Enhanced 2.5.3, overlaid on the game's own Exiles_UI localization. Built headlessly with the Conan Enhanced Dev Kit tools; the original mod is untouched. Load AFTER UIMod_Hosav. Working name, not published.",
+  "changeNote": "0.1.0 - first overlay: 260 keys / 238 strings from the accepted table (KUMM interview 002, 2026-09-12)",
+  "author": "kotkrinik",
+  "authorUrl": "",
+  "versionMajor": 0,
+  "versionMinor": 1,
+  "versionBuild": 0,
+  "bRequiresLoadOnStartup": false,
+  "steamPublishedFileId": "",
+  "steamTestLivePublishedFileId": "",
+  "steamWorkshopFileIds": {},
+  "steamVisibility": 0,
+  "folderName": "HosavRU",
+  "devkitRevisionNumber": 1001,
+  "devkitSnapshotId": 0,
+  "fileSize": -1,
+  "minimumVersion": "Enhanced"
+}

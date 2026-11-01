@@ -1,0 +1,9 @@
+# Запуск 1 — ручки, которые меняются на лету (очередь владельца 2026-10-26)
+#read s.AsyncLoadingTimeLimit s.PriorityAsyncLoadingExtraTime s.AsyncLoadingUseFullTimeLimit r.Streaming.PoolSize p.ClothPhysics
+b1-warmup
+b1-A3
+b1-tl2	exec s.AsyncLoadingTimeLimit 2; exec s.PriorityAsyncLoadingExtraTime 5
+b1-A4	exec s.AsyncLoadingTimeLimit 5; exec s.PriorityAsyncLoadingExtraTime 15
+b1-pool8000	exec r.Streaming.PoolSize 8000
+b1-nocloth	exec r.Streaming.PoolSize 1200; exec p.ClothPhysics 0
+b1-A5	exec p.ClothPhysics 1

@@ -1,0 +1,6 @@
+# Simple Minimap, hint row of the fullscreen map (SM_UI_MapHelper) — KRINIK MODIFIED (2026-10-29, KUMM bugs/64 item 5)
+# The 3.0 vanilla button «Сброс маркеров [X] ?» sits at the bottom-left of the map (4K frame 15:46: frame x 22…703 px); the mod's row starts at x≈65 —
+# «Shift + мышь Новый маркер» lay on top of it. The row has no slot of its own (the mod inserts it), so the first element moves: the Shift image of
+# AddMarkerSection (slot order [18, 16, 15, 17] — HorizontalBoxSlot_5 is first), padding Left 30 → 355 = +325 UI units (680 px at 4K, 2.09 px/unit).
+# The rest of the row follows; its right end (the magnifier) lands ≈ 2170 px, the region selector starts ≈ 2450 px.
+prop:AddMarkerSection.HorizontalBoxSlot_5/Padding/Left	355

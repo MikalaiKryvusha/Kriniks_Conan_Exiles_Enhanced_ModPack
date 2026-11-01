@@ -1,0 +1,184 @@
+{
+ "ok": true,
+ "widgets": {
+  "W_Settings_Audio": {
+   "path": "/Game/UI/Widgets/MainMenu/Settings/W_Settings_Audio",
+   "tree": [
+    {
+     "name": "HorizontalBox_0",
+     "class": "HorizontalBox",
+     "parent": "",
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "SizeBox_0",
+     "class": "SizeBox",
+     "parent": "HorizontalBox_0",
+     "slot_class": "HorizontalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E8CC0) {left: 440.000000, top: 120.000000, right: 0.000000, bottom: 60.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E8CB8) {value: 1.000000, size_rule: Fill}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "ScrollBox",
+     "class": "ScrollBox",
+     "parent": "SizeBox_0",
+     "slot_class": "SizeBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E28F0) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "CB_PlayClassicMenuMusic",
+     "class": "WBP_Setting_Checkbox_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451ED9B8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451ED9B0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_MasterVolume",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E90A8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E90A0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_VoiceChatVolume",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E3068) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E3060) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_MicInputGain",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451EC9F8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451EC9F0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_MusicVolume",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E4258) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E4250) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_VoiceVolume",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E45D8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E45D0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_SFXVolume",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E4F08) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E4F00) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "S_IntroVideoVolume",
+     "class": "W_EditableLabeledSlider_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451E5BB8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451E5BB0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "CB_PushToTalk",
+     "class": "WBP_Setting_Checkbox_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451EC988) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451EC980) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "CB_ShowOwnVoiceIndicator",
+     "class": "WBP_Setting_Checkbox_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451EC918) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451EC910) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "CB_ShowOtherVoiceIndicator",
+     "class": "WBP_Setting_Checkbox_C",
+     "parent": "ScrollBox",
+     "slot_class": "ScrollBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000001E6451EC838) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000001E6451EC830) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    }
+   ]
+  }
+ }
+}

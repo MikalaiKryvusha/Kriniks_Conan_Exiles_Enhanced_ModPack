@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# arrow-offset.sh — промах стрел относительно линии прицела (KUMM план 36 п. 32: «стрела летит не в точку прицела, а выше и правее»).
+# Игрок стреляет и не двигает камеру; прибор берёт вид камеры (PlayerCameraManager: место и поворот — то, что видит игрок, центр экрана =
+# прицел) и все стрелы-актёры мира ближе 60 м; для каждой — расстояние вдоль луча прицела и поперечный промах: вправо (+) / вверх (+),
+# в см и в градусах. Только чтение. Почему так, а не выстрелом пультом: выстрел идёт через родной боевой компонент, события ввода атаки
+# у героя нет (есть только InpActEvt_AttackCommand — приказ рабам).
+# [NOT-TESTED]
+cd "$(dirname "$0")"
+bash pult.sh "lua local pc=FindFirstOf('FunCombat_PlayerController_C'); local cm=pc.PlayerCameraManager; local c=cm:GetCameraLocation(); local r=cm:GetCameraRotation(); local cp,sp=math.cos(math.rad(r.Pitch)),math.sin(math.rad(r.Pitch)); local cy,sy=math.cos(math.rad(r.Yaw)),math.sin(math.rad(r.Yaw)); local f={X=cp*cy,Y=cp*sy,Z=sp}; local rt={X=-sy,Y=cy,Z=0}; local up={X=f.Y*rt.Z-f.Z*rt.Y, Y=f.Z*rt.X-f.X*rt.Z, Z=f.X*rt.Y-f.Y*rt.X}; if up.Z<0 then up={X=-up.X,Y=-up.Y,Z=-up.Z} end; local out={string.format('cam pitch=%.1f yaw=%.1f', r.Pitch, r.Yaw)}; local seen=0; for _,a in ipairs(FindAllOf('Actor') or {}) do if a:IsValid() then local cn=a:GetClass():GetFName():ToString(); local l=cn:lower(); if l:find('projectile') or l:find('arrow') then local p=a:K2_GetActorLocation(); local d={X=p.X-c.X,Y=p.Y-c.Y,Z=p.Z-c.Z}; local t=d.X*f.X+d.Y*f.Y+d.Z*f.Z; if t>50 and t<6000 then local x=d.X*rt.X+d.Y*rt.Y+d.Z*rt.Z; local y=d.X*up.X+d.Y*up.Y+d.Z*up.Z; seen=seen+1; out[#out+1]=string.format('%s: along=%.0f right=%+.0f up=%+.0f (%+.1f / %+.1f deg)', cn, t, x, y, math.deg(math.atan(x,t)), math.deg(math.atan(y,t))) end end end end; out[#out+1]='arrows in front: '..seen; return table.concat(out,' | ')" 2>&1 | tail -1 | tr '|' '\n'

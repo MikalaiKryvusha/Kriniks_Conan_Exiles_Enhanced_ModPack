@@ -1,0 +1,135 @@
+[size=5][b]The camera goes straight behind you, and the zoom becomes yours[/b][/size]
+
+Conan Exiles puts the camera over your shoulder. Your character stands beside your line of sight, his back fills half the screen, and he hides whatever is on that side.
+
+[b]This mod puts the camera straight behind him.[/b] Character, camera and crosshair line up. You see what you aim at.
+
+[size=4][b]Main features[/b][/size]
+
+[list]
+[*][b]Camera directly behind[/b] - no sideways offset. One key returns to it at any time.
+[*][b]Full control of the zoom range[/b] - set how close and how far the wheel may go. The vanilla limits are replaced by yours.
+[*][b]Three-band wheel step[/b] - fine steps close to the character, normal steps in the middle, coarse steps far away. Scrolling out from 30 to 1000 no longer takes forty clicks, and framing a close-up no longer overshoots.
+[*][b]The pivot moves as well as the camera[/b] - lift the orbit centre out of the chest to above the head and you get the old-school third-person framing of TES IV: Oblivion.
+[*][b]Tune it live[/b] - every value is adjusted in game, on the numpad, and saved by itself. No reloading, no editing files.
+[*][b]Save your setup[/b] - one key records the whole seating (offset, distance, pivot), another restores it.
+[*][b]Survives death[/b] - the camera comes back where you had it after respawn.
+[/list]
+
+[size=4][b]Requirements[/b][/size]
+
+[list]
+[*][b]Conan Exiles Enhanced[/b] (UE 5.6). Not for the legacy UE4 version.
+[*][b]UE4SS[/b] - tested on 3.0.1 build 1127.
+[*]Singleplayer. Not tested on servers.
+[/list]
+
+[size=4][b]Installation[/b][/size]
+
+[list=1]
+[*]Install UE4SS into ConanSandbox\Binaries\Win64.
+[*]Drop the ConanCameraControl folder into ConanSandbox\Binaries\Win64\ue4ss\Mods\
+[*]Add ConanCameraControl : 1 to ue4ss\Mods\mods.txt, or simply keep the enabled.txt that ships inside the folder.
+[*]Start the game.
+[/list]
+
+[b]Do not use UE4SS hot reload (Ctrl+R) on this mod.[/b] It stacks the mod's timer loop instead of replacing it, and the game will come down after a while. Restart the game instead.
+
+[size=4][b]Controls - numpad[/b][/size]
+
+NumLock must be on. The * key is left free on purpose - the game uses it for chat.
+
+[code]
+8 / 2                  camera back / forward
+4 / 6                  camera left / right
+9 / 3                  camera up / down
+7 / 1                  pivot up / down
+5                      centre it - zero the sideways offset
++ / -                  distance
+/                      save the current setup
+0                      restore the saved setup
+Ctrl + 8/2, 4/6, 9/3   move the PIVOT instead of the camera
+Ctrl + 5               reset the pivot
+Ctrl + 0               re-acquire the camera component (emergency)
+[/code]
+
+[size=4][b]Camera offset and pivot - what the difference is[/b][/size]
+
+SocketOffset moves [b]the camera[/b] and rides along when you turn, so the character keeps its place on screen. TargetOffset moves [b]the orbit centre[/b] in world space, so the character sits lower in frame - and that is how the classic TES IV: Oblivion framing is built. Neither of them turns the camera: aim always follows the mouse.
+
+[size=4][b]Compatibility - Enhanced Armory and Arsenal[/b][/size]
+
+EAA ships its own Extended Camera Zoom and takes the spring arm over, which breaks the zoom limit. This mod detects that and stops just its camera component - the rest of EAA keeps working. Set mute_foreign_camera = false in config.lua if you prefer EAA's zoom.
+
+[size=4][b]Credits[/b][/size]
+
+Built by Krinik with Claude (Anthropic). Free to use and to learn from.
+
+[line]
+
+[size=5][b]RUSSIAN / ПО-РУССКИ[/b][/size]
+
+Conan Exiles держит камеру из-за плеча. Персонаж стоит сбоку от линии взгляда, его спина занимает половину экрана, и он закрывает всё, что с этой стороны.
+
+[b]Этот мод ставит камеру ровно за ним.[/b] Персонаж, камера и перекрестье выстраиваются в одну линию. Вы видите то, во что целитесь.
+
+[size=4][b]Что делает[/b][/size]
+
+[list]
+[*][b]Камера строго за спиной[/b] - никакого бокового смещения. Одна клавиша возвращает к нему в любой момент.
+[*][b]Полное управление пределами зума[/b] - задайте, насколько близко и насколько далеко пускать колесо. Игровые пределы заменяются вашими.
+[*][b]Шаг колеса тремя полосами[/b] - мелкий у персонажа, обычный в середине, крупный вдали. Отъехать с 30 до 1000 больше не сорок щелчков, а подвести камеру вплотную - не проскочить мимо.
+[*][b]Двигается и точка привязки[/b] - поднимите центр орбиты из груди выше головы, и получится классический вид от третьего лица, как в TES IV: Oblivion.
+[*][b]Настройка живьём[/b] - каждое значение крутится в игре, на цифровом блоке, и сохраняется само. Ни перезапусков, ни правки файлов.
+[*][b]Запись посадки[/b] - одна клавиша запоминает всё разом (смещение, дистанцию, ось), другая возвращает.
+[*][b]Переживает смерть[/b] - после возрождения камера возвращается туда, где была.
+[/list]
+
+[size=4][b]Требования[/b][/size]
+
+[list]
+[*][b]Conan Exiles Enhanced[/b] (UE 5.6). Для старой версии на UE4 не подходит.
+[*][b]UE4SS[/b] - проверено на 3.0.1 сборка 1127.
+[*]Одиночная игра. На серверах не проверялся.
+[/list]
+
+[size=4][b]Установка[/b][/size]
+
+[list=1]
+[*]Поставьте UE4SS в ConanSandbox\Binaries\Win64.
+[*]Положите папку ConanCameraControl в ConanSandbox\Binaries\Win64\ue4ss\Mods\
+[*]Допишите ConanCameraControl : 1 в ue4ss\Mods\mods.txt - или просто оставьте enabled.txt, который лежит в папке мода.
+[*]Запустите игру.
+[/list]
+
+[b]Горячая перезагрузка UE4SS (Ctrl+R) этому моду противопоказана.[/b] Она не заменяет его цикл таймеров, а добавляет ещё один, и через некоторое время игра оборвётся. Перезапускайте игру.
+
+[size=4][b]Управление - цифровой блок[/b][/size]
+
+NumLock должен быть включён. Клавиша * намеренно свободна - на ней чат игры.
+
+[code]
+8 / 2                  камера назад / вперёд
+4 / 6                  камера влево / вправо
+9 / 3                  камера выше / ниже
+7 / 1                  ось выше / ниже
+5                      строго за спиной - обнулить боковое смещение
++ / -                  дистанция
+/                      записать нынешнюю посадку
+0                      применить записанную посадку
+Ctrl + 8/2, 4/6, 9/3   двигают ОСЬ, а не камеру
+Ctrl + 5               обнулить ось
+Ctrl + 0               пересобрать поиск камеры (аварийная)
+[/code]
+
+[size=4][b]Смещение камеры и ось - в чём разница[/b][/size]
+
+SocketOffset двигает [b]камеру[/b] и едет вместе с поворотом - персонаж остаётся на том же месте экрана. TargetOffset двигает [b]центр орбиты[/b] в мировых координатах - персонаж оказывается ниже в кадре, и именно так собран классический вид TES IV: Oblivion. Направление взгляда не меняет ни то, ни другое: прицел всегда идёт за мышью.
+
+[size=4][b]Совместимость - Enhanced Armory and Arsenal[/b][/size]
+
+Тот мод везёт свою функцию Extended Camera Zoom и забирает пружинную штангу себе, из-за чего предел отдаления перестаёт соблюдаться. Наш мод это замечает и останавливает только его камерный компонент - всё остальное в EAA работает. Выключается ключом mute_foreign_camera = false, если зум EAA вам нужнее.
+
+[size=4][b]Благодарности[/b][/size]
+
+Сделано Криником вместе с Claude (Anthropic). Пользуйтесь свободно.

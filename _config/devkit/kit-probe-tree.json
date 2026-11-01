@@ -1,0 +1,1152 @@
+{
+ "ok": true,
+ "widgets": {
+  "W_MainMenu_MainMenu": {
+   "path": "/Game/UI/Widgets/MainMenu/W_MainMenu_MainMenu",
+   "tree": [
+    {
+     "name": "Border",
+     "class": "Border",
+     "parent": "Overlay_0",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6BB68) {left: -60.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Border_1",
+     "class": "Border",
+     "parent": "Overlay_3",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6B028) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Overlay_0",
+     "class": "Overlay",
+     "parent": "Overlay_Main",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A58C8) {left: 60.000000, top: 340.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Overlay_3",
+     "class": "Overlay",
+     "parent": "VerticalBox",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF331B8) {left: 0.000000, top: 0.000000, right: 48.000000, bottom: 48.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF331B0) {value: 1.000000, size_rule: Fill}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "GeneralText_61",
+     "class": "GeneralText",
+     "parent": "Overlay_SaveLog",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6D368) {left: 0.000000, top: 48.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "text": {
+      "text": "Select Adventure Log"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Overlay_SaveLog",
+     "class": "Overlay",
+     "parent": "Overlay_Content",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5A48) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "Text_OnlineState",
+     "class": "GeneralText",
+     "parent": "VerticalBox_0",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF31708) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF31700) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "text": {
+      "text": "Signed In"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "VerticalBox_0",
+     "class": "VerticalBox",
+     "parent": "VerticalBox",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF346B8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF346B0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Text_PlayerName",
+     "class": "GeneralText",
+     "parent": "VerticalBox_0",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF31778) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 32.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF31770) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "text": {
+      "text": "[Player Name]"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Text_VersionLabel",
+     "class": "GeneralText",
+     "parent": "VerticalBox_0",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF31A88) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF31A80) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "text": {
+      "text": "Version"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Text_VersionValue",
+     "class": "GeneralText",
+     "parent": "VerticalBox_0",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF31B68) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF31B60) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "text": {
+      "text": "[Game Version]"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "HorizontalBox_100",
+     "class": "HorizontalBox",
+     "parent": "Overlay_SaveLog",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6AC68) {left: 0.000000, top: 12.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "WBP_SaveLogButton",
+     "class": "WBP_SaveLogButton_C",
+     "parent": "HorizontalBox_100",
+     "slot_class": "HorizontalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF31FD0) {left: 24.000000, top: 0.000000, right: 24.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF31FC8) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "WBP_SaveLogButton_1",
+     "class": "WBP_SaveLogButton_C",
+     "parent": "HorizontalBox_100",
+     "slot_class": "HorizontalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF32200) {left: 24.000000, top: 0.000000, right: 24.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF321F8) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "WBP_LeftSaveButton",
+     "class": "WBP_ButtonMinor_C",
+     "parent": "HorizontalBox_100",
+     "slot_class": "HorizontalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF319B0) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF319A8) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "WBP_RightSaveButton",
+     "class": "WBP_ButtonMinor_C",
+     "parent": "HorizontalBox_100",
+     "slot_class": "HorizontalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF31A20) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF31A18) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "WBP_SaveLogButton_2",
+     "class": "WBP_SaveLogButton_C",
+     "parent": "HorizontalBox_100",
+     "slot_class": "HorizontalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF32270) {left: 24.000000, top: 0.000000, right: 24.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF32268) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_BinkPlayer",
+     "class": "Image",
+     "parent": "Overlay_Content",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D69E88) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=1920.000000,Y=1080.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=None,OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000000,B=0.000000,A=0.000000),ColorUseRule=UseColor_Specified),Width=0.000000,RoundingTy",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Overlay_Content",
+     "class": "Overlay",
+     "parent": "SizeBox_3",
+     "slot_class": "SizeBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF330D0) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_BlackoutOverlay",
+     "class": "Image",
+     "parent": "Overlay_Wrapper",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6A308) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=0.000000,G=0.000000,B=0.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=NoImage,ImageSize=(X=32.000000,Y=32.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=None,OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000000,B=0.000000,A=0.000000),ColorUseRule=UseColor_Specified),Width=0.000000,RoundingType=Hal",
+     "visibility": "<SlateVisibility.HIT_TEST_INVISIBLE: 3>"
+    },
+    {
+     "name": "Overlay_Wrapper",
+     "class": "Overlay",
+     "parent": "",
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_GradientUnderlay",
+     "class": "Image",
+     "parent": "Overlay_0",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6A6C8) {left: -60.000000, top: 20.000000, right: 0.000000, bottom: 17.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=256.000000,Y=128.000000),Margin=(Left=0.100000,Top=0.100000,Right=0.100000,Bottom=0.100000),ResourceObject=\"/Script/Engine.Material'/Game/UI/Materials/Media/M_UI_UnderlayGradient.M_UI_UnderlayGradient'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_HR",
+     "class": "Image",
+     "parent": "Overlay_SaveLog",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6ACC8) {left: 0.000000, top: 112.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=1024.000000,Y=4.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/General/T_UI_HorizontalRule.T_UI_HorizontalRule'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.00",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_Logo",
+     "class": "Image",
+     "parent": "Overlay_Main",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6AA28) {left: 72.000000, top: 120.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=384.000000,Y=192.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/Logos/T_UI_ConanExiles_Enhanced_Logo.T_UI_ConanExiles_Enhanced_Logo'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedCol",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Overlay_Main",
+     "class": "Overlay",
+     "parent": "Overlay_Content",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A59E8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_PillarBoxOverlay",
+     "class": "Image",
+     "parent": "Overlay_Content",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6A728) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=1920.000000,Y=1080.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Material'/Game/UI/Materials/Media/M_UI_SoftPillarBox.M_UI_SoftPillarBox'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000",
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_SideBar_1",
+     "class": "Image",
+     "parent": "Overlay_3",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x0000026223D6A1E8) {left: -1.000000, top: 8.000000, right: 24.000000, bottom: 4.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Box,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=6.000000,Y=45.000000),Margin=(Left=0.200000,Top=0.200000,Right=0.200000,Bottom=0.200000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/General/T_UI_Sidebar.T_UI_Sidebar'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000000,B=0.000000,A=",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Img_MenuDivider",
+     "class": "Image",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF34648) {left: -16.000000, top: 16.000000, right: 0.000000, bottom: 16.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF34640) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=512.000000,Y=4.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/General/T_UI_HorizontalRule.T_UI_HorizontalRule'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "VB_MainNav",
+     "class": "VerticalBox",
+     "parent": "Overlay_0",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5868) {left: 20.000000, top: 64.000000, right: 0.000000, bottom: 58.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Overlay",
+     "class": "Overlay",
+     "parent": "sb_ProfileManagementPanel",
+     "slot_class": "SizeBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF34410) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "sb_ProfileManagementPanel",
+     "class": "SizeBox",
+     "parent": "Overlay_SaveLog",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5B08) {left: 300.000000, top: 12.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "VerticalBox",
+     "class": "VerticalBox",
+     "parent": "Overlay_Main",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5AA8) {left: 0.000000, top: 144.000000, right: 72.000000, bottom: 144.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "SizeBox_3",
+     "class": "SizeBox",
+     "parent": "ScaleBox_2",
+     "slot_class": "ScaleBoxSlot",
+     "slot": {
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "VerticalBox_66",
+     "class": "VerticalBox",
+     "parent": "Overlay",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5808) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "PatchNotesView",
+     "class": "W_PatchNotesView_C",
+     "parent": "Overlay_3",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5928) {left: 24.000000, top: 48.000000, right: 12.000000, bottom: 40.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "ScaleBox_2",
+     "class": "ScaleBox",
+     "parent": "Overlay_Wrapper",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5B68) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "ButtonBar",
+     "class": "WBP_ButtonBar_C",
+     "parent": "Overlay_Wrapper",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000262F98A5BC8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "B_PlayOnline",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF32F88) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF32F80) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "B_PlayLocal",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF32FF8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF32FF0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "B_Options",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF33068) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF33060) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "B_Mods",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF33148) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF33140) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "B_Credits",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF34028) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF34020) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "B_Continue",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF32E38) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF32E30) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "B_Exit",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VB_MainNav",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF343A8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF343A0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "ButtonSolo",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_66",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF34808) {left: 12.000000, top: 12.000000, right: 12.000000, bottom: 12.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF34800) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "ButtonCoop",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_66",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF349C8) {left: 12.000000, top: 12.000000, right: 12.000000, bottom: 12.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF349C0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "ButtonDelete",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_66",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x000002629FF34A38) {left: 12.000000, top: 12.000000, right: 12.000000, bottom: 12.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x000002629FF34A30) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    }
+   ]
+  },
+  "W_IngameMenu": {
+   "path": "/Game/UI/HUD/W_IngameMenu",
+   "tree": [
+    {
+     "name": "BackgroundBlur_56",
+     "class": "BackgroundBlur",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E335C4C8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Overlay_1",
+     "class": "Overlay",
+     "parent": "",
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Border_0",
+     "class": "Border",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E3350648) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 48.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "VBox_Meta",
+     "class": "VerticalBox",
+     "parent": "Border_0",
+     "slot_class": "BorderSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653B330) {left: 24.000000, top: 36.000000, right: 72.000000, bottom: 35.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Text_OfflineMode",
+     "class": "GeneralText",
+     "parent": "VBox_Meta",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537B38) {left: 8.000000, top: 2.000000, right: 8.000000, bottom: 2.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537B30) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "text": {
+      "text": "Offline Mode"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Text_ServerMode",
+     "class": "GeneralText",
+     "parent": "VBox_Meta",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537A58) {left: 8.000000, top: 2.000000, right: 8.000000, bottom: 2.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537A50) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "text": {
+      "text": "Single Player"
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Text_ServerName",
+     "class": "GeneralText",
+     "parent": "VBox_Meta",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537978) {left: 8.000000, top: 2.000000, right: 8.000000, bottom: 2.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537970) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "text": {
+      "text": ""
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Text_VersionNumber",
+     "class": "GeneralText",
+     "parent": "VBox_Meta",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537898) {left: 8.000000, top: 2.000000, right: 8.000000, bottom: 2.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537890) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "text": {
+      "text": ""
+     },
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_Background",
+     "class": "Image",
+     "parent": "SB_BackgroundWrapper",
+     "slot_class": "ScaleBoxSlot",
+     "slot": {
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=1080.000000,Y=1080.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Material'/Game/UI/Materials/Backgrounds/M_UI_MaskedBackground.M_UI_MaskedBackground'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.00",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "SB_BackgroundWrapper",
+     "class": "ScaleBox",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E33F64C8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_Divider",
+     "class": "Image",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537358) {left: 0.000000, top: 3.000000, right: 0.000000, bottom: 3.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537350) {value: 1.000000, size_rule: Fill}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=NoImage,ImageSize=(X=360.000000,Y=10.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/MainMenu/T_IngameMenu_A02_Divider.T_IngameMenu_A02_Divider'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "VerticalBox_2",
+     "class": "VerticalBox",
+     "parent": "Overlay_0",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E33F7008) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Image_Divider_1",
+     "class": "Image",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537278) {left: 0.000000, top: 3.000000, right: 0.000000, bottom: 3.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537270) {value: 1.000000, size_rule: Fill}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=NoImage,ImageSize=(X=360.000000,Y=10.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/MainMenu/T_IngameMenu_A02_Divider.T_IngameMenu_A02_Divider'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_Divider_2",
+     "class": "Image",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6537198) {left: 0.000000, top: 3.000000, right: 0.000000, bottom: 3.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6537190) {value: 1.000000, size_rule: Fill}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=NoImage,ImageSize=(X=360.000000,Y=10.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/MainMenu/T_IngameMenu_A02_Divider.T_IngameMenu_A02_Divider'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_Divider_Admin",
+     "class": "Image",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F65370B8) {left: 0.000000, top: 3.000000, right: 0.000000, bottom: 3.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F65370B0) {value: 1.000000, size_rule: Fill}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=NoImage,ImageSize=(X=360.000000,Y=10.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/MainMenu/T_IngameMenu_A02_Divider.T_IngameMenu_A02_Divider'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_KeyArtOver",
+     "class": "Image",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E3356E28) {left: 0.000000, top: 96.000000, right: 192.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=768.000000,Y=384.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/KeyArt/T_UI_HeroArt_Simple.T_UI_HeroArt_Simple'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.00",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_KeyArtUnder",
+     "class": "Image",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E33536A8) {left: 0.000000, top: 96.000000, right: 192.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=0.800000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=768.000000,Y=384.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/KeyArt/T_UI_HeroArt.T_UI_HeroArt'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000000,B=0.00000",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Image_Logo",
+     "class": "Image",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E335C288) {left: 0.000000, top: 88.000000, right: 72.000000, bottom: 0.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+     },
+     "brush": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Image,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=512.000000,Y=256.000000),Margin=(Left=0.000000,Top=0.000000,Right=0.000000,Bottom=0.000000),ResourceObject=\"/Script/Engine.Texture2D'/Game/UI/Textures/Logos/T_UI_ConanExiles_Enhanced_Logo.T_UI_ConanExiles_Enhanced_Logo'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedCol",
+     "visibility": "<SlateVisibility.VISIBLE: 0>"
+    },
+    {
+     "name": "Overlay_0",
+     "class": "Overlay",
+     "parent": "Overlay_1",
+     "slot_class": "OverlaySlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263E33F7728) {left: 0.000000, top: 0.000000, right: 72.000000, bottom: 80.000000}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "VBox_Subgroup_Character",
+     "class": "VerticalBox",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E7B8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E7B0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "VBox_SubGroup_Quit",
+     "class": "VerticalBox",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E978) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E970) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "VBox_SubGroup_Server",
+     "class": "VerticalBox",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653EBA8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653EBA0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "Button_Remove_Bracelet",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_Subgroup_Character",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E588) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E580) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_ServerTransfer",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_Subgroup_Character",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E5F8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E5F0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "Button_CharacterCopy",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_Subgroup_Character",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E668) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E660) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "Button_ExportAppearance",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_Subgroup_Character",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E748) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E740) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_RecreateCharacter",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_Subgroup_Character",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E6D8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E6D0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_ExitToMenu",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_SubGroup_Quit",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E898) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E890) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_QuitGame",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_SubGroup_Quit",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653E908) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653E900) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_EventLog",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_SubGroup_Server",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653EA58) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653EA50) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_PlayerList",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_SubGroup_Server",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653EAC8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653EAC0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_InviteFriend",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VBox_SubGroup_Server",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653EB38) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653EB30) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_Feedback",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F65397A8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F65397A0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "Button_Resume",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653ECF8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653ECF0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_Group_Quit",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6538E78) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6538E70) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_Settings",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F653EC88) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F653EC80) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_Group_Server",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F65391F8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F65391F0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_Help",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F65393B8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F65393B0) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_AdminPanel",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6539188) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6539180) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    },
+    {
+     "name": "Button_CreativeMode",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6539818) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6539810) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.COLLAPSED: 1>"
+    },
+    {
+     "name": "Button_Group_Character",
+     "class": "WBP_ButtonBase_C",
+     "parent": "VerticalBox_2",
+     "slot_class": "VerticalBoxSlot",
+     "slot": {
+      "padding": "<Struct 'Margin' (0x00000263F6539428) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+      "size": "<Struct 'SlateChildSize' (0x00000263F6539420) {value: 1.000000, size_rule: Automatic}>",
+      "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+      "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+     },
+     "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+    }
+   ]
+  }
+ }
+}

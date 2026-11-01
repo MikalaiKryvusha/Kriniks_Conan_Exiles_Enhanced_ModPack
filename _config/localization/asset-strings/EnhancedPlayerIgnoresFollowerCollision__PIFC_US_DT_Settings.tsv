@@ -1,0 +1,17 @@
+# Player Ignores Follower Collision, PIFC_US_DT_Settings — KRINIK MODIFIED (KUMM bugs/64 п. 20, 2026-10-26)
+# Окно настроек мода (консоль `dc PIFCSettings`) было целиком английским: подписи и описания — строки StrProperty в рядах таблицы данных,
+# .locres до них не дотягивается. Служебные поля рядов (Type bool/int, DefaultValue, Scope player/shared) не трогаются.
+Enable mod	Включить мод
+Turns the mod on for you. Off means your character collides with followers exactly as it does in the base game.	Включает мод для вас. Если выключить, герой сталкивается со спутниками так же, как в игре без модов.
+Only the active follower	Только активный спутник
+Ignore collision only with the follower you currently have out. Turn this off and it works for ALL of your thralls.	Столкновения отключаются только со спутником, который сейчас следует за вами. Если выключить — со всеми вашими рабами.
+Include enemies	Враги тоже
+Also ignore collision with hostile NPCs, not just with your own thralls.	Столкновения отключаются и с враждебными NPC, а не только с вашими рабами.
+General	Общие
+Admin	Для администратора
+Override: enable mod	Для всех: включение мода
+0 - each player decides for themselves. 1 - the mod is on for everyone. 2 - the mod is off for everyone. The player's own Enable mod setting is ignored while this is 1 or 2.	0 — каждый игрок решает сам. 1 — мод включён у всех. 2 — мод выключен у всех. Пока стоит 1 или 2, своя настройка игрока «Включить мод» не действует.
+Override: only the active follower	Для всех: только активный спутник
+0 - each player decides for themselves. 1 - only the active follower is ignored, for everyone. 2 - all of a player's thralls are ignored, for everyone.	0 — каждый игрок решает сам. 1 — у всех сквозь проходит только активный спутник. 2 — у всех сквозь проходят все рабы игрока.
+Override: include enemies	Для всех: враги тоже
+0 - each player decides for themselves. 1 - enemies are ignored too, for everyone. 2 - enemies always collide, for everyone.	0 — каждый игрок решает сам. 1 — у всех сквозь проходят и враги. 2 — у всех враги остаются препятствием.

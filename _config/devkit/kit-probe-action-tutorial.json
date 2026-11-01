@@ -1,0 +1,71 @@
+{
+ "ok": true,
+ "widgets": {
+  "HorizontalBox_0": {
+   "class": "HorizontalBox",
+   "visibility": "<SlateVisibility.HIT_TEST_INVISIBLE: 3>",
+   "render_transform": "<Struct 'WidgetTransform' (0x000001FABAC02AD8) {translation: {x: 0.000000, y: 0.000000}, scale: {x: 1.000000, y: 1.000000}, shear: {x: 0.000000, y: 0.000000}, angle: 0.000000}>",
+   "justification": "?Exception",
+   "auto_wrap_text": "?Exception",
+   "wrap_text_at": "?Exception",
+   "font": "?Exception",
+   "min_desired_width": "?Exception",
+   "line_height_percentage": "?Exception"
+  },
+  "PreText": {
+   "class": "GeneralText",
+   "visibility": "<SlateVisibility.HIT_TEST_INVISIBLE: 3>",
+   "render_transform": "<Struct 'WidgetTransform' (0x000001FB17370CD8) {translation: {x: 0.000000, y: 0.000000}, scale: {x: 1.000000, y: 1.000000}, shear: {x: 0.000000, y: 0.000000}, angle: 0.000000}>",
+   "justification": "<TextJustify.RIGHT: 2>",
+   "auto_wrap_text": "False",
+   "wrap_text_at": "0.0",
+   "font": "<Struct 'SlateFontInfo' (0x000001FB17370F50) {font_object: \"/Script/Engine.Font'/Game/UI/Fonts/CrimsonPro/CrimsonPro-Regular_Font.CrimsonPro-Regular_Font'\", font_material: None, outline_settings: {outline_size: 0, mitered_corners: False, separate_fill_alpha: False, apply_outline_to_drop_shadows: False, outline_material: None, outline_color: {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}}, typeface_font_name: \"Default\", size: 14.000000, letter_spacing: 0, skew_amount: 0.000000, force_monospaced: False, material_is_stencil: False, monospaced_width: 1.000000}>",
+   "min_desired_width": "0.0",
+   "line_height_percentage": "1.0",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001FABAA3AA10) {left: 0.000000, top: 0.000000, right: 4.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001FABAA3AA08) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  "Icon": {
+   "class": "W_HotkeyIcon_C",
+   "visibility": "<SlateVisibility.HIT_TEST_INVISIBLE: 3>",
+   "render_transform": "<Struct 'WidgetTransform' (0x000001FA0168E0D8) {translation: {x: 0.000000, y: 0.000000}, scale: {x: 1.000000, y: 1.000000}, shear: {x: 0.000000, y: 0.000000}, angle: 0.000000}>",
+   "justification": "?Exception",
+   "auto_wrap_text": "?Exception",
+   "wrap_text_at": "?Exception",
+   "font": "?Exception",
+   "min_desired_width": "?Exception",
+   "line_height_percentage": "?Exception",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001FABAA341F0) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001FABAA341E8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  "PostText": {
+   "class": "GeneralText",
+   "visibility": "<SlateVisibility.HIT_TEST_INVISIBLE: 3>",
+   "render_transform": "<Struct 'WidgetTransform' (0x000001FB173706D8) {translation: {x: 0.000000, y: 0.000000}, scale: {x: 1.000000, y: 1.000000}, shear: {x: 0.000000, y: 0.000000}, angle: 0.000000}>",
+   "justification": "<TextJustify.LEFT: 0>",
+   "auto_wrap_text": "False",
+   "wrap_text_at": "0.0",
+   "font": "<Struct 'SlateFontInfo' (0x000001FB17370950) {font_object: \"/Script/Engine.Font'/Game/UI/Fonts/CrimsonPro/CrimsonPro-Regular_Font.CrimsonPro-Regular_Font'\", font_material: None, outline_settings: {outline_size: 0, mitered_corners: False, separate_fill_alpha: False, apply_outline_to_drop_shadows: False, outline_material: None, outline_color: {r: 0.000000, g: 0.000000, b: 0.000000, a: 1.000000}}, typeface_font_name: \"Default\", size: 14.000000, letter_spacing: 0, skew_amount: 0.000000, force_monospaced: False, material_is_stencil: False, monospaced_width: 1.000000}>",
+   "min_desired_width": "0.0",
+   "line_height_percentage": "1.0",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001FAAD838F50) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001FAAD838F48) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  }
+ },
+ "loaded": "/Game/UI/HUD/Notifications/W_ActionTutorial.W_ActionTutorial"
+}

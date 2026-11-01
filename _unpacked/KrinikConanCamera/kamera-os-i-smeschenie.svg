@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 700" width="1240" height="700" font-family="Segoe UI, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c0392b"/>
+    </marker>
+    <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2471a3"/>
+    </marker>
+  </defs>
+
+  <rect width="1240" height="700" fill="#fbfaf7"/>
+
+  <text x="620" y="42" text-anchor="middle" font-size="25" font-weight="700" fill="#1a1a1a">Куда смотрит камера — вид сбоку</text>
+  <text x="620" y="70" text-anchor="middle" font-size="15" fill="#555">Красная линия — направление взгляда камеры. Она и решает, где окажется перекрестье.</text>
+
+  <line x1="620" y1="100" x2="620" y2="640" stroke="#ddd8cf" stroke-width="2"/>
+
+  <!-- ================= ЛЕВАЯ ПАНЕЛЬ: КОНАН ================= -->
+  <text x="300" y="118" text-anchor="middle" font-size="19" font-weight="700" fill="#8e44ad">КОНАН — как сейчас</text>
+  <text x="300" y="142" text-anchor="middle" font-size="14" fill="#666">двигали SocketOffset: камеру</text>
+
+  <line x1="60" y1="520" x2="560" y2="520" stroke="#9a8f7d" stroke-width="3"/>
+  <text x="70" y="540" font-size="12" fill="#9a8f7d">земля</text>
+
+  <!-- герой -->
+  <g stroke="#2c3e50" stroke-width="3" fill="none" stroke-linecap="round">
+    <circle cx="420" cy="392" r="15" fill="#2c3e50"/>
+    <line x1="420" y1="407" x2="420" y2="470"/>
+    <line x1="420" y1="425" x2="398" y2="452"/>
+    <line x1="420" y1="425" x2="442" y2="452"/>
+    <line x1="420" y1="470" x2="404" y2="518"/>
+    <line x1="420" y1="470" x2="436" y2="518"/>
+  </g>
+  <text x="452" y="500" font-size="13" fill="#2c3e50">герой</text>
+
+  <!-- ось вращения: на груди -->
+  <circle cx="420" cy="428" r="7" fill="#e67e22"/>
+  <text x="436" y="424" font-size="13" font-weight="600" fill="#c0651a">ось вращения</text>
+  <text x="436" y="440" font-size="12" fill="#c0651a">на уровне груди</text>
+
+  <!-- штанга -->
+  <line x1="420" y1="428" x2="185" y2="352" stroke="#7f8c8d" stroke-width="3" stroke-dasharray="7 5"/>
+  <text x="278" y="378" font-size="13" fill="#7f8c8d" transform="rotate(-18 278 378)">пружинная штанга</text>
+
+  <!-- камера -->
+  <g>
+    <rect x="140" y="332" width="46" height="32" rx="4" fill="#2c3e50"/>
+    <path d="M 186 340 L 208 330 L 208 366 L 186 356 Z" fill="#2c3e50"/>
+    <text x="163" y="322" text-anchor="middle" font-size="13" font-weight="600" fill="#2c3e50">камера</text>
+  </g>
+
+  <!-- взгляд: строго горизонтально -->
+  <line x1="208" y1="348" x2="540" y2="348" stroke="#c0392b" stroke-width="3.5" marker-end="url(#arrow)"/>
+  <line x1="208" y1="348" x2="540" y2="348" stroke="#c0392b" stroke-width="1" stroke-dasharray="2 4" opacity="0.4"/>
+
+  <!-- перекрестье -->
+  <g stroke="#c0392b" stroke-width="2.5">
+    <line x1="492" y1="336" x2="492" y2="360"/>
+    <line x1="480" y1="348" x2="504" y2="348"/>
+  </g>
+  <text x="492" y="326" text-anchor="middle" font-size="13" font-weight="600" fill="#c0392b">перекрестье</text>
+
+  <!-- пояснение -->
+  <line x1="420" y1="392" x2="420" y2="348" stroke="#c0392b" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <text x="300" y="580" text-anchor="middle" font-size="14.5" fill="#333">Камера смотрит <tspan font-weight="700">параллельно земле</tspan>.</text>
+  <text x="300" y="602" text-anchor="middle" font-size="14.5" fill="#333">Луч взгляда проходит <tspan font-weight="700">над головой</tspan> героя,</text>
+  <text x="300" y="624" text-anchor="middle" font-size="14.5" fill="#333">и перекрестье оказывается выше него.</text>
+
+  <!-- ================= ПРАВАЯ ПАНЕЛЬ: ОБЛИВИОН ================= -->
+  <text x="930" y="118" text-anchor="middle" font-size="19" font-weight="700" fill="#1e8449">ОБЛИВИОН — и что даст TargetOffset</text>
+  <text x="930" y="142" text-anchor="middle" font-size="14" fill="#666">двигаем ось вращения, а не камеру</text>
+
+  <line x1="690" y1="520" x2="1190" y2="520" stroke="#9a8f7d" stroke-width="3"/>
+  <text x="700" y="540" font-size="12" fill="#9a8f7d">земля</text>
+
+  <!-- герой -->
+  <g stroke="#2c3e50" stroke-width="3" fill="none" stroke-linecap="round">
+    <circle cx="1050" cy="392" r="15" fill="#2c3e50"/>
+    <line x1="1050" y1="407" x2="1050" y2="470"/>
+    <line x1="1050" y1="425" x2="1028" y2="452"/>
+    <line x1="1050" y1="425" x2="1072" y2="452"/>
+    <line x1="1050" y1="470" x2="1034" y2="518"/>
+    <line x1="1050" y1="470" x2="1066" y2="518"/>
+  </g>
+  <text x="1082" y="500" font-size="13" fill="#2c3e50">герой</text>
+
+  <!-- ось поднята -->
+  <circle cx="1050" cy="330" r="7" fill="#e67e22"/>
+  <text x="1066" y="326" font-size="13" font-weight="600" fill="#c0651a">ось ПОДНЯТА</text>
+  <text x="1066" y="342" font-size="12" fill="#c0651a">над героем</text>
+  <line x1="1050" y1="337" x2="1050" y2="385" stroke="#e67e22" stroke-width="2" stroke-dasharray="4 4"/>
+  <line x1="1044" y1="352" x2="1056" y2="352" stroke="#e67e22" stroke-width="2"/>
+  <line x1="1044" y1="368" x2="1056" y2="368" stroke="#e67e22" stroke-width="2"/>
+
+  <!-- штанга к поднятой оси -->
+  <line x1="1050" y1="330" x2="815" y2="300" stroke="#7f8c8d" stroke-width="3" stroke-dasharray="7 5"/>
+  <text x="908" y="300" font-size="13" fill="#7f8c8d" transform="rotate(-7 908 300)">пружинная штанга</text>
+
+  <!-- камера -->
+  <g>
+    <rect x="770" y="284" width="46" height="32" rx="4" fill="#2c3e50"/>
+    <path d="M 816 292 L 838 282 L 838 318 L 816 308 Z" fill="#2c3e50"/>
+    <text x="793" y="274" text-anchor="middle" font-size="13" font-weight="600" fill="#2c3e50">камера</text>
+  </g>
+
+  <!-- взгляд: сквозь ось, вниз -->
+  <line x1="838" y1="300" x2="1178" y2="452" stroke="#c0392b" stroke-width="3.5" marker-end="url(#arrow)"/>
+
+  <!-- перекрестье на земле перед героем -->
+  <g stroke="#c0392b" stroke-width="2.5">
+    <line x1="1136" y1="422" x2="1136" y2="446"/>
+    <line x1="1124" y1="434" x2="1148" y2="434"/>
+  </g>
+  <text x="1136" y="412" text-anchor="middle" font-size="13" font-weight="600" fill="#c0392b">перекрестье</text>
+
+  <!-- угол вниз -->
+  <path d="M 872 312 A 64 64 0 0 1 884 344" fill="none" stroke="#2471a3" stroke-width="2.5" marker-end="url(#arrowBlue)"/>
+  <text x="838" y="368" font-size="13" font-weight="600" fill="#2471a3">взгляд наклонён вниз</text>
+
+  <text x="930" y="580" text-anchor="middle" font-size="14.5" fill="#333">Камера смотрит <tspan font-weight="700">В ось</tspan>, а ось поднята —</text>
+  <text x="930" y="602" text-anchor="middle" font-size="14.5" fill="#333">взгляд идёт <tspan font-weight="700">сверху вниз, сквозь героя</tspan>,</text>
+  <text x="930" y="624" text-anchor="middle" font-size="14.5" fill="#333">и перекрестье ложится на землю перед ним.</text>
+
+  <!-- ================= НИЖНЯЯ ПОЛОСА ================= -->
+  <rect x="60" y="650" width="1120" height="38" rx="6" fill="#efe9dd"/>
+  <text x="80" y="675" font-size="14.5" fill="#333">
+    <tspan font-weight="700" fill="#8e44ad">SocketOffset</tspan> — двигает камеру, взгляд остаётся параллельным.
+    <tspan font-weight="700" fill="#1e8449" dx="18">TargetOffset</tspan> — двигает ось, меняется сам ракурс.
+    <tspan dx="18" fill="#666">Живьём: Numpad ✳ выше · Numpad ∕ ниже</tspan>
+  </text>
+</svg>

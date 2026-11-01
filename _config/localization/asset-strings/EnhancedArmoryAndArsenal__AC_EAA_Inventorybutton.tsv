@@ -1,0 +1,6 @@
+# Enhanced Armory and Arsenal, компонент кнопок хаба (AC_EAA_Inventorybutton) — KRINIK MODIFIED (2026-10-29, KUMM bugs/64 п. 17 и 26)
+# Эмблема с мечом (Button_Axe) и её камень появлялись (кнопка «Аксессуары» — не этот виджет, а Accessory System: EnhancedArmoryAndArsenal__AC_acs_AccessorySystem_Persistent.tsv) на «Снаряжении» позже хаба: по сигналу CharacterInventory компонент ждёт
+# Delay 1.0 игровой секунды и только потом ищет портрет героя (UICharacterDisplay) — сигнал приходит на 50 мс раньше, чем хаб создаёт портрет.
+# В хабе наш KrinikPauseGameInMenu держит время мира 0.03, и эта секунда длилась ≈33 с (замер пультом 17:56). Задержка заглушена (1e9 с), вставку
+# зовёт KrinikPauseGameInMenu 0.9.0 по рождению портрета: ExecuteUbergraph_AC_EAA_Inventorybutton(286) — та же точка, куда вернулся бы Delay.
+flt:ExecuteUbergraph_AC_EAA_Inventorybutton	1.0	1000000000.0

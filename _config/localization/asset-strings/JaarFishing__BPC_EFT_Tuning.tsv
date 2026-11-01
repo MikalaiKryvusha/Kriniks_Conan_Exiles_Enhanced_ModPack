@@ -1,0 +1,37 @@
+# Exiles Fishing, компонент настройки (BPC_EFT_Tuning) — строковые свойства шаблона: названия сложностей, ступеней, мест. Их подставляет
+# код в панель и в список рыб (KUMM bugs/64 п. 7). Термины — как в W_EFT_Panel и в переводе мода.
+# английский	русский
+Easy	Легко
+Relaxed	Спокойно
+Seasoned	Опытный
+Vanilla	Ваниль
+Custom	Своё
+T1 Junk	T1 Хлам
+T2 Common	T2 Обычная
+T3 Uncommon	T3 Необычная
+T4 Rare	T4 Редкая
+T5 Epic	T5 Эпическая
+T6 Legendary	T6 Легенд.
+T7 Mythic	T7 Мифич.
+Global	Везде
+Warm	Тепло
+Temperate	Умеренно
+Cold	Холод
+Swamp	Болото
+# Строки прямо в байткоде (kismet.py, bugs/64 п. 7): удлиняются со сдвигом адресов переходов
+lit:Fishing Power: 	"Мастерство рыбака: "
+lit:Average bite wait: 	"Среднее ожидание клёва: "
+lit: s   (vanilla 	" с   (ваниль "
+lit: s)	 с)
+lit: %   (vanilla 	" %   (ваниль "
+lit:Per hour (estimate, 20 s per fight):   T5 	"В час (оценка, 20 с на схватку):   T5 "
+lit: (modified)	 (изменено)
+lit:Custom  ·  base 	"Своё  ·  основа "
+lit:—  empty  —	—  пусто  —
+lit:Unnamed	Без имени
+# Кнопка «Настройка рыбалки» опаздывала на 0–300 мс при каждом входе на «Снаряжение» (видео 57 к/с 2026-10-29, KUMM bugs/64 п. 17): CheckInventory
+# по кругу каждые 0,3 с спрашивает IsModuleActive(CharacterInventory) и на фронте зовёт Graft. Таймер заводят BeginPlay (граф событий) и TryLocal —
+# глушим оба (1e9 с), Graft зовёт KrinikPauseGameInMenu 0.8.0 по событию XCS_Panel (тот же путь, что у кнопки Hosav). TryLocal 0.5 с не трогаем:
+# он сам себя снимает, как только герой локальный.
+flt:ExecuteUbergraph_BPC_EFT_Tuning	0.3	1000000000.0
+flt:TryLocal	0.3	1000000000.0

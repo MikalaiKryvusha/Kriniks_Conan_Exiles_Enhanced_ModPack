@@ -1,0 +1,5 @@
+# Запуск 2 — s.AsyncPostLoadEnabled=1 в ini до запуска (README)
+#read s.AsyncPostLoadEnabled s.AsyncLoadingThreadEnabled
+q2-warmup
+q2-B1
+q2-B2

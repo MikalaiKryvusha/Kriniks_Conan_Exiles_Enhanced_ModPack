@@ -1,0 +1,20 @@
+{
+	"name": "KrinikConanUI",
+	"description": "KRINIK: interface of the build - vanilla HUD and window layout fixes, FPS counter, HUD text outline, the world pauses in menus",
+	"changeNote": "",
+	"author": "",
+	"authorUrl": "",
+	"versionMajor": 1,
+	"versionMinor": 0,
+	"versionBuild": 0,
+	"bRequiresLoadOnStartup": false,
+	"steamPublishedFileId": "",
+	"steamTestLivePublishedFileId": "",
+	"steamWorkshopFileIds": {},
+	"steamVisibility": 2,
+	"folderName": "KrinikConanUI",
+	"devkitRevisionNumber": 1002,
+	"devkitSnapshotId": 0,
+	"minimumVersion": "Enhanced",
+	"requestedHttpOrigins": []
+}

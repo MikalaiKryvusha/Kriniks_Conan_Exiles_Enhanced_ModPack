@@ -1,0 +1,4 @@
+# Simple Minimap, окно настроек (SM_UI_Settings) — KRINIK MODIFIED (2026-10-26, KUMM bugs/64 п. 25)
+# «Сохранить» и «Отмена» слипались (кадр 18:12): русские слова вдвое длиннее «Save» / «Cancel». Кегль обеих кнопок 15 → 12.
+prop:TextBlock_34/Font/Size	12
+prop:cancel/Font/Size	12

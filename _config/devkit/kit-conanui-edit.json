@@ -1,0 +1,57 @@
+{
+ "ok": true,
+ "steps": [
+  "loaded /Game/UI/Widgets/HUD/Interact/WBP_ContainerInfo.WBP_ContainerInfo",
+  "OverlaySlot_5: <HorizontalAlignment.H_ALIGN_CENTER: 2> -> <HorizontalAlignment.H_ALIGN_CENTER: 2>, padding <Struct 'Margin' (0x00000200FCFAF168) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
+  "OverlaySlot_3: <HorizontalAlignment.H_ALIGN_CENTER: 2> -> <HorizontalAlignment.H_ALIGN_CENTER: 2>, padding <Struct 'Margin' (0x00000200FD416A08) {left: 500.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+  "OverlaySlot_5 padding -> <Struct 'Margin' (0x00000200FCFAF168) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
+  "W_QuickLootPanel grid padding (35.0, 35.0) -> <Struct 'Margin' (0x000002004447FE78) {left: 35.000000, top: 10.000000, right: 35.000000, bottom: 10.000000}>",
+  "W_QuickLootPanel WidgetSwitcherTooltips padding (20.0, 20.0) -> <Struct 'Margin' (0x000002004447FEE8) {left: 20.000000, top: 10.000000, right: 20.000000, bottom: 10.000000}>",
+  "W_QuickLootPanel LootButtonLabel_1 padding (0.0, 20.0) -> <Struct 'Margin' (0x0000020044474C70) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
+  "HotkeyHoldPromptVisibility members {'ALWAYS': 2, 'DEFAULT': 0, 'NEVER': 1}",
+  "W_QuickLootPanel W_HotkeyIcon_3 hold_prompt_visibility -> <HotkeyHoldPromptVisibility.NEVER: 1>",
+  "W_QuickLootPanel W_HotkeyIcon_4 hold_prompt_visibility -> <HotkeyHoldPromptVisibility.NEVER: 1>",
+  "W_QuickLootPanel LootButtonLabel_1 text -> Забрать все (удерж.)",
+  "W_QuickLootPanel LootButtonLabel_2 text -> Забрать все (удерж.)",
+  "W_ItemIconTooltipView Text_Content auto_wrap_text/wrap_text_at (False, 800.0) -> (False, 800.0)",
+  "W_AttributeInfoEntry_PerkView PerkDescription padding top/bottom (10.0, 10.0) -> <Struct 'Margin' (0x00000200D6F5CD80) {left: 0.000000, top: 10.000000, right: 0.000000, bottom: 10.000000}>",
+  "W_ActionTutorial Icon valign/padding (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x000001FFB8781E80) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 1.000000}>) -> (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x000001FFB8781E80) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 1.000000}>)",
+  "W_ActionTutorial PostText valign/padding (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x000001FFB87896D0) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>) -> (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x000001FFB87896D0) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>)",
+  "WBP_ContainerInfo T_CorpseText1 already present",
+  "line1 font Cardo-SC-Bold_Font size 18.0",
+  "Content padding L/R (140.0, 140.0) -> (140.0, 140.0)",
+  "Border_Underlay own padding L/R (140.0, 140.0) -> (140.0, 140.0)",
+  "Border_Underlay brush ImageSize=(X=356.000000,Y=168.000000),Margin=(Left=0.400000,Top=0.300000,Right=0.400000,Bottom=0.300000) -> ImageSize=(X=356.000000,Y=168.000000),Margin=(Left=0.400000,Top=0.300000,Right=0.400000,Bottom=0.300000)",
+  "WBP_ContainerInfo Content order: ['T_Name', 'T_CorpseText1', 'ActionTutorial', 'T_Type', 'T_Decayed', 'Overlay_2', 'Text_Owner']",
+  "W_MainMenu_MainMenu: feedback 195x40 at (628.7939453125, 326.9425048828125, 0.0)",
+  "W_MainMenu_MainMenu: game logo (384.0, 192.0) pad (72.0, 120.0, 0.0); ours 427x162 at (507.53375244140625, 131.20957946777344, 0.0) (right); versions under both",
+  "W_IngameMenu: feedback 195x40 at (0.0, 325.2353210449219, 703.7200317382812)",
+  "W_IngameMenu: game logo (512.0, 256.0) pad (0.0, 88.0, 72.0); ours 422x160 at (0.0, 131.34654235839844, 595.4527587890625) (left); versions under both"
+ ],
+ "saved": true,
+ "saved_ql": true,
+ "saved_tt": true,
+ "saved_perk": true,
+ "saved_at": true,
+ "saved_line1": true,
+ "menu_backdrop": {
+  "BackgroundMovies": [
+   "/Game/Movies/TitleScreen_Claws.TitleScreen_Claws",
+   "/Game/Movies/TitleScreen_Icefield.TitleScreen_Icefield",
+   "/Game/Movies/TitleScreen_Jungle.TitleScreen_Jungle",
+   "/Game/Movies/TitleScreen_UnnamedCity.TitleScreen_UnnamedCity",
+   "/Game/Movies/TitleScreen_Volcano.TitleScreen_Volcano",
+   "/Game/Movies/TitleScreen_WineCellar.TitleScreen_WineCellar"
+  ],
+  "BackgroundMovieTextures": [
+   "/Game/Movies/MediaTextures/TitleScreen_Claws_Tex.TitleScreen_Claws_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_Icefield_Tex.TitleScreen_Icefield_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_Jungle_Tex.TitleScreen_Jungle_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_UnnamedCity_Tex.TitleScreen_UnnamedCity_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_Volcano_Tex.TitleScreen_Volcano_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_WineCellar_Tex.TitleScreen_WineCellar_Tex"
+  ]
+ },
+ "saved_W_MainMenu_MainMenu": true,
+ "saved_W_IngameMenu": true
+}

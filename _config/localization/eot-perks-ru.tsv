@@ -1,0 +1,39 @@
+# EraOfTrials, EoT_DT_ReligiousPerkData — 17 религиозных умений, имя и описание (план 36 п. 14, баг 64 п. 20). Черновик 2026-10-27 19:4x,
+# [NOT-TESTED]: в ассет не внесён. Термины — из уже переведённого (dm-fish-ru.tsv): Edict → Указ, Doctrine → Учение, stamina → запас сил,
+# magic resist → защита от магии, magic amp → усиление магии, thralls → рабы, Shard of Notion → Осколок замысла, Ironhide → железная шкура.
+# Обращение — на «вы», без прошедшего времени о герое (род героя не выдаётся). Применение: patch-mod-asset.py build EraOfTrials
+# EoT_DT_ReligiousPerkData <work> <этот файл>; KRINIK MODIFIED.
+Edict of Coyness	Указ уклончивости
+After being hit, evading further damage for 10s heals back some health.	Если после удара 10 с не получать урона, часть здоровья вернётся.
+Edict of Vivacity	Указ живости
+Falling below 35% max health instantly restores all of your stamina.	Когда здоровье падает ниже 35 % от наибольшего, запас сил сразу восполняется целиком.
+Edict of Ironhide	Указ железной шкуры
+All magic damage you take is reduced by 25 (flat), calculated after magic amp/resist. Magic damage reduced to 0 still has a small chance to proc its secondary effect.	Любой магический урон по вам меньше на 25 единиц — после усиления магии и защиты от неё. Даже сведённый к нулю, такой урон с малым шансом вызывает свой побочный эффект.
+Edict of Adaptation	Указ приспособления
+While wearing armors of different weights you gain bonus armor and bonus health.	В доспехах разного веса вы получаете добавочную броню и здоровье.
+Edict of Asceticism	Указ аскезы
+Every 25s, upon reaching max stamina you consume half of it and your stamina regen is suppressed for 2s to regain health.	Раз в 25 с, когда запас сил полон, половина его тратится и 2 с не восстанавливается — взамен вы восполняете здоровье.
+Edict of Orthodoxy	Указ правоверия
+Every 22s you reflect the next instance of magic damage back at its instigator.	Раз в 22 с следующий магический удар по вам возвращается к тому, кто его нанёс.
+Edict of Will	Указ воли
+Every 25s your next melee or ranged attack heals you.	Раз в 25 с ваш следующий удар в ближнем бою или выстрел лечит вас.
+Edict of Temerity	Указ дерзости
+When taking magic damage you gain 700 armor for 16s.	Магический урон по вам даёт +700 брони на 16 с.
+Doctrine of Devotion	Учение преданности
+Dealing or taking damage or harvesting has a small chance to give you a Shard of Notion.	Нанесённый или полученный урон и добыча ресурсов с малым шансом приносят Осколок замысла.
+Doctrine of Prosperity	Учение процветания
+Harvesting religious organs has a small chance to give you a Shard of Notion.	Добыча религиозных органов с малым шансом приносит Осколок замысла.
+Doctrine of Evangelism	Учение проповеди
+Killing blows dealt by any thralls, pets, or golems currently following you have a chance to grant you a Shard of Notion.	Добивающий удар раба, питомца или голема, который следует за вами, может принести вам Осколок замысла.
+Edict of Obstinance	Указ упорства
+Falling below 20% max health knocks back all nearby enemies and heals a large amount of health over 6s. 90s cooldown.	Когда здоровье падает ниже 20 % от наибольшего, враги рядом отлетают, а вы за 6 с восполняете много здоровья. Перезарядка — 90 с.
+Edict of Mettle	Указ стойкости
+When taking physical damage you gain 15% magic resist for 16s.	Физический урон по вам даёт +15 % защиты от магии на 16 с.
+Edict of Guts	Указ отваги
+When taking any damage you have a 20% chance to instantly heal half of it back.	Любой урон по вам с шансом 20 % сразу наполовину возвращается здоровьем.
+Edict of Doggedness	Указ несгибаемости
+Surviving a weapon attack that brings you below 10% health makes you immune to all further damage for 10 seconds.	Если удар оружием оставил вам меньше 10 % здоровья, 10 с вы неуязвимы для любого урона.
+Edict of Skittering	Указ увёртливости
+While knocked down you become immune to further damage until you get back up.	Пока вы сбиты с ног, урон вас не берёт — до тех пор, пока не встанете.
+Edict of Antigen	Указ иммунитета
+While below 15% max health all damage over time effects are cleansed and you become immune to new applications of them.	Пока здоровье ниже 15 % от наибольшего, все эффекты урона со временем снимаются, и новые вас не берут.

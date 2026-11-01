@@ -1,0 +1,127 @@
+{
+ "ok": true,
+ "widgets": [
+  {
+   "name": "Border_Underlay",
+   "class": "Border",
+   "parent": "Overlay_Main",
+   "slot_class": "OverlaySlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E7046A9108) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "Overlay_Main",
+   "class": "Overlay",
+   "parent": ""
+  },
+  {
+   "name": "Content",
+   "class": "VerticalBox",
+   "parent": "Border_Underlay",
+   "slot_class": "BorderSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E7184044F0) {left: 12.000000, top: 12.000000, right: 12.000000, bottom: 8.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "T_Decayed",
+   "class": "GeneralText",
+   "parent": "Content",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E718403538) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 8.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001E718403530) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "T_Name",
+   "class": "GeneralText",
+   "parent": "Content",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E718403458) {left: 0.000000, top: 4.000000, right: 0.000000, bottom: 4.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001E718403450) {value: 0.500000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "T_State",
+   "class": "GeneralText",
+   "parent": "Overlay_2",
+   "slot_class": "OverlaySlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E7046AA248) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "Overlay_2",
+   "class": "Overlay",
+   "parent": "Content",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E71840D638) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 8.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001E71840D630) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "T_Type",
+   "class": "GeneralText",
+   "parent": "Content",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E718403308) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 8.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001E718403300) {value: 0.500000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "Text_Owner",
+   "class": "GeneralText",
+   "parent": "Content",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E7184031B8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 8.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001E7184031B0) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "W_QuickLootPanel",
+   "class": "W_QuickLootPanel_C",
+   "parent": "Overlay_Main",
+   "slot_class": "OverlaySlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E7046AA128) {left: 500.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "ActionTutorial",
+   "class": "W_ActionTutorial_C",
+   "parent": "Content",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x000001E71840D0F8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 8.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x000001E71840D0F0) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  }
+ ],
+ "loaded": "/Game/UI/Widgets/HUD/Interact/WBP_ContainerInfo.WBP_ContainerInfo"
+}

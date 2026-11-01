@@ -1,0 +1,51 @@
+# EraOfTrials, EoT_DT_DesecrationTargets — места осквернения святилищ: названия мест карты (план 36 п. 14, баг 64 п. 20). 2026-10-28:
+# русский — ОФИЦИАЛЬНЫЙ перевод игры, не наш: строка игры найдена по CRC32 английского исходника в ru-.locres пака игры (pakchunk0:
+# Exiles_UI, Exiles_Items и др.) — 47 из 48; «Test Invocation Location» (проверочная строка автора) в игре не переведена и не тронута.
+# Применение: patch-mod-asset.py build EraOfTrials EoT_DT_ReligiousPerkData <work> eot-perks-ru.tsv <этот файл> EoT_DT_DesecrationTargets.
+A Light to Guide Them Home	Ведущий-домой-свет
+Avenue of the Sun	Дорога Солнца
+Bastard's Stand	Стоянка Ублюдка
+Bonebreaker's Bend	Изгиб костолома
+Bonepicker Camp	Лагерь костогрызов
+Carver's Crest	Пик резчика
+Circle of Swords	Круг мечей
+Citadel of the Triumvirate	Цитадель Триумвирата
+Dagon's Claw	Коготь Дагона
+Dagon's Eye	Глаз Дагона
+Descent of Dagon	Склон Дагона
+Fleshtearer Falls	Плотоядные водопады
+Gallaman's Overlook	Вершина Галламана
+Gate of the Moon	Врата Луны
+Hand of the Maker	Рука Создателя
+Marrowman's Height	Мозговой пик
+Mek-kamoses's Spire	Пик Мек-Камозиса
+Mitra's Serenity	Спокойствие Митры
+Mounds of the Dead	Гибельные курганы
+Muriela's Hope	Надежда Муриэлы
+Narrowneck Span	Узкий путь
+New Asagarth	Новый Асгард
+Pagoda of Boundless Lusts	Пагода безмерного желания
+Sandswept Ruins	Занесенные песками руины
+Scuttler's Shortcut	Тропа беглеца
+Shaman's Rise	Высота шамана
+Skittering Cavern	Пещера суеты
+Spinebreaker's Flank	Хребтоломный склон
+Stargazer's Crest	Пик звездочета
+Temple Quarter	Храмовый квартал
+The Black Garden	Черный сад
+The Celestial Plaza	Небесная площадь
+The Corner of Bones	Угол костей
+The Cursed Way	Проклятая тропа
+The Den	Логово
+The Dryfalls	Сухие водопады
+The Forge of Ymir	Кузница Имира
+The Outcast Camp	Лагерь изгоев
+The Sentinels	Стражи
+The Silkwood	Шелковый лес
+The Summoning Place	Место призыва
+The Wardtowers	Охранные башни
+Thugra's Stand	Стоянка Тугры
+Totem of Jhebbal Sag	Тотем Джеббал Сага
+Watcher of the Passage	Смотритель прохода
+Weaver's Hollow	Ткацкая лощина
+Wreck of the Martyr	Обломки «Мученицы»

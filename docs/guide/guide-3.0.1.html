@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Сборка модов Krinik Mod Pack 1.0.0 для Conan Exiles Enhanced 3.0.1</title>
+<style>
+  /* Подложка — слегка выцветшая старинная бумага, как манускрипт (владелец, план 35 Г11 п. 1): тёплый тон, мелкая фактура и пятна
+     неравномерного выцветания из SVG-шума, виньетка по краям. Фон стоит на @page: Chrome печатает его на каждом листе целиком, с полями. */
+  @page { size: A4; margin: 14mm 13mm 15mm 13mm; background-color: #f2e8d2; background-size: 100% 100%;
+          background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='794' height='1123' viewBox='0 0 794 1123' preserveAspectRatio='none'><defs><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' seed='3'/><feColorMatrix values='0 0 0 0 0.36  0 0 0 0 0.26  0 0 0 0 0.12  0 0 0 0.09 0'/></filter><filter id='b'><feTurbulence type='fractalNoise' baseFrequency='0.005' numOctaves='3' seed='11'/><feColorMatrix values='0 0 0 0 0.58  0 0 0 0 0.42  0 0 0 0 0.18  0 0 0 0.22 -0.03'/></filter><radialGradient id='v' cx='50%' cy='50%' r='72%'><stop offset='62%' stop-color='%23805524' stop-opacity='0'/><stop offset='100%' stop-color='%23805524' stop-opacity='0.30'/></radialGradient></defs><rect width='794' height='1123' filter='url(%23b)'/><rect width='794' height='1123' filter='url(%23n)'/><rect width='794' height='1123' fill='url(%23v)'/></svg>"); }
+  :root {
+    --ink: #22201c; --muted: #6b6359; --line: #d9cfbf; --paper: rgba(252,247,236,.55);
+    --bronze: #9a5b1e; --bronze-soft: rgba(230,208,175,.55); --ours: #2f5d50; --ours-soft: rgba(214,232,224,.55);
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: transparent; }
+  body { margin: 0; color: var(--ink); background: transparent; font: 10pt/1.4 "Segoe UI", Arial, sans-serif; }
+  h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; font-weight: 700; color: var(--ink); hyphens: none; }
+  h2 { font-size: 16pt; margin: 13pt 0 6pt; padding-bottom: 3pt; border-bottom: 2px solid var(--bronze); break-after: avoid; }
+  h3 { font-size: 11.5pt; margin: 12pt 0 4pt; color: var(--bronze); break-after: avoid; }
+  p { margin: 0 0 6pt; }
+  code, kbd { font-family: Consolas, "Cascadia Mono", monospace; font-size: 9pt; white-space: nowrap; }
+  kbd { display: inline-block; padding: 0 4pt; border: 1px solid #b9ad9a; border-bottom-width: 2px; border-radius: 3pt;
+        background: rgba(255,253,247,.7); line-height: 1.35; }
+  /* Названия не переносятся на две строки (владелец 2026-10-31 17:43). */
+  .nm { white-space: nowrap; }
+  .muted { color: var(--muted); }
+
+  /* Главы с номерами: 1 — «Возможности сборки» на титульном листе, дальше по порядку (владелец 16:37). */
+  body { counter-reset: ch 1 par; }
+  .features, h2.ch { counter-set: par 0; }
+  /* Пункты внутри глав: 6.1, 6.2 … (владелец 16:38). */
+  h3::before, tr.grp th::before { counter-increment: par; content: counter(ch) "." counter(par) " "; }
+  /* Титульный лист — витрина: его пункты без номеров (владелец 17:19). */
+  .features h3::before { content: none; counter-increment: none; }
+  h2.ch::before { counter-increment: ch; content: counter(ch) ". "; }
+
+  /* Титульный лист: блок заголовка, под ним содержание (владелец 17:35), затем возможности сборки. */
+  .cover { background: var(--paper); border: 1px solid var(--line); border-left: 6px solid var(--bronze);
+           padding: 10pt 16pt 9pt; margin-bottom: 5pt; }
+  .cover h1 { font-size: 21pt; margin: 0 0 1pt; }
+  .cover .doc-type { font: 700 20pt/1.15 Georgia, "Times New Roman", serif; color: var(--bronze); letter-spacing: .02em; margin: 4pt 0 6pt; }
+  .stats { display: flex; gap: 8pt; }
+  .stat { flex: 1; background: rgba(255,253,247,.6); border: 1px solid var(--line); padding: 3pt 8pt; }
+  .stat b { display: inline; font: 700 15pt Georgia, serif; color: var(--bronze); margin-right: 6pt; }
+  .stat span { font-size: 8.5pt; color: var(--muted); }
+
+  .toc { margin-bottom: 7pt; }
+  .toc h2 { text-align: center; border: 0; margin: 4pt 0 3pt; padding: 0; font-size: 13pt; }
+  .toc ol { columns: 3; column-gap: 16pt; margin: 0; padding-left: 18pt; font-size: 9.6pt; }
+  .toc li { margin-bottom: 2pt; break-inside: avoid; }
+  .toc a { color: var(--ink); text-decoration: none; border-bottom: 1px dotted var(--bronze); }
+
+  .features { columns: 2; column-gap: 14pt; }
+  .feature { break-inside: avoid; margin: 0 0 5pt; }
+  .feature h3 { margin: 0 0 1pt; font-size: 10.3pt; }
+  .feature p { margin: 0; font-size: 8.5pt; line-height: 1.27; }
+
+  .steps { counter-reset: s; margin: 0 0 6pt; padding: 0; list-style: none; }
+  .steps li { counter-increment: s; position: relative; padding: 0 0 5pt 26pt; }
+  .steps li::before { content: counter(s); position: absolute; left: 0; top: 0; width: 18pt; height: 18pt; border-radius: 50%;
+                      background: var(--bronze); color: #fff; font: 700 9.5pt/18pt Georgia, serif; text-align: center; }
+  .note { background: var(--bronze-soft); border-left: 3px solid var(--bronze); padding: 5pt 8pt; margin: 6pt 0; break-inside: avoid; font-size: 9.2pt; line-height: 1.35; }
+
+  .caption { font-size: 9.5pt; margin: 6pt 0 2pt; break-after: avoid; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 8pt; break-inside: auto; }
+  th { text-align: left; font-size: 8.5pt; letter-spacing: .04em; text-transform: uppercase; color: var(--muted);
+       border-bottom: 3px double var(--ink); padding: 3pt 5pt; }
+  td { border-bottom: 1px solid var(--line); padding: 4pt 5pt; vertical-align: top; }
+  tr { break-inside: avoid; }
+  thead { display: table-header-group; }
+  td.k { white-space: nowrap; width: 1%; }
+  td.name { width: 1%; white-space: nowrap; font-weight: 600; font-size: 9pt; }
+  td.name small { display: block; font-weight: 400; color: var(--muted); font-size: 7.8pt; }
+  td ul { margin: 0; padding-left: 13pt; }
+  td li { margin-bottom: 1pt; }
+  .use { color: var(--bronze); font-weight: 500; }
+  /* Строка группы — пункт главы 6 (6.1, 6.2 …) внутри одного списка модов. */
+  tr.grp { break-after: avoid; }
+  tr.grp th { font: 700 11.5pt Georgia, "Times New Roman", serif; text-transform: none; letter-spacing: 0; color: var(--bronze);
+              border-bottom: 1.5px solid var(--bronze); padding: 10pt 5pt 3pt; }
+  .km { display: inline-block; font-size: 7pt; font-weight: 700; letter-spacing: .05em; padding: 0 4pt; border-radius: 6pt;
+        background: var(--ours); color: #fff; vertical-align: 1pt; margin-left: 3pt; white-space: nowrap; }
+  .tag { display: inline-block; font-size: 7.5pt; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+         padding: 1pt 5pt; border-radius: 8pt; vertical-align: 1pt; margin-left: 4pt; background: var(--bronze); color: #fff; }
+
+  .figure { display: flex; gap: 14pt; align-items: center; margin: 4pt 0 8pt; break-inside: avoid; }
+  .numpad { border-collapse: separate; border-spacing: 2pt; width: auto; margin: 0; }
+  .numpad td { border: 1px solid #9fbeb2; background: rgba(255,253,247,.7); width: 34pt; height: 24pt; text-align: center; padding: 1pt;
+               font: 700 10pt Consolas, monospace; color: var(--ours); }
+  .numpad td small { display: block; font: 6.5pt "Segoe UI", sans-serif; color: var(--muted); }
+
+  ul { margin: 2pt 0 6pt; padding-left: 16pt; }
+  li { margin-bottom: 3pt; }
+
+  .chapter { break-before: page; }
+  /* Все главы — в одном стиле, без рамок и плашек (владелец 2026-10-31 17:53). */
+  .author { break-inside: avoid; }
+  a { color: var(--bronze); }
+  /* «Автор сборки» — строки собирает _config/release/build-docs.py из author_links.txt (владелец, 31.10 15:36). */
+  .author-links { list-style: none; padding: 0; font-size: 11pt; }
+  .author-links li { margin-bottom: 4pt; }
+  .author-links a { color: var(--bronze); font-weight: 600; text-decoration: none; }
+  /* «Что нового» — журнал изменений по версиям: подзаголовки Добавлено / Изменено / Исправлено без номеров. */
+  .cl { font: 700 10.5pt Georgia, "Times New Roman", serif; margin: 8pt 0 2pt; break-after: avoid; }
+</style>
+</head>
+
+<body>
+
+<section class="cover">
+  <h1>Сборка модов <span class="nm">Krinik Mod Pack 1.0.0</span><br>для <span class="nm">Conan Exiles Enhanced 3.0.1</span></h1>
+  <div class="doc-type">Руководство пользователя</div>
+  <div class="stats">
+    <div class="stat"><b>64</b><span>мода Мастерской <span class="nm">Steam</span> и <span class="nm">Nexus Mods</span></span></div>
+    <div class="stat"><b>7</b><span>уникальных вручную написанных модов</span></div>
+  </div>
+</section>
+
+<nav class="toc">
+  <h2 id="contents">Содержание</h2>
+  <ol>
+    <li><a href="#features">Возможности сборки</a></li>
+    <li><a href="#feedback">Руководство по отзывам и обратной связи</a></li>
+    <li><a href="#install">Установка</a></li>
+    <li><a href="#uninstall">Удаление сборки</a></li>
+    <li><a href="#controls">Управление</a></li>
+    <li><a href="#mods">Состав сборки</a></li>
+    <li><a href="#history">История версий</a></li>
+    <li><a href="#whats-new">Что нового</a></li>
+    <li><a href="#author">Автор сборки и ссылки</a></li>
+  </ol>
+</nav>
+
+<div class="features" id="features">
+  <div class="feature"><h3>Полная русификация</h3>
+    <p>Все моды сборки говорят по-русски теми же словами, что и сама игра. Переведены окна настроек модов, их сообщения, религиозные умения, журнал поселения и названия рыб.</p></div>
+  <div class="feature"><h3>Управление положением камеры</h3>
+    <p>Камера от третьего лица построена по классической школе ролевых игр 2000-х годов: герой виден строго со спины, и каждый игрок ставит камеру под свой взгляд на мир прямо в игре, клавишами цифрового блока. Реализованы сохранение положения камеры героя, сброс камеры до значения по умолчанию и возврат к сохранённому пресету игрока.</p></div>
+  <div class="feature"><h3>Стрельба из лука</h3>
+    <p>Стрельба из лука фундаментально переработана по классической школе ролевых игр 2000-х годов, и герой стреляет как настоящий лучник: стрела уходит в точку прицела по дуге, а сила натяжения задаёт её скорость. Реализованы баллистика полёта стрелы по физике <span class="nm">The Elder Scrolls IV: Oblivion</span>, вид от первого лица с луком в руках героя, переработанное поведение камеры при стрельбе для удобного прицеливания от первого и от третьего лица и стрельба в прыжке.</p></div>
+  <div class="feature"><h3>Прокачка героя до 10 000 уровня</h3>
+    <p>Это значит, что в игре реализована практически бесконечная прокачка, позволяющая свободно прокачивать героя, наслаждаться его постоянной прогрессией, которая влияет на способности героя, которые реально видны в действии, герой быстрее бегает, выше и дальше прыгает, лучше стреляет из лука и так далее.</p></div>
+  <div class="feature"><h3>Пауза в инвентаре и хабе</h3>
+    <p>Реализована пауза игры в инвентаре и хабе: добычу можно разобрать и всё обдумать спокойно.</p></div>
+  <div class="feature"><h3>Поселение и спутники</h3>
+    <p>База героя живёт по своему распорядку: рабы спят, едят, работают, тренируются, торгуют и выходят в патруль, а за героем идёт отряд до сотни спутников, и в дорогу рабы едут верхом рядом с ним. Реализованы взятие в рабы боссов и уникальных персонажей и рост уровня рабов до 50.</p></div>
+  <div class="feature"><h3>Новые земли</h3>
+    <p>Мир стал шире, и за горизонтом ждут новые места. Добавлены пещеры Сета с поселением <span class="nm">Akhlut Outpost</span>, шемитский город-государство на западе саванны, подземелье <span class="nm">Ymir's Respite</span> с ареной босса и возрождённая крепость <span class="nm">Al-Merayah</span>. Реализована сеть путевых камней для переноса героя по карте мира.</p></div>
+  <div class="feature"><h3>Опасный мир</h3>
+    <p>За стенами базы героя ждут засады, ночью из темноты выходят демоны и нежить, а жара, холод и бури гонят его в укрытие. Добавлено более 700 новых неигровых персонажей среди родных фракций мира, температура по климату и тёмные подземелья.</p></div>
+  <div class="feature"><h3>Снаряжение и облик героя</h3>
+    <p>Герой собирает оружие, доспехи и внешность под свою историю. Добавлены оружие с собственными связками ударов, броня семи религий, руны, система славы, новые причёски и облик народов по описаниям Роберта Говарда.</p></div>
+  <div class="feature"><h3>Быт и хозяйство базы</h3>
+    <p>Игрок ведёт хозяйство базы, не обходя сундуки по одному, и обставляет дом по своему вкусу. Реализованы строительство и крафт из сундуков всей базы, раскладка рюкзака по сундукам и сундук-сортировщик; добавлены тысячи предметов декора, рыбалка и ловушки для рыбы; вместимость хранилищ удвоена.</p></div>
+  <div class="feature"><h3>Интерфейс</h3>
+    <p>Проделана колоссальная работа по исправлению дефектов в различных элементах графического пользовательского интерфейса с целью повышения его удобства, читаемости, устранения дефектов и приведения его к единому стилю игры <span class="nm">Conan Exiles</span>. Добавлены настраиваемый HUD <span class="nm">Hosav</span>, мини-карта, счётчик урона, полоски здоровья спутников и счётчик кадров.</p></div>
+  <div class="feature"><h3>Лаунчер и обратная связь</h3>
+    <p>Сборка ставится, запускается и удаляется из одного окна, а написать автору сборки игрок может прямо из меню игры. В лаунчере <code>KrinikConanLauncher.exe</code> реализованы установка сборки, запуск игры, сбор отчёта для автора и удаление сборки с возвратом игры к состоянию до установки; в главное меню и в меню <kbd>Esc</kbd> добавлена кнопка «Отзыв».</p></div>
+</div>
+
+<h2 class="ch" id="feedback">Руководство по отзывам и обратной связи</h2>
+<p>Автор сборки принимает отзывы, вопросы и сообщения о сбоях. К сообщению о вылете, зависании игры или неверной работе мода приложите отчёт.</p>
+<ol class="steps">
+  <li><b>Нажмите кнопку «Отзыв»</b> в главном меню игры или в меню <kbd>Esc</kbd>. Если игра закрыта, запустите <code>KrinikConanLauncher.exe</code>, нажмите «Отзыв», затем «Собрать отчёт».</li>
+  <li><b>Дождитесь файла</b> <code>Conan-report-&lt;дата&gt;_&lt;время&gt;.zip</code> на рабочем столе.</li>
+  <li><b>Отправьте файл автору сборки</b> на почту или в личные сообщения на <span class="nm">PlayGround</span>: адреса — в главе <a href="#author">«Автор сборки и ссылки»</a>.</li>
+  <li><b>Опишите в письме,</b> что происходило в игре перед сбоем и повторяется ли сбой.</li>
+</ol>
+<div class="note">Тот же отчёт собирает файл <code>collect_report.cmd</code> в папке сборки. С вопросом по сборке пишите автору без отчёта.</div>
+
+<h2 class="ch" id="install">Установка</h2>
+<ol class="steps">
+  <li><b>Убедитесь, что установлена игра <span class="nm">Conan Exiles Enhanced 3.0.1</span></b> (билд <code>CL-379176</code>).</li>
+  <li><b>Распакуйте архив сборки в папку игры,</b> где лежит файл <code>ConanSandbox.exe</code>.</li>
+  <li><b>Запустите <code>KrinikConanLauncher.exe</code></b> из папки сборки <b>и нажмите «Установить сборку».</b> Лаунчер находит игру по папке, в которой лежит сборка.</li>
+  <li><b>Нажмите «Играть».</b></li>
+  <li><b>Смените разрешение в настройках игры,</b> если экран меньше 4K.</li>
+</ol>
+<p>Сборка ставит полноэкранный режим 3840 × 2160 и русский язык игры. В архиве сборки лежат обои для рабочего стола в разрешениях 4K, 2K и 1080p.</p>
+<div class="note">Запасной путь установки — файл <code>install.cmd</code> в папке сборки.</div>
+
+<h2 class="ch" id="uninstall">Удаление сборки</h2>
+<ol class="steps">
+  <li><b>Закройте игру.</b></li>
+  <li><b>Запустите <code>KrinikConanLauncher.exe</code> и нажмите «Удалить сборку».</b></li>
+  <li><b>Подтвердите удаление</b> в окне вопроса. Игра возвращается в состояние до установки сборки.</li>
+</ol>
+<div class="note">Запасной путь удаления — файл <code>uninstall_krinik_build.cmd</code> в папке игры.</div>
+
+<section class="chapter">
+<h2 class="ch" id="controls">Управление</h2>
+<div class="figure">
+  <table class="numpad">
+    <tr><td>7<small>взгляд ↑</small></td><td>8<small>вперёд</small></td><td>9<small>выше</small></td></tr>
+    <tr><td>4<small>влево</small></td><td>5<small>за спину</small></td><td>6<small>вправо</small></td></tr>
+    <tr><td>1<small>взгляд ↓</small></td><td>2<small>назад</small></td><td>3<small>ниже</small></td></tr>
+  </table>
+  <div class="caption">Рисунок 1 — Камера на цифровом блоке клавиатуры (<span class="nm">KrinikConanCamera</span>)</div>
+</div>
+<div class="caption">Таблица 1 — Клавиши сборки и модов</div>
+<table>
+  <thead><tr><th>Клавиша</th><th>Действие</th><th>Мод</th></tr></thead>
+  <tr><td class="k"><kbd>NumLock</kbd></td><td>Включите один раз: цифровой блок управляет камерой при включённом <kbd>NumLock</kbd>. В игре на эту клавишу также назначен автобег.</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Num 5</kbd></td><td>Камера встаёт строго за спину героя</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Num 8</kbd><kbd>2</kbd><kbd>4</kbd><kbd>6</kbd><kbd>9</kbd><kbd>3</kbd></td><td>Камера вперёд и назад, влево и вправо, выше и ниже</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Num 7</kbd><kbd>1</kbd></td><td>Наклон взгляда камеры выше и ниже</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Num +</kbd><kbd>−</kbd></td><td>Расстояние от камеры до героя</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Num /</kbd> · <kbd>Num 0</kbd></td><td>Сохранение положения камеры героя · возврат к сохранённому пресету игрока</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Num /</kbd></td><td>Сброс камеры до значения по умолчанию</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Ctrl</kbd>+<kbd>Num 5</kbd></td><td>Возврат к штатному наклону камеры игры</td><td class="nm">KrinikConanCamera</td></tr>
+  <tr><td class="k"><kbd>Shift</kbd>+<kbd>L</kbd></td><td>Раскладка рюкзака по ближним сундукам; при наведении на рецепт или повреждённую вещь — сбор недостающих ингредиентов из ящиков вокруг; в режиме строительства — сбор материалов на элемент постройки</td><td class="nm">PackRat Helper</td></tr>
+  <tr><td class="k"><kbd>Ctrl</kbd>+<kbd>L</kbd></td><td>Тот же сбор с выбором числа изделий</td><td class="nm">PackRat Helper</td></tr>
+  <tr><td class="k"><kbd>Shift</kbd>+<kbd>V</kbd></td><td>Меню арсенала: классы, руны, слава</td><td class="nm">Enhanced Armory and Arsenal</td></tr>
+  <tr><td class="k">удержание <kbd>F1</kbd></td><td>Курсор мыши на экране игры: перенос мини-карты и окна счётчика урона, кнопка разворота счётчика урона</td><td><span class="nm">Simple Minimap</span> · <span class="nm">The Damage Meter</span></td></tr>
+  <tr><td class="k"><kbd>Shift</kbd> + кнопка мыши</td><td>Своя метка на большой карте</td><td class="nm">Simple Minimap</td></tr>
+  <tr><td class="k">колесо мыши в прицеле</td><td>Смена вида стрел без выхода из прицела</td><td class="nm">Arrow Quick Swap</td></tr>
+  <tr><td class="k"><kbd>Esc</kbd></td><td>Меню игры на паузе, слева — список всех модов с версиями</td><td><span class="nm">KrinikConanUI</span> · <span class="nm">Simple Modlist</span></td></tr>
+  <tr><td class="k">консоль игры</td><td><code>dc PIFCSettings</code> — настройки прохода сквозь спутников, <code>dc SW_config</code> — настройки погоды</td><td><span class="nm">Player Ignores Follower Collision</span> · <span class="nm">Severe Weather Enhanced</span></td></tr>
+</table>
+</section>
+
+<section class="chapter">
+<h2 class="ch" id="mods">Состав сборки</h2>
+<p>Знаком <span class="km">KRINIK MODIFIED</span> отмечены моды других авторов с доработками для сборки.</p>
+<div class="caption">Таблица 2 — Моды сборки</div>
+<table>
+  <thead><tr><th>Мод</th><th>Описание</th></tr></thead>
+  <tr><td class="name">KrinikConanCamera<span class="tag">Krinik</span><small>камера героя</small></td><td><ul>
+    <li>Камера от третьего лица поставлена строго за спину героя.</li>
+    <li>Добавлено управление положением камеры с цифрового блока клавиатуры: расстояние, высота, боковое смещение и наклон взгляда.</li>
+    <li>Реализованы сохранение положения камеры героя, сброс камеры до значения по умолчанию и возврат к сохранённому пресету игрока.</li>
+    <li>Переработано приближение камеры колесом мыши: мелкий шаг рядом с героем и крупный вдали.</li>
+  </ul></td></tr>
+  <tr><td class="name">KrinikConanArchery<span class="tag">Krinik</span><small>стрельба из лука</small></td><td><ul>
+    <li>Переработана механика прицеливания для удобной работы с модом <span class="nm">KrinikConanCamera</span>: куда целишься точкой прицела, туда и летит стрела.</li>
+    <li>Баллистика полёта стрелы переработана под физику <span class="nm">The Elder Scrolls IV: Oblivion</span>: скорость стрелы задаёт сила натяжения лука.</li>
+    <li>Добавлен вид от первого лица с луком в руках героя.</li>
+    <li>Переработано поведение камеры при стрельбе из лука для более удобного прицеливания как от первого лица, так и от третьего лица.</li>
+    <li>Добавлена стрельба в прыжке: выстрел в воздухе и прыжок во время натяжения лука.</li>
+    <li>Прицел сведён к точке без полосок разброса.</li>
+    <li>Добавлена звуковая индикация полного натяжения лука героя игрока.</li>
+    <li>Изменён внешний вид стрелы при полёте для лучшей видимости траектории полёта стрелы; стрелы не ломаются при попадании.</li>
+  </ul></td></tr>
+  <tr><td class="name">KrinikConanGameplay<span class="tag">Krinik</span><small>прокачка и движение героя</small></td><td><ul>
+    <li>Реализована прокачка героя до 10 000 уровня.</li>
+    <li>На каждом уровне герой получает очко атрибута и очки знаний, на каждом десятом уровне очков знаний втрое больше.</li>
+    <li>За каждое очко Проворства герой быстрее бегает и выше прыгает, как в классической серии игр <span class="nm">The Elder Scrolls</span>.</li>
+  </ul></td></tr>
+  <tr><td class="name">KrinikConanUI<span class="tag">Krinik</span><small>интерфейс сборки</small></td><td><ul>
+    <li>Реализована пауза игры в инвентаре и хабе.</li>
+    <li>Для лучшей читаемости переработан HUD <span class="nm">Hosav</span>.</li>
+    <li>Значки голода, жажды и веса начинают мигать заранее, до предела.</li>
+    <li>Выкрики врагов появляются и гаснут плавно, на своём месте.</li>
+    <li>Добавлен счётчик кадров в правом верхнем углу экрана.</li>
+    <li>В главное меню и в меню <kbd>Esc</kbd> добавлены логотип сборки, версия игры и версия сборки.</li>
+    <li>Добавлена кнопка «Отзыв» в главном меню и в меню <kbd>Esc</kbd>: отчёт и письмо автору сборки готовятся одним нажатием.</li>
+  </ul></td></tr>
+  <tr><td class="name">KrinikConanGraphics<span class="tag">Krinik</span><small>графика сборки</small></td><td><ul>
+    <li>Пятна крови от ударов лежат на земле до пяти минут и плавно гаснут.</li>
+    <li>Добавлены настройки графики сборки: дальность прорисовки, тени, туман и DLSS.</li>
+  </ul></td></tr>
+  <tr><td class="name">KrinikConanRussianTranslation<span class="tag">Krinik</span><small>русский язык модов</small></td><td><ul>
+    <li>Реализован русский перевод текстов всех модов сборки.</li>
+  </ul></td></tr>
+  <tr><td class="name">KrinikConanModPackManager<span class="tag">Krinik</span><small>заставка и главное меню</small></td><td><ul>
+    <li>Добавлена заставка на всё время загрузки игры: логотип игры, логотип сборки и знак загрузки.</li>
+    <li>В главное меню добавлена строка состояния сборки: сколько модов сборки загрузила игра.</li>
+    <li>Из главного меню убраны окно «Играть без подключения» и пустая рамка новостей.</li>
+  </ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Интерфейс и удобство</th></tr>
+  <tr><td class="name">Hosav's Custom UI<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Интерфейс игры заменён настраиваемым HUD, у которого больше 50 параметров; любой новый элемент выключается.</li></ul><span class="use">Настройка HUD — кнопка «Настройки интерфейса» на вкладке «Снаряжение».</span></td></tr>
+  <tr><td class="name">Simple Minimap<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Добавлена мини-карта с метками мест и пятью ступенями приближения.</li><li>Реализованы собственные метки игрока сверх лимита игры.</li><li>Реализовано отображение трупа героя, кровати и спального мешка на карте с любого расстояния.</li></ul></td></tr>
+  <tr><td class="name">Simple Modlist<span class="km">KRINIK MODIFIED</span></td><td><ul><li>В меню <kbd>Esc</kbd> добавлен список включённых модов с версиями, с прокруткой и копированием в виде текста.</li></ul></td></tr>
+  <tr><td class="name">The Damage Meter<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Добавлен счётчик урона и урона в секунду в реальном времени: герой, спутники, другие игроки.</li><li>Реализованы разбивка урона по типам, журнал на 1 000 событий и история десяти последних стычек.</li></ul></td></tr>
+  <tr><td class="name">Proximity Party</td><td><ul><li>Добавлены полоски здоровья ближних спутников и соклановцев, до 15 одновременно.</li></ul></td></tr>
+  <tr><td class="name">Lore &amp; Loot Highlight</td><td><ul><li>Реализована подсветка контуром всего, с чем можно взаимодействовать, и отдельный цвет для сундуков с добычей.</li></ul></td></tr>
+  <tr><td class="name">ModControlPanel</td><td><ul><li>Добавлено единое окно настроек модов.</li></ul></td></tr>
+  <tr><td class="name">Pickup+</td><td><ul><li>Реализован возврат любой поставленной вещи в инвентарь.</li></ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Инвентарь и сундуки</th></tr>
+  <tr><td class="name">PackRat Helper</td><td><ul><li>Реализована раскладка рюкзака по сундукам и станциям, где уже лежат такие же вещи.</li><li>Реализован сбор ингредиентов для рецепта, ремонта или элемента постройки из ящиков вокруг.</li></ul></td></tr>
+  <tr><td class="name">Inventory Compactor</td><td><ul><li>Добавлена кнопка уплотнения инвентаря с уборкой пустых ячеек и объединением стопок.</li><li>Реализовано точное деление стопки.</li></ul><span class="use">Кнопки — в инвентаре и в круговом меню контейнера.</span></td></tr>
+  <tr><td class="name">Organizer Sorting Chest</td><td><ul><li>Добавлен сундук-сортировщик: положенная в него добыча расходится по сундукам вокруг, где лежат такие же вещи.</li></ul><span class="use">Радиус сортировки — в круговом меню сундука.</span></td></tr>
+  <tr><td class="name">Chest Labels</td><td><ul><li>Добавлены надписи с именем сундука или шкафа на самой мебели.</li></ul><span class="use">Включение надписи — в круговом меню сундука.</span></td></tr>
+  <tr><td class="name">Storage Reach Expanded</td><td><ul><li>Реализованы строительство и крафт из сундуков всей базы.</li></ul></td></tr>
+  <tr><td class="name">Double Storage Space</td><td><ul><li>Удвоена вместимость хранилищ.</li></ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Строительство и быт</th></tr>
+  <tr><td class="name">Less Building Placement Restrictions</td><td><ul><li>Сняты запреты игры на постановку построек в свободном месте.</li></ul></td></tr>
+  <tr><td class="name">Beyond Decor: Rustic Edition</td><td><ul><li>Добавлено более 3 000 предметов деревенского убранства: спальня, кухня и столовая, гостиная, сад, рынок и лавки.</li></ul><span class="use">Открытие — в знаниях.</span></td></tr>
+  <tr><td class="name">Ancient Civilization</td><td><ul><li>Добавлены постройки древней подгорной цивилизации с собственной цепочкой производства: тёмный порошок и тёмный камень из древних мельницы и печи.</li></ul></td></tr>
+  <tr><td class="name">Emberlight</td><td><ul><li>Добавлены стойла и разведение животных.</li><li>Добавлены поля, травники, кладовые, пивоварение, святилища и ритуалы.</li><li>Добавлены таверны с артистами, купальни, мебель и улучшенные верстаки.</li></ul></td></tr>
+  <tr><td class="name">Ironlight-Settlements<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Реализовано поселение с распорядком дня рабов: сон, еда, работа, тренировки, торговля и патрули.</li></ul><span class="use">Поселение начинается с городского центра, вокруг него ставятся кровати.</span></td></tr>
+  <tr><td class="name">Ironlight-Settlements-RPG</td><td><ul><li>Добавлены гигиена рабов и профессия артиста.</li></ul></td></tr>
+  <tr><td class="name">Faster Elevator</td><td><ul><li>Ускорены вертикальные и горизонтальные лифты.</li></ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Оружие, броня и бой</th></tr>
+  <tr><td class="name">Highmane's Arsenal</td><td><ul><li>Добавлено более 2 000 предметов: сотни видов оружия с собственными связками ударов и более 500 украшений.</li><li>Добавлены универсальные верстаки.</li></ul></td></tr>
+  <tr><td class="name">Enhanced Armory and Arsenal<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Добавлено более 700 видов оружия, более 350 видов брони, 40 питомцев и 120 перевоплощений.</li><li>Реализованы классы с собственным опытом, три древа умений, руны и система славы.</li></ul></td></tr>
+  <tr><td class="name">Era of Trials<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Для каждой из семи религий добавлены лёгкий, средний и тяжёлый комплекты брони и не меньше шести видов оружия, с бонусами комплекта.</li><li>Добавлены пять видов магического урона, настои и пиры.</li><li>Реализованы волны верующих, которые идут на героя после убийства жреца, и осквернение святилищ.</li></ul></td></tr>
+  <tr><td class="name">LegitReligious</td><td><ul><li>У религиозных алтарей добавлены эпическая броня и оружие; рецепты открывает благословение бога героя.</li></ul></td></tr>
+  <tr><td class="name">MSCasaDesFlores — Weapons &amp; Armors</td><td><ul><li>Добавлены мечи, топоры, копья, кинжалы, семь луков, шесть видов стрел, щиты и броня для героев с 55 по 120 уровень.</li></ul></td></tr>
+  <tr><td class="name">More Katanas</td><td><ul><li>Добавлены новые ступени катан, одноручные катаны и вакидзаси для левой руки.</li></ul></td></tr>
+  <tr><td class="name">Immersive Warriors Enhanced<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Добавлены атаки и комбинации ударов для катаны, меча, двуручного оружия и рукопашного боя.</li><li>Добавлены анимации усталости, еды и питья.</li></ul><span class="use">Боевая часть мода выключается в колесе эмоций.</span></td></tr>
+  <tr><td class="name">TDI_LegendaryRepair</td><td><ul><li>Добавлены ремонтные наборы для легендарных и уникальных вещей, среди них «Совершенный» для ремонта без потери прочности.</li></ul><span class="use">Рецепты — у кузнеца или бронника 4-го уровня.</span></td></tr>
+  <tr><td class="name">Arrow Quick Swap<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Реализована смена вида стрел в прицеле.</li><li>Реализован переход на следующий вид стрел, когда стрелы кончаются.</li></ul></td></tr>
+  <tr><td class="name">Corpse Stripper<small>Nexus Mods</small></td><td><ul><li>Реализовано выпадение всего надетого снаряжения с убитых неигровых персонажей и боссов.</li></ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Рабы и спутники</th></tr>
+  <tr><td class="name">My Absolutely Unnecessary Thrall Army<small>Nexus Mods</small></td><td><ul><li>Отряд героя расширен до 100 спутников.</li></ul></td></tr>
+  <tr><td class="name">Bosses My New Besties<small>Nexus Mods</small></td><td><ul><li>Реализованы оглушение и взятие в рабы боссов, минибоссов и уникальных неигровых персонажей.</li></ul></td></tr>
+  <tr><td class="name">EAA Lv50 Thralls</td><td><ul><li>Потолок уровня рабов поднят до 50; добавлены перки на 10, 15, 20, 35 и 50 уровнях.</li></ul></td></tr>
+  <tr><td class="name">Extended Thrall Stats</td><td><ul><li>Добавлена панель раба и питомца: множители ближнего и дальнего урона, прибавка урона за очко атрибута, здоровье за очко живучести, настоящее имя.</li></ul></td></tr>
+  <tr><td class="name">Thrall Inventory x2</td><td><ul><li>Удвоен инвентарь рабов.</li></ul></td></tr>
+  <tr><td class="name">Riding Thralls</td><td><ul><li>Реализована езда рабов верхом рядом с героем.</li></ul></td></tr>
+  <tr><td class="name">Rideable Pets</td><td><ul><li>Добавлено почти пятьдесят ездовых зверей.</li></ul></td></tr>
+  <tr><td class="name">Player Ignores Follower Collision<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Реализован проход героя сквозь своих спутников в дверях, на лестницах и в бою.</li></ul></td></tr>
+  <tr><td class="name">Thrall_Peeper</td><td><ul><li>Добавлено имя раба при наведении на него прицела.</li></ul></td></tr>
+  <tr><td class="name">Diverse Barkeeps</td><td><ul><li>Реализовано появление трактирщиков девяти народов в клетках тюремщика с равным шансом.</li></ul></td></tr>
+  <tr><td class="name">Better Tavern PATRONS</td><td><ul><li>Посетителем таверны героя может стать почти любой раб игры.</li></ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Мир, земли и ресурсы</th></tr>
+  <tr><td class="name">Exiles Fishing<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Добавлена рыбалка: заброс, слежение за рыбой и вываживание.</li><li>Добавлены 60 видов рыбы в четырёх биомах и семи ступенях редкости, у каждой рыбы своё время суток; четыре удочки и журнал рыб.</li></ul><span class="use">Сложность рыбалки — в окне «Настройка рыбалки».</span></td></tr>
+  <tr><td class="name">Automatic Fish Trap</td><td><ul><li>Добавлены ловушки для рыбы и моллюсков, в том числе глубоководная.</li></ul><span class="use">Знания <span class="nm">Auto Fisher</span> и <span class="nm">Auto Deep Sea Fisher</span>.</span></td></tr>
+  <tr><td class="name">Caverns of Set</td><td><ul><li>Добавлены пещеры с поселением <span class="nm">Akhlut Outpost</span> между Логовом, Безымянным городом и Разбитыми источниками.</li></ul></td></tr>
+  <tr><td class="name">Shemite City State</td><td><ul><li>Добавлен город-государство за стенами на западе саванны: подземелье и свои неигровые персонажи.</li></ul></td></tr>
+  <tr><td class="name">Ymir's Respite</td><td><ul><li>Добавлено пещерное подземелье с ареной босса на севере.</li></ul></td></tr>
+  <tr><td class="name">Al-Merayah Reborn</td><td><ul><li>Возвращена вырезанная разработчиком <span class="nm">Funcom</span> разрушаемая крепость с неигровыми персонажами и осадой.</li></ul></td></tr>
+  <tr><td class="name">Waystones Enhanced</td><td><ul><li>Добавлены путевые камни с переносом между ними по карте мира.</li></ul></td></tr>
+  <tr><td class="name">Ragnar's New Factions<span class="km">KRINIK MODIFIED</span><br>RNF NPC Distribution</td><td><ul><li>Добавлено более 700 новых неигровых персонажей среди родных фракций, расселённых по миру.</li></ul></td></tr>
+  <tr><td class="name">Night Terrors</td><td><ul><li>Добавлены ночные встречи с демонами и нежитью вне базы с 10 уровня.</li></ul></td></tr>
+  <tr><td class="name">PvE Plus Ambush</td><td><ul><li>Добавлены засады на героя с 9 уровня.</li></ul></td></tr>
+  <tr><td class="name">Severe Weather Enhanced<span class="km">KRINIK MODIFIED</span></td><td><ul><li>Добавлены температура по климату, своя погода и бури.</li><li>Реализованы тёмные подземелья и физический свет неба.</li></ul><span class="use">Настройки — команда консоли <code>dc SW_config</code>.</span></td></tr>
+  <tr><td class="name">Resource Stimulus Package<small>Nexus Mods</small></td><td><ul><li>Реализована добыча железа, кристалла и серы из камней, кристалла и льда — из железных жил.</li><li>Увеличена добыча с трупов.</li></ul></td></tr>
+  <tr><td class="name">Reliable Meteor Showers</td><td><ul><li>Реализован досрочный метеоритный дождь, когда на карте остаётся пять узлов звёздного металла или меньше.</li></ul></td></tr>
+
+  <tr class="grp"><th colspan="2">Внешность</th></tr>
+  <tr><td class="name">Edit Appearance</td><td><ul><li>Добавлен редактор внешности героя в самой игре.</li></ul></td></tr>
+  <tr><td class="name">Heritage</td><td><ul><li>Расы мира переработаны по описаниям народов в книгах Роберта Говарда.</li><li>Добавлены постоянные лица для 162 именных персонажей.</li></ul></td></tr>
+  <tr><td class="name">Female New Faces</td><td><ul><li>Добавлены новые женские лица, глаза, брови и причёски в создании героя.</li></ul></td></tr>
+  <tr><td class="name">Ostavar: Salon</td><td><ul><li>Добавлено около 60 женских и 50 мужских причёсок, часть из них — с физикой волос.</li></ul></td></tr>
+  <tr><td class="name">Hair We Go</td><td><ul><li>Добавлен набор причёсок.</li></ul></td></tr>
+  <tr><td class="name">True (Hair) Colors</td><td><ul><li>Реализована насыщенная палитра цветов волос и бород.</li></ul></td></tr>
+  <tr><td class="name">MSCasaDesFlores — Nails Station</td><td><ul><li>Добавлено 58 вариантов ногтей на руках и ногах, раскраски и причёски.</li></ul><span class="use">Станция — в знаниях мебельщика; ногти — в знаниях «Броня → <span class="nm">Nails Arts</span>».</span></td></tr>
+
+  <tr class="grp"><th colspan="2">Запуск игры</th></tr>
+  <tr><td class="name">No-Intro-Splash<small>Nexus Mods</small></td><td><ul><li>Отключены вступительные ролики при запуске игры.</li></ul></td></tr>
+</table>
+</section>
+
+<section class="chapter">
+<h2 class="ch" id="history">История версий</h2>
+<p>Версия сборки 1.0.0 — первая публикация сборки на <span class="nm">PlayGround</span>. Сборка шла вслед за обновлениями игры и собиралась под три её версии.</p>
+<div class="caption">Таблица 3 — Версии игры, под которые собиралась сборка</div>
+<table>
+  <thead><tr><th>Версия игры</th><th>Билд</th><th>Период</th></tr></thead>
+  <tr><td class="nm">Conan Exiles Enhanced 2.1.1</td><td><code>CL-373655</code></td><td>до 2 октября 2026 года</td></tr>
+  <tr><td class="nm">Conan Exiles Enhanced 2.2.3</td><td><code>CL-378132</code></td><td>со 2 по 25 октября 2026 года</td></tr>
+  <tr><td class="nm">Conan Exiles Enhanced 3.0.1</td><td><code>CL-379176</code></td><td>с 25 октября 2026 года</td></tr>
+</table>
+
+<h2 class="ch" id="whats-new">Что нового</h2>
+<h3>Версия 1.0.0 (2026-10-31)</h3>
+<p>Первый выпуск сборки модов <span class="nm">Krinik Mod Pack</span> для <span class="nm">Conan Exiles Enhanced 3.0.1</span>.</p>
+<p class="cl">Добавлено</p>
+<ul>
+  <li>Моды сборки <span class="nm">KrinikConanCamera</span>, <span class="nm">KrinikConanArchery</span>, <span class="nm">KrinikConanGameplay</span>, <span class="nm">KrinikConanUI</span>, <span class="nm">KrinikConanGraphics</span>, <span class="nm">KrinikConanRussianTranslation</span> и <span class="nm">KrinikConanModPackManager</span>.</li>
+  <li>Лаунчер <span class="nm">KrinikConanLauncher</span>: установка, запуск, отчёт для автора и удаление сборки с возвратом игры к состоянию до установки.</li>
+  <li>Обои для рабочего стола в разрешениях 4K, 2K и 1080p.</li>
+</ul>
+<p class="cl">Изменено</p>
+<ul>
+  <li>На русский язык переведены тексты модов <span class="nm">Immersive Warriors Enhanced</span>, <span class="nm">Exiles Fishing</span>, <span class="nm">Player Ignores Follower Collision</span>, <span class="nm">Era of Trials</span> и <span class="nm">Ironlight-Settlements</span>: сообщения, окна настроек, умения, места осквернения святилищ и журнал поселения.</li>
+  <li><span class="nm">Hosav's Custom UI</span> и <span class="nm">Simple Minimap</span> переработаны для лучшей читаемости; координаты мини-карты стоят внутри её кольца.</li>
+  <li>С <span class="nm">Severe Weather Enhanced</span> ночью горит родной свет игры.</li>
+  <li>Метрики сервера в HUD <span class="nm">Hosav's Custom UI</span> выключены в настройках по умолчанию.</li>
+  <li>Свёрнутый счётчик <span class="nm">The Damage Meter</span> уходит в верхний левый угол экрана.</li>
+</ul>
+<p class="cl">Исправлено</p>
+<ul>
+  <li>Предметы поднимаются при любом отдалении камеры (благодарность <span class="nm">Taurin78</span> с форума <span class="nm">playground.ru</span> за подсказку).</li>
+  <li>Окно быстрой добычи и подсказка у трупа стоят рядом и не накрывают друг друга; подсказка предмета держит одну раскладку.</li>
+  <li>Строка координат над мини-картой <span class="nm">Simple Minimap</span> видна целиком.</li>
+  <li>Список модов <span class="nm">Simple Modlist</span> в меню <kbd>Esc</kbd> оставляет открытыми нижние строки меню игры.</li>
+  <li>Кнопка «Настройки интерфейса» <span class="nm">Hosav's Custom UI</span> оставляет открытой кнопку контента DLC.</li>
+  <li>Окно выбора стрел <span class="nm">Arrow Quick Swap</span> появляется только при смене стрел.</li>
+  <li>Эмблема <span class="nm">Enhanced Armory and Arsenal</span> на вкладке «Снаряжение» появляется вместе с хабом.</li>
+  <li>Кнопки и подписи окон настроек <span class="nm">Enhanced Armory and Arsenal</span>, <span class="nm">Simple Minimap</span> и <span class="nm">The Damage Meter</span> стоят каждая на своём месте.</li>
+  <li>В списках появления <span class="nm">Ragnar's New Factions</span> каждое место занимает существующий персонаж.</li>
+</ul>
+</section>
+
+<section class="author">
+<h2 class="ch" id="author">Автор сборки и ссылки</h2>
+<ul class="author-links">
+    <!-- AUTHOR_LINKS:BEGIN — строки ниже пишет _config/release/build-docs.py из author_links.txt; правьте тот файл, а не эти строки -->
+    <li>Почта: <a href="mailto:kotkrinik@yandex.ru">kotkrinik@yandex.ru</a></li>
+    <li>Личные сообщения на PlayGround: <a href="https://users.playground.ru/4580431/">users.playground.ru/4580431</a></li>
+    <li>Публичный репозиторий сборки на GitHub: <a href="https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack">github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack</a></li>
+    <!-- AUTHOR_LINKS:END -->
+</ul>
+</section>
+
+</body>
+</html>

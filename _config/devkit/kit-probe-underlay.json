@@ -1,0 +1,66 @@
+{
+ "ok": true,
+ "border": {
+  "__class__": "/Script/UMG.Border",
+  "background": "<Struct 'SlateBrush' (0x0000020663095120) {tint_color: {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}, draw_as: Box, tiling: NoTile, mirroring: NoMirror, image_size: {}, margin: {left: 0.000000, top: 0.300000, right: 0.000000, bottom: 0.300000}, resource_object: \"/Script/Engine.MaterialInstanceConstant'/Game/UI/Materials/Notifications/MI",
+  "brush_color": "<Struct 'LinearColor' (0x0000020663095210) {r: 1.000000, g: 1.000000, b: 1.000000, a: 0.800000}>",
+  "clip_to_bounds": "<WidgetClipping.INHERIT: 0>",
+  "clipping": "<WidgetClipping.INHERIT: 0>",
+  "content_color_and_opacity": "<Struct 'LinearColor' (0x00000206630950D4) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+  "cursor": "<MouseCursor.DEFAULT: 1>",
+  "desired_size_scale": "<Struct 'Vector2D' (0x0000020663095240) {x: 1.000000, y: 1.000000}>",
+  "flow_direction_preference": "<FlowDirectionPreference.INHERIT: 0>",
+  "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+  "is_enabled": "True",
+  "is_volatile": "False",
+  "navigation": "None",
+  "opacity": "1.0",
+  "padding": "<Struct 'Margin' (0x0000020663095108) {left: 12.000000, top: 12.000000, right: 12.000000, bottom: 8.000000}>",
+  "pixel_snapping": "<WidgetPixelSnapping.INHERIT: 0>",
+  "render_opacity": "1.0",
+  "render_transform": "<Struct 'WidgetTransform' (0x0000020663094ED8) {translation: {x: 0.000000, y: 0.000000}, scale: {x: 1.000000, y: 1.000000}, shear: {x: 0.000000, y: 0.000000}, angle: 0.000000}>",
+  "render_transform_pivot": "<Struct 'Vector2D' (0x0000020663094F10) {x: 0.500000, y: 0.500000}>",
+  "show_effect_when_disabled": "True",
+  "slot": "<Object '/Game/UI/Widgets/HUD/Interact/WBP_ContainerInfo.WBP_ContainerInfo:WidgetTree.Overlay_Main.OverlaySlot_5' (0x000002064E667260) Class 'OverlaySlot'>",
+  "tool_tip_text": "",
+  "tool_tip_widget": "None",
+  "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>",
+  "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>",
+  "visiblity": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+ },
+ "brush": {
+  "draw_as": "<SlateBrushDrawType.BOX: 1>",
+  "image_size": "<Struct 'DeprecateSlateVector2D' (0x0000020663095140) {}>",
+  "margin": "<Struct 'Margin' (0x0000020663095148) {left: 0.000000, top: 0.300000, right: 0.000000, bottom: 0.300000}>",
+  "tiling": "<SlateBrushTileType.NO_TILE: 0>",
+  "mirroring": "<SlateBrushMirrorType.NO_MIRROR: 0>",
+  "image_type": "<SlateBrushImageType.FULL_COLOR: 1>",
+  "tint_color": "<Struct 'SlateColor' (0x0000020663095128) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+  "resource_object": "<Object '/Game/UI/Materials/Notifications/MI_UI_InteractionBlossomFade.MI_UI_InteractionBlossomFade' (0x00000204CB245800) Class 'MaterialInstanceConstant'>",
+  "resource_name": "None",
+  "image_size_xy": [
+   null,
+   null
+  ],
+  "export_text": "(TintColor=(SpecifiedColor=(R=1.000000,G=1.000000,B=1.000000,A=1.000000),ColorUseRule=UseColor_Specified),DrawAs=Box,Tiling=NoTile,Mirroring=NoMirror,ImageType=FullColor,ImageSize=(X=356.000000,Y=168.000000),Margin=(Left=0.000000,Top=0.300000,Right=0.000000,Bottom=0.300000),ResourceObject=\"/Script/Engine.MaterialInstanceConstant'/Game/UI/Materials/Notifications/MI_UI_InteractionBlossomFade.MI_UI_InteractionBlossomFade'\",OutlineSettings=(CornerRadii=(X=0.000000,Y=0.000000,Z=0.000000,W=0.000000),Color=(SpecifiedColor=(R=0.000000,G=0.000000,B=0.000000,A=0.000000),ColorUseRule=UseColor_Specified),Width=0.000000,RoundingType=HalfHeightRadius,bUseBrushTransparency=False),UVRegion=(Min=(X=0.000000,Y=0.000000),Max=(X=0.000000,Y=0.000000),bIsValid=False),bIsDynamicallyLoaded=False,ResourceName=\"\")"
+ },
+ "material": {
+  "parent": "/Game/UI/Materials/Notifications/MI_UI_LevelUpBlossomFade.MI_UI_LevelUpBlossomFade",
+  "scalar": {
+   "ProgressPercent": "1.0",
+   "BlossomScaleFactor": "1.0"
+  },
+  "vector": {
+   "TransitionColor": "<Struct 'LinearColor' (0x00000204FDD8C460) {r: 0.375000, g: 0.000000, b: 0.000000, a: 0.500000}>"
+  },
+  "texture": {
+   "BackgroundTexture": "/Game/UI/Textures/Backgrounds/T_UI_InteractionUnderlay.T_UI_InteractionUnderlay"
+  }
+ },
+ "texture": {
+  "path": "/Game/UI/Textures/Backgrounds/T_UI_InteractionUnderlay.T_UI_InteractionUnderlay",
+  "class": "Texture2D",
+  "blueprint_get_size_x": 687,
+  "blueprint_get_size_y": 185
+ }
+}

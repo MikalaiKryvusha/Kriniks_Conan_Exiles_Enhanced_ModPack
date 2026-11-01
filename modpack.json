@@ -1,0 +1,1047 @@
+{
+  "$comment": "Манифест сборки Conan Exiles Enhanced. Исполняется движком KUMM: Deploy-ModPack.ps1 -PackDir <эта папка> для раскатки, kumm.mjs --root <эта папка> для сверки версий и загрузки с Nexus.",
+  "packName": "Krinik Conan Exiles Enhanced pack",
+  "builtFor": "Conan Exiles Enhanced 3.0.1 (UE 5.8, билд ++exiles+release-CL-379176, кит 1002; с 2026-10-25; до того 2.2.3 — CL-378132, до 2026-10-02 — 2.1.1, UE 5.6.1, CL-373655)",
+  "packVersion": "1.0.0",
+  "uninstall": { "cmd": "uninstall_krinik_build.cmd", "template": "_config/uninstall/uninstall.cmd" },
+  "$comment_uninstall": "Деинсталлятор с откатом на то, что было в игре до сборки (KUMM bugs/72, 2026-10-31: «инсталятор должен устанавливать унисталер сборки с возможностью отката на ваниль» · «или чтобы прямо из лаунчера можно было это сделать по кнопке удаления сборки» — владелец). Раскатка ведёт журнал <игра>/_kumm_backup/journal.txt и кладёт туда копии заменённых файлов; uninstall_krinik_build.cmd в корне игры зовёт копию движка с -Restore — архив сборки для удаления не нужен. Кнопка «Удалить сборку» лаунчера зовёт этот же файл.",
+  "$comment_packVersion": "Версия самой сборки (не игры) - слово владельца 2026-10-02: «версия сборки 1.0.0». Первая публикация на PlayGround.",
+  "guide": "docs/guide/Krinik-Conan-3.0.1-guide.pdf",
+  "$comment_guide": "Гайд по сборке для игрока (что за моды, клавиши, установка, что доработано). Исходник 3.0.1 - docs/guide/guide-3.0.1.html (2.2.3 - guide.html), PDF печатает Chrome без окна: chrome --headless=new --no-pdf-header-footer --print-to-pdf=<pdf> file:///<html>. Deploy-ModPack.ps1 -Export кладёт его в корень архива сборки. Перед выгрузкой: -ConfigFrom берёт *.ini ЖИВОЙ игры - сначала вернуть в неё эталон пака (python _config/deploy-config.py), иначе в архив уедут разрешение и настройки агентских прогонов (2026-10-26: в живой игре стояло 1280x720).",
+  "extras": [
+    "D:/Games/Conan Exiles Mods/mods/_extras/Wallpapers",
+    "_config/player-report/collect_report.cmd",
+    "_config/player-report/collect_report.ps1",
+    "_config/player-report/feedback_howto.txt",
+    "_config/launcher/bin/KrinikConanLauncher.exe",
+    "_config/branding/icon/krinik_build_icon_1.ico",
+    "_config/branding/icon/krinik_build_icon_2.ico"
+  ],
+  "$comment_extras_report": "collect_report.cmd + collect_report.ps1 — в корень архива: игрок двойным щелчком собирает журналы, падения (без дампов) и журнал Lua-модов в zip на рабочий стол без MachineId / LoginId / EpicAccountId, имени компьютера и пути профиля (KUMM план 36 п. 5, план 35 Г13, 2026-10-26). Папку игры ищет рядом с папкой сборки, как install.ps1, иначе спрашивает.",
+  "$comment_extras": "Дополнительные материалы, которые -Export кладёт в корень архива сборки рядом с гайдом. Обои 3.0.1 - слово владельца 2026-10-25: «из неё сделал wallpaper - его кропнуть до 4K, 2K, 10080p и положить в сборку как доп материалы, в png качество». Сделаны из D:/Krinik_Conan_Exiles_ModPack_Wallpapers_upscayl_4x_ultrasharp-4x.png (6684x3764): срез по 2 строки сверху и снизу до точных 16:9, затем LANCZOS до 3840x2160, 2560x1440, 1920x1080. PNG по слову владельца; лежат в библиотеке, вне git (в git PNG не кладём - канон KUMM).",
+  "exportConfig": [
+    "ConanSandbox/Saved/SaveGames/HosavUISave_New.sav",
+    "ConanSandbox/Saved/SaveGames/SimpleMinimap.sav",
+    "ConanSandbox/Saved/SaveGames/ProximityParty.sav",
+    "ConanSandbox/Saved/SaveGames/DamageMeter.sav"
+  ],
+  "$comment_exportConfig": "Что кроме *.ini папки конфига везти в архив сборки при -Export -ConfigFrom: настройки модов, которые они хранят своими сохранениями (интерфейс Hosav - внутриигровые опции, не ini). Метки карты (SimpleMinimap_MarkerData) и данные боёв не везём - они про мир и партию, а не про настройки.",
+
+  "nexusGame": "conanexilesenhanced",
+  "$comment_nexusGame": "Слаг игры в адресах Nexus (nexusmods.com/<slug>/mods/<id>). У Enhanced ОТДЕЛЬНЫЙ домен от старой UE4-версии: 'conanexiles' - это UE4, его моды к Enhanced не подходят. Движку KUMM правок не потребовалось: слаг читается отсюда, а game_id движок берёт прямо со страницы (window.current_game_id).",
+
+  "gameExe": "ConanSandbox.exe",
+  "$comment_gameExe": "Проверка вменяемости цели: без этого файла папка целью не считается и в неё ничего не пишется.",
+
+  "library": "D:/Games/Conan Exiles Mods/mods",
+  "$comment_library": "Библиотека скачанного: архивы с Nexus и OLD/ с отработавшими версиями. Лежит отдельно от сборки и в git не входит - это чужие файлы, их всегда можно скачать заново. Исходники модов, правленные руками (source.folder, то есть _unpacked/), лежат РЯДОМ С ЭТИМ ФАЙЛОМ и версионируются.",
+
+  "engineIni": {
+    "$comment": "У Конана конфиг живёт В ПАПКЕ ИГРЫ, а не в %LOCALAPPDATA% - это отличие от Palworld, и путать их нельзя: Palworld пишет один файл на машину, Конан - свой файл на каждую установку. Файл копируется побайтово из _config/; он собран из ванильного блока [Core.System] (80 строк путей к контенту плагинов, терять нельзя) плюс наш [SystemSettings]. Пересборка - _config/build_engine_ini через скрипт в KUMM.",
+    "file": "_unpacked/KrinikConanGraphics/Engine.ini",
+    "target": "ConanSandbox/Saved/Config/Windows/Engine.ini",
+    "setReadOnly": false,
+    "$comment_setReadOnly": "ПОКА false, и это осознанно. Игра переписывает все пять ini при выходе (наблюдение 08.09.2026: одна метка 0:01:58 на всех файлах), и сообщество лечит это флагом 'только для чтения'. Но тот же флаг лишает меню игры возможности что-либо менять, а мы ещё не знаем, какие из наших значений игра трогает. Сначала наблюдение: запустить, выйти, сравнить файлы с _config/. Ставить true только по результату."
+  },
+
+  "$comment_mods": "Мод-лист собран 08.09.2026 по выбору владельца из каталога docs/05-каталог-модов-nexus.md. Устройство модов в Enhanced: файл .pak И ЕГО СПУТНИКИ .utoc/.ucas кладутся в ConanSandbox/Mods/, а порядок загрузки задаёт modlist.txt в той же папке. ПЕРЕИМЕНОВЫВАТЬ ФАЙЛЫ МОДОВ НЕЛЬЗЯ - прямое предупреждение Funcom: переименованный .pak не загрузится и не скажет об этом. Поэтому у модов kind=pak НЕТ списка install: движок переносит все .pak/.utoc/.ucas из источника в modsDir как есть и сам пишет modlist.txt в порядке этого массива.",
+
+  "$comment_order": "ПОРЯДОК В ЭТОМ МАССИВЕ ЕСТЬ ПОРЯДОК ЗАГРУЗКИ, и он же порядок в modlist.txt. Кто ниже - грузится позже и ПЕРЕБИВАЕТ. Отсюда правило набора: сперва безобидное и косметика, потом правки таблиц, и последним - Level and Attribute Overhaul, потому что он владеет таблицами прогрессии (DT_AttributeSystem, DT_ExperienceSystemLevel, DT_FeatsPerLevel) и никто не должен их перекрывать.",
+
+  "modsDir": "ConanSandbox/Mods",
+  "$comment_modsDir": "Куда движок кладёт .pak/.utoc/.ucas модов. Есть только у игр с таким устройством модов; у Palworld этого ключа нет, и его ветка кода не включается.",
+
+  "modList": "ConanSandbox/Mods/modlist.txt",
+  "$comment_modList": "Файл порядка загрузки. Движок ГЕНЕРИРУЕТ его из порядка mods[], перечисляя .pak включённых модов. Меню игры (Главное меню -> Mods) пишет этот же файл само - после ручной правки в меню наш порядок будет затёрт следующей раскаткой, и это правильно: хозяин порядка - манифест.",
+
+  "mods": [
+    {
+      "name": "UE4SS",
+      "kind": "loader",
+      "version": "3.0.1 build 1181 (experimental-latest, g83330635, 2026-10-17)",
+      "$comment_3_0_1": "2026-10-25, переезд на 3.0.1: сборка 1181 и конфиг zCustomGameConfigs/Conan Exiles Enhanced из того же релиза. Состав файлов 1181 = 1152, VTableLayout.ini Конана не изменился, в UE4SS-settings.ini Конана добавлен только ключ PointerHash (пусто = автоопределение). Правки снимались РАЗНИЦЕЙ стокового архива 1152 с нашим _unpacked: (1) UE4SS-settings.ini и VTableLayout.ini Конана - в корень ue4ss; (2) BPModLoaderMod : 0 в Mods/mods.txt. ⚠️ ПОПРАВКА к записи 2.2.3: консоли НЕ включены - ConsoleEnabled = 0 и GuiConsoleEnabled = 0, как в конфиге Конана; в 1152 стояло так же (файл совпадал с конфигом байт в байт). Строка 'три правки повторены' ниже была неверна.",
+      "$comment_2_2_3": "2026-10-02, переезд на 2.2.3 (UE 5.8): сборка 1152 и конфиг zCustomGameConfigs/Conan Exiles Enhanced из того же релиза (апстрим перегенерировал его под 5.8 коммитом b0d470ba 27.09: MajorVersion 5 / MinorVersion 8, bUseUObjectArrayCache = false). Три правки ниже повторены. Наша строка Unknown_1 (issue #1421, принята 12.09 коммитом 3fe75235) в раскладке 5.8 отсутствует: генератор снял слоты с бинарника 5.8; если в UE4SS.log выравнивание FName снова станет мусорным - вернуть её над GetMinAlignment.",
+      "source": {
+        "folder": "_unpacked/UE4SS"
+      },
+      "$comment": "Загрузчик Lua-модов. НЕ ПАК: кладётся рядом с ConanSandbox-Win64-Shipping.exe как прокси-DLL (dwmapi.dll) плюс папка ue4ss. Ничего в игре не перезаписывает, откат = удаление этих двух объектов, что и делает -Remove. НОМЕР СБОРКИ ВАЖЕН: практики оперируют билдами, а не версиями - в issue #1405 сборка 1101 падала там, где 1009 работала. Здесь 1127.",
+      "$comment_config": "Исходник в _unpacked правлен руками, и это осознанно (как UE4SS в паке Palworld). Три правки против стокового архива: (1) UE4SS-settings.ini и VTableLayout.ini взяты из zCustomGameConfigs/Conan Exiles Enhanced и положены В КОРЕНЬ ue4ss, а НЕ одноимённой подпапкой - UE4SS ищет конфиг по имени папки на три уровня выше exe, а она у владельца называется 'Conan Exiles', и автоподбор не сработал бы; (2) включены обе консоли (в конанском конфиге они выключены); (3) ВЫКЛЮЧЕН BPModLoaderMod - открытый баг UE4SS #1391 роняет процесс после каждой загрузки карты именно через него, а чистому Lua-моду он не нужен. При обновлении UE4SS распаковать заново и повторить все три.",
+      "$comment_risk": "ЗАПУСК НА ЭТОМ БИЛДЕ НИКЕМ НЕ ПОДТВЕРЖДЁН. Все публичные отчёты сделаны на CL 373004 и в основном на выделенном сервере, а тут CL-373655. Вердикт читается за минуту в ue4ss/UE4SS.log: 'Using engine version: 5.6' и 'Event loop start' = завелось; обрыв инициализации = не подошёл VTableLayout.ini под этот CL; лога нет вовсе = dwmapi.dll не подхватилась. Разбор - docs/04-камера.md.",
+      "install": [
+        {
+          "from": "dwmapi.dll",
+          "to": "ConanSandbox/Binaries/Win64/dwmapi.dll"
+        },
+        {
+          "from": "ue4ss",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/dwmapi.dll",
+        "ConanSandbox/Binaries/Win64/ue4ss/UE4SS.dll",
+        "ConanSandbox/Binaries/Win64/ue4ss/UE4SS-settings.ini",
+        "ConanSandbox/Binaries/Win64/ue4ss/VTableLayout.ini"
+      ]
+    },
+    {
+      "name": "KrinikConanCamera",
+      "kind": "lua",
+      "version": "0.1.0 (наш, написан 08.09.2026)",
+      "source": {
+        "folder": "_unpacked/KrinikConanCamera"
+      },
+      "$comment": "НАШ мод: камера строго за спиной вместо вида из-за плеча. Готового такого мода нет нигде - перепроверено по всем 40 модам Nexus Enhanced, Мастерской, ModDB и GitHub (docs/04-камера.md). Пишет в штатные свойства USpringArmComponent: SocketOffset.Y=0 это и есть 'строго за спиной', X - назад/вперёд, Z - высота, TargetArmLength - дистанция. Маршрут взят у практиков (MMOCams, 3rdCamDist Кхарзетта), а не придуман.",
+      "$comment_keys": "Раскладка клавиш - в _unpacked/KrinikConanCamera/README.md (источник истины; 2026-10-02 здесь стояла устаревшая раскладка 0.1.0 и убрана). Коротко: Нумпад 5 за спину · 8/2 дальше-ближе · 4/6 вбок · 9/3 высота · 7/1 ось · +/- дистанция · / записать, 0 применить посадку; с Ctrl - ось. Значения сохраняются в config.lua сами, отложенно на 1200 мс, чтобы серия нажатий давала одну запись - механизм перенесён из палворлдовского CameraControl владельца.",
+      "$comment_unknowns": "ЧЕГО НЕ ЗНАЕМ ДО ПЕРВОГО ЗАПУСКА: как называется компонент камеры на КЛИЕНТЕ (имя ThirdPersonSpringArm взято из СЕРВЕРНОГО дампа другого билда) - поэтому мод сперва печатает в журнал ВСЕ найденные пружинные штанги и только потом выбирает, а config.lua позволяет назвать компонент вручную; возвращает ли игра камеру сама (автор 3rdCamDist снял свою горячую клавишу со словами 'funcom now recenters the camera') - на этот случай есть повторное применение по таймеру, выключаемое. И ОЖИДАЕМАЯ ПЛАТА: центровка камеры ЛОМАЕТ СТРЕЛЬБУ ИЗ ЛУКА - об этом говорят и MMOCams, и Кхарзетт. Это не дефект мода.",
+      "install": [
+        {
+          "from": ".",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanCamera"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanCamera/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanCamera/enabled.txt"
+      ]
+    },
+    {
+      "name": "KrinikConanModPackManager",
+      "kind": "lua",
+      "version": "1.0.0",
+      "source": {
+        "folder": "_unpacked/KrinikConanModPackManager"
+      },
+      "$comment_merge": "2026-10-31 16:48 the owner: «KrinikIntro · KrinikConanModPackStatus — вот это все организационные вопросы» · «Я предлагаю их объединять в KrinikConanModPackManager». One mod of the build's organisation: the Lua half (ue4ss/ → ue4ss/Mods/KrinikConanModPackManager; was ConanModPackStatus) and the loading intro (intro/KrinikIntro.mp4 → Content/Movies/.mp4; was the entry KrinikIntro: the game's DefaultGame.ini carries ONE EMPTY +StartupMovies= entry and WindowsMoviePlayer opens Content/Movies/.mp4; built by _config/branding/make-intro.py; bWaitForMoviesToComplete=False in _config/Game.ini; recon KUMM researches/conan-intro-movie/README.md).",
+      "$comment": "НАШ мод. Два дела: (1) считает по журналу игры, сколько паков смонтировалось, и сверяет с modlist.txt - это единственный способ узнать, доехала ли сборка, не глядя на экран; (2) по заказу владельца 09.09.2026 гасит модалку 'Играть без подключения' - причина её неустранима и проверена: домен сервисов Funcom для этой сборки недоступен снаружи. Опознание модалки идёт по строке самой игры 'Requested Message FlsOfflineMode', а не по тексту окна: текст не читается.",
+      "$comment_manifest": "ЗАПИСАН В МАНИФЕСТ 2026-09-09 22:5x. До этого мод ЛЕЖАЛ В ИГРЕ, но манифест о нём молчал: раскатка его не видела и не могла обновить, а -Verify не мог его проверить. Дрейф 'файл в игре есть, источник истины молчит' - ровно тот класс, ради которого манифест и существует.",
+      "$comment_probe": "В моде живёт ЗОНД ИНТЕРФЕЙСА (probe_widget_prefix в config.lua): ждёт мира, выписывает живые виджеты названного мода и устройство их классов в widget-report.txt. Только метаданные плюс поля, известные поимённо, - граница EXP-0050. Заведён под заказ 'увеличить ТОЛЬКО HUD от Hosav'. Выключается пустой строкой; держать включённым постоянно незачем.",
+      "install": [
+        {
+          "from": "ue4ss",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanModPackManager"
+        },
+        { "from": "intro/KrinikIntro.mp4", "to": "ConanSandbox/Content/Movies/.mp4" }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanModPackManager/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanModPackManager/enabled.txt",
+        "ConanSandbox/Content/Movies/.mp4"
+      ]
+    },
+    {
+      "name": "KrinikConanGraphics",
+      "kind": "lua",
+      "version": "1.0.0 (наш, 30.10.2026: графика сборки одним модом — кровь на земле 5 минут (Lua) и оптимизированный Engine.ini: дальности, тени, туман, DLSS, шаг солнца; до того — мод KrinikLingeringBlood и _config/Engine.ini)",
+      "source": {
+        "folder": "_unpacked/KrinikConanGraphics"
+      },
+      "$comment": "НАШ мод графики. Слово владельца 30.10 ≈12:5x: «Может всё по графике Krinik сведём в один мод KrinikConanGraphics? а не размазывать KrinikLingeringBlood» · «у нас и Engine.ini поставляется» · «оптимизированный» · «и по солнцу». Две половины: Lua UE4SS (ue4ss/ → Mods/KrinikConanGraphics) — кровь на земле: после родного SetFadeOut пятна M_blood_ground_decal ставит SetFadeOut(297, 3) + SetFadeIn(-500, 1000), потолок 200 пятен — сверх него самое старое тает за 0,5 с («Нужно старые убирать, а новые чтобы жили 5 минут»); Engine.ini — файл этого мода, его раскатывают поле engineIni манифеста и _config/deploy-config.py. KUMM plans/36 W28, W30.",
+      "install": [
+        {
+          "from": "ue4ss",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGraphics"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGraphics/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGraphics/enabled.txt"
+      ]
+    },
+    {
+      "name": "KrinikConanHarness",
+      "kind": "lua",
+      "export": false,
+      "version": "1.0.0 (ours, 2026-10-30: the agent's modding instruments as one dev-only entry — KrinikAgentRemote (the remote: cmd.txt → done.txt, dump, call, lua), KrinikConanBench (the fly-through bench), KrinikMenuProbe; installed on this machine, NEVER in the players' archive)",
+      "source": {
+        "folder": "_unpacked/KrinikConanHarness"
+      },
+      "$comment": "The owner's Krinik mod set (KUMM plans/36 W34): «и ещё будет KrinikConanHarness - все инструменты, которые мы используем для моддинга» · «хорошо, в поставку сборки не включаем» · 2026-10-30 ≈13:0x. \"export\": false — Deploy-ModPack.ps1 -Export leaves this entry out (the remote runs any Lua from a text file in the game folder: an open door on a player machine). Three UE4SS Lua mods, each its own folder in ue4ss/Mods, as before 2026-10-30 (then outside the manifest, deployed by hand). KrinikConanBench has no enabled.txt in the source: switched on in the game folder by hand when a bench run needs it.",
+      "install": [
+        {
+          "from": "KrinikAgentRemote",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote"
+        },
+        {
+          "from": "KrinikConanBench",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanBench"
+        },
+        {
+          "from": "KrinikMenuProbe",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikMenuProbe"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/enabled.txt",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanBench/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikMenuProbe/Scripts/main.lua"
+      ]
+    },
+    {
+      "name": "ConanProjectileProbe",
+      "kind": "lua",
+      "enabled": false,
+      "$comment_disabled": "ВЫКЛЮЧЕН 2026-09-09 17:25 +03:00. Мод убивает ВЕСЬ Lua-слой UE4SS: с ним загрузчик падает на 'Fatal Error: [FName::StaticAlignment] StaticAlignment_Private is not valid' ещё ДО запуска модов, и не стартует НИКТО - ни наши моды, ни штатные модули UE4SS (консоль, кейбинды). Доказано перебором 09.09.2026: три наших мода = падение; ноль наших модов = 'Event loop start' и штатные живы; камера с гасителем модалки, зонд убран = 'Event loop start' и 244 строки камеры в журнале. Причина ВНУТРИ зонда не найдена - он лишь регистрирует две клавиши и печатает строку. НЕ ВКЛЮЧАТЬ, пока причина не найдена и не проверена запуском игры. Разбор - bugs/07.",
+      "version": "0.1.0 (наш, написан 09.09.2026)",
+      "source": {
+        "folder": "_unpacked/ConanProjectileProbe"
+      },
+      "$comment": "РАЗВЕДОЧНЫЙ мод, только ЧИТАЕТ. Отвечает на один вопрос: есть ли внутри снаряда лука штатный движковый ProjectileMovementComponent. Если есть - у него есть ProjectileGravityScale (штатно 1.0) и InitialSpeed, и обливионская парабола становится вопросом двух чисел. Если нет - Funcom считает полёт сам, и путь совсем другой. Повод: разведка 09.09 (docs/08) показала, что физику полёта стрелы за девять лет не тронул НИ ОДИН мод Конана - ни на Nexus, ни в Мастерской: все правят таблицы предметов, а дуга живёт в блюпринте снаряда.",
+      "$comment_keys": "Numpad * - стадия 1, ТОЛЬКО ИМЕНА (безопасно). Numpad / - стадия 2, чтение трёх известных движковых полей, каждое в своём pcall. Две стадии и отдельная клавиша для значений - то же решение, что у лампочки: перебор значений чужих свойств роняет игру (три падения 08.09). Нумпад 0-9, плюс и минус заняты модом камеры - свободны только эти две клавиши.",
+      "$comment_risk": "Ни одного вечного цикла и ни одной записи - всё строго по нажатию. Имена классов добыты ОФФЛАЙН индексом IoStore (researches/ue5-iostore-index), а не перебором в живой памяти. Стрела существует только в полёте: если FindAllOf даёт ноль - выстрелить и нажать снова. Правки подхватывать ПЕРЕЗАПУСКОМ игры, не Ctrl+R (EXP-0062: горячая перезагрузка не отменяет, а накапливает).",
+      "install": [
+        {
+          "from": ".",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/ConanProjectileProbe"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/ConanProjectileProbe/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/ConanProjectileProbe/enabled.txt"
+      ]
+    },
+    {
+      "name": "No-Intro-Splash",
+      "kind": "files",
+      "nexusId": 1,
+      "$comment": "ЭТО НЕ МОД-ПАК. Он не кладёт .pak, а ПОДМЕНЯЕТ ФАЙЛЫ САМОЙ ИГРЫ: десять роликов заставок и Splash.bmp - заглушками по 392 байта. Отсюда три следствия, все важные. (1) Оригиналы сохранены ДО первой раскатки в '<библиотека>/_originals/' (197 МБ, вне git - там чужие файлы); возврат заставок - копированием оттуда, разбор в ЧТО_ЗДЕСЬ.md рядом. (2) Десять из этих файлов числятся в манифесте целостности установки, поэтому они объявлены в _config/verify-baseline.json с причиной - иначе verify-install.py начал бы врать десятью ложными тревогами. (3) Штатное удаление (-Remove) НЕ вернёт оригиналы, а сотрёт файлы: удаление идёт по списку 'to'. Поэтому здесь пофайловый список, а НЕ папка: 'to' с папкой ConanSandbox означал бы удаление всей игры одной командой.",
+      "$comment_extra": "В архиве есть ещё два файла - SplashScreenMiddlewareLogos.mp4 и StartupUE.mp4. В этой сборке игры их НЕТ (проверено), они из другого билда. Намеренно не ставим: мусор в папке игры дороже пользы.",
+      "install": [
+        {
+          "from": "ConanSandbox/Content/Movies/Exiles Cinematic Intro.bk2",
+          "to": "ConanSandbox/Content/Movies/Exiles Cinematic Intro.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/Funcom Splash.bk2",
+          "to": "ConanSandbox/Content/Movies/Funcom Splash.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/Inflexion_Logo.bk2",
+          "to": "ConanSandbox/Content/Movies/Inflexion_Logo.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/Inflexion_Logo_1080.bk2",
+          "to": "ConanSandbox/Content/Movies/Inflexion_Logo_1080.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/Intro_Cinematic_Siptah.bk2",
+          "to": "ConanSandbox/Content/Movies/Intro_Cinematic_Siptah.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/Nvidia_Splash.bk2",
+          "to": "ConanSandbox/Content/Movies/Nvidia_Splash.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/Splash_Inflexion.bk2",
+          "to": "ConanSandbox/Content/Movies/Splash_Inflexion.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/StartupNvidia.bk2",
+          "to": "ConanSandbox/Content/Movies/StartupNvidia.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Movies/StartupUnreal.bk2",
+          "to": "ConanSandbox/Content/Movies/StartupUnreal.bk2"
+        },
+        {
+          "from": "ConanSandbox/Content/Splash/Splash.bmp",
+          "to": "ConanSandbox/Content/Splash/Splash.bmp"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Content/Movies/Exiles Cinematic Intro.bk2",
+        "ConanSandbox/Content/Movies/Funcom Splash.bk2",
+        "ConanSandbox/Content/Movies/Inflexion_Logo.bk2",
+        "ConanSandbox/Content/Movies/Inflexion_Logo_1080.bk2",
+        "ConanSandbox/Content/Movies/Intro_Cinematic_Siptah.bk2",
+        "ConanSandbox/Content/Movies/Nvidia_Splash.bk2",
+        "ConanSandbox/Content/Movies/Splash_Inflexion.bk2",
+        "ConanSandbox/Content/Movies/StartupNvidia.bk2",
+        "ConanSandbox/Content/Movies/StartupUnreal.bk2",
+        "ConanSandbox/Content/Splash/Splash.bmp"
+      ]
+    },
+    {
+      "name": "KrinikConanRussianTranslation",
+      "kind": "files",
+      "version": "1.0.0 · Game.locres 54 441 запись, пересборка 2026-10-26 ≈15:35; правки записей без пересборки — _config/localization/locres-fixes-2026-10-29.tsv («XP :» с тонким пробелом, 2026-10-29; регресс: 0 пропало, 1 изменено)",
+      "source": {
+        "folder": "_config/localization/Game"
+      },
+      "$comment": "Русский перевод всех модов сборки — один Game.locres цели локализации Game движка (как устроен и как пересобирается — _config/localization/README.md). Запись манифеста нужна, чтобы перевод ехал в архив игрока и ставился install.cmd: до 2026-10-26 его раскатывал только отдельный прибор deploy-localization.py, и выгрузка -Export перевод не везла (разбор фактов для путеводителя 3.0.1, KUMM plans/35). Папка Content/Localization/Game в чистой игре пуста: ванильный перевод лежит в паках игры, поэтому -Remove удаляет только эти два наших файла. Работает при Language=ru в Game.ini (едет с настройками игры).",
+      "install": [
+        {
+          "from": "Game.locmeta",
+          "to": "ConanSandbox/Content/Localization/Game/Game.locmeta"
+        },
+        {
+          "from": "ru/Game.locres",
+          "to": "ConanSandbox/Content/Localization/Game/ru/Game.locres"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Content/Localization/Game/Game.locmeta",
+        "ConanSandbox/Content/Localization/Game/ru/Game.locres"
+      ]
+    },
+    {
+      "name": "More Katanas",
+      "kind": "pak",
+      "workshopId": 3741906845,
+      "source": {
+        "folder": "_workshop/3741906845"
+      },
+      "$comment_source": "С 2026-10-02 (переезд на 2.2.3) берётся из Мастерской, а не с Nexus 41: страница Nexus застряла на 1.1.1 от 03.08 (UE5 1017, под 2.1.x), а автор выложил 1.1.2 в Мастерскую 16.09 (UE5 1018). Id взят из steamWorkshopFileIds в modinfo.json самого пака (KUMM EXP-0124).",
+      "$comment": "Новые тиры катан и одноручные варианты с вакидзаси в левой руке. Чистое добавление контента, чужих таблиц почти не трогает - поэтому рано в порядке. Автор Hazelberry (не xtrekiller)."
+    },
+    {
+      "name": "Resource Stimulus Package",
+      "kind": "pak",
+      "nexusId": 34,
+      "$comment": "Камни дают железо, кристалл и серу; железные жилы - кристалл и лёд; с трупов падает больше. 32 КБ, правка таблиц добычи. ВКЛЮЧАЕТ В СЕБЯ мод Stone Drop Brimstone (№10) - тот отдельно НЕ берём, иначе два мода будут спорить за одни таблицы."
+    },
+    {
+      "name": "Corpse Stripper",
+      "kind": "pak",
+      "nexusId": 14,
+      "$comment": "С NPC и боссов падает 100% надетого снаряжения. Правит таблицы лута, поэтому идёт после правок добычи."
+    },
+    {
+      "name": "Bosses My New Besties",
+      "kind": "pak",
+      "nexusId": 18,
+      "$comment": "Позволяет вырубать и вербовать в рабы боссов, минибоссов и уникальных NPC. Вместе с лимитом в 100 спутников даёт заметную нагрузку на игровой поток - если пойдут просадки, проверять эту пару первой."
+    },
+    {
+      "name": "My Absolutely Unnecessary Thrall Army",
+      "kind": "pak",
+      "nexusId": 22,
+      "$comment": "Лимит спутников 100. Выбран владельцем ВМЕСТО My Little Thrall Army (№9, лимит 10) - взять можно только один, оба правят лимит. Автор сам предупреждает про 'FPS collapse' и 'pathfinding disaster'. ОТКАТ: заменить эту запись на nexusId 9 и передеплоить - минутное дело."
+    },
+    {
+      "name": "Edit Appearance",
+      "kind": "pak",
+      "workshopId": 3751947496,
+      "source": {
+        "folder": "_workshop/3751947496"
+      },
+      "$comment_source": "С 2026-10-25 (переезд на 3.0.1) берётся из Мастерской, а не с Nexus 36: автор выложил '1.2.8 (Update for game item changes)' 07.10 на обе витрины ('Update for game changes to armor categories' - фильтры брони патча 3.0), а вход в профиль Chrome KUMM слетел. Анонимный steamcmd входа не требует. Id - из steamWorkshopFileIds в modinfo.json самого пака (KUMM EXP-0124). Прежний архив Nexus (Update for Version 2.2.0) остаётся в библиотеке.",
+      "$comment": "Редактор внешности персонажа в игре, версия 1.2.8 автора IdeaPoet. Интерфейс, не геймплей."
+    },
+    {
+      "name": "Immersive Warriors Enhanced",
+      "kind": "pak",
+      "workshopId": 3742373178,
+      "source": {
+        "folder": "_krinik-modified/3742373178"
+      },
+      "krinikModified": "KRINIK MODIFIED — сообщения мода по-русски: таблица IMWA_DT_UI_Strings, английские индексы 0 и 1 (6 сообщений, 9 строк: «Кром отводит взор…», «Идёт изучение языка» и др.) — их .locres не видит (KUMM план 36 п. 14, баг 64 п. 20; 2026-10-28). Оригинал: _workshop/3742373178 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\IMM_WAR.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build IMM_WAR IMWA_DT_UI_Strings <work> _config/localization/imwa-ui-ru.tsv → <work>/out/IMM_WAR.pak в _krinik-modified/3742373178. Пак без сжатия обёртки — 735 МБ против 359 у оригинала.",
+      "krinikBuild": {"args": ["IMM_WAR", "IMWA_DT_UI_Strings", "_config/localization/imwa-ui-ru.tsv"]},
+      "$comment_source": "С 2026-10-02 (переезд на 2.2.3) берётся из Мастерской, а не с Nexus 38: страница Nexus застряла на 1.0.8 от 23.08, а автор выложил 1.1.0 в Мастерскую 21.09 (UE5 1018). Id взят из steamWorkshopFileIds в modinfo.json самого пака (KUMM EXP-0124).",
+      "$comment": "235 МБ анимаций: новые лёгкие/тяжёлые/прыжковые атаки и комбо для катаны, меча, двуручника и рукопашной; анимации усталости, еды, питья; перевоплощение; озвучка на 4 языках (русского нет). Боевую часть можно выключить в колесе эмоций. ИЗВЕСТНАЯ ПРОБЛЕМА АВТОРА: 'cinematic camera corrupts the animations' - кинематографическая камера ломает анимации. ЭТО ЗАДЕВАЕТ ЗАКАЗ ВЛАДЕЛЬЦА ПО КАМЕРЕ (docs/04-камера.md): если работа над камерой начнёт конфликтовать, подозреваемый номер один."
+    },
+    {
+      "name": "Simple Modlist",
+      "kind": "pak",
+      "workshopId": 3719546290,
+      "source": {
+        "folder": "_krinik-modified/3719546290"
+      },
+      "krinikModified": "KRINIK MODIFIED — панель списка модов в меню Esc не накрывает нижние строки меню игры 3.0 («Играть без подключения», «Организатор совместной игры», «Версия»): высота списка 800 → 620; шрифт списка 12 → 15, ширина панели 420 → 680 — длинные имена модов помещаются (KUMM bugs/64 п. 8–9, 2026-10-26). Оригинал: _workshop/3719546290 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\SimpleModlist.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build SimpleModlist SML_UI_ModList <work> _config/localization/asset-strings/SimpleModlist__SML_UI_ModList.tsv → <work>/out/SimpleModlist.pak в _krinik-modified/3719546290.",
+      "krinikBuild": {"args": ["SimpleModlist", "SML_UI_ModList", "_config/localization/asset-strings/SimpleModlist__SML_UI_ModList.tsv"]},
+      "$comment": "Выбор владельца 09.09. Показывает список активных модов ПРЯМО НА ЭКРАНЕ ESC, с номерами версий, прокруткой и возможностью выделить и скопировать текстом. 129 КБ.",
+      "$comment_history": "⚠️ ЭТО ТО, НАД ЧЕМ МЫ БИЛИСЬ ДВА ДНЯ. Заказ владельца на 'лампочку модов' (показать своё внутри игры) провалился ПЯТЬ РАЗ ИЗ ПЯТИ и уронил игру, после чего владелец заказ снял (docs/06, EXP-0060, EXP-0061). А готовый мод с 21 087 подписчиками всё это время лежал в Мастерской. Не увидели мы его потому, что днём раньше агент объявил Мастерскую недоступной, не проверив вход в аккаунт (EXP-0063). Настоящая цена той ошибки - не 'сорок модов вместо тысячи', а вечер обрывов игры у владельца ради того, что уже было сделано."
+    },
+    {
+      "name": "PackRat Helper",
+      "kind": "pak",
+      "workshopId": 2596031352,
+      "source": {
+        "folder": "_workshop/2596031352"
+      },
+      "$comment": "Выбор владельца 09.09. Разбирает рюкзак в обратную сторону: Shift+L рассовывает стаки по ближним сундукам и станциям - туда, где такие вещи уже лежат. Если навести мышь на рецепт или повреждённую вещь, та же клавиша ВТЯНЕТ недостающие ингредиенты из окружающих ящиков; в режиме строительства вытянет материалы на один кусок. Ctrl+L спросит, на сколько крафтов тянуть.",
+      "$comment_pair": "Третий в связке разбора добычи: Inventory Compactor уплотняет рюкзак, Organizer Sorting Chest раскладывает по сундукам, PackRat делает и то и другое по клавише."
+    },
+    {
+      "name": "The Damage Meter",
+      "kind": "pak",
+      "workshopId": 3719585133,
+      "source": {
+        "folder": "_krinik-modified/3719585133"
+      },
+      "krinikModified": "KRINIK MODIFIED — значение по умолчанию: свёрнутый счётчик уходит в верхний левый угол (DN_SG_SaveSettings.RestoreAnchor 2 → 0; слово владельца 2026-10-26 «нужно сворачивать не в левый нижний угол, а в левый верний»). Игрок с уже сохранёнными настройками мода меняет угол сам: настройки мода → Minimize to corner. Второе (2026-10-26 18:19, KUMM bugs/64 п. 21): в окне настроек подписи «Непрозрачность» и «Масштаб» кеглем 10 вместо 13 — русские вдвое длиннее английских и наезжали друг на друга; кнопки «Сохранить» и «Отмена» — кеглем 10 вместо 12 (слипались). Оригинал: _workshop/3719585133 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\DamageNumber.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build DamageNumber DN_SG_SaveSettings <work> _config/localization/asset-strings/DamageNumber__DN_SG_SaveSettings.tsv _config/localization/asset-strings/DamageNumber__DN_UI_SettingsWindow.tsv DN_UI_SettingsWindow → <work>/out/DamageNumber.pak в _krinik-modified/3719585133.",
+      "krinikBuild": {"args": ["DamageNumber", "DN_SG_SaveSettings", "_config/localization/asset-strings/DamageNumber__DN_SG_SaveSettings.tsv", "_config/localization/asset-strings/DamageNumber__DN_UI_SettingsWindow.tsv", "DN_UI_SettingsWindow"]},
+      "$comment": "Выбор владельца 09.09. Счётчик урона и ДПС в реальном времени по игроку, спутникам и другим игрокам, с разбивкой по типу урона по наведению, боевым журналом на 1000 событий и всплывающими цифрами. Хранит последние 10 стычек плюс общий итог, данные лежат у клиента.",
+      "$comment_why": "ДЛЯ НАС ЭТО ПРИБОР, А НЕ ИГРУШКА: им проверяется, работает ли вообще правка боя - своя или чужая. С ним 'стало лучше' перестаёт быть ощущением. Пригодится, когда дойдут руки до баланса и до проверки Immersive Warriors.",
+      "$comment_keys": "Мышь на экране - по удержанию F1 (третий мод с этой клавишей, см. риск у Proximity Party)."
+    },
+    {
+      "name": "Diverse Barkeeps",
+      "kind": "pak",
+      "workshopId": 3722887659,
+      "source": {
+        "folder": "_workshop/3722887659"
+      },
+      "$comment": "Выбор владельца 09.09. В клетках тюремщика теперь с РАВНЫМ шансом попадаются трактирщики девяти народов (хайборийцы, нордхеймцы, киммерийцы, стигийцы, дарфари, хирканийцы, кушиты, шемиты, зингарцы), а не почти всегда замориец. Работает на любой карте, где есть клетки тюремщика.",
+      "$comment_risk": "⚠️ Перезаписывает конкретные строки таблицы весов спавна - единственный из новых модов, кто вообще трогает ванильные таблицы. Данные Чистки не трогает: в её клетках по-прежнему только заморийцы."
+    },
+    {
+      "name": "Exiles Fishing",
+      "kind": "pak",
+      "workshopId": 3718368769,
+      "source": {
+        "folder": "_krinik-modified/3718368769"
+      },
+      "krinikModified": "KRINIK MODIFIED — по-русски правкой ассетов: панель настройки сервера (W_EFT_Panel), названия сложностей, ступеней и мест (BPC_EFT_Tuning), кнопка хаба (W_EFT_AdminButton, подпись «Настройка рыбалки» — слово владельца 2026-10-26); строки прямо в байткоде панели и карточки рыбы (строки lit: таблиц, _config/devkit/kismet.py, 2026-10-26); названия 51 рыбы в таблице дальностей DT_FishRanges (_config/localization/fishranges-ru.tsv — из переведённых карточек, 2026-10-28; KUMM план 36 п. 14). Оригинал: _workshop/3718368769 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\JaarFishing.pak. Пересборка после обновления мода (положить новый оригинал в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build JaarFishing W_EFT_Panel <work> _config/localization/asset-strings/JaarFishing__W_EFT_Panel.tsv _config/localization/asset-strings/JaarFishing__BPC_EFT_Tuning.tsv BPC_EFT_Tuning _config/localization/asset-strings/JaarFishing__W_EFT_AdminButton.tsv W_EFT_AdminButton _config/localization/asset-strings/JaarFishing__W_EFT_FishCard.tsv W_EFT_FishCard _config/localization/fishranges-ru.tsv DT_FishRanges → <work>/out/JaarFishing.pak в _krinik-modified/3718368769. 2026-10-29: опрос хаба заглушён — таймер CheckInventory 0.3 с по кругу → 1e9 в графе событий и в TryLocal (строки flt: в JaarFishing__BPC_EFT_Tuning.tsv); кнопку ставит KrinikPauseGameInMenu 0.8.0 по событию вкладки «Снаряжение» (KUMM bugs/64 п. 17, видео 57 к/с). Проверено в игре 2026-10-26 11:25 (KUMM bugs/64); рецепт без DT_FishRanges 2026-10-28 воспроизвёл прежний пак — внутренние файлы байт в байт. 2026-10-30: окно «Настройка рыбалки» — модальное поверх хаба (DT_Fishing_UIModule, ряд ExilesFishingTuning: Category Fullscreen → Modal; строка enum: в _config/localization/asset-strings/JaarFishing__DT_Fishing_UIModule.tsv), Esc закрывает только окно — клавишу ловит KrinikPauseGameInMenu 0.11.0 (KUMM plan 36). В рецепт пересборки добавить пару _config/localization/asset-strings/JaarFishing__DT_Fishing_UIModule.tsv DT_Fishing_UIModule. 2026-10-30 (KUMM plan 36, STATUS п. 3): в карточке рыбы авторское «table» = вес пресета «Vanilla» (при «Ваниль» и множителях 1,00 расчёт совпадает с «(ваниль …)», «Сбросить на ваниль» возвращает к нему) — подпись «ваниль» (было «исходно»); поле подписи BaseSize 66 → 92 и поле ввода EditSize 76 → 66 (строки prop: в JaarFishing__W_EFT_FishCard.tsv), чтобы «ваниль 100» не уходила под поле, а длинные имена рыб оставались целыми. Обводка кнопки «Настройка рыбалки» при наведении — KrinikPauseGameInMenu 0.12.0.",
+      "krinikBuild": {"args": ["JaarFishing", "W_EFT_Panel", "_config/localization/asset-strings/JaarFishing__W_EFT_Panel.tsv", "_config/localization/asset-strings/JaarFishing__BPC_EFT_Tuning.tsv", "BPC_EFT_Tuning", "_config/localization/asset-strings/JaarFishing__W_EFT_AdminButton.tsv", "W_EFT_AdminButton", "_config/localization/asset-strings/JaarFishing__W_EFT_FishCard.tsv", "W_EFT_FishCard", "_config/localization/fishranges-ru.tsv", "DT_FishRanges", "_config/localization/asset-strings/JaarFishing__DT_Fishing_UIModule.tsv", "DT_Fishing_UIModule"]},
+      "$comment": "Выбор владельца 09.09. Полноценная рыбалка как занятие, а не ловушка на берегу: заброс, слежение за рыбой, вываживание. 60 видов рыбы по четырём биомам (пустыня, нагорья, тундра, болото), семь степеней редкости от мусора до мифической, у каждой рыбы своё время суток, сложность и повадка. Четыре удочки. 220 МБ.",
+      "$comment_language": "⚠️ ЗАКАЗ ВЛАДЕЛЬЦА НА РУССКИЙ ЯЗЫК. Автор пишет 'Multi-Langage, visit the discord to find yours' - то есть переводы СУЩЕСТВУЮТ, но лежат не в моде, а в его Discord, и ставятся отдельно. Сам мод приезжает английским. Достать русский можно только через Discord автора, и это требует аккаунта владельца."
+    },
+    {
+      "name": "Ostavar: Salon",
+      "kind": "pak",
+      "workshopId": 3734199233,
+      "source": {
+        "folder": "_workshop/3734199233"
+      },
+      "$comment": "Выбор владельца 09.09. Около 60 женских и 50 мужских причёсок, части добавлена физика волос. Ванильных файлов не перезаписывает.",
+      "$comment_risk": "Работает БЕЗ Tot ! Custom (автор пишет: рекомендуется, но не обязателен) - то есть годится для одиночной игры, в отличие от большей части косметики каталога. ⚠️ 760 МБ - третий по размеру мод сборки."
+    },
+    {
+      "name": "True (Hair) Colors",
+      "kind": "pak",
+      "workshopId": 3731099424,
+      "source": {
+        "folder": "_workshop/3731099424"
+      },
+      "$comment": "Выбор владельца 09.09. Переделанная палитра цветов волос и бород: автор считал ванильный выбор блёклым (много малонасыщенных пастельных оттенков) и заменил его на насыщенные с вариациями тона. Крошечный, 98 КБ.",
+      "$comment_pair": "ПАРНЫЙ К HERITAGE - тот же автор (Dread Swoop). Heritage переделывает лица NPC, этот - цвета волос; вместе дают связный вид, порознь работают тоже."
+    },
+    {
+      "name": "Beyond Decor: Rustic Edition",
+      "kind": "pak",
+      "workshopId": 3729154757,
+      "source": {
+        "folder": "_workshop/3729154757"
+      },
+      "$comment": "Выбор владельца 09.09. БОЛЬШЕ 3000 украшений в деревенском стиле, разбитых по знаниям: спальня, кухня и столовая, гостиная, реквизит, садоводство, рынок и лавки.",
+      "$comment_risk": "⚠️ 1,49 ГБ - САМЫЙ БОЛЬШОЙ МОД СБОРКИ, больше даже Highmane's Arsenal (1,24 ГБ). Самое фэнтезийное заперто за админскими книгами - в обычной игре недоступно без админки."
+    },
+    {
+      "name": "ModControlPanel",
+      "kind": "pak",
+      "workshopId": 3722388367,
+      "source": {
+        "folder": "_workshop/3722388367"
+      },
+      "$comment": "Выбор владельца 09.09. Единое окно настроек для модов, которые его поддерживают. Сам по себе ничего не даёт - это ХОСТ для чужих настроек, и поставлен он ради LBPR, у которого без него настройки не открываются вовсе.",
+      "$comment_keys": "Открывается Shift+End (можно отключить в опциях) или консольной командой 'DataCmd ModControlPanel'.",
+      "$comment_order": "Стоит ПЕРЕД LBPR: сперва хост, потом тот, кто в него встраивается."
+    },
+    {
+      "name": "Less Building Placement Restrictions",
+      "kind": "pak",
+      "workshopId": 3755091710,
+      "source": {
+        "folder": "_workshop/3755091710"
+      },
+      "$comment": "Выбор владельца 09.09. Снимает ванильные запреты на постановку построек - те самые 'здесь строить нельзя' на ровном месте, из-за которых не встаёт кусок в очевидно свободном месте.",
+      "$comment_risk": "⚠️ ТРЕБУЕТ ModControlPanel: автор пишет прямо, что настройки LBPR доступны только через него. Без панели мод работает, но неуправляем - поэтому оба ставятся парой."
+    },
+    {
+      "name": "Player Ignores Follower Collision",
+      "kind": "pak",
+      "$comment_was_suspect": "ВОЗВРАЩЁН 2026-09-10 ~11:35. Был выключен опытом в ночь 09->10.09 как единственный мод, трогающий физическое тело персонажа. Снят с подозрения ИЗМЕРЕНИЕМ дважды: выключение не помогло (цель зума всё равно уехала на 4260), а настоящий виновник назван делением сборки пополам - Enhanced Armory and Arsenal с его Extended Camera Zoom. Прежняя запись о выключении: Владелец: вчера, когда стоял только наш мод камеры, предел зума работал и рывков не было; сегодня встали 36 модов Мастерской - и сломалось. Наш мод при этом пишет всё, что должен (журнал: щуп препятствий выключен - да, предел 1000 записан), а цель всё равно уезжает на 5620 и штангу трясёт при НЕПОДВИЖНОЙ цели. Этот мод - единственный в сборке, кто по слову автора трогает физическое тело персонажа: 'меняет отклик столкновений капсулы игрока в рантайме'. Камера на пружинной штанге упирается именно в него. Если после выключения рывки уйдут - виновник назван; если нет - включить обратно и делить сборку пополам.",
+      "workshopId": 3720753923,
+      "source": {
+        "folder": "_krinik-modified/3720753923"
+      },
+      "krinikModified": "KRINIK MODIFIED — окно настроек (`dc PIFCSettings`) по-русски: 18 подписей, описаний и разделов в рядах таблицы PIFC_US_DT_Settings (строки StrProperty — .locres их не видит) и 3 текста окна PIFC_WBP_SettingsWindow («Закрыть», «По умолчанию», «Настройки мода»); KUMM bugs/64 п. 20, 2026-10-26. Оригинал: _workshop/3720753923 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\EnhancedPlayerIgnoresFollowerCollision.pak. Пересборка после обновления мода: python -I -X utf8 _config/devkit/patch-mod-asset.py build EnhancedPlayerIgnoresFollowerCollision PIFC_US_DT_Settings <work> _config/localization/asset-strings/EnhancedPlayerIgnoresFollowerCollision__PIFC_US_DT_Settings.tsv _config/localization/asset-strings/EnhancedPlayerIgnoresFollowerCollision__PIFC_WBP_SettingsWindow.tsv PIFC_WBP_SettingsWindow → <work>/out/EnhancedPlayerIgnoresFollowerCollision.pak в _krinik-modified/3720753923.",
+      "krinikBuild": {"args": ["EnhancedPlayerIgnoresFollowerCollision", "PIFC_US_DT_Settings", "_config/localization/asset-strings/EnhancedPlayerIgnoresFollowerCollision__PIFC_US_DT_Settings.tsv", "_config/localization/asset-strings/EnhancedPlayerIgnoresFollowerCollision__PIFC_WBP_SettingsWindow.tsv", "PIFC_WBP_SettingsWindow"]},
+      "$comment": "Выбор владельца 09.09. Твои спутники перестают быть стенами: пока раб стоит на дороге, столкновение между ним и ТОБОЙ выключается, и ты проходишь насквозь - в дверях, на лестнице, посреди драки. Для всех остальных он по-прежнему препятствие, дерётся и получает урон. С сотней спутников это не удобство, а необходимость.",
+      "$comment_keys": "Своё окно настроек: консольная команда 'dc PIFCSettings'. Её можно повесить на клавишу через Настройки - Управление - Команды."
+    },
+    {
+      "name": "Proximity Party",
+      "kind": "pak",
+      "workshopId": 3718878457,
+      "source": {
+        "folder": "_workshop/3718878457"
+      },
+      "$comment": "Выбор владельца 09.09. Полоски здоровья ближних спутников и соклановцев, как 'партия' в MMO; игроки в приоритете над рабами. Настраивается дальность обнаружения, масштаб окна и число полосок (1-15). Лечит боль: не видно, кто из свиты ранен.",
+      "$comment_keys": "Настройки - консольная команда 'dc proxyparty'. Окно двигается мышью по УДЕРЖАНИЮ F1.",
+      "$comment_risk": "⚠️ ТА ЖЕ КЛАВИША F1, что у Simple Minimap - оба мода одного автора (Xevyr) и, судя по описаниям, рассчитаны на сосуществование, но если мышь на экране начнёт вести себя странно, подозреваемые эти двое. Автор отдельно упоминает совместимость с CE Helper (shift+F1)."
+    },
+    {
+      "name": "Heritage",
+      "kind": "pak",
+      "workshopId": 3726392245,
+      "source": {
+        "folder": "_workshop/3726392245"
+      },
+      "$comment": "Выбор владельца 09.09. Переделывает внешность людей в игре системно: заново собраны диапазоны случайной внешности для обоих полов всех рас, у 'особых' NPC случайность убрана, 162 ИМЕННЫМ ПЕРСОНАЖАМ заданы постоянные лица, поправлены пресеты рас в создании персонажа. Заморийцы и зингарцы переделаны целиком. Автор ориентировался на описания рас у Говарда.",
+      "$comment_risk": "Зависимостей от Tot ! Custom НЕТ - работает в одиночной игре (в отличие от большей части косметики каталога). ⚠️ Трогает те же таблицы внешности NPC, что и любой другой мод внешности: если однажды поставим второй такой - смотреть порядок загрузки. У автора есть парный мод на цвета волос (True Hair Colors) - не обязателен."
+    },
+    {
+      "name": "Organizer Sorting Chest",
+      "kind": "pak",
+      "workshopId": 3723101055,
+      "source": {
+        "folder": "_workshop/3723101055"
+      },
+      "$comment": "Выбор владельца 09.09. Добавляет сундук-сортировщик: кладёшь в него добычу, и он САМ раскладывает её по соседним сундукам - но только в те, где такие вещи уже лежат. То есть раскладка идёт по образцу, который ты задал руками один раз. Радиус действия настраивается в круговом меню самого сундука.",
+      "$comment_pair": "Ложится в пару к Inventory Compactor: тот уплотняет рюкзак, этот разбирает добычу по местам. Вместе закрывают всю рутину после вылазки.",
+      "$comment_risk": "Ставится как обычная постройка, никаких зависимостей. ⚠️ Работает только с соседними сундуками В РАДИУСЕ и только по уже существующему образцу: в пустую базу без разложенных вещей класть бессмысленно - ему не с чем сверяться."
+    },
+    {
+      "name": "Inventory Compactor",
+      "kind": "pak",
+      "workshopId": 3718614759,
+      "source": {
+        "folder": "_workshop/3718614759"
+      },
+      "$comment": "Выбор владельца 09.09. Кнопка 'уплотнить' в инвентаре: убирает дыры и пересобирает стаки одним нажатием. Плюс кнопка точного деления стака и та же команда в круговом меню ЛЮБОГО контейнера - сундуков, верстаков. Лечит боль: инвентарь-решето после вылазки. Крошечный, 331 КБ.",
+      "$comment_risk": "Автор (Xevyr) заявляет совместимость со всем, ванильных ассетов не трогает."
+    },
+    {
+      "name": "Hair We Go",
+      "kind": "pak",
+      "workshopId": 3731128190,
+      "source": {
+        "folder": "_workshop/3731128190"
+      },
+      "$comment": "Выбор владельца 09.09. Набор причёсок под UE5 - закрывает нехватку стрижек в базовой игре. ВАЖНО: один из немногих косметических модов каталога, который НЕ требует Tot ! Custom, а значит работает в одиночной игре (большая часть косметики Мастерской висит на Tot!, у которого 'Single Player/Coop is NOT supported').",
+      "$comment_risk": "⚠️ 774 МБ ради причёсок - второй по размеру мод сборки после Highmane's Arsenal (1,24 ГБ), и это при том, что тот несёт 2000+ предметов. Цена - текстуры волос. Если однажды понадобится ужать сборку, начинать надо отсюда: сносится без последствий, ничего от него не зависит."
+    },
+    {
+      "name": "Simple Minimap",
+      "kind": "pak",
+      "workshopId": 3719513784,
+      "source": {
+        "folder": "_krinik-modified/3719513784"
+      },
+      "krinikModified": "KRINIK MODIFIED — строка координат над миникартой больше не срезается верхним краем экрана: место карты по умолчанию считает функция мода LoadSettings от половины её размера (× 0.5), и карта упиралась в правый верхний угол; множитель 0.5 → 0.52 — карта отходит от угла вниз и влево на 2 % своего размера (6 единиц интерфейса): цифры целы, а карта у самого угла (владелец: «миникарту выше и правее в угол» после 0.58); перетаскивание мышью работает как прежде (KUMM bugs/64 п. 19, 2026-10-26). Второе (2026-10-26 18:40, п. 25): в окне настроек кнопки «Сохранить» и «Отмена» кеглем 12 вместо 15 — русские слова слипались. Третье (2026-10-29, п. 5): на полноэкранной карте ряд подсказок мода («Shift + мышь Новый маркер ?», «Свои маркеры», лупа) лежал на ванильной кнопке 3.0 «Сброс маркеров [X]» — первый элемент ряда (SM_UI_MapHelper, AddMarkerSection.HorizontalBoxSlot_5) отступом слева 30 → 355, ряд целиком правее кнопки. Оригинал: _workshop/3719513784 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\Simple_Minimap.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build Simple_Minimap SM_UI_Minimap <work> _config/localization/asset-strings/Simple_Minimap__SM_UI_Minimap.tsv _config/localization/asset-strings/Simple_Minimap__SM_UI_Settings.tsv SM_UI_Settings _config/localization/asset-strings/Simple_Minimap__SM_UI_MapHelper.tsv SM_UI_MapHelper → <work>/out/Simple_Minimap.pak в _krinik-modified/3719513784.",
+      "krinikBuild": {"args": ["Simple_Minimap", "SM_UI_Minimap", "_config/localization/asset-strings/Simple_Minimap__SM_UI_Minimap.tsv", "_config/localization/asset-strings/Simple_Minimap__SM_UI_Settings.tsv", "SM_UI_Settings", "_config/localization/asset-strings/Simple_Minimap__SM_UI_MapHelper.tsv", "SM_UI_MapHelper"]},
+      "$comment": "Выбор владельца 09.09. Миникарта с метками мест и своими метками сверх ванильного лимита. Главное для вылазок: ПОКАЗЫВАЕТ ТВОЙ ТРУП С ЛЮБОГО РАССТОЯНИЯ, плюс вечные метки кровати и спального мешка. Пять уровней зума сохраняются между сессиями, карта двигается мышью за иконку игрока, ориентиры прижимаются к краю. Работает на всех картах.",
+      "$comment_keys": "Мышь на игровом экране - по УДЕРЖАНИЮ F1 (тогда же работают кнопки + / - и подписи меток). Есть режим компаса и часы. Кнопка полного скрытия карты - в самом правом верхнем углу экрана.",
+      "$comment_risk": "Автор (Xevyr) заявляет совместимость со всем. ⚠️ Единственный известный конфликт - клавиша F1, если её занял другой мод."
+    },
+    {
+      "name": "Lore & Loot Highlight",
+      "kind": "pak",
+      "workshopId": 3718655125,
+      "source": {
+        "folder": "_workshop/3718655125"
+      },
+      "$comment": "Выбор владельца 09.09. Светящийся контур на всём, с чем можно взаимодействовать; сундуки с добычей - ОТДЕЛЬНЫМ ЦВЕТОМ. Лечит боль: не видно, что в мире можно взять. Крошечный, 939 КБ.",
+      "$comment_keys": "Настройки открываются консольной командой 'dc LLHSettings' - там же меняются цвета и выключается подсветка.",
+      "$comment_risk": "Автор пишет прямо: совместим со всем, ванильные ассеты не трогает. Тот же автор, что у Simple Minimap."
+    },
+    {
+      "name": "Highmane's Arsenal",
+      "kind": "pak",
+      "workshopId": 3721926604,
+      "source": {
+        "folder": "_workshop/3721926604"
+      },
+      "$comment": "ПЕРВЫЙ МОД ИЗ МАСТЕРСКОЙ STEAM, а не с Nexus. Выбор владельца 09.09. 2000+ предметов, сотни видов оружия с новыми связками движений, 500+ украшений, универсальные верстаки; автор упирает на производительность и совместимость, разработка сольная четыре года. 1,24 ГБ - самый большой мод сборки.",
+      "$comment_source": "Скачано анонимным steamcmd (appid 440900) в '<библиотека>/_workshop/<id>/'. Поэтому здесь source.folder, а не nexusId: моды Мастерской приезжают ПАПКОЙ с готовым .pak, а не архивом, и разбор имени по схеме библиотеки к ним неприменим. Обновление: тот же steamcmd с +force_install_dir на '<библиотека>/_workshop', порядок в docs/08.",
+      "$comment_order": "Стоит ПЕРЕД Level and Attribute Overhaul: тот владеет таблицами прогрессии и обязан грузиться последним."
+    },
+    {
+      "name": "Enhanced Armory and Arsenal",
+      "kind": "pak",
+      "$comment_zoom_resolved": "ОСТАЁТСЯ В СБОРКЕ ЦЕЛИКОМ, НО С ЗАГЛУШЕННОЙ КАМЕРОЙ (2026-09-10). Этот мод был назван виновником бага 09 (зум уезжал за предел и дёргался) делением сборки пополам: (1) выключены 18 модов Мастерской из 35 - симптом остался, максимум цели зума 4660 при пределе 1000; (2) все моды назад, выключен ОДИН этот - слово владельца 'да, сейчас баг ушёл'. Наводку дал офлайн-каталог имён: из семнадцати подозреваемых камерные ассеты везёт ТОЛЬКО он. Это не дефект мода, а его ЗАЯВЛЕННАЯ функция - со страницы автора: 'Extended Camera Zoom, scroll out the view like never before'. ЛЕЧЕНИЕ: наш мод KrinikConanCamera останавливает тик его камерного компонента EAA_Zoom_C (ключ mute_foreign_camera), а всё остальное - оружие, броня, самоцветы, классы, боссы - работает. Разбор - bugs/09_conan_zoom_runaway.md.",
+      "$comment_zoom_proof": "ДОКАЗАНО ПАРОЙ ПРОГОНОВ, одинаковых во всём, кроме одного выключателя (40 щелчков колеса, харнесс _config/run-camera-test.ps1): глушилка ВЫКЛЮЧЕНА - цель 2100 при пределе 1000, штанга скачет 1753..1799 при стоящей цели; глушилка ВКЛЮЧЕНА - цель ровно 1000.0, штанга 999.99987..1000.0 неподвижна. ⚠️ Первая попытка проверки была СЛЕПОЙ: харнесс крутил колесо 12 щелчков, этого хватает ровно до 1000, и опыт показывал 'предел держится' в ОБОИХ состояниях. Ловится только контрольным прогоном - проверка, которая не может провалиться, ничего не доказывает.",
+      "$comment_not_perks": "ЧТО ЭТОТ МОД НЕ ВИНОВАТ: 'Placeholder Perk' в дереве Авторитета - НЕ его. Проверено владельцем в игре 2026-09-10 при выключенном EAA: 'нет, баг с перками на месте'. Подозрение переходит к MrS_LevelAndAttributeOverhaul, чьё дерево DT_MrS_PerksTable_Authority совпадает со скриншотом поимённо (plans/04, пункт 5).",
+      "workshopId": 3718199031,
+      "source": {
+        "folder": "_krinik-modified/3718199031"
+      },
+      "krinikModified": "KRINIK MODIFIED — эмблема с мечом и её камень на вкладке «Снаряжение» появляются вместе с хабом, а не через секунду (под паузой меню — через полминуты): компонент AC_EAA_Inventorybutton ждал Delay 1.0 игровой секунды по сигналу CharacterInventory, теперь задержка заглушена (1e9, строка flt: в _config/localization/asset-strings/EnhancedArmoryAndArsenal__AC_EAA_Inventorybutton.tsv), а вставку по рождению портрета героя зовёт KrinikPauseGameInMenu 0.9.x. Кнопка «Аксессуары» — общая библиотека Accessory System, её копия в этом паке (игра грузит её, не копию Highmane's Arsenal): AC_acs_AccessorySystem_Persistent Delay 0.2 → 0.0015 (_config/localization/asset-strings/EnhancedArmoryAndArsenal__AC_acs_AccessorySystem_Persistent.tsv; звать её точку возврата снаружи нельзя — падение, KUMM EXPERIENCE EXP-0371) (KUMM bugs/64 п. 17, 26; 2026-10-29). Оригинал: _workshop/3718199031 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\EnhancedArmoryAndArsenal.pak. Пересборка после обновления мода: PATCH_VIEW_EXCLUDE=HighmanesArsenal python -I -X utf8 _config/devkit/patch-mod-asset.py build EnhancedArmoryAndArsenal AC_EAA_Inventorybutton <work> _config/localization/asset-strings/EnhancedArmoryAndArsenal__AC_EAA_Inventorybutton.tsv _config/localization/asset-strings/EnhancedArmoryAndArsenal__AC_acs_AccessorySystem_Persistent.tsv AC_acs_AccessorySystem_Persistent → <work>/out/EnhancedArmoryAndArsenal.pak в _krinik-modified/3718199031.",
+      "krinikBuild": {"args": ["EnhancedArmoryAndArsenal", "AC_EAA_Inventorybutton", "_config/localization/asset-strings/EnhancedArmoryAndArsenal__AC_EAA_Inventorybutton.tsv", "_config/localization/asset-strings/EnhancedArmoryAndArsenal__AC_acs_AccessorySystem_Persistent.tsv", "AC_acs_AccessorySystem_Persistent"], "env": {"PATCH_VIEW_EXCLUDE": "HighmanesArsenal"}},
+      "$comment": "Выбор владельца 09.09, из Мастерской. 178 МБ, но содержимого больше, чем в ином гигабайте: 700+ оружия, 350+ брони, 40 питомцев, 120 перевоплощений, три древа умений, 36 рун-перков, система классов с собственным опытом, спавнер боссов на 11 тиров, 38 именных рабов. Меню мода на Shift+V. Автор заявляет 'Overwritten files or basefiles: None' - ванильных файлов не перезаписывает.",
+      "$comment_owner_interest": "ВАЖНОЕ ДЛЯ ЗАКАЗА ПРО АФФИКСЫ: внутри 400+ собираемых самоцветов под сборку экипировки и 120 аксессуаров, КОТОРЫЕ ЗАЧАРОВЫВАЮТСЯ ПРЯМО В ИНТЕРФЕЙСЕ. Это ближайшее к диабло-аффиксам, что есть в живом каталоге Enhanced.",
+      "$comment_risk": "⚠️ У мода есть СВОЙ 'Extended Camera Zoom'. Зум камеры у нас отобран у игры вручную и чинился две сессии (docs/07-зум-камеры.md, баг 04). Если зум начнёт вести себя иначе - подозреваемый номер один. Отдельно: мод несовместим с NoRepairBS (снимает метки легендарности, нужные EAA), но такого мода у нас нет."
+    },
+    {
+      "name": "Chest Labels",
+      "kind": "pak",
+      "workshopId": 3735258746,
+      "source": {
+        "folder": "_workshop/3735258746"
+      },
+      "$comment": "Выбор владельца 09.09. Подпись ПРЯМО НА СУНДУКЕ: деревянные и большие сундуки и шкафы показывают то имя, которое ты им дал. Включается в круговом меню самого сундука. 271 КБ.",
+      "$comment_pair": "Третий кирпич складского порядка: Organizer Sorting Chest раскладывает, Inventory Compactor уплотняет, этот подписывает."
+    },
+    {
+      "name": "Automatic Fish Trap",
+      "kind": "pak",
+      "workshopId": 3720452046,
+      "source": {
+        "folder": "_workshop/3720452046"
+      },
+      "$comment": "Выбор владельца 09.09. Ловушки, которые ловят рыбу и моллюсков САМИ: обычные и улучшенные (время крафта 180 и 120 сек) плюс глубоководный вариант. Новые знания - Auto Fisher и Auto Deep Sea Fisher; глубоководный рецепт появляется после ванильного знания глубоководной рыбалки.",
+      "$comment_pair": "В пару к стоящему Exiles Fishing: тот делает рыбалку занятием, этот снимает её же рутину, когда рыба нужна как ресурс."
+    },
+    {
+      "name": "Better Tavern PATRONS",
+      "kind": "pak",
+      "workshopId": 3729932396,
+      "source": {
+        "folder": "_workshop/3729932396"
+      },
+      "$comment": "Выбор владельца 09.09. Переписывает список тех, кто приходит в твою таверну: заглянуть может ПОЧТИ ЛЮБОЙ раб игры (кроме боссовых и недоступных), а шансы на роль (боец, мастеровой и прочие) заданы конкретными числами вместо ванильного 'поровну'.",
+      "$comment_pair": "Ложится к Diverse Barkeeps: тот разнообразит трактирщиков в клетках тюремщика, этот - посетителей самой таверны. Разные источники, не спорят."
+    },
+    {
+      "name": "MSCasaDesFlores — Weapons & Armors",
+      "kind": "pak",
+      "workshopId": 3734522624,
+      "source": {
+        "folder": "_workshop/3734522624"
+      },
+      "$comment": "Выбор владельца 09.09. Оружие и броня россыпью: 11 мечей, по 4 топора, копья и кинжала, СЕМЬ ЛУКОВ, 6 видов стрел, 3 щита, королевские инструменты, и рядом внезапно бита Харли Квинн. Броня и оружие открываются с 55 по 120 уровень. 259 МБ.",
+      "$comment_risk": "⚠️ Требование по уровню (55-120) означает, что часть содержимого недоступна, пока потолок уровня не поднят. У нас стоит Level and Attribute Overhaul, так что доступ будет."
+    },
+    {
+      "name": "MSCasaDesFlores — Nails Station",
+      "kind": "pak",
+      "workshopId": 3723318347,
+      "source": {
+        "folder": "_workshop/3723318347"
+      },
+      "$comment": "Выбор владельца 09.09 (второй мод того же автора). Ногти и причёски для женских персонажей: 58 вариантов ногтей на руках и ногах, несколько раскрасок и причёсок. Своя станция крафтится на столе ремесленника; ногти открываются в знаниях (Броня -> Nails Arts), станция - в знаниях мебельщика. 88 МБ."
+    },
+    {
+      "name": "Emberlight",
+      "kind": "pak",
+      "workshopId": 3741684658,
+      "source": {
+        "folder": "_workshop/3741684658"
+      },
+      "$comment": "Выбор владельца 09.09. Большой ролевой пак про быт (386 МБ): животноводство со стойлами и разведением, святилища и ритуалы, садоводство с травниками и полями, кладовые и пивоварение, таверны с артистами и купальнями, мебель и улучшенные верстаки. Всё доступно БЕЗ админской панели - автор упирает на это отдельно.",
+      "$comment_history": "⚠️ Я ошибочно называл его кандидатом под заказ владельца про аффиксы лута - зачарования и самоцветов в нём НЕТ. Ошибка была из анонимной веб-выборки, исправлена по чтению страницы залогиненным Chrome (docs/08, ловушка 7)."
+    },
+    {
+      "name": "Severe Weather Enhanced",
+      "kind": "pak",
+      "workshopId": 3721071602,
+      "source": {
+        "folder": "_krinik-modified/3721071602"
+      },
+      "krinikModified": "KRINIK MODIFIED — значение по умолчанию: ночью родной свет игры, а не свет мода (SW_ModController «light enabled» True → False; слово владельца 2026-10-26 «исплавляем его ночное освещение. возвращаем ваниль»; консольная `dc SW_config disable_custom_GI` до мода не доходит — проверено 2026-10-29). Рецепт: _config/localization/asset-strings/SevereWeatherEnhanced__SW_ModController.tsv, patch-mod-asset.py build.",
+      "$comment": "Слово владельца 2026-10-25 16:09: «по моду погоды - ставим, попродуем сразу с настройками тумана, как у него задано. затем я потестирую и ты потестируешь производительность - может отключим туман». Температура по климатам, своя погода и бури, тёмные подземелья, физический свет неба; половина вида держится на тумане, поэтому на пробу Engine.ini r.Fog=1. Разбор пересечений - docs/15 (заменяет ванильные молнии песчаной бури; с Immersive Warriors совместим по устройству). Настройки - консоль `dc SW_config <слово>`. Перевод (шесть фраз Крома) - со сборкой KrinikRU."
+    },
+    {
+      "name": "Storage Reach Expanded",
+      "kind": "pak",
+      "workshopId": 3733835102,
+      "source": {
+        "folder": "_workshop/3733835102"
+      },
+      "$comment": "Выбор владельца 09.09. Поднимает ТРИ радиуса 'строить и крафтить из сундуков' с ванильных 4000 до 15000: BuildFromStorageRadius, CraftFromStorageRadius, PersonalCraftFromStorageRadius. То есть станции и строительный молот тянут материалы со всей базы, а не с десяти фундаментов вокруг.",
+      "$comment_owner_request": "⚠️ ВЛАДЕЛЕЦ ПРОСИЛ 20000, А НЕ 15000. Ini-файлом это не задаётся: мод пишет значения в память при старте, а меняются они АДМИНСКОЙ КОНСОЛЬНОЙ КОМАНДОЙ, которая сохраняется между перезапусками: 'dc SRE.set 20000'. Проверить - 'dc SRE.show', вернуть умолчание - 'dc SRE.reset'. Допустимый диапазон 4000-30000, значения вне его отвергаются с ошибкой на экране. В одиночной игре новое значение применяется НЕ СРАЗУ, а при следующем сканировании хранилищ: после команды надо отойти и подойти к сундукам."
+    },
+    {
+      "name": "Thrall_Peeper",
+      "kind": "pak",
+      "workshopId": 3723820003,
+      "source": {
+        "folder": "_workshop/3723820003"
+      },
+      "$comment": "Выбор владельца 09.09. Одна функция: имя раба показывается, когда наводишь на него прицел. Автор писал мод потому, что устал подбегать вплотную, чтобы прочитать, кто перед ним. 76 КБ - самый маленький мод сборки.",
+      "$comment_pair": "Ложится к Extended Thrall Stats: тот показывает ЧИСЛА раба в панели, этот - ИМЯ прямо в мире, не открывая ничего."
+    },
+    {
+      "name": "Ancient Civilization",
+      "kind": "pak",
+      "workshopId": 3721996090,
+      "source": {
+        "folder": "_workshop/3721996090"
+      },
+      "$comment": "Выбор владельца 09.09. Постройки и украшения в духе древней подгорной цивилизации - но, в отличие от прочих строительных наборов, СО СВОЕЙ ПРОИЗВОДСТВЕННОЙ ЦЕПОЧКОЙ: в древней мельнице и печи делаются собственные материалы (тёмный порошок из кристалла, серы и угля; тёмный камень). Рабов в эти станции ставить можно, но полезны только мельница, печь и горн - остальные станции декоративные.",
+      "$comment_risk": "⚠️ 1,17 ГБ - третий по размеру мод сборки после Beyond Decor: Rustic (1,49) и Highmane's Arsenal (1,24). Рецепты подсказаны картинками внутри самих станций, отдельного руководства нет."
+    },
+    {
+      "name": "Al-Merayah Reborn",
+      "kind": "pak",
+      "workshopId": 3718036277,
+      "source": {
+        "folder": "_workshop/3718036277"
+      },
+      "$comment": "Выбор владельца 09.09, и это ЕДИНСТВЕННЫЙ мод сборки, отвечающий на заказ про живой мир. Возвращает в игру РАЗРУШАЕМУЮ КРЕПОСТЬ С NPC, собранную из настоящих игровых построек, - её можно осаждать в режиме PvE. Форт спроектировал сам Funcom и потом убрал из игры; автор вернул его в том виде, в каком смог.",
+      "$comment_keys": "Таймеры возрождения настраиваются консольной командой 'dc raidconfig'. Сам форт включается и выключается командой 'dc togglefort' - то есть если он окажется дорогим по кадрам, гасить его можно не снося мод.",
+      "$comment_risk": "⚠️ ЗДЕСЬ И ПЛАТИТСЯ ЦЕНА В КАДРАХ. Это населённая NPC крепость, а игровой поток у владельца уже узкое место: 5700G держит клиент и сервер в одном процессе, плюс сотня спутников. Из всех тридцати с лишним модов сборки этот - первый подозреваемый, если кадр просядет. Проверять его отдельно и с замером, а не заодно со всеми."
+    },
+    {
+      "name": "LegitReligious",
+      "kind": "pak",
+      "workshopId": 3720748663,
+      "source": {
+        "folder": "_workshop/3720748663"
+      },
+      "$comment": "Выбор владельца 09.09. Делает религию осмысленной, а не декоративной: у религиозных алтарей появляется ЭПИЧЕСКИЙ крафт - эпические варианты религиозной брони и по нескольку видов оружия для большинства религий. Рецепты открываются соответствующим благословением (например, 'Благословение Деркето'), то есть тем знанием, которое у игрока и так есть, если он выбрал религию.",
+      "$comment_balance": "Снаряжение балансировано примерно на уровне эпика и звёздного металла - то есть не ломает прогрессию, а закрывает дыру: раньше выбор религии не давал ничего, кроме алтаря и пары ритуалов. Заодно автор поправил то, что считает недосмотрами Funcom.",
+      "$comment_risk": "Добавочный мод: новые рецепты вешаются на существующие знания, ванильные вещи не переписываются. Со стоящими Highmane's Arsenal и EAA не спорит - те тоже только добавляют."
+    },
+    {
+      "name": "Era of Trials",
+      "kind": "pak",
+      "workshopId": 3744562094,
+      "source": {
+        "folder": "_krinik-modified/3744562094"
+      },
+      "krinikModified": "KRINIK MODIFIED — религиозные умения по-русски: таблица EoT_DT_ReligiousPerkData, 17 умений, имя и описание (34 строки; термины — из уже переведённого: Указ, Учение, запас сил, Осколок замысла) и места осквернения святилищ EoT_DT_DesecrationTargets (47 названий мест карты — официальный русский игры, найден по CRC исходника в ru-.locres пака игры), имя религии «Джеббал Саг» в EoT_DT_InvocationsByReligion (официальное) — их .locres не видит (KUMM план 36 п. 14, баг 64 п. 20; 2026-10-28). Оригинал: _workshop/3744562094 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\EraOfTrials.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build EraOfTrials EoT_DT_ReligiousPerkData <work> _config/localization/eot-perks-ru.tsv _config/localization/eot-desecration-ru.tsv EoT_DT_DesecrationTargets _config/localization/eot-invocations-ru.tsv EoT_DT_InvocationsByReligion _config/localization/asset-strings/EraOfTrials__EoT_AC_InterfaceInjectorComponent.tsv EoT_AC_InterfaceInjectorComponent (2026-10-29: Delay 0.1 вкладки «Снаряжение» заглушена, значки школ магии вставляет KrinikPauseGameInMenu 0.9.0 по рождению портрета героя, KUMM bugs/64 п. 17) → <work>/out/EraOfTrials.pak в _krinik-modified/3744562094. Пак без сжатия обёртки — 604 МБ против 255 у оригинала.",
+      "krinikBuild": {"args": ["EraOfTrials", "EoT_DT_ReligiousPerkData", "_config/localization/eot-perks-ru.tsv", "_config/localization/eot-desecration-ru.tsv", "EoT_DT_DesecrationTargets", "_config/localization/eot-invocations-ru.tsv", "EoT_DT_InvocationsByReligion", "_config/localization/asset-strings/EraOfTrials__EoT_AC_InterfaceInjectorComponent.tsv", "EoT_AC_InterfaceInjectorComponent"]},
+      "$comment": "Слово владельца 2026-10-25: «Era of Trials - давай берём, но будет встраивать в сборку так. чтобы все моды работали корректно». Vanilla+ автора Orero, 1.2.1, кит 1002: у семи религий лёгкий, средний и тяжёлый комплекты брони и по шесть с лишним видов оружия с бонусами комплекта, гибкое оружие (Сила или Ловкость), пять видов магического урона, настои и пиры, «Призывы» - волны верующих после убийства жреца, осквернение святилищ. 243,5 МБ. Разбор - docs/13.",
+      "$comment_order": "СТОИТ СРАЗУ ПОД LegitReligious осознанно: оба пишут строки 54 ванильных луков, и при этом порядке работают стрелы обоих модов (LegitReligious перезаписывает строку лука, Era of Trials дописывает свои стрелы поверх); цена - пять вещей брони Зата крафтятся по рецепту Era of Trials. Выше Hosav (тот грузится после модов интерфейса, а Era of Trials подменяет карточку предмета W_InventoryItemInfoPanel) и выше KrinikLevelUncapped (таблиц прогрессии Era of Trials не трогает). Сверка номеров строк с 13 модами блока 3.0.1: одно пересечение, безвредное - таблица потребностей Ironlight перечисляет шесть религиозных пиров и Purified Flesh, которые Era of Trials переписывает (Ironlight строк не пишет). WBP_BuffIcon везёт и Highmane's Arsenal - файлы побайтно одинаковы.",
+      "$comment_risk": "⚠️ ТЯЖЁЛ ПО ИГРЕ: «Призывы» на низких уровнях сносят лагерь и рабов (игроки 15.08 и 15.10), волны не подстраиваются под уровень героя. С нашей прокачкой на 10 000 уровней на высоких уровнях станут лёгкими."
+    },
+    {
+      "$comment_block_qol": "МЕЛКИЕ МОДЫ УДОБСТВА, добавлены 2026-10-25 по слову владельца: «Советую: Double Storage Space … и Pickup+» — согласие владельца на сводку docs/16; «давай поставим в сборку приятные мелочи» (Faster Elevator, Thrall Inventory x2, Arrow Quick Swap, TDI_LegendaryRepair). Все шесть - кит 1002, файлов игры не подменяют, кроме служебной пустой карты Dev/AlmostEmpty у Pickup+ (её везут и три других мода сборки, безвредно); матрица - _catalog/overrides/qol-18.tsv, разбор - docs/12, раздел «Мелкие моды удобства». Стоят ВЫШЕ Hosav и Extended Thrall Stats.",
+      "name": "Double Storage Space",
+      "kind": "pak",
+      "workshopId": 3803465771,
+      "source": {
+        "folder": "_workshop/3803465771"
+      },
+      "$comment": "Вместимость хранилищ вдвое, больше ничего. Пересборка выпавшего с 2.2.3 Doubled Storage Size (3722857684) другим автором под 2.2.0, тот же список контейнеров и баланс. Заменяет выключенную запись Doubled Storage Size."
+    },
+    {
+      "name": "Pickup+",
+      "kind": "pak",
+      "workshopId": 864199675,
+      "source": {
+        "folder": "_workshop/864199675"
+      },
+      "$comment": "Поднять обратно любую поставленную вещь; клавиша быстрого подъёма настраивается в Input.ini. Самый популярный мод Конана (446 тыс. подписчиков)."
+    },
+    {
+      "name": "Faster Elevator",
+      "kind": "pak",
+      "workshopId": 3729885653,
+      "source": {
+        "folder": "_workshop/3729885653"
+      },
+      "$comment": "Лифты: вертикальный в 5 раз быстрее, горизонтальный в 2,5. Варианты «Fast» не трогает, ванильные блюпринты не меняет."
+    },
+    {
+      "name": "Thrall Inventory x2",
+      "kind": "pak",
+      "workshopId": 3733163336,
+      "source": {
+        "folder": "_workshop/3733163336"
+      },
+      "$comment": "Инвентарь рабов вдвое больше (кратно 6 под сетку интерфейса). Автор предупреждает: носильщики унесут очень много."
+    },
+    {
+      "name": "Arrow Quick Swap",
+      "kind": "pak",
+      "workshopId": 3724971404,
+      "source": {
+        "folder": "_krinik-modified/3724971404"
+      },
+      "krinikModified": "KRINIK MODIFIED — окно выбора стрел больше не вспыхивает при каждом натяжении лука: мод добавлял окно на экран при прицеливании, и оно рождалось непрозрачным, пока мод сам его не прятал; теперь окно рождается прозрачным (UI_AmmoDisplay, CanvasPanel_32.RenderOpacity 0) и появляется только при смене стрел колесом — его анимация показа сама поднимает прозрачность (KUMM bugs/64 п. 29, 2026-10-29). Оригинал: _workshop/3724971404 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\ArrowQuickSwap.pak. Пересборка после обновления мода: python -I -X utf8 _config/devkit/patch-mod-asset.py build ArrowQuickSwap UI_AmmoDisplay <work> _config/localization/asset-strings/ArrowQuickSwap__UI_AmmoDisplay.tsv → <work>/out/ArrowQuickSwap.pak в _krinik-modified/3724971404.",
+      "krinikBuild": {"args": ["ArrowQuickSwap", "UI_AmmoDisplay", "_config/localization/asset-strings/ArrowQuickSwap__UI_AmmoDisplay.tsv"]},
+      "$comment": "Смена вида стрел колесом мыши при прицеливании; кончились стрелы - сам берёт следующий вид. С луками Era of Trials и LegitReligious."
+    },
+    {
+      "name": "TDI_LegendaryRepair",
+      "kind": "pak",
+      "workshopId": 3723127994,
+      "source": {
+        "folder": "_workshop/3723127994"
+      },
+      "$comment": "Ремкомплекты для легендарных и уникальных вещей, нужен кузнец или бронник 4-го уровня; «Совершенный» комплект чинит без потери прочности."
+    },
+    {
+      "$comment_block_3_0_1": "БЛОК МОДОВ, ДОБАВЛЕННЫХ 2026-10-25 при переезде на 3.0.1 по выбору владельца из docs/12 (каталог Мастерской под игру мечты). Все 13 паков - кит ревизии 1002, как у игры 3.0.1. Стоят ВЫШЕ Hosav's Custom UI (автор Hosav требует грузить его после других UI-модов) и выше EAA Lv50 Thralls / Extended Thrall Stats (ETS обязан быть ниже всех, кто трогает панель раба). Пересечения по файлам игры - docs/12, раздел «Совместимость»; вливание в таблицы на лету - проверка прогоном в игре по журналу. План - KUMM plans/33, шаги 21-25.",
+      "name": "Caverns of Set",
+      "kind": "pak",
+      "workshopId": 3722525736,
+      "source": {
+        "folder": "_workshop/3722525736"
+      },
+      "$comment": "Выбор владельца 25.10 («выглядит интересно ... можно поставить, нужна руссификация»). Район карты автора PNutt: пещеры с городком Akhlut между Логовом, Безымянным городом и Разбитыми источниками. Пак Mines_of_Set.pak, 1,58 ГБ.",
+      "$comment_risk": "Перезаписывает 5 клеток карты; все 5 в 3.0 Funcom не менял (хеши паков 2.2.3 и 3.0.1 совпали) - откатывать нечего. С модами сборки файлов не делит."
+    },
+    {
+      "name": "Shemite City State",
+      "kind": "pak",
+      "workshopId": 3755371705,
+      "source": {
+        "folder": "_workshop/3755371705"
+      },
+      "$comment": "Выбор владельца 25.10. Район карты автора PNutt: город-государство за стенами на западе саванны, подземелье, свои NPC. Пак 2,0 ГБ - самый большой мод сборки.",
+      "$comment_risk": "⚠️ Перезаписывает 7 клеток карты, и одна из них - клетка роликов Cinematic_x1_y4 - в 3.0 изменена: мод вернёт её версию 2.2. Проверить в игре ролики этого места. С модами сборки файлов не делит."
+    },
+    {
+      "name": "Ymir's Respite",
+      "kind": "pak",
+      "workshopId": 3730427175,
+      "source": {
+        "folder": "_workshop/3730427175"
+      },
+      "$comment": "Выбор владельца 25.10. Район карты автора PNutt: пещерное подземелье с ареной босса на севере. Пак 1,6 ГБ.",
+      "$comment_risk": "⚠️ ГЛАВНЫЙ РИСК НОВОГО БЛОКА. Перезаписывает ландшафт Heightmap_x3_y5, а его Funcom в 3.0 изменил: мод вернёт землю 2.2, и поставленное Funcom к 3.0 в этой клетке может повиснуть в воздухе или уйти под землю. Проверка - прогон в игре по клетке x3_y5. Если найдётся - выключить мод (enabled: false) и ждать перепечки автора."
+    },
+    {
+      "name": "Waystones Enhanced",
+      "kind": "pak",
+      "workshopId": 3813660690,
+      "source": {
+        "folder": "_workshop/3813660690"
+      },
+      "$comment": "Выбор владельца 25.10 («берём в сборку, нужен перевод»). Путевые камни и перенос между ними с карты. 2 МБ, файлов игры не перезаписывает."
+    },
+    {
+      "name": "Female New Faces",
+      "kind": "pak",
+      "workshopId": 3753757942,
+      "source": {
+        "folder": "_workshop/3753757942"
+      },
+      "$comment": "Выбор владельца 25.10 («берём в сборку»). Новые женские лица, глаза, брови и причёски в создании героя. 151 МБ.",
+      "$comment_order": "СТОИТ НИЖЕ Heritage осознанно: Heritage переделывает наборы внешности рас, и если оба вливают строки в одни таблицы, побеждает нижний - а заказ владельца - чтобы новые лица были в редакторе. Файлов они не делят; кто чьи наборы перекроет, видно только в редакторе героя."
+    },
+    {
+      "name": "Ironlight-Settlements",
+      "kind": "pak",
+      "workshopId": 3741725671,
+      "source": {
+        "folder": "_krinik-modified/3741725671"
+      },
+      "krinikModified": "KRINIK MODIFIED — журнал поселения по-русски: таблица IL_DT_EventPhrases, 23 фразы событий (пол поселенца неизвестен — без прошедшего времени; вставки {item}, {need} после двоеточия) — их .locres не видит (KUMM план 36 п. 14, баг 64 п. 20; 2026-10-28). Оригинал: _workshop/3741725671 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\Ironlight-Core.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build Ironlight-Core IL_DT_EventPhrases <work> _config/localization/il-event-phrases-ru.tsv → <work>/out/Ironlight-Core.pak в _krinik-modified/3741725671. Пак без сжатия обёртки — 109 МБ против 22 у оригинала.",
+      "krinikBuild": {"args": ["Ironlight-Core", "IL_DT_EventPhrases", "_config/localization/il-event-phrases-ru.tsv"]},
+      "$comment": "Выбор владельца 25.10 («выглядит интересно ... нужна будет руссификация»). Рабы на базе живут по распорядку - спят, едят, работают, тренируются, торгуют, патрулируют, смотрите вы или нет. Ставится Городской центр, вокруг него поселение; нужны кровати. Пак называется Ironlight-Core.pak, 21 МБ; файлов игры не перезаписывает."
+    },
+    {
+      "name": "Ironlight-Settlements-RPG",
+      "kind": "pak",
+      "workshopId": 3780656133,
+      "source": {
+        "folder": "_workshop/3780656133"
+      },
+      "$comment": "Расширение к Ironlight-Settlements (выбор владельца 25.10): у рабов гигиена и профессия артиста. Стоит сразу под основным модом. Везёт только служебную пустую карту."
+    },
+    {
+      "name": "Riding Thralls",
+      "kind": "pak",
+      "workshopId": 3803149679,
+      "source": {
+        "folder": "_workshop/3803149679"
+      },
+      "$comment": "Выбор владельца 25.10 («берём в сборку, нужны переводы, адаптация в случае конфликтности»). Рабы садятся на коней и едут с героем. 87 МБ, файлов игры не перезаписывает."
+    },
+    {
+      "name": "Rideable Pets",
+      "kind": "pak",
+      "workshopId": 3817969576,
+      "source": {
+        "folder": "_workshop/3817969576"
+      },
+      "$comment": "Выбор владельца 25.10. Почти пятьдесят ездовых зверей. 77 МБ, файлов игры не перезаписывает; 69 своих таблиц - вливание проверяется в игре."
+    },
+    {
+      "name": "Night Terrors",
+      "kind": "pak",
+      "workshopId": 3723538551,
+      "source": {
+        "folder": "_workshop/3723538551"
+      },
+      "$comment": "Выбор владельца 25.10 («можно было бы поставить, но нужна будет русификация и настройка из коробки, чтобы эти нападения были не сильно частыми, не навязчивыми. чтобы был какой-то рандом их срабатываний»). Ночью вне базы с 10 уровня - случайные встречи с демонами и нежитью. 9 МБ, файлов игры не перезаписывает; 36 своих таблиц спавна.",
+      "$comment_todo": "НАСТРОЙКА «РЕДКО И СЛУЧАЙНО» ЕЩЁ НЕ СДЕЛАНА: где мод хранит настройку и как раскатать её заранее - план 33, шаг 22."
+    },
+    {
+      "name": "PvE Plus Ambush",
+      "kind": "pak",
+      "workshopId": 3721274811,
+      "source": {
+        "folder": "_workshop/3721274811"
+      },
+      "$comment": "Выбор владельца 25.10 (то же слово, что у Night Terrors). Засады по личному таймеру на каждого игрока с 9 уровня. Настройка - админской консолью DataCMD PvEAmbushConfig, действует со следующего круга. 4 МБ, файлов игры не перезаписывает.",
+      "$comment_todo": "Частоту задать заранее - план 33, шаг 22."
+    },
+    {
+      "name": "Ragnar's New Factions",
+      "kind": "pak",
+      "workshopId": 3717969878,
+      "source": {
+        "folder": "_krinik-modified/3717969878"
+      },
+      "krinikModified": "KRINIK MODIFIED — ряды взвешенного списка RNF_Shared_WeightedSpawns на несуществующие таблицы спавна (ошибки автора; игра писала «SpawnNPC - could not find SpawnTable» и оставляла место пустым): четыре плавильщика Wadai RNF_NPC_WadaiFlesheaters_Smelter1–4 и мёртвый босс Zingaran (RNF_NPC_ZingaranConquerors_Boss) убраны; алхимик пиктов 4-го уровня указывает на существующую RNF_NPC_PictishHunters_Alchemist4_Yagnja, опечатка «RNF_EliteWarriors_Pirate » (пробел) исправлена (KUMM план 36 п. 2; 2026-10-26 — вес 0, 2026-10-29 — ряды убраны). Оригинал: _workshop/3717969878 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\RagnarsNewFactions.pak. Пересборка после обновления мода (новый оригинал — в _patch-originals; сверить таблицу со спавн-таблицей — не добавил ли автор плавильщиков Wadai): python -I -X utf8 _config/devkit/patch-mod-asset.py build RagnarsNewFactions RNF_Shared_WeightedSpawns <work> _config/localization/asset-strings/RagnarsNewFactions__RNF_Shared_WeightedSpawns.tsv → <work>/out/RagnarsNewFactions.pak в _krinik-modified/3717969878.",
+      "krinikBuild": {"args": ["RagnarsNewFactions", "RNF_Shared_WeightedSpawns", "_config/localization/asset-strings/RagnarsNewFactions__RNF_Shared_WeightedSpawns.tsv"], "env": {"PATCH_VIEW": "<work>/view"}},
+      "$comment": "Выбор владельца 25.10 («можно ставить с русификацией и осторожно, так как кажется, что может быть конфликтным с другими модами»). 700+ новых NPC среди родных фракций. 90 МБ, файлов игры не перезаписывает.",
+      "$comment_order": "ПОСЛЕДНИЙ ИЗ НОВЫХ вместе с RNF NPC Distribution - по слову владельца «осторожно»: если что-то сломается в спавне, выключается одной парой, не трогая остальных."
+    },
+    {
+      "name": "RNF NPC Distribution",
+      "kind": "pak",
+      "workshopId": 3819183152,
+      "source": {
+        "folder": "_workshop/3819183152"
+      },
+      "$comment": "Дополнение к Ragnar's New Factions: расселяет его NPC по миру. Крошечный пак.",
+      "$comment_risk": "⚠️ Вливает NPC в общую взвешенную таблицу спавна - её же правит Diverse Barkeeps (строки клеток тюремщика). Файлов они не делят, спор возможен только на лету: проверка - _config/who-overwrites-table.py по журналу игры. Стоит НИЖЕ Diverse Barkeeps."
+    },
+    {
+      "name": "Hosav's Custom UI",
+      "kind": "pak",
+      "workshopId": 3748867573,
+      "source": {
+        "folder": "_krinik-modified/3748867573"
+      },
+      "krinikModified": "KRINIK MODIFIED — значение по умолчанию: метрики сервера в HUD (FPS сервера, игроки, пинг — настройка «Server Info») выключены (SaveUISettings_UIH.ServerInfo true → false; слово владельца 2026-10-26 «в настройках мода худ в поставке по умолчанию нужно выключить метрики сервера»). Игрок с уже сохранёнными настройками мода выключает её сам: настройки Hosav → Server Info. Оригинал: _workshop/3748867573 = D:\\Games\\Conan Exiles Mods\\_patch-originals\\UIMod_Hosav.pak. Второе (2026-10-26 ≈14:55, слово владельца «вторую колонку можно сильнее от первой отодвинуть, а то статы брони могут быть длинными» · «третью … можно чуть-чуть»): верхний HUD W_SmoothHP — две колонки по три строки вместо трёх по две (≈15:30 владелец: «Урон · Броня · Вес» / «Температура · Еда · Вода»; ≈15:45 «температуру … вниз левой колонки, а вес — вниз правой»: урон, броня, температура / еда, вода, вес), значок XP убран, строка опыта «Опыт: …» (перевод шаблона, интервью #003 строка 299). Третье (2026-10-26 17:59, KUMM bugs/64 п. 2, 16): кнопка «Настройки интерфейса» в хабе — только на вкладке «Снаряжение» и сразу, без задержки: опрос мода (Delay 3.0 по кругу + IsModuleActive(CharacterInventory), из-за него кнопка жила на всех вкладках и лежала на «Показать контент из DLC») заглушён в W_UI_SettingsButton, видимость ставит наш KrinikPauseGameInMenu по событию вкладки; кнопка на линии «Закрыть» (поле 20 → 13). Без KrinikPauseGameInMenu кнопка не появится вовсе — моды едут парой. Пересборка после обновления мода (новый оригинал — в _patch-originals): python -I -X utf8 _config/devkit/patch-mod-asset.py build UIMod_Hosav SaveUISettings_UIH <work> _config/localization/asset-strings/UIMod_Hosav__SaveUISettings_UIH.tsv _config/localization/asset-strings/UIMod_Hosav__W_SmoothHP.tsv W_SmoothHP _config/localization/asset-strings/UIMod_Hosav__W_UI_SettingsButton.tsv W_UI_SettingsButton → <work>/out/UIMod_Hosav.pak в _krinik-modified/3748867573 (в моде есть авторская копия SUPERUI_Backup_ForFuckups/W_SmoothHP — прибор берёт ассет ближе к корню). Четвёртое (2026-10-30, KUMM plan 36, слово владельца «нужно сразу мод рыбалки закрывать»): «Настройки интерфейса» открываются поверх хаба и Esc закрывает только их — ряд HosavUIsettings в живой таблице UIModuleTable_UIH и двойник в DT_UIModuleTable_HosavNew: Category Popup → Modal, FullscreenGUIAction Close → None (строки enum:); кнопка W_UI_SettingsButton больше не закрывает хаб — ActivateModule(CharacterInventory, False) → True (строка bool:ExecuteUbergraph_W_UI_SettingsButton@4); Esc ловит KrinikPauseGameInMenu 0.11.0. В рецепт пересборки добавить пары _config/localization/asset-strings/UIMod_Hosav__DT_UIModuleTable_HosavNew.tsv DT_UIModuleTable_HosavNew _config/localization/asset-strings/UIMod_Hosav__UIModuleTable_UIH.tsv UIModuleTable_UIH.",
+      "krinikBuild": {"args": ["UIMod_Hosav", "SaveUISettings_UIH", "_config/localization/asset-strings/UIMod_Hosav__SaveUISettings_UIH.tsv", "_config/localization/asset-strings/UIMod_Hosav__W_SmoothHP.tsv", "W_SmoothHP", "_config/localization/asset-strings/UIMod_Hosav__W_UI_SettingsButton.tsv", "W_UI_SettingsButton", "_config/localization/asset-strings/UIMod_Hosav__DT_UIModuleTable_HosavNew.tsv", "DT_UIModuleTable_HosavNew", "_config/localization/asset-strings/UIMod_Hosav__UIModuleTable_UIH.tsv", "UIModuleTable_UIH", "_config/localization/asset-strings/UIMod_Hosav__BPFL_Hosav_UI.tsv", "BPFL_Hosav_UI"]},
+      "$comment": "Выбор владельца 09.09. Самый настраиваемый интерфейс Конана: больше 50 опций, вдохновлён HUD из Black Desert. Всё новое можно отключить и вернуть ванильный вид. 26 МБ.",
+      "$comment_order": "⚠️ МЕСТО В СПИСКЕ ВЫБРАНО ОСОЗНАННО. Автор требует грузить его ПОСЛЕ других UI-модов - поэтому он стоит ниже Simple Modlist, Damage Meter, ModControlPanel, Proximity Party, Simple Minimap, Lore & Loot Highlight и Chest Labels. Но ВЫШЕ Extended Thrall Stats: у того своё требование - быть ниже всех, кто трогает панель раба. Два требования выполнены оба.",
+      "$comment_owner_request": "Владелец просил настройки под 4K. ⚠️ Снаружи их выставить нельзя: это не ini, а внутриигровые опции мода, они сохраняются в профиль при первом запуске. После первого входа в игру их надо будет настроить руками, и тогда, если мод пишет свой файл настроек, его можно будет забрать в пак и раскатывать вместе со сборкой. Что смотреть в первую очередь на 4K: масштаб HUD и размер шрифта (по умолчанию мелко), положение миникарты от Simple Minimap - чтобы не наложилась на новые панели, и прозрачность."
+    },
+    {
+      "name": "Reliable Meteor Showers",
+      "kind": "pak",
+      "workshopId": 3723073788,
+      "source": {
+        "folder": "_workshop/3723073788"
+      },
+      "$comment": "Выбор владельца 09.09. Если на карте осталось ПЯТЬ узлов звёздного металла или меньше - ждать метеоритного дождя приходится меньше. Больше метеоров не сыплет и обычные дожди не трогает; когда узлов достаточно, мод не делает НИЧЕГО. Не читерство, а страховка от засухи: металл на карте есть, надо только найти. 114 КБ.",
+      "$comment_pair": "Хорошо ложится к стоящему Resource Stimulus Package (Nexus 34): тот даёт больше кристаллов и серы с камней, этот чинит нехватку звёздного металла - разные ресурсы, не спорят."
+    },
+    {
+      "name": "Doubled Storage Size",
+      "kind": "pak",
+      "enabled": false,
+      "$comment_disabled": "ВЫКЛЮЧЕН 2026-10-02 переездом на 2.2.3: мод удалён из Мастерской (steamcmd: File Not Found), есть только варка под 2.1.x - игра 2.2.x её не примет. Прежний пак лежит в библиотеке OLD/_workshop-2.1.1/3722857684. Замена - свой мод в ките (досье Конана, шаг 6а).",
+      "workshopId": 3722857684,
+      "source": {
+        "folder": "_workshop/3722857684"
+      },
+      "$comment": "Выбор владельца 09.09. Вместимость всех ванильных хранилищ удвоена и ничего больше: деревянный ящик 24 -> 48, укреплённый 30 -> 60, большой сундук 48 -> 96, ХРАНИЛИЩЕ 300 -> 600, шкаф 48 -> 96, ящик сохранения 24 -> 48, верстак красильщика 42 -> 84.",
+      "$comment_risk": "⚠️ Меняет размеры ванильных контейнеров - если однажды поставим второй мод на вместимость, будет прямой спор. Пока такого нет."
+    },
+    {
+      "name": "EAA Lv50 Thralls",
+      "kind": "pak",
+      "workshopId": 3725707777,
+      "source": {
+        "folder": "_workshop/3725707777"
+      },
+      "$comment": "Выбор владельца 09.09. ⚠️ ПОПРАВКА К ЗАКАЗУ: рабы качаются и в ванили, до 20 уровня. Этот мод поднимает потолок до 50 и добавляет два перка сверх обычных - перки даются на 10, 15, 20, 35 и 50. Заодно показывает расширенные характеристики раба.",
+      "$comment_order": "Стоит ПЕРЕД Extended Thrall Stats: оба трогают панель характеристик раба, а автор ETS требует ставить свой мод НИЖЕ всех, кто её меняет.",
+      "$comment_risk": "Автор: работает с любыми модами, если те не задают собственные кривые прокачки спутников. Наш Level and Attribute Overhaul владеет таблицами ИГРОКА (DT_AttributeSystem, DT_ExperienceSystemLevel, DT_FeatsPerLevel), а не спутников - спора быть не должно, но это гипотеза, а не проверка."
+    },
+    {
+      "name": "Extended Thrall Stats",
+      "kind": "pak",
+      "workshopId": 3720737911,
+      "source": {
+        "folder": "_workshop/3720737911"
+      },
+      "$comment": "Выбор владельца 09.09. Достраивает панель раба и питомца тем, чего в ней нет: множитель ближнего и дальнего урона, процент урона за очко атрибута, здоровье за очко живучести и НАСТОЯЩЕЕ ИМЯ. Прибор для отбора: с сотней спутников сразу видно, кого держать.",
+      "$comment_order": "СТОИТ ПРЕДПОСЛЕДНИМ ОСОЗНАННО. Автор с версии 1.4 внедряется в интерфейс, а не перезаписывает ассеты, и прямо требует: ставить НИЖЕ всех модов, трогающих панель раба. У нас такой сосед один - EAA Lv50 Thralls, он выше.",
+      "$comment_risk": "Панель раба открывается с задержкой в доли секунды - это норма, а не дефект: интерфейс собирается на лету. Есть кнопка переключения между переводом и английским."
+    },
+    {
+      "name": "Level and Attribute Overhaul",
+      "kind": "pak",
+      "enabled": false,
+      "$comment_disabled": "ВЫКЛЮЧЕН 2026-09-10 ~12:15 - ЗАМЕНЁН НА MrSerji's Level 1000 (Nexus 15) того же автора. Причина: он рисует 'Placeholder Perk - Just a Placeholder' во ВСЕХ шести ветках и заодно ОТБИРАЕТ у перков русский перевод игры. Доказано контролем со снимками экрана 10.09: с модом длинные ленты с '?' и английские 'Heavy Blows'; без него ванильные ветки по пять узлов и русские 'Тяжелая рука', 'Берсерк'. Виновником он назван поимённо: единственный из 44 модов, кто монтируется в ВАНИЛЬНЫЙ путь Content/UI/Inventory/Attributes/ (W_Attribute, W_AttributeInfo), и он же везёт иконку-заглушку IMG_MrS_Perk_Level_Unknown. Конфликта с другими модами при этом НЕТ: ни одной чужой строки он не переписывает. Разбор - plans/04, пункт 5.",
+      "$comment_curve": "И ВТОРАЯ ПРИЧИНА, ЗАМЕРЕННАЯ ТЕМИ ЖЕ СНИМКАМИ: его кривая КРУЧЕ ванильной, а владелец просил обратного ('чтоб уровни качались быстро и часто, кривая пологая или линейная'). Один и тот же персонаж на 10 уровне: с этим модом до 11-го нужно 107 861 опыта, без него 61 825.",
+      "$comment": "ПОСЛЕДНИМ В ПОРЯДКЕ - он владеет таблицами прогрессии и не должен быть перекрыт. Потолок 1000 уровней, 600 очков атрибутов (по 100 на каждый из шести), 121 099 очков умений, перераспределённые перки плюс новые ветки Robust 2-5 и Energetic 1-5. ВКЛЮЧАЕТ В СЕБЯ MrSerji's Level 1000 (№15) того же автора - тот отдельно НЕ берём. Также исключает Why Stop At 60 (№7) и Why Are You Weak (№6): все правят DT_AttributeSystem / DT_ExperienceSystemLevel / DT_FeatsPerLevel. Оговорки автора: 'Only works in Singleplayer so far' (владельцу подходит) и несовместим с 'EAA - Enhanced Perks & Level'.",
+      "$comment_speed": "СКОРОСТЬ ПРОКАЧКИ ЭТИМ МОДОМ НЕ РЕШАЕТСЯ. Тысяча уровней на ванильной скорости - это вечность, а владелец просил 'уверенно быстро'. Ручка не здесь, а в ServerSettings.ini самой игры: PlayerXPRateMultiplier (общий) плюс XPKill/XPHarvest/XPCraft/XPTime. Пак этот файл пока НЕ ведёт - см. отдельную задачу."
+    },
+    {
+      "name": "MrSerji's Level 1000",
+      "kind": "pak",
+      "nexusId": 15,
+      "enabled": false,
+      "$comment_disabled": "ВЫКЛЮЧЕН 2026-09-13 ~20:50: его место занял наш форк KrinikLevelUncapped (запись ниже). Вместе их держать НЕЛЬЗЯ: контроллер MrS при старте вливает свои 1000 строк поверх наших таблиц и перезаписывает уровни 1-1000 своей кривой.",
+      "$comment": "ПОСЛЕДНИМ В ПОРЯДКЕ - владеет таблицами прогрессии и не должен быть перекрыт. Взят 2026-09-10 ВМЕСТО Level and Attribute Overhaul (№29) того же автора, по заказу владельца: 'я хочу БЕЗ потолка уровня, поэтому 1000 выглядит ближе к этому заказу'. Даёт ровно ту же прогрессию - потолок 1000, 600 очков атрибутов (по 100 на каждый из шести), 121 099 очков умений - НО БЕЗ переработки перков, из-за которой в №29 появлялись пустые слоты и пропадал русский перевод.",
+      "$comment_tables": "Автор перечисляет ровно три изменяемые таблицы: DT_AttributeSystem, DT_ExperienceSystemLevel, DT_FeatsPerLevel. Перковых среди них НЕТ - в этом и весь смысл замены. Исключает Why Stop At 60 (№7) и Why Are You Weak (№6): те правят те же три. Несовместим с 'EAA - Enhanced Perks & Level'.",
+      "$comment_points": "Раздача очков атрибутов по диапазонам: уровни 1-299 по очку за уровень, 300-899 очко за каждый третий, 900-999 снова по очку.",
+      "$comment_loss": "ЧТО ПОТЕРЯНО ПРИ ЗАМЕНЕ, ТОЧНО: только ДОПОЛНИТЕЛЬНЫЕ СТУПЕНИ перков Robust 2-5 и Energetic 2-5, которые довозил №29. САМИ перки на месте - они ванильные и по-русски: Живучесть -> 'Полнокровность' (+100 к здоровью, это и есть Robust), Выдержка -> 'Выносливость' (запас сил восстанавливается на 25% быстрее, это Energetic). Проверено снимками экрана обеих веток 2026-09-10 12:04. Прежняя формулировка агента 'веток нет' была неточной и здесь исправлена.",
+      "$comment_speed": "СКОРОСТЬ ПРОКАЧКИ ЭТИМ МОДОМ НЕ РЕШАЕТСЯ - ручка в ServerSettings.ini игры: PlayerXPRateMultiplier (сейчас 5.0) плюс PlayerXPKill/Harvest/Craft/TimeMultiplier (сейчас по 1). Заказ владельца 10.09: 'чтоб уровни качались быстро и часто'. Пак этот файл пока НЕ ведёт - отдельная задача."
+    },
+    {
+      "name": "PauseGame",
+      "kind": "pak",
+      "enabled": false,
+      "$comment_disabled": "ВЫКЛЮЧЕН 2026-10-02 переездом на 2.2.3: автор не пересобрал мод с 10.06 (devkitRevisionNumber 1001 - кит 2.1.x), игра 2.2.x его не примет. Паузу в меню и на ESC делает наш KrinikPauseGameInMenu 0.6.0. Вернуть - когда автор перевыложит.",
+      "workshopId": 3723599319,
+      "source": {
+        "folder": "_workshop/3723599319"
+      },
+      "$comment": "Выбор владельца 13.09.2026 ~22:45 ('есть мод в стиме, чтобы при ESC игра ставилась на паузу, замирала?' -> 'PauseGame - установи'). Автор Glad2Skill, обновлён 09.06.2026, 3 394 подписчика. По описанию автора: открытое игровое меню ставит игру на паузу с надписью, закрытие меню снимает паузу. Только одиночная игра.",
+      "$comment_checked": "Проверено до раскатки: пакеты UE5 1017 / лиц. 5, кит ревизии 1001 - как у модов, которые игра грузит; все четыре ассета в своей папке Mods/PauseGame (AC_PauseGame, W_Pause_Overlay, PreLoad/MC_PauseGame, preview) - ванильного не подменяет. Перед KrinikLevelUncapped: тот должен оставаться последним."
+    },
+    {
+      "name": "KrinikConanArchery",
+      "kind": "pak",
+      "version": "1.0.0 (наш, 30.10.2026: стрельба в прыжке — в воздухе лук стреляет, прыжок посреди натяжки взлетает; 0.6.0: тиковый пересчёт гравитации снят — у стрелы убирается кривая FC_BowProjectileGravCurve_*; 0.5.0: баллистика Oblivion Remastered — гравитация 0,55, скорость по натяжке, минимум 0,5; 28.10.2026: лук героя одним модом — пак кита + Lua UE4SS; прежде KrinikArrowAim и KrinikBowFixes)",
+      "source": { "folder": "_unpacked/KrinikConanArchery" },
+      "$comment": "НАШ мод лука, две половины одного мода (`[OWNER]` «почему у нас какой-то BowFixes? Нельзя всё, что по стрельбе из лука - в один мод собрать?» · 2026-10-28; имя — «мод KrinikConanAim переименовываем в KrinikConanArchery»). Пак кита (Mods/KrinikConanArchery.pak): родной монтаж натяжки AM_combat_2h_bow_combo_heavy_c0 — уведомление обзора до конца монтажа (иначе камера отъезжала при выстреле с зажатой ПКМ), немое уведомление звука держит S_ChargeFull загруженным. Lua UE4SS (ue4ss/Mods/KrinikConanArchery): стрела героя в точку прицела камеры, вид стрелы, выход из прицела по отпусканию ПКМ, камера над стрелой от первого лица, удержание обзора на новом натяжении, звук полного заряда только герою игрока. Пересечений нет: монтаж 2h_bow в 101 контейнере сборки — только в паке игры (retoc list --path, 2026-10-28). Кейсы — KUMM testcases/TC_conan_bow_*_2026-10-2*.md.",
+      "$comment_build": "Пак НЕ в git (.gitignore) — пересобирается: кит в режиме модов (UE4/Content/Mods/KrinikConanArchery, active.txt — один активный мод на кит) → UnrealEditor-Cmd -run=PythonScript -Script=_config/devkit/kit-archery-edit.py -ModDevKit -NullRHI → python _config/devkit/kit-buildmod.py KrinikConanArchery <вывод> → копия в _unpacked/KrinikConanArchery. modinfo devkitRevisionNumber 1002, иначе «Mod is too old» (EXP-0354). Lua-половина — _unpacked/KrinikConanArchery/ue4ss, ставится шагом install. Перед KrinikConanGameplay (до 2026-10-30 — KrinikLevelUncapped): тот должен оставаться последним.",
+      "install": [
+        {
+          "from": "ue4ss",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanArchery"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanArchery/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanArchery/enabled.txt"
+      ]
+    },
+    {
+      "name": "KrinikConanUI",
+      "kind": "pak",
+      "version": "1.0.0 (ours, 2026-10-30: the build's interface as one mod — the KrinikUIFixes kit pak renamed, its Lua half and the Lua mods KrinikFpsCounter 0.2.0, KrinikHudOutline 0.2.0, KrinikPauseGameInMenu 0.13.0 as sections of one Lua folder; behaviour unchanged. Before: KrinikUIFixes 1.2.0 — button key glyphs keep their width from the first frame; the item hover tooltip keeps one layout; the corpse strip goes left only while the quick-loot window shows; «Q Забрать все (удерживайте)»)",
+      "source": {
+        "folder": "_unpacked/KrinikConanUI"
+      },
+      "$comment_merge": "The owner's Krinik mod set (KUMM plans/36 W31, W34): «KrinikUIFixes - переименовать в KrinikConanUI» · «KrinikFpsCounter - идет в мод UI» · 2026-10-30 ≈13:0x; HudOutline and PauseGameInMenu join by the approved set of five shipped mods (13:02). Lua: ue4ss/Scripts/main.lua requires four sections — krinik_ui_fixes, krinik_fps_counter (frames per second top right, over the minimap; the owner 25.10: «как в нашей игре UnliminiumDigital», «В ПРАВОМ! НАД КАРТОЙ»), krinik_hud_outline (the Hosav HUD text outline, Roboto Bold ×1.1, F1 under the folded damage meter; the owner 25.10–26.10), krinik_pause_in_menu (the world dilated to 0.0001 while the tabbed menu or the inventory is open, GUIModuleController.ActivateModule hook; the owner 13.09: «вот полностью в этом меню с табами находишься - нужно замедлять время»; KUMM ideas/05). Log prefix «[KrinikConanUI:<section>]».",
+      "$comment": "OUR mod, two halves. Kit pak (Mods/KrinikConanUI.pak, before 2026-10-30 KrinikUIFixes.pak) overrides three vanilla widgets: W_ItemIconTooltipView (Text_Content AutoWrapText off — the hover tooltip no longer opens one-line and jumps to two, KUMM bugs/64 item 17 class A; no build mod overrides it, mod-overrides.py 2026-10-29), WBP_ContainerInfo (corpse strip and quick-loot window in one full-screen overlay; strip padding 120, vanilla Center) and W_QuickLootPanel (grid padding 35, tips 20, Esc gap 20 — one width on the quest edge; take-all icons HoldPromptVisibility NEVER, labels «Забрать все (удерживайте)»). Lua (ue4ss/Mods/KrinikUIFixes): post-hooks on WBP_ContainerInfo_C SetObject / HandleInventoryChanged / HandleLootContainerInventoryChanged set the strip Left while the loot window shows and Center otherwise — a layout constant cannot (the overlay spans the screen). KUMM bugs/64 items 32, 34, 35; the owner: «если открывается этот виджет быстрого лута, то подсказку над трупом - нужно на экране двигать левее». No overlaps: both widgets exist only in the game pak (retoc list --path over 72 mod containers, 2026-10-28). Cases — KUMM testcases/TC_conan_corpse_prompt_left_of_quickloot_2026-10-28.md, TC_conan_loot_panel_hidden_and_hold_prompt_2026-10-28.md.",
+      "install": [
+        {
+          "from": "ue4ss",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/Scripts/krinik_ui_fixes.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/Scripts/krinik_fps_counter.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/Scripts/krinik_hud_outline.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/Scripts/krinik_pause_in_menu.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/Scripts/krinik_hud_blink.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanUI/enabled.txt"
+      ],
+      "$comment_build": "The pak is NOT in git (.gitignore) — rebuilt: the kit in mod mode (UE4/Content/Mods/KrinikConanUI, its modinfo.json and Local/CookInfo.ini copied in _unpacked/KrinikConanUI/kit; active.txt — one active mod per kit: move it to KrinikConanArchery to rebuild that one) → UnrealEditor-Cmd -run=PythonScript -Script=_config/devkit/kit-conanui-edit.py -EnablePlugins=PythonScriptPlugin -ModDevKit → every edited asset listed as FilesToCook in Local/CookInfo.ini (an asset saved but not listed is silently left out — 2026-10-29) → python _config/devkit/kit-buildmod.py KrinikConanUI <out> → copy into _unpacked/KrinikConanUI. modinfo devkitRevisionNumber 1002 (EXP-0354). Before KrinikConanGameplay (its tables replace three vanilla ones): that one must stay last."
+    },
+    {
+      "name": "KrinikConanGameplay",
+      "kind": "pak",
+      "version": "1.0.0 (ours, 2026-10-30: the build's gameplay as one mod — the pak KrinikLevelUncapped rebuilt under the new name (10 000 levels, XP 500 × level^0.5, one attribute point every level) and the Lua mod KrinikOblivionLocomotion 0.3.0 (+3 cm/s to run, sprint and jump per Agility point) as a section of its Lua folder; behaviour unchanged)",
+      "source": {
+        "folder": "_unpacked/KrinikConanGameplay"
+      },
+      "$comment_merge": "The owner's Krinik mod set (KUMM plans/36 W32, W34): «KrinikOblivionLocomotion · KrinikLevelUncapped · Идет в мод KrinikConanGameplay» · 2026-10-30 ≈13:0x. Lua: ue4ss/Scripts/main.lua requires the section krinik_oblivion_locomotion (the owner 13.09: as in Oblivion, every Agility point adds speed; 29.10: the hero by the spawn event, no scene search every second). Log prefix «[KrinikConanGameplay:<section>]». The pak stays LAST in the load order.",
+      "install": [
+        {
+          "from": "ue4ss",
+          "to": "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGameplay"
+        }
+      ],
+      "verify": [
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGameplay/Scripts/main.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGameplay/Scripts/krinik_oblivion_locomotion.lua",
+        "ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanGameplay/enabled.txt"
+      ],
+      "$comment": "НАШ МОД, форк MrSerji's Level 1000 (слово владельца 13.09: 'делай, но это будет наш мод - форк', имя - 'KrinikLevelUncapped'). ПОСЛЕДНИМ В ПОРЯДКЕ: заменяет три родные таблицы прогрессии целиком. 10 000 уровней, опыт за уровень 500 * L^0,5 (якорь поднят с 175 до 500 словом владельца 16.09; итог 333 358 180 - генератор _config/xp-table.py); одно очко атрибута на каждом уровне; очки знаний - родная формула с потолком нормы 16 (48 на каждом десятом уровне), 191 316 к 10 000-му. Разбор и решения - KUMM ideas/04.",
+      "$comment_build": "The pak is NOT in git (.gitignore) — rebuilt by one command, no kit: python -I -X utf8 _config/devkit/build-level-mod.py --name KrinikConanGameplay --work <empty folder outside the pack> --out _unpacked/KrinikConanGameplay (2026-10-30: works for 3.0.1 — retoc UE5_7 reads and writes the 5.8 tables, EXP-0125; references resolve through the hard-link view of the game's containers; step 6 checks 3 × 10 000 rows against the generators). Needs the MrS archive in the library and _tools/retoc, _tools/UAssetGUI, _tools/repak. Lua half — _unpacked/KrinikConanGameplay/ue4ss, installed by the install step.",
+      "$comment_tables": "Таблицы лежат на ВАНИЛЬНЫХ путях /Game/Systems/Progression/DT_ExperienceSystemLevel, DT_AttributeSystem, DT_FeatsPerLevel - без блюпринта-контроллера. Любой другой мод, который вливает строки в эти таблицы своим контроллером (EAA пишет строку 7 в DT_AttributeSystem), по-прежнему вливает поверх."
+    }
+  ]
+}

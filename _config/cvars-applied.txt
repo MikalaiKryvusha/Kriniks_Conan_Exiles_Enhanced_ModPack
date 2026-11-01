@@ -1,0 +1,69 @@
+Штатные значения, применённые игрой при старте.
+Журнал: D:\Games\Conan Exiles\ConanSandbox\Saved\Logs\ConanSandbox.log
+Фильтр: dw.
+
+=== [/Script/FFXFSRSettings.FFXFSRSettings] из файла Engine — 1 значений
+    dw.NetClientFloatsDuringNavWalking = 1
+
+=== [/Script/Engine.RendererSettings] из файла Engine — 2 значений
+    dw.OSD.Scale = 1
+    dw.OSD.Format = {stream} {online_subsystems} {cl}_{snapshot_id} {configuration_code}
+
+=== [/Script/UE4Dreamworld.SystemSettings] из файла Engine — 1 значений
+    dw.EnableDeveloperMode = 1
+
+=== [/Script/ConanSandbox.SystemSettings] из файла Engine — 54 значений
+    dw.ForceGameDBOpenFail = 0
+    dw.MaxLevelLoadFailureCount = 5
+    dw.MinSuccessfulLevelPostLoadSeconds = 5
+    dw.GameEventBufferMaxAgeSeconds = 1800
+    dw.ItemTransactionMetricsFlushTime = 300
+    dw.GameEventFlushMaxItems = 180
+    dw.GameEventFlushMaxTimes = 20
+    dw.nav.OctreePruningIntervalSeconds = -1
+    dw.EnableStaticRoamingPaths = 0
+    dw.PerformUnsafeMovementChecks = 1
+    dw.EnableManualSpawnersAiLodCheckOnDedicatedServers = 0
+    dw.EnableManualSpawnersAiLodCheckOnListenServers = 0
+    dw.UsePerConnectionObjectList = 1
+    dw.EnablePlaceablePushModel = 1
+    dw.NPCsTargetNPCs = 1
+    dw.NPCsTargetBuildings = 0
+    dw.SkeletalMeshTickRate = 0.25
+    dw.AILOD1Distance = 3000
+    dw.AILOD2Distance = 9000
+    dw.AILOD3Distance = 15000
+    dw.AILOD0NetUpdateFrequency = -1
+    dw.AILOD0NetPriority = -1
+    dw.AILOD1NetUpdateFrequency = 10
+    dw.AILOD1NetPriority = -1
+    dw.AILOD2NetUpdateFrequency = 1
+    dw.AILOD2NetPriority = -1
+    dw.AILOD3NetUpdateFrequency = .1
+    dw.AILOD3NetPriority = 1
+    dw.AllowAILODOverlay = 0
+    dw.DefaultPathFollowingBlockDetectionDistanceThreshold = 10.f
+    dw.DefaultPathFollowingBlockDetectionInterval = .1f
+    dw.DefaultPathFollowingBlockDetectionNumSamples = 10
+    dw.nav.UseBrokenInterpolation = 0
+    dw.nav.InterpolateAvoidanceResult = 0
+    dw.nav.AvoidanceBreakingStartFraction = 0
+    dw.nav.AvoidanceBreakingCurvePower = 1
+    dw.nav.AvoidanceUseCurrentAngleWeightForBreaking = 0
+    dw.nav.AvoidanceLimitYawSearchRange = 0
+    dw.nav.AvoidanceLeftBias = -0.5
+    dw.nav.AvoidanceUseIdealYawAsInput = 0
+    dw.nav.AvoidanceObstacleOverlapWeight = 0.0
+    dw.nav.AvoidanceUsePerpendicularAngleComputation = 1
+    dw.nav.AvoidancePerpendicularAngleMaxAdjustment = 130.0
+    dw.nav.AvoidancePerpendicularAngleOversteering = 10
+    dw.nav.AvoidanceFov = 80
+    dw.nav.AvoidNonPawns = 0
+    dw.nav.RaycastEdgeEntryOffset = 5.0
+    dw.nav.DepenetrationLength = 5.0
+    dw.nav.BlockDetectionMinYaw = 10.0
+    dw.nav.SmoothTurnCornerInflation = 10.0
+    dw.cc.SkeletalMeshTickBatchingEnabled = 1
+    dw.aba.Enable = 1
+    dw.aba.MaxSpeedForSigScalingSqr = 400.0
+    dw.aba.ABASigBonusScalingAtMaxSpeed = 0.75

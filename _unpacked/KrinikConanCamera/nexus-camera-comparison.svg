@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Двуязычная схема для страницы мода. Подписи ПАРНЫЕ: русская строка и
+     под ней английская, помельче и светлее, — так пара читается как одна
+     подпись, а не как два конкурирующих текста. Русский идёт первым, потому
+     что первым он идёт и на подписях кадров; порядок меняется одним словом
+     владельца. Геометрия перенесена из английской версии без изменений,
+     сдвинута вниз на 50 px под выросшую шапку. -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 950" width="1400" height="950" font-family="Segoe UI, Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="rayHead" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c0392b"/>
+    </marker>
+    <linearGradient id="coneA" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#c0392b" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#c0392b" stop-opacity="0.02"/>
+    </linearGradient>
+    <linearGradient id="coneB" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1e8449" stop-opacity="0.16"/>
+      <stop offset="100%" stop-color="#1e8449" stop-opacity="0.02"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1400" height="950" fill="#faf8f4"/>
+
+  <!-- =========================== ШАПКА =========================== -->
+  <text x="700" y="54" text-anchor="middle" font-size="30" font-weight="700" fill="#17202a">Camera Behind — что меняется</text>
+  <text x="700" y="84" text-anchor="middle" font-size="21" font-weight="600" fill="#5d6d7e">Camera Behind — what it changes</text>
+  <text x="700" y="116" text-anchor="middle" font-size="16" fill="#5d6d7e">Вид сверху. Камера смотрит туда же, куда целишься, — меняется только её место.</text>
+  <text x="700" y="138" text-anchor="middle" font-size="15" fill="#95a3ad">Seen from above. The camera looks where you aim; only its position differs.</text>
+
+  <line x1="700" y1="168" x2="700" y2="760" stroke="#e3ddd2" stroke-width="2"/>
+
+  <!-- =========================== СЛЕВА: ВАНИЛЬ =========================== -->
+  <text x="350" y="198" text-anchor="middle" font-size="21" font-weight="700" fill="#c0392b">ВАНИЛЬ</text>
+  <text x="350" y="222" text-anchor="middle" font-size="16" font-weight="600" fill="#c0392b" opacity="0.72">VANILLA</text>
+  <text x="350" y="242" text-anchor="middle" font-size="15" fill="#7b8794">камера стоит из-за плеча</text>
+  <text x="350" y="262" text-anchor="middle" font-size="14" fill="#a3aeb7">camera sits over the shoulder</text>
+
+  <path d="M 430 670 L 250 307 L 610 307 Z" fill="url(#coneA)"/>
+
+  <g>
+    <rect x="404" y="662" width="52" height="34" rx="5" fill="#2c3e50"/>
+    <path d="M 430 654 L 414 662 L 446 662 Z" fill="#2c3e50"/>
+  </g>
+  <text x="430" y="728" text-anchor="middle" font-size="15" font-weight="600" fill="#2c3e50">камера</text>
+  <text x="430" y="748" text-anchor="middle" font-size="14" fill="#8d99a4">camera</text>
+
+  <line x1="430" y1="654" x2="430" y2="295" stroke="#c0392b" stroke-width="3.5" marker-end="url(#rayHead)"/>
+
+  <g>
+    <circle cx="350" cy="505" r="26" fill="#34495e"/>
+    <circle cx="350" cy="505" r="26" fill="none" stroke="#17202a" stroke-width="2"/>
+    <line x1="350" y1="479" x2="350" y2="455" stroke="#17202a" stroke-width="3"/>
+  </g>
+  <text x="296" y="502" text-anchor="end" font-size="15" fill="#2c3e50">твой персонаж</text>
+  <text x="296" y="522" text-anchor="end" font-size="14" fill="#8d99a4">your character</text>
+  <line x1="302" y1="505" x2="322" y2="505" stroke="#95a5a6" stroke-width="1.5"/>
+
+  <line x1="350" y1="562" x2="430" y2="562" stroke="#c0392b" stroke-width="2" stroke-dasharray="5 4"/>
+  <line x1="350" y1="554" x2="350" y2="570" stroke="#c0392b" stroke-width="2"/>
+  <line x1="430" y1="554" x2="430" y2="570" stroke="#c0392b" stroke-width="2"/>
+  <text x="338" y="596" text-anchor="end" font-size="14" font-weight="600" fill="#c0392b">боковое смещение</text>
+  <text x="338" y="616" text-anchor="end" font-size="13" fill="#c0392b" opacity="0.66">sideways offset</text>
+
+  <g stroke="#c0392b" stroke-width="3">
+    <line x1="430" y1="336" x2="430" y2="366"/>
+    <line x1="415" y1="351" x2="445" y2="351"/>
+  </g>
+  <text x="462" y="347" font-size="15" font-weight="600" fill="#c0392b">прицел</text>
+  <text x="462" y="367" font-size="14" fill="#c0392b" opacity="0.66">crosshair</text>
+
+  <text x="350" y="796" text-anchor="middle" font-size="16" fill="#2c3e50">Персонаж стоит <tspan font-weight="700">сбоку</tspan> от линии взгляда.</text>
+  <text x="350" y="820" text-anchor="middle" font-size="16" fill="#2c3e50">Пол-экрана — его спина, и одну сторону он закрывает.</text>
+  <text x="350" y="846" text-anchor="middle" font-size="14" fill="#95a3ad">Your character stands beside the line of sight.</text>
+  <text x="350" y="866" text-anchor="middle" font-size="14" fill="#95a3ad">Half the screen is his back, and he blocks one side.</text>
+
+  <!-- =========================== СПРАВА: С МОДОМ =========================== -->
+  <text x="1050" y="198" text-anchor="middle" font-size="21" font-weight="700" fill="#1e8449">С ЭТИМ МОДОМ</text>
+  <text x="1050" y="222" text-anchor="middle" font-size="16" font-weight="600" fill="#1e8449" opacity="0.72">WITH THIS MOD</text>
+  <text x="1050" y="242" text-anchor="middle" font-size="15" fill="#7b8794">камера стоит точно за спиной</text>
+  <text x="1050" y="262" text-anchor="middle" font-size="14" fill="#a3aeb7">camera sits directly behind</text>
+
+  <path d="M 1050 670 L 870 307 L 1230 307 Z" fill="url(#coneB)"/>
+
+  <g>
+    <rect x="1024" y="662" width="52" height="34" rx="5" fill="#2c3e50"/>
+    <path d="M 1050 654 L 1034 662 L 1066 662 Z" fill="#2c3e50"/>
+  </g>
+  <text x="1050" y="728" text-anchor="middle" font-size="15" font-weight="600" fill="#2c3e50">камера</text>
+  <text x="1050" y="748" text-anchor="middle" font-size="14" fill="#8d99a4">camera</text>
+
+  <line x1="1050" y1="654" x2="1050" y2="295" stroke="#c0392b" stroke-width="3.5" marker-end="url(#rayHead)"/>
+
+  <g>
+    <circle cx="1050" cy="505" r="26" fill="#34495e"/>
+    <circle cx="1050" cy="505" r="26" fill="none" stroke="#17202a" stroke-width="2"/>
+    <line x1="1050" y1="479" x2="1050" y2="455" stroke="#17202a" stroke-width="3"/>
+  </g>
+  <text x="1120" y="502" font-size="15" fill="#2c3e50">твой персонаж</text>
+  <text x="1120" y="522" font-size="14" fill="#8d99a4">your character</text>
+  <line x1="1082" y1="505" x2="1112" y2="505" stroke="#95a5a6" stroke-width="1.5"/>
+
+  <text x="1030" y="596" text-anchor="end" font-size="14" font-weight="600" fill="#1e8449">бокового смещения нет</text>
+  <text x="1030" y="616" text-anchor="end" font-size="13" fill="#1e8449" opacity="0.66">no sideways offset</text>
+  <line x1="1050" y1="562" x2="1050" y2="580" stroke="#1e8449" stroke-width="2"/>
+  <circle cx="1050" cy="562" r="4" fill="#1e8449"/>
+
+  <g stroke="#c0392b" stroke-width="3">
+    <line x1="1050" y1="336" x2="1050" y2="366"/>
+    <line x1="1035" y1="351" x2="1065" y2="351"/>
+  </g>
+  <text x="1082" y="347" font-size="15" font-weight="600" fill="#c0392b">прицел</text>
+  <text x="1082" y="367" font-size="14" fill="#c0392b" opacity="0.66">crosshair</text>
+
+  <text x="1050" y="796" text-anchor="middle" font-size="16" fill="#2c3e50">Персонаж, камера и прицел — на <tspan font-weight="700">одной линии</tspan>.</text>
+  <text x="1050" y="820" text-anchor="middle" font-size="16" fill="#2c3e50">Видно то, во что целишься. За спиной ничего не прячется.</text>
+  <text x="1050" y="846" text-anchor="middle" font-size="14" fill="#95a3ad">Character, camera and crosshair share one line.</text>
+  <text x="1050" y="866" text-anchor="middle" font-size="14" fill="#95a3ad">You see what you aim at. Nothing is hidden behind him.</text>
+
+  <!-- =========================== ПОДВАЛ =========================== -->
+  <rect x="70" y="890" width="1260" height="48" rx="8" fill="#eee7d9"/>
+  <text x="700" y="910" text-anchor="middle" font-size="15" fill="#4d5656">Всё настраивается на нумпаде прямо в игре и сохраняется само — смещение, дистанция, пределы зума и шаг колеса.</text>
+  <text x="700" y="930" text-anchor="middle" font-size="13" fill="#7f8c8d">Everything is tuned live on the numpad and saved automatically — offset, distance, zoom range and wheel step.</text>
+</svg>

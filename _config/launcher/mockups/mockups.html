@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>KrinikConanLauncher — 10 макетов</title>
+<!-- Десять разных направлений лаунчера сборки на нашем материале: волпейпер res/wallpaper.jpg, логотипы res/logo-*.png, те же четыре
+     действия и те же тексты, что в KrinikConanLauncher.cs. Окно 960×540 логических пикселей, как настоящее при 100 %; shoot.mjs снимает
+     его при масштабе 4 (3840×2160). ?v=N — показать одно окно. Слово владельца 2026-10-31 18:06: «лаунчер некрасивый, иди в интернет
+     в разведку и 10 макетов с вариантами давай разными». Разведка — KUMM researches/conan-launcher-design/README.md.
+     [NOT-TESTED] -->
+<style>
+  @font-face { font-family: CormorantSC; src: url(fonts/CormorantSC-Bold.ttf); font-weight: 700; }
+  @font-face { font-family: Cormorant; src: url("fonts/CormorantGaramond[wght].ttf"); font-weight: 300 700; }
+  @font-face { font-family: Forum; src: url(fonts/Forum-Regular.ttf); }
+  @font-face { font-family: Prata; src: url(fonts/Prata-Regular.ttf); }
+  @font-face { font-family: Yeseva; src: url(fonts/YesevaOne-Regular.ttf); }
+  @font-face { font-family: Ruslan; src: url(fonts/RuslanDisplay-Regular.ttf); }
+  @font-face { font-family: Philosopher; src: url(fonts/Philosopher-Bold.ttf); font-weight: 700; }
+  @font-face { font-family: AlegreyaSC; src: url(fonts/AlegreyaSC-Bold.ttf); font-weight: 700; }
+  @font-face { font-family: Kurale; src: url(fonts/Kurale-Regular.ttf); }
+  @font-face { font-family: Oswald; src: url("fonts/Oswald[wght].ttf"); font-weight: 200 700; }
+  @font-face { font-family: Inter; src: url("fonts/Inter[opsz,wght].ttf"); font-weight: 100 900; }
+
+  :root {
+    --gold: #f2c977; --gold-hi: #fff0c4; --gold-lo: #a8642a; --ink: #f7ecd6; --muted: #e4d6bd;
+    --noise: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='7'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0'/></filter><rect width='300' height='300' filter='url(%23n)'/></svg>");
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #222; padding: 40px; font-family: "Segoe UI", sans-serif; color: var(--ink); }
+  body.one .win:not(.show) { display: none; }
+  .win { position: relative; width: 960px; height: 540px; overflow: hidden; margin: 0 0 40px; background: #000 url(../res/wallpaper.jpg) center / cover no-repeat; }
+  .win * { position: relative; }
+  .abs { position: absolute; }
+  .logo-g { content: url(../res/logo-game.png); }
+  .logo-p { content: url(../res/logo-pack.png); }
+  .sh { text-shadow: 0 1px 2px #000, 0 0 6px rgba(0,0,0,.85); }
+  a { color: var(--gold); text-decoration: underline; text-underline-offset: 2px; }
+  svg.i { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; flex: none; }
+
+  /* Кнопки окна — свои, без рамки Windows; у каждого варианта свой вид через переменные. */
+  .ctl { position: absolute; top: 12px; right: 12px; display: flex; gap: 6px; z-index: 5; }
+  .ctl b { width: var(--cw, 30px); height: var(--cw, 30px); display: grid; place-items: center; font: 400 15px "Segoe UI Symbol", sans-serif;
+           color: var(--cc, var(--gold-hi)); background: var(--cb, rgba(20,12,6,.6)); border: var(--cbd, 1px solid rgba(242,201,119,.55)); border-radius: var(--cr, 3px); }
+
+  /* ——— 1. Бетесда: колонка-меню справа ——— */
+  .v1 { background-position: 28% center; }
+  .v1 .side { position: absolute; top: 0; right: 0; bottom: 0; width: 360px; padding: 58px 38px 22px 70px;
+              background: linear-gradient(90deg, rgba(8,5,2,0) 0%, rgba(8,5,2,.72) 22%, rgba(8,5,2,.9) 60%); display: flex; flex-direction: column; }
+  .v1 .logos { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+  .v1 .logos .logo-g { height: 62px; } .v1 .logos .logo-p { height: 58px; }
+  .v1 .orn { height: 14px; margin: 14px 0 10px; background: center / contain no-repeat url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 14'><path d='M0 7H104M136 7H240' stroke='%23c98a44' stroke-width='1.2'/><path d='M120 1l6 6-6 6-6-6z' fill='%23f2c977'/><circle cx='108' cy='7' r='1.6' fill='%23c98a44'/><circle cx='132' cy='7' r='1.6' fill='%23c98a44'/></svg>"); }
+  .v1 nav { display: flex; flex-direction: column; align-items: center; gap: 6px; font-family: CormorantSC; font-weight: 700; }
+  .v1 nav span { font-size: 23px; letter-spacing: .06em; color: var(--muted); }
+  .v1 nav .play { font-size: 34px; color: var(--gold); letter-spacing: .1em; text-shadow: 0 0 14px rgba(242,170,80,.55), 0 1px 2px #000; }
+  .v1 nav .del { font-size: 17px; color: #b9ab94; margin-top: 4px; }
+  .v1 .status { margin-top: 10px; text-align: center; font: 12px "Segoe UI"; color: #cdbfa6; }
+  .v1 .author { margin-top: auto; text-align: center; font: 12px/1.5 "Segoe UI"; color: #d8cab0; }
+  .v1 .author h4 { font: 700 15px CormorantSC; color: var(--gold); letter-spacing: .08em; }
+  .v1 .ver { position: absolute; left: 16px; bottom: 12px; font: 600 12px "Segoe UI"; color: rgba(255,240,210,.75); }
+
+  /* ——— 2. Нижняя панель и большая кнопка «Играть» (Battle.net, Riot) ——— */
+  .v2 .logos { position: absolute; top: 18px; left: 22px; display: flex; align-items: center; gap: 14px; }
+  .v2 .logos .logo-g { height: 52px; } .v2 .logos .logo-p { height: 50px; }
+  .v2 .bar { position: absolute; left: 0; right: 0; bottom: 0; height: 170px; padding: 0 26px 20px; display: flex; align-items: flex-end; gap: 22px;
+             background: linear-gradient(180deg, rgba(6,4,2,0) 0%, rgba(6,4,2,.82) 45%, rgba(6,4,2,.95) 100%); }
+  .v2 .meta { flex: 1; }
+  .v2 .meta h1 { font: 600 26px/1.1 Oswald; letter-spacing: .02em; }
+  .v2 .meta h2 { font: 400 15px Oswald; color: var(--gold); letter-spacing: .08em; text-transform: uppercase; margin: 3px 0 10px; }
+  .v2 .row { display: flex; gap: 8px; }
+  .v2 .ghost { display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 13px; font: 500 13px Inter; color: #eadcc2;
+               border: 1px solid rgba(242,201,119,.35); border-radius: 4px; background: rgba(255,240,210,.06); }
+  .v2 .ghost svg.i { width: 16px; height: 16px; }
+  .v2 .ghost.del { color: #c9b9a0; border-color: rgba(255,255,255,.14); }
+  .v2 .playbox { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .v2 .play { width: 250px; height: 70px; display: grid; place-items: center; font: 700 30px Oswald; letter-spacing: .14em; color: #2a1606;
+              background: linear-gradient(180deg, #ffe7a8 0%, #f2b85a 48%, #c97a2c 100%); border-radius: 5px;
+              box-shadow: 0 0 0 1px #fff3c9 inset, 0 0 0 2px #6b3a12, 0 8px 26px rgba(242,150,60,.45); }
+  .v2 .status { font: 12px Inter; color: #bfb19a; }
+  .v2 .author { position: absolute; right: 26px; top: 64px; text-align: right; font: 12px/1.6 Inter; color: #e6d8bf; }
+  .v2 .author b { font: 600 11px Inter; color: var(--gold); letter-spacing: .14em; text-transform: uppercase; }
+
+  /* ——— 3. Чёрное железо: кованая рамка с углями в углах, светящаяся полоса «Играть» внизу по центру (Diablo IV, Grim Dawn) ——— */
+  .v3 { border: 10px solid transparent; border-image: linear-gradient(160deg, #4a4a4e, #141416 30%, #2c2c30 55%, #0b0b0c 80%, #3a3a3e) 1;
+        box-shadow: inset 0 0 0 1px #000; }
+  .v3::before { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+        background: radial-gradient(circle at 0 0, rgba(255,110,30,.45), transparent 14%), radial-gradient(circle at 100% 0, rgba(255,110,30,.35), transparent 12%),
+                    radial-gradient(circle at 0 100%, rgba(255,90,20,.55), transparent 16%), radial-gradient(circle at 100% 100%, rgba(255,90,20,.55), transparent 16%),
+                    linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,0) 30%, rgba(0,0,0,0) 52%, rgba(4,2,1,.9)); }
+  .v3 > * { z-index: 2; }
+  .v3 .logos { position: absolute; top: 16px; left: 20px; display: flex; align-items: center; gap: 14px; }
+  .v3 .logos .logo-g { height: 54px; } .v3 .logos .logo-p { height: 50px; }
+  .v3 .titles { position: absolute; top: 76px; left: 22px; font: 700 16px Philosopher; color: #fff3de; text-shadow: 0 1px 2px #000, 0 0 8px #000, 0 0 14px rgba(0,0,0,.8); }
+  .v3 .titles em { font-style: normal; color: #ffd39a; }
+  .v3 .dock { position: absolute; left: 0; right: 0; bottom: 34px; display: flex; justify-content: center; align-items: flex-end; gap: 16px; }
+  .v3 .sq { width: 64px; display: flex; flex-direction: column; align-items: center; gap: 6px; font: 600 11.5px "Segoe UI"; color: #d9cbb2; }
+  .v3 .sq i { width: 58px; height: 58px; display: grid; place-items: center; color: #ffb36b;
+              background: linear-gradient(180deg, #2e2e32, #121214); box-shadow: inset 0 1px 0 rgba(255,255,255,.18), 0 0 0 1px #000, 0 0 0 2px #5b4a3a, 0 6px 14px rgba(0,0,0,.7); transform: rotate(45deg) scale(.78); }
+  .v3 .sq i svg.i { transform: rotate(-45deg); width: 26px; height: 26px; }
+  .v3 .play { width: 320px; height: 64px; display: grid; place-items: center; font: 600 28px Oswald; letter-spacing: .22em; color: #fff1dc;
+              background: linear-gradient(180deg, #2c2b2e, #111113); clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0 50%);
+              text-shadow: 0 0 12px rgba(255,120,40,.95), 0 0 2px #ff7a2a; }
+  .v3 .playwrap { padding: 3px; background: linear-gradient(90deg, #6b2a0a, #ff8a3a 30%, #ffd08a 50%, #ff8a3a 70%, #6b2a0a);
+              clip-path: polygon(16px 0, calc(100% - 16px) 0, 100% 50%, calc(100% - 16px) 100%, 16px 100%, 0 50%); filter: drop-shadow(0 0 14px rgba(255,110,30,.7)); }
+  .v3 .del { position: absolute; right: 24px; bottom: 14px; font: 12px "Segoe UI"; color: #9b8f80; text-decoration: underline; text-underline-offset: 2px; }
+  .v3 .foot { position: absolute; left: 22px; bottom: 14px; font: 12px "Segoe UI"; color: #b9ab94; }
+  .v3 .author { position: absolute; top: 60px; right: 22px; text-align: right; font: 12px/1.6 "Segoe UI"; color: #d9cbb2; }
+  .v3 .author b { font: 700 13px Philosopher; color: #ff9a4a; letter-spacing: .06em; }
+  .v3 { --cb: linear-gradient(180deg, #2e2e32, #121214); --cbd: 1px solid #5b4a3a; --cc: #ffb36b; }
+
+  /* ——— 4. Пергамент, как руководство ——— */
+  .v4 { background-position: 32% center; }
+  .v4 .logos { position: absolute; top: 20px; left: 26px; display: flex; flex-direction: column; gap: 6px; }
+  .v4 .logos .logo-g { height: 60px; } .v4 .logos .logo-p { height: 56px; align-self: flex-start; }
+  .v4 .sheet { position: absolute; top: 34px; right: 34px; bottom: 34px; width: 360px; padding: 30px 34px 22px; color: #2a2016;
+               background: radial-gradient(ellipse at 50% 50%, rgba(255,250,236,0) 55%, rgba(128,85,36,.32) 100%), var(--noise), #efe2c4;
+               filter: drop-shadow(0 10px 24px rgba(0,0,0,.6));
+               -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'><path d='M1 2 L6 0.6 L14 1.8 L22 0.4 L31 1.6 L40 0.5 L50 1.7 L60 0.3 L69 1.5 L78 0.6 L87 1.8 L95 0.4 L99.2 2 L99.8 10 L98.9 20 L99.7 30 L98.8 41 L99.6 52 L98.9 63 L99.7 74 L98.8 85 L99.5 94 L98.6 99 L90 99.6 L80 98.6 L70 99.7 L60 98.7 L50 99.6 L40 98.6 L30 99.7 L20 98.7 L10 99.6 L1.4 98.8 L0.5 90 L1.3 80 L0.3 70 L1.2 60 L0.4 50 L1.3 40 L0.3 30 L1.2 20 L0.4 10 Z' fill='black'/></svg>") 0 0 / 100% 100%; }
+  .v4 h1 { font: 400 25px/1.15 Prata; text-align: center; }
+  .v4 h2 { font: 400 15px Prata; color: #8f4f17; text-align: center; margin: 4px 0 4px; }
+  .v4 .rule { height: 1px; background: linear-gradient(90deg, transparent, #9a5b1e, transparent); margin: 12px 0 16px; }
+  .v4 .seal { width: 108px; height: 108px; margin: 0 auto 14px; border-radius: 50%; display: grid; place-items: center; font: 400 21px Prata; color: #f6dfc0;
+              background: radial-gradient(circle at 38% 32%, #c4473a, #8a1d16 58%, #5c100b 100%);
+              box-shadow: 0 0 0 5px rgba(138,29,22,.55), 0 0 0 9px rgba(138,29,22,.18), 0 5px 12px rgba(60,10,5,.5);
+              text-shadow: 0 1px 1px #3b0705; }
+  .v4 .links { display: flex; flex-direction: column; align-items: center; gap: 7px; font: 400 17px Prata; }
+  .v4 .links span { border-bottom: 1px solid rgba(154,91,30,.45); padding-bottom: 1px; }
+  .v4 .links .del { font-size: 14px; color: #6b6359; }
+  .v4 .foot { position: absolute; left: 34px; right: 34px; bottom: 20px; text-align: center; font: 11.5px/1.55 "Segoe UI"; color: #4a4036; }
+  .v4 .foot a { color: #8f4f17; }
+  .v4 .status { position: absolute; left: 26px; bottom: 18px; font: 12px "Segoe UI"; color: #f1e3c8; }
+
+  /* ——— 5. Металл Конана: ряд кованых табличек внизу по центру ——— */
+  .v5 { border: 9px solid transparent; border-image: linear-gradient(135deg, #fff0c4, #c98a44 20%, #4a2508 45%, #a8642a 65%, #e9c47e 85%, #6b3a12) 1; }
+  .v5 .logos { position: absolute; top: 18px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 22px; }
+  .v5 .logos .logo-g { height: 66px; } .v5 .logos .logo-p { height: 62px; }
+  .v5 .titles { position: absolute; top: 96px; left: 0; right: 0; text-align: center; }
+  .v5 .titles h1 { font: 700 19px CormorantSC; letter-spacing: .05em; }
+  .v5 .scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(6,3,1,.78)); }
+  .v5 .plates { position: absolute; left: 0; right: 0; bottom: 56px; display: flex; justify-content: center; align-items: flex-end; gap: 12px; }
+  .v5 .plate { width: 214px; height: 54px; padding: 0 22px; display: grid; place-items: center; font: 700 16px CormorantSC; letter-spacing: .06em; color: #f6e4bc;
+               background: linear-gradient(180deg, #4b3826 0%, #2a1c11 50%, #1a110a 100%); border-radius: 3px;
+               box-shadow: inset 0 1px 0 rgba(255,225,170,.45), inset 0 -1px 0 rgba(0,0,0,.6), 0 0 0 2px #7a4a1c, 0 0 0 3px #e9c47e, 0 0 0 5px #3a210c, 0 6px 14px rgba(0,0,0,.7); }
+  .v5 .plate::before, .v5 .plate::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%;
+               background: radial-gradient(circle at 35% 30%, #fff0c4, #a8642a 60%, #3a210c); }
+  .v5 .plate::before { left: 10px; } .v5 .plate::after { right: 10px; }
+  .v5 .plate.play { width: 220px; height: 70px; font-size: 27px; color: #2a1606; text-shadow: 0 1px 0 rgba(255,240,200,.6);
+               background: linear-gradient(180deg, #fff0c4 0%, #e9c47e 30%, #c98a44 60%, #8a5220 100%); }
+  .v5 .del { position: absolute; left: 0; right: 0; bottom: 34px; text-align: center; font: 700 13px CormorantSC; letter-spacing: .08em; color: #b9a98e; text-decoration: underline; text-underline-offset: 3px; }
+  .v5 .foot { position: absolute; left: 18px; right: 18px; bottom: 14px; display: flex; justify-content: space-between; font: 12px "Segoe UI"; color: #d8cab0; }
+  .v5 { --cb: linear-gradient(180deg, #4b3826, #1a110a); --cbd: 2px solid #c98a44; }
+
+  /* ——— 6. Стекло: тихий современный интерфейс ——— */
+  .v6 { background-position: 60% center; }
+  .v6 .logos { position: absolute; top: 22px; left: 26px; display: flex; align-items: center; gap: 12px; }
+  .v6 .logos .logo-g { height: 40px; } .v6 .logos .logo-p { height: 38px; }
+  .v6 .glass { position: absolute; left: 26px; bottom: 26px; width: 430px; padding: 24px 26px 20px; border-radius: 14px;
+               background: rgba(18,12,8,.42); backdrop-filter: blur(18px) saturate(1.3); border: 1px solid rgba(255,235,200,.18); box-shadow: 0 20px 50px rgba(0,0,0,.45); }
+  .v6 h1 { font: 650 22px/1.15 Inter; letter-spacing: -.01em; }
+  .v6 h2 { font: 500 13px Inter; color: #f0c98a; margin: 4px 0 16px; }
+  .v6 .play { height: 52px; border-radius: 26px; display: flex; align-items: center; justify-content: center; gap: 10px; font: 700 17px Inter; letter-spacing: .04em;
+              color: #24160a; background: #fff3dc; box-shadow: 0 6px 20px rgba(255,214,150,.35); }
+  .v6 .play svg { fill: #24160a; stroke: none; width: 18px; height: 18px; }
+  .v6 .row { display: flex; justify-content: space-between; margin-top: 14px; }
+  .v6 .row span { display: flex; align-items: center; gap: 6px; font: 500 13px Inter; color: #eadcc6; }
+  .v6 .row svg.i { width: 16px; height: 16px; }
+  .v6 .status { font: 11.5px Inter; color: #bcae98; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,235,200,.14); }
+  .v6 .author { position: absolute; right: 26px; bottom: 26px; text-align: right; font: 12px/1.6 Inter; color: #eadcc6; }
+  .v6 .author b { font: 600 11px Inter; letter-spacing: .12em; color: #f0c98a; text-transform: uppercase; }
+  .v6 { --cb: rgba(20,14,10,.35); --cbd: 1px solid rgba(255,235,200,.2); --cr: 15px; --cc: #fff3dc; }
+
+  /* ——— 7. Сплит: кожаная колонка с описаниями (дашборды сборок Wabbajack) ——— */
+  .v7 { background-position: 62% center; background-size: auto 100%; }
+  .v7 .panel { position: absolute; top: 0; left: 0; bottom: 0; width: 410px; padding: 26px 28px 18px; display: flex; flex-direction: column;
+               background: var(--noise), linear-gradient(160deg, #2b1d12, #140c07 70%); box-shadow: inset -1px 0 0 #8a5220, inset -4px 0 0 #2a1a0c, inset -5px 0 0 #c98a44, 10px 0 30px rgba(0,0,0,.6); }
+  .v7 .logos { display: flex; align-items: center; justify-content: center; gap: 12px; }
+  .v7 .logos .logo-g { height: 46px; } .v7 .logos .logo-p { height: 44px; }
+  .v7 h1 { text-align: center; font: 400 17px Forum; letter-spacing: .04em; color: #eadcc2; margin: 10px 0 14px; }
+  .v7 h1 em { font-style: normal; color: var(--gold); }
+  .v7 .act { display: flex; align-items: center; gap: 14px; padding: 10px 14px; margin-bottom: 7px; border-radius: 3px; border: 1px solid rgba(201,138,68,.35); background: rgba(255,230,180,.04); }
+  .v7 .act svg.i { width: 26px; height: 26px; color: var(--gold); }
+  .v7 .act b { display: block; font: 400 18px Forum; color: #f6e4bc; }
+  .v7 .act small { display: block; font: 11.5px/1.35 "Segoe UI"; color: #b8a88e; }
+  .v7 .act.play { background: linear-gradient(90deg, rgba(242,170,80,.28), rgba(242,170,80,.06)); border-color: #e9c47e; box-shadow: 0 0 18px rgba(242,170,80,.18); }
+  .v7 .act.play b { font-size: 22px; color: var(--gold-hi); }
+  .v7 .act.del svg.i { color: #b07a5a; }
+  .v7 .author { margin-top: auto; font: 11.5px/1.55 "Segoe UI"; color: #c9bba2; text-align: center; }
+  .v7 .author b { color: var(--gold); font: 400 14px Forum; letter-spacing: .05em; }
+  .v7 .status { position: absolute; right: 18px; bottom: 14px; font: 12px "Segoe UI"; color: #f1e3c8; }
+
+  /* ——— 8. Кино: чёрные полосы сверху и снизу ——— */
+  .v8 { background-size: auto 100%; background-position: center 55%; }
+  .v8 .top, .v8 .bot { position: absolute; left: 0; right: 0; background: #070504; }
+  .v8 .top { top: 0; height: 74px; display: flex; align-items: center; padding: 0 20px; gap: 14px; box-shadow: 0 1px 0 rgba(242,201,119,.3); }
+  .v8 .top .logo-g { height: 50px; } .v8 .top .logo-p { height: 46px; }
+  .v8 .top h1 { margin-left: 10px; font: 700 13px CormorantSC; letter-spacing: .22em; color: #cdb98f; }
+  .v8 .bot { bottom: 0; height: 96px; display: flex; align-items: center; justify-content: center; gap: 0; box-shadow: 0 -1px 0 rgba(242,201,119,.3); }
+  .v8 .bot span { padding: 0 26px; font: 700 18px CormorantSC; letter-spacing: .16em; color: #d9c9aa; border-left: 1px solid rgba(242,201,119,.25); }
+  .v8 .bot span:first-child { border-left: 0; }
+  .v8 .bot .play { font-size: 34px; color: var(--gold-hi); letter-spacing: .24em; text-shadow: 0 0 18px rgba(242,170,80,.75); }
+  .v8 .bot .del { font-size: 14px; color: #9c8d76; }
+  .v8 .cap { position: absolute; left: 0; right: 0; bottom: 108px; text-align: center; font: 500 13px Cormorant; font-style: italic; color: #f1e3c8; letter-spacing: .04em; }
+  .v8 .author { position: absolute; right: 18px; bottom: 8px; font: 10.5px "Segoe UI"; color: #8f826d; }
+  .v8 .author a { color: #c8a565; }
+  .v8 .status { position: absolute; left: 18px; bottom: 8px; font: 10.5px "Segoe UI"; color: #8f826d; }
+  .v8 { --cb: transparent; --cbd: 1px solid rgba(242,201,119,.3); --ct: 22px; }
+
+  /* ——— 9. MMO-патчер: картина в раме сверху, каменная панель снизу (Lineage II, Ragnarok) ——— */
+  .v9 { background: #0d0a08; }
+  .v9 .art { position: absolute; top: 14px; left: 14px; right: 14px; height: 320px; background: url(../res/wallpaper.jpg) center 42% / cover;
+             box-shadow: 0 0 0 1px #000, 0 0 0 3px #8a5220, 0 0 0 4px #e9c47e, 0 0 0 6px #3a210c; }
+  .v9 .art .logos { position: absolute; top: 14px; left: 18px; display: flex; gap: 12px; align-items: center; }
+  .v9 .art .logo-g { height: 54px; } .v9 .art .logo-p { height: 50px; }
+  .v9 .stone { position: absolute; left: 14px; right: 14px; bottom: 14px; height: 178px; display: flex; gap: 14px; padding: 16px;
+               background: var(--noise), linear-gradient(180deg, #2c2722, #1a1714); box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 0 0 1px #000; }
+  .v9 .info { flex: 1; padding: 12px 16px; background: rgba(0,0,0,.35); box-shadow: inset 0 0 0 1px rgba(201,138,68,.35); }
+  .v9 .info h1 { font: 700 19px AlegreyaSC; color: #f1e2c2; }
+  .v9 .info h2 { font: 700 14px AlegreyaSC; color: var(--gold); }
+  .v9 .info .ok { margin: 10px 0 8px; font: 12.5px "Segoe UI"; color: #b9d79a; }
+  .v9 .info .ok::before { content: "● "; color: #7fc15a; }
+  .v9 .info .meter { height: 10px; background: #0b0a09; box-shadow: inset 0 0 0 1px #4d3a26; }
+  .v9 .info .meter i { display: block; height: 100%; width: 100%; background: linear-gradient(180deg, #ffe08f, #c98a44 60%, #7a4a1c); }
+  .v9 .info .who { margin-top: 10px; font: 11.5px/1.5 "Segoe UI"; color: #b5a891; }
+  .v9 .side { width: 236px; display: flex; flex-direction: column; gap: 6px; }
+  .v9 .play { height: 74px; display: grid; place-items: center; font: 700 30px AlegreyaSC; letter-spacing: .06em; color: #fff3d6;
+              background: linear-gradient(180deg, #c0392b 0%, #8e1d12 55%, #5e0f08 100%); box-shadow: inset 0 1px 0 rgba(255,190,160,.6), 0 0 0 2px #e9c47e, 0 0 0 3px #3a0a05; text-shadow: 0 2px 2px #3a0705; }
+  .v9 .small { display: flex; gap: 6px; }
+  .v9 .small span { flex: 1; height: 32px; display: grid; place-items: center; font: 600 12px "Segoe UI"; color: #e8d9be;
+                    background: linear-gradient(180deg, #3b332b, #221d18); box-shadow: inset 0 1px 0 rgba(255,255,255,.12), 0 0 0 1px #000, 0 0 0 2px #5e4a33; }
+  .v9 .small .del { color: #b8a58a; }
+  .v9 { --ct: 22px; --cb: rgba(10,7,4,.7); }
+
+  /* ——— 10. Плитки с иконками внизу ——— */
+  .v10 .logos { position: absolute; top: 22px; left: 0; right: 0; display: flex; justify-content: center; gap: 20px; align-items: center; }
+  .v10 .logos .logo-g { height: 58px; } .v10 .logos .logo-p { height: 54px; }
+  .v10 .titles { position: absolute; top: 88px; left: 0; right: 0; text-align: center; font: 400 15px Yeseva; letter-spacing: .03em; color: #f8ead0; }
+  .v10 .scrim { position: absolute; left: 0; right: 0; bottom: 0; height: 260px; background: linear-gradient(180deg, rgba(0,0,0,0), rgba(5,3,1,.86) 55%); }
+  .v10 .tiles { position: absolute; left: 28px; right: 28px; bottom: 50px; display: grid; grid-template-columns: 1fr 1.35fr 1fr .72fr; gap: 12px; align-items: end; }
+  .v10 .tile { height: 140px; padding: 16px 14px 12px; display: flex; flex-direction: column; align-items: center; text-align: center;
+               background: rgba(14,9,5,.72); border: 1px solid rgba(242,201,119,.28); border-top: 2px solid var(--gold); border-radius: 4px; }
+  .v10 .tile svg.i { width: 34px; height: 34px; color: var(--gold); stroke-width: 1.4; }
+  .v10 .tile b { font: 400 17px Yeseva; color: #f6e4bc; margin: 8px 0 5px; }
+  .v10 .tile small { font: 11px/1.35 "Segoe UI"; color: #b8a88e; }
+  .v10 .tile.play { height: 164px; background: linear-gradient(180deg, rgba(242,185,90,.95), rgba(176,96,30,.95)); border-color: #fff0c4; }
+  .v10 .tile.play svg.i { color: #2a1606; width: 40px; height: 40px; }
+  .v10 .tile.play b { font-size: 24px; color: #2a1606; }
+  .v10 .tile.play small { color: #3d230c; }
+  .v10 .tile.del { height: 112px; opacity: .78; border-top-color: #6d5a44; }
+  .v10 .tile.del svg.i { color: #9c8b76; width: 26px; height: 26px; }
+  .v10 .tile.del b { font-size: 14px; color: #cdbfa6; }
+  .v10 .foot { position: absolute; left: 28px; right: 28px; bottom: 14px; display: flex; justify-content: space-between; font: 12px "Segoe UI"; color: #cdbfa6; }
+
+  /* ——— 11. Выбор владельца 2026-10-31 18:22 — вариант 2, переставленный: «2, путь к игре над кнопкой, название вверх, ссылки вниз слева,
+     кнопки в колонке справа, автор сборки - убрать заголовок». ——— */
+  /* Затемнение под текстом: 18:32 «затемнение под текстом ок верни» («тени какието» 18:31 было о кайме). */
+  .v11::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+                 background: linear-gradient(180deg, rgba(6,4,2,.78) 0%, rgba(6,4,2,.35) 22%, rgba(6,4,2,0) 34%),
+                             linear-gradient(180deg, rgba(6,4,2,0) 62%, rgba(6,4,2,.82) 100%),
+                             linear-gradient(270deg, rgba(6,4,2,.82) 0%, rgba(6,4,2,.55) 26%, rgba(6,4,2,0) 40%); }
+  .v11 .top { position: absolute; top: 16px; left: 22px; display: flex; align-items: center; gap: 18px; }
+  .v11 .top .logo-g { height: 54px; } .v11 .top .logo-p { height: 50px; }
+  .v11 .top h1 { font: 600 25px/1.1 Oswald; letter-spacing: .02em; margin-left: 6px; }
+  .v11 .top h2 { font: 400 14px Oswald; color: var(--gold); letter-spacing: .08em; text-transform: uppercase; margin-top: 3px; }
+  .v11 .col { position: absolute; right: 30px; bottom: 28px; width: 270px; display: flex; flex-direction: column; gap: 9px; }
+  .v11 .col .status { font: 12px Inter; color: #e2d4ba; }
+  .v11 .links { position: absolute; left: 30px; bottom: 26px; font: 13px/1.7 Inter; color: #eadcc2; }
+  .v11 .top { top: 24px; left: 30px; }
+  .v11 .top h2 { text-align: center; font-size: 17px; font-weight: 500; color: #ffd27e; letter-spacing: .1em; }   /* 18:31 «для конан эксайлс - это центрировать» */
+  /* 18:34 «для меньше, чтобы почти невидно, акцент на названии игры»; 18:37 «ровняй без учета для, для светлее но меньше»: по центру — одно название игры,
+     «для» вынесено влево от него и в ширину строки не входит. */
+  .v11 .top h2 .game { display: inline-block; }
+  .v11 .top h2 .game small { position: absolute; right: 100%; bottom: 3px; margin-right: 5px; font: 400 8px Oswald; color: rgba(255,240,215,.72); letter-spacing: .06em; }
+  /* Кайма и кнопки — как рисует KrinikConanLauncher.cs (владелец 18:22: «золотую кайму и кнопки не забудь от текущего лаунчера, углы у каймы
+     не нужны»): прут BORDER = 11 px с профилем Metal.Rod от внешнего края к внутреннему, низ и правый край темнее; заклёпок в углах нет.
+     Кнопка — Metal.Plaque: срез углов 6 px, окантовка Metal.Rim 2.5 px, лицо #3b2e21 → #161009, блик по верху, текст Georgia 14 pt #f6e4bc с тенью. */
+  .v11 .frame { position: absolute; inset: 0; z-index: 6; pointer-events: none; }
+  /* 18:26 «койму тоньше и не из гладкого металла, а из грубого, как в логотипе конана»: 7 px вместо 11, текстура литого металла из make_frame.py
+     (frame_h.jpg — верх, она же перевёрнутая — низ; frame_v.jpg — левый край, перевёрнутая — правый). */
+  /* 18:34–18:35 «без идельных углов» · «без идеальных ровных краев» · «кривой, сырой, в царапинах и кавернах»: полосы с прозрачностью (кромки рваные),
+     без обрезки под линейку; горизонтальные лежат поверх вертикальных — в углах полосы заходят друг на друга сбитыми концами. */
+  .v11 .frame i { position: absolute; --b: var(--fb, 6px); }
+  .v11 .frame .t, .v11 .frame .b { left: 0; right: 0; height: var(--b); background: var(--fh, url(frame_h.webp)) 0 0 / 100% 100%; z-index: 2; }
+  .v11 .frame .t { top: 0; }
+  .v11 .frame .b { bottom: 0; transform: scale(-1, -1); filter: brightness(.82); }
+  .v11 .frame .l, .v11 .frame .r { top: 0; bottom: 0; width: var(--b); background: var(--fv, url(frame_v.webp)) 0 0 / 100% 100%; z-index: 1; }
+  .v11 .frame .l { left: 0; }
+  .v11 .frame .r { right: 0; transform: scale(-1, -1); filter: brightness(.86); }
+  .v11 .pl { --c: 6px; padding: 2.5px; background: linear-gradient(180deg, #f7e2a6 0%, #d9a352 30%, #a1622a 60%, #5e3411 86%, #b47a3c 100%);
+             clip-path: polygon(var(--c) 0, calc(100% - var(--c)) 0, 100% var(--c), 100% calc(100% - var(--c)), calc(100% - var(--c)) 100%, var(--c) 100%, 0 calc(100% - var(--c)), 0 var(--c)); }
+  .v11 .pl > span { height: 100%; display: grid; place-items: center; --d: 4.5px; background: linear-gradient(180deg, #3b2e21, #161009); box-shadow: inset 0 1px 0 rgba(255,232,180,.27);
+             clip-path: polygon(var(--d) 0, calc(100% - var(--d)) 0, 100% var(--d), 100% calc(100% - var(--d)), calc(100% - var(--d)) 100%, var(--d) 100%, 0 calc(100% - var(--d)), 0 var(--d));
+             font: 700 18.7px Georgia; color: #f6e4bc; text-shadow: 1px 1px 0 #000; }
+  .v11 .col .pl { height: 44px; }
+  .v11 .col .pl.play { height: 70px; }
+  .v11 .col .pl.play > span { font-size: 28px; letter-spacing: .06em; color: #2a1606; text-shadow: 0 1px 0 rgba(255,244,214,.7);
+                              background: linear-gradient(180deg, #ffe7a8 0%, #f2b85a 48%, #c97a2c 100%); box-shadow: inset 0 1px 0 #fff3c9; }
+  .v11 .col .pl.play { margin-top: 6px; filter: drop-shadow(0 6px 16px rgba(242,150,60,.4)); }
+  .v11 .caps { position: absolute; top: 18px; right: 20px; display: flex; gap: 6px; z-index: 7; }
+  .v11 .caps .pl { width: 38px; height: 28px; }
+  .v11 .caps svg { width: 14px; height: 14px; fill: none; stroke: url(#glyph); stroke-width: 2.2; stroke-linecap: round; }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="glyph" gradientUnits="userSpaceOnUse" x1="0" y1="1" x2="0" y2="13"><stop offset="0" stop-color="#fbe9b6"/><stop offset="1" stop-color="#c98a44"/></linearGradient>
+    <!-- Иконки действий: установить — сундук со стрелкой внутрь; играть — меч; отзыв — перо; удалить — стрелка назад. -->
+    <symbol id="i-install" viewBox="0 0 24 24"><path d="M12 2v9M8.5 7.5 12 11l3.5-3.5"/><path d="M3 13h18v8H3z"/><path d="M3 13l2-3h14l2 3M10 16h4"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M14.5 3.5 20.5 3.5 20.5 9.5 10 20l-6-6z"/><path d="M7 13l4 4M5 19l-2 2M4.5 15.5l4 4"/></symbol>
+    <symbol id="i-tri" viewBox="0 0 24 24"><path d="M6 3.5v17l15-8.5z"/></symbol>
+    <symbol id="i-feedback" viewBox="0 0 24 24"><path d="M20 3c-6 1-11 6-13 13l-2 5 5-2c7-2 12-7 10-16z"/><path d="M6 18 15 9"/></symbol>
+    <symbol id="i-undo" viewBox="0 0 24 24"><path d="M4 9h11a5 5 0 0 1 0 10H8"/><path d="M8 5 4 9l4 4"/></symbol>
+  </defs>
+</svg>
+
+<!-- 1 -->
+<div class="win v1" data-v="1">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="ver sh">Krinik Mod Pack 1.0.0 · Conan Exiles Enhanced 3.0.1</div>
+  <div class="side">
+    <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+    <div class="orn"></div>
+    <nav class="sh">
+      <span class="play">Играть</span>
+      <span>Установить сборку</span>
+      <span>Отзыв</span>
+      <span class="del">Удалить сборку</span>
+    </nav>
+    <div class="status">Игра: D:\Games\Conan Exiles</div>
+    <div class="author"><h4>Автор сборки</h4>Почта: <a>kotkrinik@yandex.ru</a><br>Личные сообщения на PlayGround: <a>users.playground.ru/4580431</a></div>
+  </div>
+</div>
+
+<!-- 2 -->
+<div class="win v2" data-v="2">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+  <div class="author sh"><b>Автор сборки</b><br>Почта: <a>kotkrinik@yandex.ru</a><br>PlayGround: <a>users.playground.ru/4580431</a></div>
+  <div class="bar">
+    <div class="meta sh">
+      <h1>Сборка модов Krinik Mod Pack 1.0.0</h1>
+      <h2>для Conan Exiles Enhanced 3.0.1</h2>
+      <div class="row">
+        <span class="ghost"><svg class="i"><use href="#i-install"/></svg>Установить сборку</span>
+        <span class="ghost"><svg class="i"><use href="#i-feedback"/></svg>Отзыв</span>
+        <span class="ghost del"><svg class="i"><use href="#i-undo"/></svg>Удалить сборку</span>
+      </div>
+    </div>
+    <div class="playbox"><div class="play">ИГРАТЬ</div><div class="status">Игра: D:\Games\Conan Exiles</div></div>
+  </div>
+</div>
+
+<!-- 3 -->
+<div class="win v3" data-v="3">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+  <div class="titles sh">Сборка модов Krinik Mod Pack 1.0.0 <em>· для Conan Exiles Enhanced 3.0.1</em></div>
+  <div class="author sh"><b>Автор сборки</b><br>Почта: <a>kotkrinik@yandex.ru</a><br>PlayGround: <a>users.playground.ru/4580431</a></div>
+  <div class="dock sh">
+    <div class="sq"><i><svg class="i"><use href="#i-install"/></svg></i>Установить</div>
+    <div class="playwrap"><div class="play">ИГРАТЬ</div></div>
+    <div class="sq"><i><svg class="i"><use href="#i-feedback"/></svg></i>Отзыв</div>
+  </div>
+  <div class="foot sh">Игра: D:\Games\Conan Exiles</div>
+  <div class="del">Удалить сборку</div>
+</div>
+
+<!-- 4 -->
+<div class="win v4" data-v="4">
+  <div class="ctl" style="top:4px;right:6px;--cw:24px"><b>–</b><b>✕</b></div>
+  <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+  <div class="status sh">Игра: D:\Games\Conan Exiles</div>
+  <div class="sheet">
+    <h1>Сборка модов<br>Krinik Mod Pack 1.0.0</h1>
+    <h2>для Conan Exiles Enhanced 3.0.1</h2>
+    <div class="rule"></div>
+    <div class="seal">Играть</div>
+    <div class="links"><span>Установить сборку</span><span>Отзыв</span><span class="del">Удалить сборку</span></div>
+    <div class="foot">Автор сборки · Почта: <a>kotkrinik@yandex.ru</a><br>Личные сообщения на PlayGround: <a>users.playground.ru/4580431</a></div>
+  </div>
+</div>
+
+<!-- 5 -->
+<div class="win v5" data-v="5">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+  <div class="titles sh"><h1>Сборка модов Krinik Mod Pack 1.0.0 для Conan Exiles Enhanced 3.0.1</h1></div>
+  <div class="scrim"></div>
+  <div class="plates">
+    <div class="plate">Установить сборку</div>
+    <div class="plate play">Играть</div>
+    <div class="plate">Отзыв</div>
+  </div>
+  <div class="del sh">Удалить сборку</div>
+  <div class="foot sh"><span>Игра: D:\Games\Conan Exiles</span><span>Автор сборки · <a>kotkrinik@yandex.ru</a> · PlayGround: <a>users.playground.ru/4580431</a></span></div>
+</div>
+
+<!-- 6 -->
+<div class="win v6" data-v="6">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+  <div class="glass">
+    <h1>Сборка модов Krinik Mod Pack 1.0.0</h1>
+    <h2>для Conan Exiles Enhanced 3.0.1</h2>
+    <div class="play"><svg><use href="#i-tri"/></svg>Играть</div>
+    <div class="row">
+      <span><svg class="i"><use href="#i-install"/></svg>Установить сборку</span>
+      <span><svg class="i"><use href="#i-feedback"/></svg>Отзыв</span>
+      <span><svg class="i"><use href="#i-undo"/></svg>Удалить</span>
+    </div>
+    <div class="status">Игра: D:\Games\Conan Exiles</div>
+  </div>
+  <div class="author sh"><b>Автор сборки</b><br>Почта: <a>kotkrinik@yandex.ru</a><br>PlayGround: <a>users.playground.ru/4580431</a></div>
+</div>
+
+<!-- 7 -->
+<div class="win v7" data-v="7">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="panel">
+    <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+    <h1>Сборка модов Krinik Mod Pack 1.0.0 <em>для Conan Exiles Enhanced 3.0.1</em></h1>
+    <div class="act play"><svg class="i"><use href="#i-play"/></svg><div><b>Играть</b><small>Запускает Conan Exiles со сборкой</small></div></div>
+    <div class="act"><svg class="i"><use href="#i-install"/></svg><div><b>Установить сборку</b><small>Ставит моды в папку игры, заменённые файлы сохраняет</small></div></div>
+    <div class="act"><svg class="i"><use href="#i-feedback"/></svg><div><b>Отзыв</b><small>Как собрать отчёт о падении и куда его прислать</small></div></div>
+    <div class="act del"><svg class="i"><use href="#i-undo"/></svg><div><b>Удалить сборку</b><small>Возвращает игру в вид до установки сборки</small></div></div>
+    <div class="author"><b>Автор сборки</b><br>Почта: <a>kotkrinik@yandex.ru</a><br>Личные сообщения на PlayGround: <a>users.playground.ru/4580431</a></div>
+  </div>
+  <div class="status sh">Игра: D:\Games\Conan Exiles</div>
+</div>
+
+<!-- 8 -->
+<div class="win v8" data-v="8">
+  <div class="top"><img class="logo-g"><img class="logo-p"><h1>Сборка модов · версия 1.0.0 · для Conan Exiles Enhanced 3.0.1</h1></div>
+  <div class="ctl" style="top:22px"><b>–</b><b>✕</b></div>
+  <div class="cap sh">Krinik Mod Pack — сборка модов для Conan Exiles Enhanced 3.0.1</div>
+  <div class="bot">
+    <span>Установить сборку</span><span class="play">ИГРАТЬ</span><span>Отзыв</span><span class="del">Удалить сборку</span>
+  </div>
+  <div class="status">Игра: D:\Games\Conan Exiles</div>
+  <div class="author">Автор сборки · <a>kotkrinik@yandex.ru</a> · PlayGround: <a>users.playground.ru/4580431</a></div>
+</div>
+
+<!-- 9 -->
+<div class="win v9" data-v="9">
+  <div class="art"><div class="logos"><img class="logo-g"><img class="logo-p"></div></div>
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="stone">
+    <div class="info">
+      <h1>Сборка модов Krinik Mod Pack 1.0.0</h1>
+      <h2>для Conan Exiles Enhanced 3.0.1</h2>
+      <div class="ok">Сборка установлена · игра: D:\Games\Conan Exiles</div>
+      <div class="who">Автор сборки · Почта: <a>kotkrinik@yandex.ru</a> · PlayGround: <a>users.playground.ru/4580431</a></div>
+    </div>
+    <div class="side">
+      <div class="play">Играть</div>
+      <div class="small"><span>Установить</span><span>Отзыв</span></div>
+      <div class="small"><span class="del">Удалить сборку</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- 10 -->
+<div class="win v10" data-v="10">
+  <div class="ctl"><b>–</b><b>✕</b></div>
+  <div class="logos"><img class="logo-g"><img class="logo-p"></div>
+  <div class="titles sh">Сборка модов Krinik Mod Pack 1.0.0 · для Conan Exiles Enhanced 3.0.1</div>
+  <div class="scrim"></div>
+  <div class="tiles">
+    <div class="tile"><svg class="i"><use href="#i-install"/></svg><b>Установить сборку</b><small>Моды — в папку игры, заменённые файлы сохраняются</small></div>
+    <div class="tile play"><svg class="i"><use href="#i-play"/></svg><b>Играть</b><small>Conan Exiles со сборкой</small></div>
+    <div class="tile"><svg class="i"><use href="#i-feedback"/></svg><b>Отзыв</b><small>Отчёт о падении и куда писать</small></div>
+    <div class="tile del"><svg class="i"><use href="#i-undo"/></svg><b>Удалить сборку</b><small>Игра — как до установки</small></div>
+  </div>
+  <div class="foot sh"><span>Игра: D:\Games\Conan Exiles</span><span>Автор сборки · <a>kotkrinik@yandex.ru</a> · PlayGround: <a>users.playground.ru/4580431</a></span></div>
+</div>
+
+<!-- 11 -->
+<div class="win v11" data-v="11">
+  <div class="frame"><i class="t"></i><i class="b"></i><i class="l"></i><i class="r"></i></div>
+  <div class="caps">
+    <div class="pl"><span><svg viewBox="0 0 14 14"><path d="M1.5 10h11"/></svg></span></div>
+    <div class="pl"><span><svg viewBox="0 0 14 14"><path d="M2 2l10 10M2 12 12 2"/></svg></span></div>
+  </div>
+  <div class="top sh"><img class="logo-g"><img class="logo-p"><div><h1>Сборка модов Krinik Mod Pack 1.0.0</h1><h2><span class="game"><small>для</small>Conan Exiles Enhanced 3.0.1</span></h2></div></div>
+  <div class="col">
+    <div class="pl"><span>Установить сборку</span></div>
+    <div class="pl"><span>Отзыв</span></div>
+    <div class="pl"><span>Удалить сборку</span></div>
+    <div class="status sh" style="margin-top:10px">D:\Games\Conan Exiles</div>   <!-- 18:39 «игра: - убрать, просто путь» -->
+    <div class="pl play" style="margin-top:0"><span>Играть</span></div>
+  </div>
+  <div class="links sh">Почта: <a>kotkrinik@yandex.ru</a><br>PlayGround: <a>users.playground.ru/4580431</a></div>
+</div>
+
+<script>
+  // ?v=N — одно окно (для съёмщика), без параметра — все подряд; &metal=N — металл каймы из metals/ (18:36 «дай варианты металла, 8 штук»).
+  const q = new URLSearchParams(location.search), v = q.get('v'), metal = q.get('metal')
+  if (v) { document.body.classList.add('one'); document.querySelector(`.win[data-v="${v}"]`).classList.add('show') }
+  if (metal) { document.body.style.setProperty('--fh', `url(metals/frame_h_${metal}.webp)`); document.body.style.setProperty('--fv', `url(metals/frame_v_${metal}.webp)`) }
+  // &algo=N — кайма из algos/ (frame_algos.py: восемь алгоритмов поверхности, цвет 1; 18:41 «я просил АЛГОРИТМ построения текстуры»).
+  const algo = q.get('algo')
+  if (algo) { document.body.style.setProperty('--fh', `url(algos/frame_h_${algo}.webp)`); document.body.style.setProperty('--fv', `url(algos/frame_v_${algo}.webp)`) }
+  // &play=N — варианты frame_play.py (алгоритмы 1, 2, их смесь × толщина; 18:47 «побалуемся, и попрробуем тоньше варианты»); толщина — из таблицы.
+  const play = q.get('play'), PLAY_PX = { 1: 4, 2: 3, 3: 4, 4: 3, 5: 5, 6: 4, 7: 3, 8: 4 }
+  if (play) { const s = document.body.style; s.setProperty('--fh', `url(play/frame_h_${play}.webp)`); s.setProperty('--fv', `url(play/frame_v_${play}.webp)`); s.setProperty('--fb', `${PLAY_PX[play]}px`) }
+  // Варианты для интервью 028: &title=georgia — название шрифтом кнопок; &state=fresh — сборка ещё не установлена: золотая — «Установить сборку»,
+  // «Играть» и «Удалить сборку» тёмные и погашены, строка пути — «Игра найдена, сборка не установлена».
+  if (q.get('title') === 'georgia') for (const h of document.querySelectorAll('.v11 .top h1, .v11 .top h2')) { h.style.fontFamily = 'Georgia, serif'; h.style.fontWeight = '700' }
+  if (q.get('state') === 'fresh') {
+    const col = document.querySelector('.v11 .col'), pls = [...col.querySelectorAll('.pl')], play = pls.find(p => p.classList.contains('play')), inst = pls[0]
+    play.classList.remove('play'); play.style.opacity = '.45'; pls[2].style.opacity = '.45'
+    inst.classList.add('play'); inst.firstElementChild.style.fontSize = '22px'   // длинная надпись — в одну строку
+    col.append(col.querySelector('.status')); col.append(inst)
+    col.querySelector('.status').textContent = 'D:\\Games\\Conan Exiles · сборка не установлена'
+  }
+</script>
+</body>
+</html>

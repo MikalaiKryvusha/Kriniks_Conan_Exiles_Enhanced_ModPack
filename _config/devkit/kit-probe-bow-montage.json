@@ -1,0 +1,243 @@
+{
+ "ok": true,
+ "lib_funcs": [
+  "add_animation_notify_event",
+  "add_animation_notify_event_from_source",
+  "add_animation_notify_event_object",
+  "add_animation_notify_state_event",
+  "add_animation_notify_state_event_object",
+  "add_animation_notify_track",
+  "get_anim_notify_event_duration",
+  "get_anim_notify_event_trigger_time",
+  "get_animation_notify_event_names",
+  "get_animation_notify_events",
+  "get_animation_notify_events_for_track",
+  "get_animation_notify_track_names",
+  "is_valid_anim_notify_track_name",
+  "remove_all_animation_notify_tracks",
+  "remove_animation_notify_events_by_name",
+  "remove_animation_notify_events_by_track",
+  "remove_animation_notify_track",
+  "replace_anim_notify_states"
+ ],
+ "asset": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0' (0x0000025ECFB87C00) Class 'AnimMontage'>",
+ "length": 7.050000190734863,
+ "tracks": [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+  "11",
+  "12",
+  "13",
+  "14"
+ ],
+ "events": [
+  {
+   "notify_name": "BP_CancelDodgeWindow",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_CancelDodgeWindow_C_0' (0x0000025ECF07CEC0) Class 'BP_CancelDodgeWindow_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "BP_FieldOfViewChangeForDuration",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_FieldOfViewChangeForDuration_C_0' (0x0000025EED9F0A50) Class 'BP_FieldOfViewChangeForDuration_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "BP_AttackRotationSet",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_AttackRotationSet_C_1' (0x0000025EED9F50F0) Class 'BP_AttackRotationSet_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "bow_secondary_draw",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "PickArrow",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_impact_wood_sharp_generic_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_11' (0x0000025ED0796E40) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_bow_charge_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_1' (0x0000025ED0796EA0) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_footstep_foley_skin_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_9' (0x0000025ED0795940) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "BP_SetChargeHold",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_SetChargeHold_C_1' (0x0000025ECF07E000) Class 'BP_SetChargeHold_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "BP_PowerCharge",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_PowerCharge_C_0' (0x0000025ECF075980) Class 'BP_PowerCharge_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_crossbow_charge_lo_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_4' (0x0000025ED0797080) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_sword_sching_tale_soft_shiny_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_3' (0x0000025ED0797020) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "bow_secondary_loop",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "BP_SetChargeHold",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_SetChargeHold_C_0' (0x0000025ECF074BC0) Class 'BP_SetChargeHold_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_footstep_foley_skin_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_6' (0x0000025ED07970E0) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_crossbow_charge_lo_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_5' (0x0000025ED0797140) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "ProjectileAttack",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_ProjectileAttack_C_0' (0x0000025EEF1BE8C0) Class 'BP_ProjectileAttack_C'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_swish_slow_heavy_cloth_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_0' (0x0000025ED0796DE0) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_BowSpecialShot",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_bow_fire",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_23' (0x0000025ED0796F00) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_bow_swoosh_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_24' (0x0000025ED0796F60) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "sfx_crossbow_fire_Cue",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:AnimNotify_PlaySound_25' (0x0000025ED0796FC0) Class 'AnimNotify_PlaySound'>",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "foley",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "BP_QueueWindow",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "<Object '/Game/Characters/humans/animations/combat/2h_bow/AM_combat_2h_bow_combo_heavy_c0.AM_combat_2h_bow_combo_heavy_c0:BP_QueueWindow_C_0' (0x0000025ECF072EC0) Class 'BP_QueueWindow_C'>",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  },
+  {
+   "notify_name": "bow_secondary_settle",
+   "trigger_time_offset": "n/a: Exception",
+   "notify_state_class": "None",
+   "notify": "None",
+   "duration": "n/a: Exception",
+   "track_index": "n/a: Exception"
+  }
+ ]
+}

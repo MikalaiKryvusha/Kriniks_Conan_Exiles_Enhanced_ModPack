@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<title>Окно «Моды Krinik» — 4 макета</title>
+<!-- Четыре макета окна настроек наших модов (эпик 38, фаза 2). Слово владельца 2026-10-31 18:55: «давай примерный макет, как ты видишь окно настройки
+     модов Криника, 4 варианта макета». Раньше (2026-10-30 ≈11:00): «настройки модов Криника можно собирать в одно окно со скролом, а разные моды просто
+     разные подразделы этого одного скролящегося списка»; образец вида — окно рыбалки («рыболку можно не трогать, оно красивое», 18:54).
+     Ось вариантов: КАК поданы разделы модов в одном окне. Держится: вид окна рыбалки (тёмная панель, тонкая рамка, заглавные с «·», засечки, тонкие
+     шкалы, плоские кнопки) и набор строк. Строки — настройки, которые есть в наших модах (конспекты games/ConanExiles/mods/Krinik*.md) и те, что
+     просил владелец (виньетка W23, время крови W28); числа — примерные.
+     Экран 960×540 (кадр игры 1080p ÷ 2), shoot.mjs снимает при масштабе 4 = 4K. [NOT-TESTED] -->
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #222; padding: 40px; }
+  body.one .win:not(.show) { display: none; }
+  .win { position: relative; width: 960px; height: 540px; overflow: hidden; margin-bottom: 40px;
+         background: linear-gradient(rgba(0,0,0,.35), rgba(0,0,0,.35)), url(../../launcher/res/wallpaper.jpg) center / cover;
+         font-family: Cambria, Georgia, serif; color: #d9d6cf; }
+  /* Панель — как окно рыбалки: тёмно-серая, полупрозрачная, тонкая светлая рамка. */
+  .panel { position: absolute; background: rgba(30,31,33,.94); border: 1px solid rgba(200,196,186,.38); box-shadow: 0 10px 40px rgba(0,0,0,.6); padding: 16px 20px 12px; display: flex; flex-direction: column; }
+  .head { display: flex; align-items: baseline; justify-content: space-between; }
+  .title { font-size: 17px; letter-spacing: .08em; text-transform: uppercase; color: #ece8df; }
+  .title b { font-weight: 700; } .title i { font-style: normal; margin: 0 8px; color: #9a968d; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; height: 22px; padding: 0 12px; font-size: 11.5px; color: #e6e2d8;
+         background: #18191a; border: 1px solid rgba(200,196,186,.18); }
+  .sub { font-size: 11px; color: #a9a59c; margin: 5px 0 9px; padding-bottom: 8px; border-bottom: 1px solid rgba(200,196,186,.22); }
+  .sec { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: #cfcbc2; margin: 10px 0 6px; padding-bottom: 3px; border-bottom: 1px solid rgba(200,196,186,.16); display: flex; justify-content: space-between; }
+  .sec small { font-size: 9.5px; letter-spacing: .04em; text-transform: none; color: #8e8a82; }
+  .row { display: flex; align-items: center; height: 20px; font-size: 11.5px; }
+  .row .l { flex: 1; } .row .l em { font-style: normal; color: #8e8a82; font-size: 10px; margin-left: 4px; }
+  .slider { width: 120px; height: 2px; background: #6d6a64; position: relative; margin: 0 10px; }
+  .slider b { position: absolute; top: -4px; width: 4px; height: 10px; background: #e8e4da; }
+  .val { width: 44px; text-align: right; font-weight: 700; font-size: 11.5px; color: #ece8df; }
+  .off { color: #8e8a82; font-weight: 400; }
+  .check { width: 12px; height: 12px; border: 1px solid #bdb9b0; margin-right: 32px; position: relative; }
+  .check.on::after { content: ""; position: absolute; inset: 2px; background: #e8e4da; }
+  .drop { width: 120px; height: 18px; margin: 0 10px 0 0; padding: 0 6px; font-size: 10.5px; background: #18191a; border: 1px solid rgba(200,196,186,.2); display: flex; align-items: center; justify-content: space-between; }
+  .drop::after { content: "▾"; color: #9a968d; }
+  .note { font-size: 9.5px; color: #8e8a82; margin: 2px 0 2px; line-height: 1.35; }
+  .foot { display: flex; justify-content: space-between; align-items: center; margin-top: auto; padding-top: 8px; border-top: 1px solid rgba(200,196,186,.22); font-size: 10.5px; color: #a9a59c; }
+  .foot .btns { display: flex; gap: 6px; }
+  .scroll { position: relative; overflow: hidden; flex: 1; }
+  .bar { position: absolute; right: 0; width: 3px; background: #8e8a82; }
+  .track { position: absolute; right: 0; top: 0; bottom: 0; width: 3px; background: rgba(200,196,186,.12); }
+
+  /* 1 — один свиток */
+  .v1 .panel { left: 160px; top: 40px; width: 640px; height: 460px; }
+  .v1 .scroll { padding-right: 14px; }
+
+  /* 2 — оглавление слева + свиток */
+  .v2 .panel { left: 110px; top: 40px; width: 740px; height: 460px; }
+  .v2 .body { display: flex; gap: 16px; flex: 1; overflow: hidden; }
+  .v2 .toc { width: 150px; border-right: 1px solid rgba(200,196,186,.16); padding-right: 10px; }
+  .v2 .toc div { height: 26px; display: flex; align-items: center; justify-content: space-between; font-size: 12px; color: #b5b1a8; padding: 0 8px; }
+  .v2 .toc div small { font-size: 9.5px; color: #8e8a82; }
+  .v2 .toc .on { background: #18191a; color: #f2eee5; box-shadow: inset 2px 0 0 #d9d6cf; }
+  .v2 .scroll { padding-right: 14px; }
+
+  /* 3 — две колонки */
+  .v3 .panel { left: 60px; top: 36px; width: 840px; height: 468px; }
+  .v3 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 0 26px; }
+  .v3 .scroll { padding-right: 14px; }
+
+  /* 4 — сворачиваемые разделы */
+  .v4 .panel { left: 160px; top: 40px; width: 640px; height: 460px; }
+  .v4 .fold { height: 28px; display: flex; align-items: center; padding: 0 10px; margin-top: 6px; background: #18191a; border: 1px solid rgba(200,196,186,.14);
+              font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: #d9d6cf; }
+  .v4 .fold::before { content: "▸"; margin-right: 10px; color: #9a968d; }
+  .v4 .fold.open::before { content: "▾"; }
+  .v4 .fold small { margin-left: auto; font-size: 10px; letter-spacing: 0; text-transform: none; color: #8e8a82; }
+  .v4 .inner { padding: 4px 12px 6px 30px; border-left: 1px solid rgba(200,196,186,.14); border-right: 1px solid rgba(200,196,186,.14); border-bottom: 1px solid rgba(200,196,186,.14); }
+
+  /* 5–7 — выбор владельца 2026-10-31 19:02: вариант 2, справа ТОЛЬКО настройки выбранного мода, вверху один заголовок, полные имена модов слева бегущей строкой,
+     окно-хаб на каждого автора. */
+  .hub .panel { left: 150px; top: 46px; width: 660px; height: 448px; }
+  .hub .head { padding-bottom: 9px; border-bottom: 1px solid rgba(200,196,186,.22); margin-bottom: 10px; }
+  .hub .body { display: flex; gap: 16px; flex: 1; overflow: hidden; }
+  .hub .toc { width: 158px; flex: none; border-right: 1px solid rgba(200,196,186,.16); padding-right: 10px; }
+  .hub .toc div { height: 26px; display: flex; align-items: center; font-size: 12px; color: #b5b1a8; padding: 0 8px; overflow: hidden; white-space: nowrap;
+                  -webkit-mask: linear-gradient(90deg, transparent 0, #000 8px, #000 calc(100% - 8px), transparent 100%); }
+  .hub .toc div span { display: inline-block; }
+  .hub .toc .on { background: #18191a; color: #f2eee5; box-shadow: inset 2px 0 0 #d9d6cf; }
+  /* Бегущая строка: имя длиннее ячейки ездит влево и вправо, как на дисплее автомагнитолы; сдвиг — ровно на столько, на сколько имя не влезает. */
+  .hub .toc .run span { animation: run 6s ease-in-out infinite alternate; }
+  @keyframes run { 0%, 15% { transform: translateX(0) } 85%, 100% { transform: translateX(var(--over, 0px)) } }
+  .hub .opts { flex: 1; position: relative; padding-right: 14px; }
+  .hub .opts .sec { margin-top: 2px; }
+  .hub .hatch { margin-top: 18px; font-size: 11px; color: #a9a59c; line-height: 1.5; }
+  .hub .hatch .btn { margin-top: 12px; }
+  /* 19:06 «Кнопки сохранить и закрыть - внизу справа» · «закрыть без сохранения - вверху справа» · «Название пода не капсом». */
+  .hub .opts .sec { text-transform: none; letter-spacing: .02em; font-size: 12.5px; }
+  /* Кнопка «i» у каждой настройки: наведение или нажатие открывает пояснение (владелец 19:03: «возле каждой опции (i) кнопка, тап или ховет по которой
+     открывает поп-ап с пояснением подробным опции, так сделано во многих мобильных проектах Криника»). */
+  .hub .info { display: inline-flex; align-items: center; justify-content: center; width: 12px; height: 12px; margin-left: 6px; border-radius: 50%;
+               border: 1px solid #8e8a82; font: italic 700 8.5px Georgia, serif; color: #bdb9b0; vertical-align: 1px; }
+  .hub .info.hot { border-color: #ece8df; color: #1a1b1c; background: #ece8df; }
+  .hub .pop { position: absolute; z-index: 5; width: 250px; padding: 10px 12px; background: rgba(18,19,20,.98); border: 1px solid rgba(200,196,186,.45);
+              box-shadow: 0 8px 24px rgba(0,0,0,.7); font-size: 10.5px; line-height: 1.5; color: #d9d6cf; }
+  .hub .pop b { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #ece8df; margin-bottom: 4px; }
+  .hub .pop::before { content: ""; position: absolute; left: 14px; top: -5px; width: 8px; height: 8px; background: rgba(18,19,20,.98);
+                      border-left: 1px solid rgba(200,196,186,.45); border-top: 1px solid rgba(200,196,186,.45); transform: rotate(45deg); }
+</style>
+</head>
+<body>
+<template id="rows-camera">
+  <div class="row"><span class="l">Дальность камеры</span><span class="slider"><b style="left:55%"></b></span><span class="val">3,2 м</span></div>
+  <div class="row"><span class="l">Высота камеры</span><span class="slider"><b style="left:40%"></b></span><span class="val">0,45 м</span></div>
+  <div class="row"><span class="l">Смещение вбок</span><span class="slider"><b style="left:62%"></b></span><span class="val">0,60 м</span></div>
+  <div class="row"><span class="l">Ось поворота</span><span class="drop">у плеча героя</span></div>
+  <div class="row"><span class="l">Настройка на лету клавишами цифрового блока</span><span class="check on"></span></div>
+</template>
+<template id="rows-ui">
+  <div class="row"><span class="l">Счётчик кадров в углу экрана</span><span class="check on"></span></div>
+  <div class="row"><span class="l">Мигание еды и воды <em>с какого запаса</em></span><span class="slider"><b style="left:10%"></b></span><span class="val">10 %</span></div>
+  <div class="row"><span class="l">Мигание веса <em>с какой нагрузки</em></span><span class="slider"><b style="left:90%"></b></span><span class="val">90 %</span></div>
+  <div class="row"><span class="l">Виньетка: голод</span><span class="slider"><b style="left:60%"></b></span><span class="val">60 %</span></div>
+  <div class="row"><span class="l">Виньетка: жажда</span><span class="slider"><b style="left:60%"></b></span><span class="val">60 %</span></div>
+  <div class="row"><span class="l">Виньетка: мало здоровья</span><span class="slider"><b style="left:0%"></b></span><span class="val off">выкл</span></div>
+  <div class="row"><span class="l">Мир замедляется, пока открыт инвентарь</span><span class="check on"></span></div>
+</template>
+<template id="rows-archery">
+  <div class="row"><span class="l">Кровь от стрелы держится</span><span class="slider"><b style="left:30%"></b></span><span class="val">30 с</span></div>
+</template>
+<template id="rows-pack">
+  <div class="row"><span class="l">Строка «Сборка: моды» в главном меню</span><span class="check on"></span></div>
+  <div class="row"><span class="l">Заставка сборки при загрузке</span><span class="check on"></span></div>
+  <div class="row"><span class="l">Масштаб полос героя (HUD)</span><span class="slider"><b style="left:50%"></b></span><span class="val">×1,25</span></div>
+</template>
+
+<!-- 1 — один свиток -->
+<div class="win v1" data-v="1"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Krinik'а</b><i>·</i>Настройки</div><span class="btn">Закрыть</span></div>
+  <div class="sub">Настройки модов сборки Krinik. Изменения применяются сразу и сохраняются.</div>
+  <div class="scroll">
+    <div class="sec">Камера <small>KrinikConanCamera</small></div><div data-rows="camera"></div>
+    <div class="sec">Интерфейс <small>KrinikConanUI</small></div><div data-rows="ui"></div>
+    <div class="sec">Стрельба из лука <small>KrinikConanArchery</small></div><div data-rows="archery"></div>
+    <div class="sec">Сборка <small>KrinikConanModPackManager</small></div><div data-rows="pack"></div>
+    <div class="track"></div><div class="bar" style="top:0;height:58%"></div>
+  </div>
+  <div class="foot"><span>Мод без настроек в списке не показан.</span><span class="btns"><span class="btn">Сбросить к исходным</span></span></div>
+</div></div>
+
+<!-- 2 — оглавление слева + свиток -->
+<div class="win v2" data-v="2"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Krinik'а</b><i>·</i>Настройки</div><span class="btn">Закрыть</span></div>
+  <div class="sub">Слева — моды, справа — их настройки одним списком. Щелчок по моду прокручивает к его разделу.</div>
+  <div class="body">
+    <div class="toc"><div>Камера <small>5</small></div><div class="on">Интерфейс <small>7</small></div><div>Стрельба из лука <small>1</small></div><div>Сборка <small>3</small></div></div>
+    <div class="scroll">
+      <div class="sec">Интерфейс <small>KrinikConanUI</small></div><div data-rows="ui"></div>
+      <div class="sec">Стрельба из лука <small>KrinikConanArchery</small></div><div data-rows="archery"></div>
+      <div class="sec">Сборка <small>KrinikConanModPackManager</small></div><div data-rows="pack"></div>
+      <div class="track"></div><div class="bar" style="top:30%;height:52%"></div>
+    </div>
+  </div>
+  <div class="foot"><span>Изменения применяются сразу и сохраняются.</span><span class="btns"><span class="btn">Сбросить к исходным</span></span></div>
+</div></div>
+
+<!-- 3 — две колонки -->
+<div class="win v3" data-v="3"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Krinik'а</b><i>·</i>Настройки</div><span class="btn">Закрыть</span></div>
+  <div class="sub">Настройки модов сборки Krinik — в две колонки, как окно рыбалки. Изменения применяются сразу и сохраняются.</div>
+  <div class="scroll"><div class="cols">
+    <div><div class="sec">Камера <small>KrinikConanCamera</small></div><div data-rows="camera"></div>
+         <div class="sec">Стрельба из лука <small>KrinikConanArchery</small></div><div data-rows="archery"></div>
+         <div class="sec">Сборка <small>KrinikConanModPackManager</small></div><div data-rows="pack"></div></div>
+    <div><div class="sec">Интерфейс <small>KrinikConanUI</small></div><div data-rows="ui"></div></div>
+  </div></div>
+  <div class="foot"><span>Мод без настроек в списке не показан.</span><span class="btns"><span class="btn">Сбросить к исходным</span></span></div>
+</div></div>
+
+<!-- 4 — сворачиваемые разделы -->
+<div class="win v4" data-v="4"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Krinik'а</b><i>·</i>Настройки</div><span class="btn">Закрыть</span></div>
+  <div class="sub">Каждый мод — свой раздел; щелчок по заголовку раскрывает или сворачивает его.</div>
+  <div class="scroll">
+    <div class="fold">Камера <small>5 настроек</small></div>
+    <div class="fold open">Интерфейс <small>7 настроек</small></div><div class="inner" data-rows="ui"></div>
+    <div class="fold">Стрельба из лука <small>1 настройка</small></div>
+    <div class="fold">Сборка <small>3 настройки</small></div>
+  </div>
+  <div class="foot"><span>Изменения применяются сразу и сохраняются.</span><span class="btns"><span class="btn">Сбросить к исходным</span></span></div>
+</div></div>
+
+<!-- 5 — хаб Krinik, выбран KrinikConanUI -->
+<div class="win v5 hub" data-v="5"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Krinik'а</b><i>·</i>Настройки</div><span class="btn">Закрыть без сохранения</span></div>
+  <div class="body">
+    <div class="toc"><div><span>KrinikConanCamera</span></div><div class="on"><span>KrinikConanUI</span></div><div><span>KrinikConanArchery</span></div><div class="run"><span>KrinikConanModPackManager</span></div></div>
+    <div class="opts"><div class="sec">KrinikConanUI <small>интерфейс сборки</small></div><div data-rows="ui"></div></div>
+  </div>
+  <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
+</div></div>
+
+<!-- 6 — хаб Krinik, выбран мод с длинным именем: имя посреди бегущей строки -->
+<div class="win v6 hub" data-v="6"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Krinik'а</b><i>·</i>Настройки</div><span class="btn">Закрыть без сохранения</span></div>
+  <div class="body">
+    <div class="toc"><div><span>KrinikConanCamera</span></div><div><span>KrinikConanUI</span></div><div><span>KrinikConanArchery</span></div><div class="on run" data-frozen="1"><span>KrinikConanModPackManager</span></div></div>
+    <div class="opts"><div class="sec">KrinikConanModPackManager <small>сборка</small></div><div data-rows="pack"></div></div>
+  </div>
+  <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
+</div></div>
+
+<!-- 7 — хаб Xevyr: тот же вид для другого автора; строк его модов ещё нет — честный запасной ход «открыть окно мода» -->
+<div class="win v7 hub" data-v="7"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Xevyr'а</b><i>·</i>Настройки</div><span class="btn">Закрыть без сохранения</span></div>
+  <div class="body">
+    <div class="toc"><div class="on"><span>The Damage Meter</span></div><div><span>Proximity Party</span></div><div><span>Simple Minimap</span></div><div class="run"><span>Lore &amp; Loot Highlight</span></div></div>
+    <div class="opts"><div class="sec">The Damage Meter</div>
+      <div class="hatch">Здесь встанут настройки этого мода, когда его сохранение будет разобрано: те же шкалы, галочки и списки, что в окне Krinik.<br>
+      Пока — его собственное окно настроек.<br><span class="btn">Открыть окно мода</span></div></div>
+  </div>
+  <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
+</div></div>
+
+<script>
+  // Строки разделов — из шаблонов: один набор на все четыре макета.
+  for (const box of document.querySelectorAll('[data-rows]')) box.append(document.getElementById('rows-' + box.dataset.rows).content.cloneNode(true))
+  const q = new URLSearchParams(location.search), v = q.get('v')
+  if (v) { document.body.classList.add('one'); document.querySelector(`.win[data-v="${v}"]`).classList.add('show') }
+  // «i» у каждой настройки в хабах; в окне 5 пояснение виньетки голода открыто — так выглядит поп-ап.
+  for (const l of document.querySelectorAll('.hub .row .l')) { const i = document.createElement('span'); i.className = 'info'; i.textContent = 'i'; l.insertBefore(i, l.querySelector('em')) }   // перед пометкой «с какого …», без неё — в конец
+  const v5 = document.querySelector('.v5'), hot = [...v5.querySelectorAll('.row .l')].find(l => l.textContent.startsWith('Виньетка: голод'))
+  if (hot) {
+    const ic = hot.querySelector('.info'); ic.classList.add('hot')
+    const pop = document.createElement('div'); pop.className = 'pop'
+    pop.innerHTML = '<b>Виньетка: голод</b>Когда герой голоден, края экрана темнеют и мерцают. Шкала задаёт силу этого мерцания: правее — заметнее. ' +
+                    'Крайнее левое положение выключает виньетку голода совсем. Жажда и малое здоровье настраиваются своими шкалами.'
+    const panel = v5.querySelector('.panel'), r = ic.getBoundingClientRect(), p = panel.getBoundingClientRect()
+    pop.style.left = (r.left - p.left - 13) + 'px'; pop.style.top = (r.bottom - p.top + 7) + 'px'; panel.append(pop)
+  }
+  // Бегущая строка: сдвиг — на сколько имя длиннее ячейки (с полями); не длиннее — не едет. data-frozen — кадр для листа посреди хода.
+  for (const cell of document.querySelectorAll('.hub .toc div')) {
+    const s = cell.querySelector('span'), over = cell.clientWidth - 16 - s.scrollWidth
+    if (over < 0) { cell.classList.add('run'); s.style.setProperty('--over', over + 'px') } else cell.classList.remove('run')
+    if (cell.dataset.frozen) { s.style.animationDelay = '-3.6s'; s.style.animationPlayState = 'paused' }
+  }
+</script>
+</body>
+</html>

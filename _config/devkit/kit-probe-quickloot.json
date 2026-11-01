@@ -1,0 +1,354 @@
+{
+ "ok": true,
+ "widgets": [
+  {
+   "name": "Border_0",
+   "class": "Border",
+   "parent": "VerticalBox_0",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BC988) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BC980) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "Border_1",
+   "class": "Border",
+   "parent": "Border_2",
+   "slot_class": "BorderSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BCAD0) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "Border_2",
+   "class": "Border",
+   "parent": ""
+  },
+  {
+   "name": "VerticalBox_0",
+   "class": "VerticalBox",
+   "parent": "Border_1",
+   "slot_class": "BorderSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BCA60) {left: 4.000000, top: 4.000000, right: 4.000000, bottom: 4.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "ObjectOwnerName",
+   "class": "GeneralText",
+   "parent": "Border_0",
+   "slot_class": "BorderSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BC910) {left: 0.000000, top: 5.000000, right: 0.000000, bottom: 5.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_CENTER: 2>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "CancelButtonLabel",
+   "class": "GeneralText",
+   "parent": "LootActionTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BDF00) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BDEF8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_RIGHT: 3>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "LootActionTooltip",
+   "class": "HorizontalBox",
+   "parent": "VerticalBox_3",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BD168) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BD160) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "LootButtonLabel",
+   "class": "GeneralText",
+   "parent": "LootActionTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BDF70) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BDF68) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "LootButtonLabel_1",
+   "class": "GeneralText",
+   "parent": "LootActionTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BE050) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BE048) {value: 1.000000, size_rule: Fill}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_LEFT: 1>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "LootButtonLabel_2",
+   "class": "GeneralText",
+   "parent": "NavTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BE130) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BE128) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "NavTooltip",
+   "class": "HorizontalBox",
+   "parent": "VerticalBox_2",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BF388) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BF380) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "PostNavDepositButtonLabel",
+   "class": "GeneralText",
+   "parent": "HorizontalBoxPostNavQuickDepositContainer",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BE2F0) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BE2E8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "HorizontalBoxPostNavQuickDepositContainer",
+   "class": "HorizontalBox",
+   "parent": "VerticalBox_3",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BFFC8) {left: 0.000000, top: 5.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BFFC0) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "PreNavDepositTransferButtonLabel",
+   "class": "GeneralText",
+   "parent": "HorizontalBoxPreNavQuickDepositContainer",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BE440) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BE438) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "HorizontalBoxPreNavQuickDepositContainer",
+   "class": "HorizontalBox",
+   "parent": "VerticalBox_2",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BD088) {left: 0.000000, top: 5.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BD080) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "TextBlock_1",
+   "class": "GeneralText",
+   "parent": "NavTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BE520) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BE518) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "VerticalBox_3",
+   "class": "VerticalBox",
+   "parent": "WidgetSwitcherTooltips",
+   "slot_class": "WidgetSwitcherSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E672284A8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "VerticalBox_2",
+   "class": "VerticalBox",
+   "parent": "WidgetSwitcherTooltips",
+   "slot_class": "WidgetSwitcherSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E67228328) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon_0",
+   "class": "W_HotkeyIcon_C",
+   "parent": "HorizontalBoxPostNavQuickDepositContainer",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BCDF0) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BCDE8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon_C_1",
+   "class": "W_HotkeyIcon_C",
+   "parent": "HorizontalBoxPreNavQuickDepositContainer",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BF1D0) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BF1C8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon",
+   "class": "W_HotkeyIcon_C",
+   "parent": "LootActionTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BD100) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BD0F8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon_3",
+   "class": "W_HotkeyIcon_C",
+   "parent": "LootActionTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BF2B0) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BF2A8) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon_1",
+   "class": "W_HotkeyIcon_C",
+   "parent": "LootActionTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7B1550) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7B1548) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon_2",
+   "class": "W_HotkeyIcon_C",
+   "parent": "NavTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BD250) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BD248) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "W_HotkeyIcon_4",
+   "class": "W_HotkeyIcon_C",
+   "parent": "NavTooltip",
+   "slot_class": "HorizontalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BF320) {left: 0.000000, top: 0.000000, right: 10.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BF318) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_CENTER: 2>"
+   }
+  },
+  {
+   "name": "img_Divider1",
+   "class": "Image",
+   "parent": "VerticalBox_0",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7B0AC8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7B0AC0) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+   }
+  },
+  {
+   "name": "img_Divider1_1",
+   "class": "Image",
+   "parent": "VerticalBox_1",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7B0BA8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7B0BA0) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_BOTTOM: 3>"
+   }
+  },
+  {
+   "name": "VerticalBox_1",
+   "class": "VerticalBox",
+   "parent": "VerticalBox_0",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7B1628) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7B1620) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_TOP: 1>"
+   }
+  },
+  {
+   "name": "InventoryGridView",
+   "class": "InventoryGridView_C",
+   "parent": "VerticalBox_1",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7B0DD8) {left: 35.000000, top: 10.000000, right: 35.000000, bottom: 10.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7B0DD0) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  },
+  {
+   "name": "WidgetSwitcherTooltips",
+   "class": "WidgetSwitcher",
+   "parent": "VerticalBox_1",
+   "slot_class": "VerticalBoxSlot",
+   "slot": {
+    "padding": "<Struct 'Margin' (0x0000027E6D7BF778) {left: 20.000000, top: 10.000000, right: 20.000000, bottom: 10.000000}>",
+    "size": "<Struct 'SlateChildSize' (0x0000027E6D7BF770) {value: 1.000000, size_rule: Automatic}>",
+    "horizontal_alignment": "<HorizontalAlignment.H_ALIGN_FILL: 0>",
+    "vertical_alignment": "<VerticalAlignment.V_ALIGN_FILL: 0>"
+   }
+  }
+ ],
+ "loaded": "/Game/UI/HUD/FloatingNames/W_QuickLootPanel.W_QuickLootPanel"
+}
