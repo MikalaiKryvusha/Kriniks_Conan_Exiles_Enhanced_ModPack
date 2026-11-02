@@ -3,7 +3,7 @@
 # «и внизу тоже будем крупно цифрами писать версии» · 2026-10-30 22:44. Order as in the main menu: the game's logo left, ours right
 # (`[OWNER]` «в главном меню - справа» · 22:40); under the game's logo the game version, under ours the build version (22:39).
 #
-#   python -X utf8 make-wallpapers.py <layout> <wallpaper> <out> [--game 3.0.1] [--pack 1.0.0]
+#   python -X utf8 make-wallpapers.py <layout> <wallpaper> <out> [--game 3.0.1] [--pack 0.9.0]
 #   layouts (four for the owner's choice — «4 варианта!» · 22:50):
 #     top-centre — the pair centred at the top, each version under its logo
 #     sky-left — the pair over the clouds on the left, each version under its logo
@@ -86,7 +86,7 @@ def main():
     ap.add_argument("wallpaper")
     ap.add_argument("out")
     ap.add_argument("--game", default="3.0.1")
-    ap.add_argument("--pack", default="1.0.0")
+    ap.add_argument("--pack", default="0.9.0")
     ap.add_argument("--logo-h", type=float, default=LOGO_H, help="logo height, share of the picture height")
     ap.add_argument("--digit-h", type=float, default=DIGIT_H, help="digit font size, share of the picture height")
     a = ap.parse_args()

@@ -22,6 +22,10 @@ Fishing («DIFFICULTY», «Apply to server»), подсказки школ ма�
     bool:<Функция>@<n>\t<было>\t<стало>       n-й логический токен функции (True|False), порядок — как у kismet-trace.py
     enum:<Ряд>/<Свойство>\t<было>\t<стало>    значение перечисления (EnumProperty или ByteProperty с именем), «Тип::Значение»
                                           (2026-10-29, окна модов в хабе: Category Popup → Modal, FullscreenGUIAction Close → None — KUMM план 36)
+    rbool:<Ряд>/<Свойство>\t<было>\t<стало>   логическое поле ряда (BoolProperty), True|False (2026-11-01, окна модов из
+                                          списка «Настройки модов»: CloseOnESC false → true, иначе Esc в окне закрывал и инвентарь — KUMM план 40.3)
+    tag:<Ряд>/<Свойство>\t+\t<Метка>      ДОБАВИТЬ метку в контейнер GameplayTagContainer ряда (2026-11-01, вещи Caverns of Set в общих
+                                          кругах добычи по меткам уровня Loot.General + Loot.T3/T4)
 Эти строки правятся через JSON UAssetGUI, а кусок собирает retoc to-zen (у таблиц круг to-legacy → to-zen — байт в байт; склейка
 не годится: новое имя в таблице имён не попадёт в исходный zen-заголовок). Оба отрезка проверяются на каждой сборке.
 PATCH_VIEW=<папка> — своё представление вместо VIEW: прибор не ставит в него жёстких ссылок на игру, а кладёт только global.utoc/.ucas
@@ -348,11 +352,30 @@ def patch_rows(patched_ua, delrows, fnames, aw):
         data.remove(one_row(data, row))
         print(f"   ряд убран: {row}")
     for row, prop, old, new in fnames:
+        if old == "+":
+            # `tag:<Ряд>/<Свойство>\t+\t<Метка>` — метка ДОБАВЛЯЕТСЯ в контейнер GameplayTagContainer ряда (вещи Caverns of Set в общих кругах
+            # добычи: сундук выбирает вещь запросом по меткам каталога — KUMM games/ConanExiles/GAME_ARCHITECTURE_INTERNAL_MAP.md «Loot generation»;
+            # владелец 2026-11-01 08:58 «делаем сейчас 2»). Уже стоит — ряд не трогается.
+            # [TESTED: 2026-11-01 · Mines_of_Set 30 строк tag: — сверки после записи и куска zen зелёные; в игре таблица вещей несёт Loot.General + Loot.T4,
+            #  сундуки пещер выдали оружие Серых Древних · KUMM testcases/TC_conan_caverns_chest_loot_2026-11-01.md K6, K7]
+            conts = [p for p in one_row(data, row)["Value"] if p.get("Name") == prop and "StructPropertyData" in p.get("$type", "")
+                     and p.get("StructType") == "GameplayTagContainer"]
+            if len(conts) != 1 or not conts[0].get("Value") or "GameplayTagContainerPropertyData" not in conts[0]["Value"][0].get("$type", ""):
+                raise SystemExit(f"ряд {row}, {prop}: контейнер меток не найден — сборка остановлена")
+            have = conts[0]["Value"][0]["Value"]
+            if new not in have:
+                have.append(new)
+                if new not in doc["NameMap"]:
+                    at = doc["NamesReferencedFromExportDataCount"]
+                    doc["NameMap"].insert(at, new)
+                    doc["NamesReferencedFromExportDataCount"] = at + 1
+            print(f"   ряд {row}: {prop} + {new!r} → {have}")
+            continue
         props = [p for p in one_row(data, row)["Value"] if p.get("Name") == prop and name_field(p)]
         if len(props) != 1 or props[0].get(name_field(props[0])) != old:
             raise SystemExit(f"ряд {row}, {prop}: ждали имя {old!r}, в таблице {[p.get(name_field(p)) for p in props]} — сборка остановлена")
         props[0][name_field(props[0])] = new
-        if new not in doc["NameMap"]:
+        if isinstance(new, str) and new not in doc["NameMap"]:
             # Имени нет в таблице имён — без него UAssetAPI не запишет FName. Ставится НЕ в конец, а перед именами одного заголовка:
             # retoc to-zen берёт в zen-таблицу имён только первые NamesReferencedFromExportDataCount (у RNF 1280 из 1289); имя в конце
             # пропало из куска, и ряд после выгрузки показал номер «1289» вместо имени (2026-10-29, первая сборка).
@@ -373,7 +396,7 @@ def name_field(p):
     """Поле JSON UAssetGUI, где у свойства лежит имя: NameProperty и EnumProperty — `Value`, ByteProperty-перечисление — `EnumValue`
     (FullscreenGUIAction в UIModuleTableRow — байтовое перечисление, Category — EnumProperty; 2026-10-29). Не имя — None."""
     t = p.get("$type", "")
-    if "NamePropertyData" in t or "EnumPropertyData" in t:
+    if "NamePropertyData" in t or "EnumPropertyData" in t or "BoolPropertyData" in t:   # BoolProperty — строки rbool: (2026-11-01)
         return "Value"
     if "BytePropertyData" in t and p.get("ByteType") == "FName":
         return "EnumValue"
@@ -389,6 +412,11 @@ def check_rows(jp, delrows, fnames, count, when):
     if gone or len(names) != count:
         raise SystemExit(f"{when}: рядов {len(names)} (ждали {count}), не убраны {gone}")
     for row, prop, old, new in fnames:
+        if old == "+":
+            got = [p["Value"][0]["Value"] for r in data if r.get("Name") == row for p in r["Value"] if p.get("Name") == prop]
+            if len(got) != 1 or new not in got[0]:
+                raise SystemExit(f"{when}: ряд {row}, {prop} = {got}, ждали метку {new!r}")
+            continue
         v = [p.get(name_field(p)) for r in data if r.get("Name") == row for p in r["Value"] if p.get("Name") == prop]
         if v != [new]:
             raise SystemExit(f"{when}: ряд {row}, {prop} = {v}, ждали {new!r}")
@@ -484,10 +512,16 @@ def build(mod, pairs, work):
                 bools.append((fn, old == "True", new == "True"))
             elif line.startswith("delrow:"):
                 delrows.append(line[7:].strip())
-            elif line.startswith(("fname:", "enum:")) and line.count("\t") == 2:
+            elif line.startswith(("fname:", "enum:", "tag:")) and line.count("\t") == 2:
                 where, old, new = line.split(":", 1)[1].split("\t")
                 row, _, prop = where.rpartition("/")
                 fnames.append((row, prop, old, new))
+            elif line.startswith("rbool:") and line.count("\t") == 2:
+                where, old, new = line[6:].split("\t")
+                if {old, new} != {"True", "False"}:
+                    raise SystemExit(f"строка rbool: ждёт True/False, дано {old!r} → {new!r}")
+                row, _, prop = where.rpartition("/")
+                fnames.append((row, prop, old == "True", new == "True"))   # значения — bool: name_field отдаёт поле BoolProperty
             elif line.startswith("rawf:") and line.count("\t") == 1:
                 old, new = line[5:].split("\t")
                 rawfs.append((float(old), float(new)))

@@ -10,6 +10,7 @@ if errorlevel 1 (
   pause
   exit /b 1
 )
+if not "{SHORTCUT}"=="" powershell -NoProfile -Command "Remove-Item -LiteralPath (Join-Path ([Environment]::GetFolderPath('Desktop')) '{SHORTCUT}.lnk') -ErrorAction SilentlyContinue"
 echo.
 echo Готово: сборка удалена, файлы игры вернулись на место.
 pause

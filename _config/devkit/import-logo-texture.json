@@ -1,12 +1,12 @@
 {
  "ok": true,
  "imported": [
-  "/Game/UI/Textures/Logos/T_UI_ConanExiles_Enhanced_Logo.T_UI_ConanExiles_Enhanced_Logo"
+  "/Game/Mods/KrinikConanUI/T_KrinikModpackLogo.T_KrinikModpackLogo"
  ],
  "saved": true,
- "asset": "/Game/UI/Textures/Logos/T_UI_ConanExiles_Enhanced_Logo.T_UI_ConanExiles_Enhanced_Logo",
+ "asset": "/Game/Mods/KrinikConanUI/T_KrinikModpackLogo.T_KrinikModpackLogo",
  "size": [
   1024,
-  512
+  388
  ]
 }

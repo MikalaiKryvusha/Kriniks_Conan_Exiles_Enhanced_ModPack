@@ -122,21 +122,23 @@ local function log(fmt, ...)
     print(("[%s] %s\n"):format(MOD_NAME, ok and s or tostring(fmt)))
 end
 
--- ===================== 0.7.0: КНОПКА HOSAV «НАСТРОЙКИ ИНТЕРФЕЙСА» — ТОЛЬКО НА «СНАРЯЖЕНИИ» =====================
--- Слово владельца 26.10: «Она должна отображаться только на табе хаба "Снаряжение" а на других табах эта кнопка не нужна» (KUMM bugs/64
--- п. 16) и «починить моды и их работу с уи чтобы в хабе не было мерцаний … появлений и исчезновений». Байткод кнопки (kismet-trace.py):
--- `Delay 3.0` по кругу и `IsModuleActive(CharacterInventory)` — весь хаб, поэтому кнопка жила на всех вкладках (на «Талантах» — поверх
--- ванильной «Показать контент из DLC») и появлялась через ≤3 с. Опрос Hosav заглушён НАТИВНО (KRINIK MODIFIED: Delay 3.0 → 1e9), а
--- видимость ставим здесь — по событию: `XCS_Panel` открыт ровно пока открыта вкладка «Снаряжение» (журнал 26.10 17:41: открыт с хабом,
--- закрыт при переходе на «Таланты»). Поиск кнопки — раз на событие, не в цикле (правило §1 HOUSE_RULES: событие вместо опроса).
+-- ===================== 0.16.0: ПАНЕЛЬ ИНВЕНТАРЯ — ТОЛЬКО «НАСТРОЙКИ МОДОВ»; КНОПКА HOSAV СПРЯТАНА ВСЕГДА =====================
+-- Слово владельца 2026-11-01 15:49 «соответственно, она там одна должна остаться» · «настройки рыбалки и настройки интерфейса оттуда уходят»
+-- (KUMM plans/40_epic40_phase3_inventory_button_list.md). Окна Hosav и рыбалки теперь открывает список «Настройки модов» (krinik_mods_button.lua).
+-- Кнопка рыбалки: её вставку (BPC_EFT_Tuning.Graft) мод сам больше не зовёт — опрос заглушён НАТИВНО (KRINIK MODIFIED, таймер 0.3 → 1e9),
+-- а 0.8.0–0.12.0 этого раздела звали Graft по событию «Снаряжения» и клали кнопку в ряд; теперь не зовём — кнопки нет. Код вставки и раскладки
+-- ряда (0.8.0, 0.10.0, 0.12.0) удалён целиком (история — git пакета до 2026-11-01).
+-- Кнопка Hosav — свой слой поверх экрана (W_UI_SettingsButton); её опрос тоже заглушён нативно (Delay 3.0 → 1e9), а показывал её этот раздел
+-- по событию «Снаряжения» (0.7.0). Теперь по тому же событию её внутренняя кнопка СВОРАЧИВАЕТСЯ: Hosav создаёт кнопку ПОСЛЕ события XCS_Panel
+-- (гонка 26.10 17:56) — поэтому повтор, пока кнопка не найдена: не больше HOSAV_RETRIES раз через HOSAV_RETRY_MS, конечная цепочка после события,
+-- не цикл опроса (EXP-0052); новое событие отменяет недоделанный повтор (поколение want_gen). Ассет кнопки не правим: видимость её внутренней
+-- кнопки и так ставит только этот раздел (автор — опросом, который заглушён).
+-- [NOT-TESTED]
 local EQUIPMENT_MODULE = "XCS_Panel"
-local VIS_SELF_HIT_TEST_INVISIBLE, VIS_COLLAPSED = 4, 1   -- те же значения, что ставит сам Hosav (байткод: Byte 4 / Byte 1)
--- Гонка, найденная 26.10 17:56: при первом открытии хаба Hosav создаёт кнопку ПОСЛЕ события XCS_Panel — поиск нашёл 0, кнопка не встала.
--- Поэтому «показать» повторяется по таймеру, пока кнопка не найдена: не больше HOSAV_RETRIES раз через HOSAV_RETRY_MS, и только после
--- события (конечная цепочка, не цикл опроса — EXP-0052). Новое событие отменяет недоделанный повтор (поколение want_gen).
+local VIS_COLLAPSED = 1   -- то же значение, что ставит сам Hosav (байткод: Byte 1)
 local HOSAV_RETRIES, HOSAV_RETRY_MS = 4, 250
 local want_gen = 0
-local function hosav_settings_button(show, tries, gen)
+local function hide_hosav_button(tries, gen)
     tries = tries or 0
     if gen == nil then want_gen = want_gen + 1; gen = want_gen end
     if gen ~= want_gen then return end
@@ -145,149 +147,21 @@ local function hosav_settings_button(show, tries, gen)
         if b and b:IsValid() then
             local inner = b.WBP_ButtonBase
             if inner and inner:IsValid() then
-                inner:SetVisibility(show and VIS_SELF_HIT_TEST_INVISIBLE or VIS_COLLAPSED)
+                inner:SetVisibility(VIS_COLLAPSED)
                 n = n + 1
             end
         end
     end
-    if n == 0 and show and tries < HOSAV_RETRIES then
+    if n == 0 and tries < HOSAV_RETRIES then
         -- таймер UE4SS зовёт не из игрового потока, а виджет трогают только из него
         ExecuteInGameThreadWithDelay(HOSAV_RETRY_MS, function()
-            ExecuteInGameThread(function() hosav_settings_button(show, tries + 1, gen) end)
+            ExecuteInGameThread(function() hide_hosav_button(tries + 1, gen) end)
         end)
         return
     end
-    log("кнопка Hosav «Настройки интерфейса»: %s (%d, повторов %d)", show and "показана" or "скрыта", n, tries)
-    if show and n > 0 and _G.__krinik_pause_arrange_row then pcall(_G.__krinik_pause_arrange_row) end   -- 0.10.0, ниже
+    log("кнопка Hosav «Настройки интерфейса»: скрыта (%d, повторов %d)", n, tries)
 end
-
--- ===================== 0.8.0: КНОПКА «НАСТРОЙКА РЫБАЛКИ» (Exiles Fishing) — ПО СОБЫТИЮ, БЕЗ ОПРОСА =====================
--- Видео 57 к/с 2026-10-29 (KUMM bugs/64 п. 17): при каждом входе на «Снаряжение» кнопка рыбалки вставала позже остальных кнопок нижней полосы.
--- Причина в байткоде мода (kismet-trace.py): компонент BPC_EFT_Tuning каждые 0,3 с (таймер CheckInventory, по кругу) спрашивает
--- IsModuleActive(CharacterInventory) и на фронте зовёт Graft — отсюда 0–300 мс опоздания и опрос процессора. Опрос заглушён НАТИВНО
--- (KRINIK MODIFIED: таймер 0.3 → 1e9 в графе событий и в TryLocal), Graft зовём здесь — по тому же событию XCS_Panel, что и кнопку Hosav.
--- Graft можно звать повторно: сам снимает прежние W_EFT_AdminButton_C и ставит новую в ButtonBar.ButtonContainerRight видимого хаба
--- (CraftingGUI_C), но только если мод признал игрока админом (bAdminLocal). Хаб ещё не виден — bAdminGrafted остаётся false, и тогда повтор,
--- как у кнопки Hosav (конечная цепочка после события, не цикл).
--- [NOT-TESTED]
-local FISH_RETRIES, FISH_RETRY_MS = 4, 250
-local fish_gen = 0
-local function fishing_button(show, tries, gen)
-    tries = tries or 0
-    if gen == nil then fish_gen = fish_gen + 1; gen = fish_gen end
-    if gen ~= fish_gen or not show then return end
-    local t0 = os.clock()
-    local n, admin, grafted = 0, false, false
-    for _, c in ipairs(FindAllOf("BPC_EFT_Tuning_C") or {}) do
-        if c and c:IsValid() and c.bAdminLocal then
-            n = n + 1
-            admin = true
-            local ok, e = pcall(function() c:Graft() end)
-            if not ok then log("рыбалка: Graft упал: %s", tostring(e)) end
-            if c.bAdminGrafted then grafted = true end
-        end
-    end
-    if admin and not grafted and tries < FISH_RETRIES then
-        ExecuteInGameThreadWithDelay(FISH_RETRY_MS, function()
-            ExecuteInGameThread(function() fishing_button(true, tries + 1, gen) end)
-        end)
-        return
-    end
-    log("кнопка «Настройка рыбалки»: %s (компонентов-админов %d, повторов %d, %.2f мс)",
-        grafted and "поставлена" or "НЕ поставлена", n, tries, (os.clock() - t0) * 1000)
-    if grafted and _G.__krinik_pause_arrange_row then pcall(_G.__krinik_pause_arrange_row) end   -- 0.10.0, ниже
-end
-
--- ===================== 0.10.0: «НАСТРОЙКА РЫБАЛКИ» РЯДОМ С «НАСТРОЙКАМИ ИНТЕРФЕЙСА», В ЕЁ ВИДЕ, НА ЛИНИИ НИЖНЕЙ ПОЛОСЫ =====================
--- Слово владельца 26.10: «кнопку настройка интнрфейса поравнять в нижнем баре. в её стиль и рядом поставить Настройка рыбалки», 29.10 «кнопку
--- рыбалки делаем» (KUMM plan 36 п. 7). Кнопка Hosav — ванильная WBP_ButtonBase в своём слое поверх экрана; кнопка Exiles Fishing —
--- простая кнопка с текстом (W_EFT_AdminButton: Pad → Size_Btn_Open 214 → Btn_Open → текст) в правой половине полосы, её ставит Graft.
--- Кнопка Hosav остаётся в своём слое (перенесённая в полосу, она переставала нажиматься); рыбалку кладём в ЛЕВУЮ половину полосы
--- (ButtonContainerLeft) сразу за ней — поле слева = поле Hosav + её ширина + промежуток, сверху и снизу 15, как у «Закрыть». Вид рыбалки — ванильная WBP_ButtonBase,
--- с 0.12.0 Btn_Open лежит прозрачной ПОВЕРХ неё, в её Overlay (ниже, ради обводки при наведении): нажатие остаётся собственным у мода
--- (CustomEvent → ExilesFishingTuning). Копия виджета Hosav не годится: её нажатие не доходит до обработчика (опыт пультом 2026-10-29 22:1x, три раза).
--- Полоса пересоздаётся на каждой вкладке — ряд ставится заново на каждом событии «Снаряжения»; повторный вызов безвреден.
--- Перед правкой — проверка, что вкладка открыта и все объекты живы: перекладка виджета уходящего хаба уронила игру 29.10 22:08 (EXP-0372).
--- [NOT-TESTED]
--- Место и размер — по кадру 4K 2026-10-29 22:3x (геометрию пульт отдаёт нулями): кнопка Hosav в своём слое занимает 21…321,5 единицы
--- (крупнее своей «желаемой» ширины 274,8 в 1,094 раза — слой Hosav увеличен), рамка 2040…2136 точек кадра. Рыбалку увеличиваем так же
--- (масштаб отрисовки от левого края, по середине высоты) и ставим через 15 единиц; поля 19/11 сводят верх и низ рамок с Hosav
--- (кадр r7: рамки 40…88 обе). Единицы интерфейса от разрешения не зависят.
-local FISH_PAD = { Left = 321.5 + 15.0, Top = 19.0, Right = 15.0, Bottom = 11.0 }
-local HOSAV_SCALE = 1.094
-local ZERO = { Left = 0.0, Top = 0.0, Right = 0.0, Bottom = 0.0 }
-local HOSAV_CONTENT_PAD = { Left = 5.0, Top = 5.0, Right = 5.0, Bottom = 5.0 }   -- ContentPadding кнопки Hosav (её ассет W_UI_SettingsButton)
-local FISH_LABEL = "Настройка рыбалки"
-local VIS_HIT_TEST_INVISIBLE = 3
-local VIS_SELF_HIT_TEST_INVISIBLE = 4
-local BUTTON_BASE_CLASS = "/Game/UI/Widgets/Buttons/WBP_ButtonBase.WBP_ButtonBase_C"
 local function live(o) return o ~= nil and o:IsValid() end
-local function arrange_bottom_row()
-    local t0 = os.clock()
-    local gmc = FindFirstOf("GUIModuleController")
-    -- состояние вкладки — своё (last_state ставится до вызова кнопок); IsModuleActive внутри события ещё false (прогон 22:22)
-    if not (live(gmc) and last_state[EQUIPMENT_MODULE]) then return end
-    local eft, right
-    for _, e in ipairs(FindAllOf("W_EFT_AdminButton_C") or {}) do
-        if live(e) then local p = e:GetParent(); if live(p) then eft, right = e, p end end
-    end
-    -- Кнопку Hosav НЕ трогаем: перенесённая в полосу, она перестала нажиматься (прогон 2026-10-29 22:3x — обработчик не звался ни разу).
-    -- Рыбалка встаёт в левую половину полосы сразу за ней (FISH_PAD).
-    local tree = live(right) and right:GetOuter() or nil
-    local bar = live(tree) and tree:GetOuter() or nil
-    local left = live(bar) and bar:GetWidgetFromName(FName("ButtonContainerLeft")) or nil
-    if not live(left) then return end
-    local moved = 0
-    if live(eft) and right ~= left then
-        local function part(n) local w = eft:GetWidgetFromName(FName(n)); if live(w) then return w end; return nil end
-        local btn, size, pad = part("Btn_Open"), part("Size_Btn_Open"), part("Pad")
-        local cls = StaticFindObject(BUTTON_BASE_CLASS)
-        local pc = FindFirstOf("PlayerController")
-        local wbl = StaticFindObject("/Script/UMG.Default__WidgetBlueprintLibrary")
-        local ov = nil
-        if btn and size and pad and live(cls) and live(pc) and live(wbl) then
-            local look = wbl:Create(pc, cls, pc)
-            if live(look) then ov = look:GetWidgetFromName(FName("Overlay_16")) end
-            if live(look) and live(ov) then
-                look:SetLabel(FText(FISH_LABEL))
-                look.ContentPadding = HOSAV_CONTENT_PAD   -- как у кнопки Hosav в её ассете (родные 20/10 — кнопка выше на 10)
-                -- 0.12.0: обводка при наведении. Родной вид (FLXButtonBase) загорается сам, когда мышь над НИМ: материалы ImgFrame и ImgBackground
-                -- получают PercentHover = 1 (пульт 2026-10-30 00:2x). Видимый для мыши, он съедает и нажатие (панель не открылась, 00:21), поэтому
-                -- Btn_Open (нажатие мода) кладётся ПОСЛЕДНИМ ребёнком в его же Overlay_16 — поверх фона и рамки, прозрачной. Slate шлёт «мышь вошла»
-                -- всем виджетам на пути курсора, и родной вид-родитель загорается сам; нажатие забирает Btn_Open. Ни события, ни опроса.
-                -- Прежняя схема 0.10.0 (вид ВНУТРИ Btn_Open, без попадания мыши) не загоралась вовсе (кейс R6). Создание своего Overlay из Lua
-                -- (StaticConstructObject) уронило игру 00:22 — берётся готовый Overlay вида.
-                local own = btn:GetContent()   -- надпись самой кнопки мода — вместо неё теперь вид
-                if live(own) then own:RemoveFromParent() end
-                size:SetContent(look)          -- Btn_Open уходит из SizeBox; ссылка на него — e.Btn_Open
-                local bs = ov:AddChildToOverlay(btn)
-                bs:SetHorizontalAlignment(0); bs:SetVerticalAlignment(0)   -- Fill: вся площадь вида
-                look:SetVisibility(VIS_SELF_HIT_TEST_INVISIBLE)   -- сам мышь не ловит, ребёнок Btn_Open ловит
-                local cs = look.Slot
-                if live(cs) then cs:SetPadding(ZERO); cs:SetHorizontalAlignment(0); cs:SetVerticalAlignment(0) end   -- Fill
-                local st = btn.WidgetStyle   -- свои поля простой кнопки (8/2) — в ноль
-                st.NormalPadding = ZERO
-                st.PressedPadding = ZERO
-                btn:SetStyle(st)
-                btn:SetBackgroundColor({ R = 0.0, G = 0.0, B = 0.0, A = 0.0 })   -- прозрачная: видна только родная рамка вида
-                size.bOverride_WidthOverride = false
-                pad:SetPadding(ZERO)
-                local ps = size.Slot   -- у слота внутри Pad в ассете тоже поле 15
-                if live(ps) then ps:SetPadding(ZERO) end
-                eft:RemoveFromParent()
-                left:AddChildToHorizontalBox(eft):SetPadding(FISH_PAD)
-                eft:SetRenderTransformPivot({ X = 0.0, Y = 0.5 })
-                eft:SetRenderScale({ X = HOSAV_SCALE, Y = HOSAV_SCALE })
-                moved = moved + 1
-            end
-        end
-    end
-    if moved > 0 then log("нижний ряд: рыбалка в полосе справа от кнопки Hosav (%d, %.2f мс)", moved, (os.clock() - t0) * 1000) end
-end
-_G.__krinik_pause_arrange_row = function()
-    local ok, e = pcall(arrange_bottom_row)
-    if not ok then log("нижний ряд: ошибка %s", tostring(e)) end
-end
 
 -- ===================== 0.9.0: ПОЗДНИЕ ВСТАВКИ МОДОВ НА «СНАРЯЖЕНИИ» — ПО РОЖДЕНИЮ ПОРТРЕТА ГЕРОЯ =====================
 -- Владелец 29.10 с кадром: «вот что обвел с задержкой появляется на экране, а не сразу при его открытии» — значки школ магии Era of Trials,
@@ -360,8 +234,9 @@ end
 -- [NOT-TESTED]
 local CAROUSEL_CLASS = "/Script/ConanSandbox.CarouselWindow"
 local function on_carousel_switch(which)
-    hosav_settings_button(false)
-    log("карусель хаба: %s — кнопка Hosav спрятана до XCS_Panel", which)
+    -- 0.16.0: кнопка Hosav спрятана всегда; на входе карусели прячутся «Настройки модов» и их список (krinik_mods_button.lua)
+    if _G.__krinik_mods_button then _G.__krinik_mods_button(false) end
+    log("карусель хаба: %s — «Настройки модов» спрятаны до XCS_Panel", which)
 end
 local function hook_carousel()
     for _, fn in ipairs({ "NextCarouselWindow", "PrevCarouselWindow", "SetCarouselIndex" }) do
@@ -438,7 +313,7 @@ local TIP_FIX_DELAY_MS = 1000   -- окно панели и его подска�
 -- панель создаёт при своём рождении (34 экземпляра), поэтому правятся и они — один проход по текстам, только на открытии (лаг открытия допустим).
 local function fix_fishing_tips()
     local n = 0
-    for _, t in ipairs(FindAllOf("TextBlock") or {}) do
+    for _, t in ipairs(FindAllOf("TextBlock") or {}) do   -- templates-ok: the template IS edited on purpose (reloaded on every open, see above)
         local fn = t:GetFullName()
         if fn:find("W_EFT_Tooltip_C", 1, true) and fn:find("Txt_Tip", 1, true) then
             t.AutoWrapText = false
@@ -458,7 +333,7 @@ end
 -- через « | », по центру; остальные три свёрнуты — их место отдаётся первой строке. Только сеттеры текста, видимости и выравнивания, без новых виджетов.
 -- [TESTED: 2026-10-30 · first open and a re-open, frames 16:46, one line in the slider width · KUMM testcases/reports/2026-10-30_conan-fishing-difficulty-captions.md]
 local CAPTION_SEP = " | "   -- один пробел: строка ровно во всю ширину шкалы (кадр 16:4x); два пробела или тонкие — вылезает за край колонки на 17 точек
-local JUSTIFY_CENTER, VIS_COLLAPSED = 1, 1
+local JUSTIFY_CENTER = 1   -- VIS_COLLAPSED — выше (одно имя верхнего уровня — один раз, _config/check-lua-shadow.py)
 local function fix_fishing_captions()
     local done = 0
     for _, w in ipairs(FindAllOf("W_EFT_Panel_C") or {}) do
@@ -513,12 +388,12 @@ local function on_activate(name, activate)
     if PAUSE_MODULES[name] then
         if activate then open_modules[name] = true else open_modules[name] = nil end
     end
-    -- 0.7.0: кнопка Hosav — по вкладке «Снаряжение»; хаб закрыт — скрыта в любом случае
+    -- 0.16.0: в панели инвентаря — только «Настройки модов» (по вкладке «Снаряжение»); кнопка Hosav сворачивается на каждом открытии
     if name == EQUIPMENT_MODULE then
-        hosav_settings_button(activate)
-        fishing_button(activate)   -- 0.8.0
-    elseif name == "CharacterInventory" and not activate then
-        hosav_settings_button(false)
+        if activate then hide_hosav_button() end
+        if _G.__krinik_mods_button then _G.__krinik_mods_button(activate) end   -- «Настройки модов» (krinik_mods_button.lua, план 40.3)
+    elseif name == "CharacterInventory" then
+        if activate then hide_hosav_button() elseif _G.__krinik_mods_button then _G.__krinik_mods_button(false) end
     end
 end
 
@@ -540,17 +415,42 @@ local armed = false
 -- ⚠️ ТОЛЬКО В МИРЕ. Оплачено 13.09 23:00: главное меню игры — тоже полноэкранный интерфейс; мод
 -- замедлил время в нём до 0.0001, и загрузка мира не пошла дальше меню (35 кликов «Продолжить»
 -- за 4 минуты). Нет живого героя — меню не наше: время не трогаем, а если сами замедлили — вернуть.
+-- Поиск по сцене — НЕ на каждом опросе (HOUSE_RULES правило 7). До 2026-11-01 здесь и в poll() 4 раза в секунду шли FindAllOf героя и
+-- FindFirstOf контроллера интерфейса — обход всего списка объектов игры (`[OWNER]` 2026-11-01 14:25 «уважительно к CPU работают моды твои?» ·
+-- «не перебирают сотни объектов в каждом кадре?» · «или сотри объектов раз в 1...2 секунды?»). Теперь найденный объект держится; заново
+-- ищем, только когда он умер или герой мёртв (смерть, загрузка мира), и не чаще раза в SEARCH_EVERY опросов (2 с).
+local SEARCH_EVERY = 8
+local hero_obj, gmc_obj = nil, nil
+local hero_wait, gmc_wait = 0, 0
+local searches = 0
+
+local function hero_hp(p)
+    local hp = 0
+    pcall(function() hp = p:GetIntStat(1, 0) end)
+    return hp
+end
+
 local function hero_in_world()
-    local list = FindAllOf("BasePlayerChar_C")
-    if not list then return false end
-    for _, p in ipairs(list) do
-        if p and p:IsValid() then
-            local hp = 0
-            pcall(function() hp = p:GetIntStat(1, 0) end)
-            if hp > 0 then return true end
-        end
+    if hero_obj and hero_obj:IsValid() and hero_hp(hero_obj) > 0 then return true end
+    hero_obj = nil
+    if hero_wait > 0 then hero_wait = hero_wait - 1; return false end
+    hero_wait = SEARCH_EVERY
+    searches = searches + 1
+    for _, p in ipairs(FindAllOf("BasePlayerChar_C") or {}) do
+        if p and p:IsValid() and hero_hp(p) > 0 then hero_obj = p; return true end
     end
     return false
+end
+
+local function cached_gmc()
+    if gmc_obj and gmc_obj:IsValid() then return gmc_obj end
+    gmc_obj = nil
+    if gmc_wait > 0 then gmc_wait = gmc_wait - 1; return nil end
+    gmc_wait = SEARCH_EVERY
+    searches = searches + 1
+    local g = FindFirstOf("GUIModuleController")
+    if g and g:IsValid() then gmc_obj = g end
+    return gmc_obj
 end
 
 -- 💥 ОПЛАЧЕНО КРЭШЕМ 16.09.2026 21:49. Здесь стоял опрос нативной gmc:IsModuleActive(name) раз в
@@ -559,9 +459,15 @@ end
 -- у нативной функции — это не ошибка Lua, это падение процесса. Признак модалки берётся из УЖЕ
 -- РАБОТАЮЩЕГО перехвата ActivateModule (он приносил «модуль PerkSelection: открыт» 16.09 в 21:03),
 -- то есть из чистой таблицы Lua — новых нативных вызовов в цикле НЕТ.
+local polls = 0
 local function poll()
-    local gmc = FindFirstOf("GUIModuleController")
-    if not (gmc and gmc:IsValid()) then return end
+    polls = polls + 1
+    if polls % 240 == 0 then   -- раз в минуту: сколько раз опрос дошёл до поиска по сцене (в мире с живым героем — 0)
+        log("минута: поисков по сцене %d из 240 опросов", searches)
+        searches = 0
+    end
+    local gmc = cached_gmc()
+    if not gmc then return end
     local on = false
     local ok = pcall(function() on = gmc:IsFullscreenGUIActive() end)
     if not ok then return end
@@ -660,6 +566,8 @@ local function close_mod_window_on_esc()
             end
         end
     end
+    -- 0.16.0: окна из списка «Настройки модов» (Xevyr, «Прочее»; krinik_mods_button.lua) — модуль закрывается сам, без класса окна
+    if _G.__krinik_mods_menu_esc then _G.__krinik_mods_menu_esc() end
 end
 local esc_ok, esc_err = pcall(function()
     RegisterKeyBind(Key.ESCAPE, function()
@@ -723,4 +631,4 @@ watch_character_display()   -- 0.9.0
 ExecuteInGameThreadWithDelay(60000, function() log("СЧЁТ через 1 мин: вызовов ActivateModule %d", hook_calls) end)
 ExecuteInGameThreadWithDelay(300000, function() log("СЧЁТ через 5 мин: вызовов ActivateModule %d", hook_calls) end)
 
-log("загружен 0.13.0. Замедление, пока открыт полноэкранный интерфейс; меню с вкладками %.4f, ESC %.4f (баг 12: 0.0001 в меню убивало нажатия); кнопки Hosav и рыбалки — по вкладке «Снаряжение», в ряд слева на полосе, уход — по карусели; вставки EAA и EoT — по рождению портрета; пауза хаба — и по событию «Снаряжения»; Esc в окне мода закрывает только окно; рыбалка загорается при наведении; подсказки рыбалки без мерцания; ускорение крафта %s.", MENU_DILATION, ESC_DILATION, CRAFT_SPEEDUP and "ВКЛ" or "выкл")
+log("загружен 0.16.0. Замедление, пока открыт полноэкранный интерфейс; меню с вкладками %.4f, ESC %.4f (баг 12: 0.0001 в меню убивало нажатия); в панели инвентаря только «Настройки модов», кнопка Hosav свёрнута; вставки EAA и EoT — по рождению портрета; пауза хаба — и по событию «Снаряжения»; Esc в окне мода закрывает только окно; рыбалка загорается при наведении; подсказки рыбалки без мерцания; ускорение крафта %s.", MENU_DILATION, ESC_DILATION, CRAFT_SPEEDUP and "ВКЛ" or "выкл")

@@ -1,0 +1,4 @@
+# old translation<TAB>new translation — applied by _config/devkit/locres-set-tr.py to Game/ru/Game.locres; source dm-fish-ru.tsv rows 58, 59 edited the same move
+# The Damage Meter «Bar refresh rate (visual only)»: «(только вид)» ran the label left over the cursor-key box (frame 2026-11-01 20:4x) — moved into the tooltip
+Частота обновления полос (только вид)	Частота обновления полос
+Как часто обновлять полосы\nЧисло — доля секунды\n(0.2 = 5 раз в секунду)	Как часто обновлять полосы — только их вид, подсчёт урона не меняется\nЧисло — доля секунды\n(0.2 = 5 раз в секунду)

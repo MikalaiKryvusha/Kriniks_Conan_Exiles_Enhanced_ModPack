@@ -50,6 +50,8 @@ UNDERLAY_SIDE_MARGIN = 0.40   # [AI] Box margin left/right of the backing brush 
                               # of its width, so the sides 0..0.40 / 0.60..1 are the fade at a FIXED width (0.40 × ImageSize.X 356 ≈ 142 units)
                               # and only the dark middle stretches with the text (probe kit-probe-underlay.py, 2026-10-30 22:0x)
 LINE1_GAP = 2.0                # [AI] units between the two prompt lines; the row's own line spacing is the font's
+STRIP_SCALE = 0.70             # the corpse strip drawn 30 % smaller: `[OWNER]` 08:54 «сделать меньше на 25%» → after review folder 59, 10:54 «фон 60, меньше на» · «30»
+STRIP_BACKING_ALPHA = 0.6      # the backing's brush colour alpha (vanilla 0.8): `[OWNER]` 2026-11-02 10:54 «фон 60» (review folder 59: variants 0.8 / 0.55 / 0.35)
 AT_WIDGET = "/Game/UI/HUD/Notifications/W_ActionTutorial"   # the shared action-prompt row «PreText · Icon · PostText» (plan 36 W6, see below)
 AT_ICON_PAD_BOTTOM = 1.0   # icon centre on its text line as VAlign Center had it: plate-edge measure, text-ink centre minus plate centre = 4.5 px vanilla (B1), 6.75 px with pad 2, 19 px with pad 8 -> 2.04 px per unit at 4K -> pad ≈ 0.9 (frames 2026-10-30 18:35 / 18:51 / 19:19). The first «12.5 px low» was a detector catching the background
 MENUS = (   # W26: (widget path, name, the overlay holding the game's Image_Logo, where ours goes, our max width in units or 0,
@@ -81,7 +83,7 @@ OUR_VIS = (39 / 1024.0, 35 / 388.0, 971 / 1024.0, 324 / 388.0)    # the SOLID bo
 VERSION_GAP = 2.0         # [AI] units between a logo and its version line
 VERSION_FONT_SIZE = 18    # [AI] small: «но в игре текст меньше» (the owner 22:51); 14 read tinier than the game's own «Версия» line (frame 23:07)
 GAME_VERSION = "3.0.1"
-PACK_VERSION = "1.0.0"
+PACK_VERSION = "0.9.0"
 REPORT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kit-conanui-edit.json")
 
 res = {"ok": False, "steps": []}
@@ -334,6 +336,14 @@ try:
     after_bt = ub.get_editor_property("background").export_text()
     res["steps"].append("Border_Underlay brush %s -> %s" % (before_bt[before_bt.find("ImageSize"):before_bt.find(",ResourceObject")],
                                                             after_bt[after_bt.find("ImageSize"):after_bt.find(",ResourceObject")]))
+    # Smaller and a lighter backing (the owner 08:54): a RENDER scale about the centre — the text, the E key and the backing shrink together and the
+    # layout (the Lua half's Left while the loot window shows) is untouched; seen live 2026-11-02 10:2x (review folder 59). The alpha multiplies the
+    # backing only, the text keeps its own colour. [NOT-TESTED]
+    ub.set_editor_property("render_transform", unreal.WidgetTransform(translation=unreal.Vector2D(0, 0), scale=unreal.Vector2D(STRIP_SCALE, STRIP_SCALE),
+                                                                     shear=unreal.Vector2D(0, 0), angle=0.0))
+    bc = ub.get_editor_property("brush_color")
+    ub.set_editor_property("brush_color", unreal.LinearColor(bc.r, bc.g, bc.b, STRIP_BACKING_ALPHA))
+    res["steps"].append("Border_Underlay render scale %s, brush colour alpha %s -> %s" % (STRIP_SCALE, bc.a, STRIP_BACKING_ALPHA))
     res["steps"].append("WBP_ContainerInfo Content order: %s" % [content.get_child_at(i).get_name()
                                                                 for i in range(content.get_children_count())])
     unreal.BlueprintEditorLibrary.compile_blueprint(bp)

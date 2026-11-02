@@ -91,7 +91,7 @@ def cs(s):
     return '"' + s.replace("\\", "\\\\").replace('"', '\\"') + '"'
 
 
-def write_build_info(links, version, uninstall_cmd):
+def write_build_info(links, version, uninstall_cmd, guide_pdf):
     # Лаунчер пишет короткий текст ссылки (author_links.txt: "Длинный"|"Короткий"[…](…)), ридми — длинный.
     rows = ",\n".join(f"        new Link({cs(l['short'])}, {cs(l['label'])}, {cs(l['url'])})" for l in links)
     BUILD_INFO.write_text(
@@ -99,6 +99,8 @@ def write_build_info(links, version, uninstall_cmd):
         "static class BuildInfo\n{\n"
         f"    public const string PackVersion = {cs(version)};\n"
         f"    public const string UninstallCmd = {cs(uninstall_cmd)};\n"
+        # Имя PDF руководства в корне архива — то, под которым его кладёт Deploy-ModPack.ps1 -Export (лист пути manifest.guide).
+        f"    public const string GuidePdf = {cs(guide_pdf)};\n"
         f"    public const string Separator = {cs(SEPARATOR)};\n"
         "    public sealed class Link { public readonly string Text, Label, Url;"
         " public Link(string t, string l, string u) { Text = t; Label = l; Url = u; } }\n"
@@ -117,8 +119,8 @@ def find_csc():
     fail("не найден компилятор C# из Visual Studio (MSBuild\\Current\\Bin\\Roslyn\\csc.exe) — лаунчер собрать нечем")
 
 
-def build_launcher(links, version, uninstall_cmd):
-    write_build_info(links, version, uninstall_cmd)
+def build_launcher(links, version, uninstall_cmd, guide_pdf):
+    write_build_info(links, version, uninstall_cmd, guide_pdf)
     LAUNCHER_EXE.parent.mkdir(parents=True, exist_ok=True)
     refs = [f"-r:{FRAMEWORK_DIR / d}" for d in ("System.dll", "System.Drawing.dll", "System.Windows.Forms.dll")]
     # Картинки окна (res/, их делает _config/launcher/make-res.py) встраиваются в exe: игроку — один файл, рядом ничего не теряется.
@@ -152,7 +154,7 @@ def main():
         print_pdf(PACK / manifest["guide"])
     if "--no-launcher" not in args:
         # Имя деинсталлятора — то же, что раскатка кладёт в корень игры (manifest.uninstall.cmd, KUMM bugs/72).
-        build_launcher(links, manifest["packVersion"], manifest["uninstall"]["cmd"])
+        build_launcher(links, manifest["packVersion"], manifest["uninstall"]["cmd"], Path(manifest["guide"]).name)
     print("Готово.")
 
 

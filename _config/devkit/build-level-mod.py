@@ -58,6 +58,9 @@ _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__)
 from game_target import GAME_DIR, sandbox   # путь игры — из targets.json (2026-10-25: 2.2.3 удалена)
 GAME_PAKS = os.path.join(GAME_DIR, r"ConanSandbox\Content\Paks")
 VIEW = r"D:\work\ai_sandbox\_paksview-2.2.3"    # жёсткие ссылки на контейнеры игры, вне папки игры
+VIEW_301 = r"D:\work\ai_sandbox\_paksview-3.0.1"                                   # все контейнеры 3.0.1 (игра + моды), KUMM STATUS «work trees kept»
+RETOC_58 = os.path.join(TOOLS, "retoc-5.8", "retoc-2026-10-26-nocompress.exe")    # retoc с UE 5.8: разрешает ссылки 3.0.1
+CAV_OBJECT_VERSION = "OS_SUB_OBJECT_SHADOW_SERIALIZATION"   # ObjectVersionUE5 таблиц, прочитанных путём uasset_json (VER_UE5_6)
 MRS_ZIP = r"D:\Games\Conan Exiles Mods\mods\MrSerji's Level 1000 15 1.0.5 2026-09-17T08-48Z iP5rAx98z.zip"
 MRS = "MrS_Level1000"
 # retoc 0.1.5 знает версии только до UE5_7, а игра 2.2.x — UE 5.8. Проверено 2026-10-02 кругом без правок
@@ -102,6 +105,7 @@ def load_module(name, filename):
 
 xpt = load_module("xpt", "xp-table.py")
 fts = load_module("fts", "feats-table.py")
+cav = load_module("cav", "caverns_loot.py")   # таблица сундуков Caverns of Set (шаг 3б; владелец 2026-11-01 08:58 «делаем сейчас 2»)
 
 
 def say(msg):
@@ -184,6 +188,75 @@ def transform_table(doc, table, rows):
     return doc
 
 
+def walk_strings(node, mapping):
+    """Заменить в поддереве JSON строки-значения по словарю (имена меток в запросе RequiredTags); вернуть, что заменено."""
+    hit = set()
+    def go(n):
+        if isinstance(n, dict):
+            for k, v in n.items():
+                if isinstance(v, str) and v in mapping:
+                    n[k] = mapping[v]
+                    hit.add(v)
+                else:
+                    go(v)
+        elif isinstance(n, list):
+            for i, v in enumerate(n):
+                if isinstance(v, str) and v in mapping:
+                    n[i] = mapping[v]
+                    hit.add(v)
+                else:
+                    go(v)
+    go(node)
+    return hit
+
+
+def caverns_table(doc):
+    """Ванильная DT_LC_RelicHunter → таблица сундуков Caverns of Set по пути, который ждёт сундук мода: другой пакет и имя,
+    строки — копии строк-образцов с полями и метками из _config/caverns_loot.py.
+    [TESTED: 2026-11-01 · step 6 green; in game the chests read the table and fill · KUMM testcases/reports/2026-11-01_conan-caverns-chest-loot.md]"""
+    doc = replace_strings(doc, {cav.SOURCE_TABLE: cav.TABLE, cav.SOURCE_PACKAGE: cav.PACKAGE})
+    data = doc["Exports"][0]["Table"]["Data"]
+    by_name = {r["Name"]: r for r in data}
+    new_data, new_names = [], []
+    for name, src, fields, tags in cav.ROWS:
+        row = copy.deepcopy(by_name[src])
+        row["Name"] = name
+        new_names.append(name)
+        for col in row["Value"]:
+            if col["Name"] in fields:
+                col["Value"] = fields[col["Name"]]
+        if tags:
+            req = next(c for c in row["Value"] if c["Name"] == "RequiredTags")
+            done = walk_strings(req, tags)
+            assert done == set(tags), f"строка {name}: в запросе меток образца {src} нет {set(tags) - done}"
+            new_names += list(tags.values())
+        new_data.append(row)
+    doc["Exports"][0]["Table"]["Data"] = new_data
+    # новые имена (строки, метки) — в блок имён, на которые ссылаются данные экспорта (урок «Bad name index», transform_table)
+    names = doc["NameMap"]
+    have = set(names)
+    lead = 0
+    while lead < len(names) and names[lead].isdigit():
+        lead += 1
+    added = list(dict.fromkeys(n for n in new_names if n not in have))
+    referenced = doc["NamesReferencedFromExportDataCount"]
+    names[lead:lead] = added
+    doc["NamesReferencedFromExportDataCount"] = referenced + len(added)
+    assert cav.SOURCE_TABLE not in json.dumps(doc), "имя ванильной таблицы осталось в ассете"
+    return doc
+
+
+def caverns_rows(doc):
+    """Строки записанной таблицы — для сверки на шаге 6: (имя, ItemID, Min, Max, шанс, броски, метки запроса)."""
+    out = []
+    for r in doc["Exports"][0]["Table"]["Data"]:
+        v = {c["Name"]: c for c in r["Value"]}
+        tags = sorted(set(x for x in json.dumps(v["RequiredTags"]).split('"') if x.count(".") and x[0].isupper() and " " not in x))
+        out.append((r["Name"], v["ItemID"]["Value"], v["Min"]["Value"], v["Max"]["Value"], v["PercentChance"]["Value"],
+                    v["NumRolls"]["Value"], tags))
+    return out
+
+
 def ensure_view(mrs_platform_dir):
     view = os.path.abspath(VIEW)
     assert not view.lower().startswith(os.path.abspath(GAME_DIR).lower()), "папка-представление внутри игры"
@@ -223,6 +296,15 @@ def uasset_write(jp, dst):
     set_ue5_version(dst, UE5_VERSION_TOOL, UE5_VERSION_GAME)
 
 
+def uasset_json_58(src, dst):
+    # Вывод retoc-5.8 UAssetGUI читает напрямую как VER_UE5_8; подмена версии 1018 → 1017 и VER_UE5_6 (uasset_json) он молча отвергает
+    # (2026-11-01 09:5x). Запись — fromjson без подмены: заголовок остаётся 1018, как у пакетов игры.
+    run([UASSETGUI, "tojson", src, dst, "VER_UE5_8"])
+    if not os.path.exists(dst):
+        raise SystemExit(f"UAssetGUI не записал {dst} (код 0, без сообщения — так он отказывает)")
+    return json.load(open(dst, encoding="utf-8"))
+
+
 def build(name, display, work, out):
     if os.path.exists(work) and os.listdir(work):
         raise SystemExit(f"--work должна быть пустой или новой: {work}")
@@ -259,6 +341,26 @@ def build(name, display, work, out):
         uasset_write(jp, os.path.join(dst_dt, f"DT_{table}.uasset"))
         say(f"   DT_{table}: {len(trows)} строк")
 
+    say("3б. таблица сундуков Caverns of Set ← ванильная DT_LC_RelicHunter (KUMM mods/CavernsOfSet.md)")
+    legacy_rh = os.path.join(work, "legacy-relic")
+    # Ванильную таблицу — из представления 3.0.1 и retoc-5.8: представление VIEW держит контейнеры 2.2.3 (ensure_view только ДОБАВЛЯЕТ
+    # недостающие), и ссылки таблицы на вложенные таблицы игры там не разрешаются (прогон 2026-11-01 09:5x — «/Engine/UnknownPackage»).
+    run([RETOC_58, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", cav.SOURCE_TABLE, VIEW_301, legacy_rh])
+    src_rh = next(os.path.join(dp, f) for dp, _, fs in os.walk(legacy_rh) for f in fs if f == f"{cav.SOURCE_TABLE}.uasset")
+    doc = uasset_json_58(src_rh, os.path.join(work, "caverns.relic.json"))
+    assert "/Engine/UnknownPackage" not in json.dumps(doc["Imports"]), "DT_LC_RelicHunter: ссылки не разрешены"
+    doc = caverns_table(doc)
+    cav_dir = os.path.join(legacy_out, "ConanSandbox", "Content", *cav.PACKAGE.split("/")[2:-1])
+    os.makedirs(cav_dir, exist_ok=True)
+    jp = os.path.join(work, "caverns.ours.json")
+    # В контейнер её кладёт тот же retoc, что и три таблицы прогрессии, — он читает только их сериализацию (версия объектов 5.6 и заголовок
+    # 1018 после записи): ассет, записанный как 5.8, он отверг («failed to fill whole buffer», 2026-11-01 09:5x). Поэтому — их путь.
+    doc["ObjectVersionUE5"] = CAV_OBJECT_VERSION
+    doc["AppendedNullBytes"] = 0
+    json.dump(doc, open(jp, "w", encoding="utf-8"), ensure_ascii=False)
+    uasset_write(jp, os.path.join(cav_dir, f"{cav.TABLE}.uasset"))
+    say(f"   {cav.TABLE}: {len(cav.ROWS)} строк → {cav.PACKAGE}")
+
     say("4. ассеты → контейнеры Zen")
     stage = os.path.join(work, "outer")
     os.makedirs(stage, exist_ok=True)
@@ -281,7 +383,8 @@ def build(name, display, work, out):
         "description": (f"{LEVELS} levels. XP per level = {XP_ANCHOR} * level^{XP_P}. "
                         f"One attribute point every level. Feat points: vanilla formula, base capped at "
                         f"{fts.BASE_CAP} (x3 every 10th level). Replaces DT_ExperienceSystemLevel, "
-                        f"DT_AttributeSystem, DT_FeatsPerLevel. Fork of MrSerji's Level 1000."),
+                        f"DT_AttributeSystem, DT_FeatsPerLevel. Fork of MrSerji's Level 1000. "
+                        f"Ships the missing loot table of the Caverns of Set chests."),
         # Версия мода = версия сборки packVersion из modpack.json: «в сборке моды Krinik ставим по версии сборки 1.0.0» (владелец 2026-10-31 15:39;
         # отменило «все моды Krinik... получают версию 3.0.1» от 2026-10-28).
         "changeNote": "", **pack_version_fields(),
@@ -340,6 +443,27 @@ def build(name, display, work, out):
             f"данные в контейнере = записанным: {same_data} · ссылки на игру = как у MrS: {same_imports} · "
             f"имён в словаре пакета {zen_names} ≥ строк: {names_cover}")
         ok = ok and good
+    # таблица сундуков: данные в контейнере = записанным, строки = рецепт, имён в словаре хватает, путь — тот, что ждёт сундук
+    cav_zen = os.path.join(zen_x, "ConanSandbox", "Content", *cav.PACKAGE.split("/")[2:-1])
+    have_zen = os.path.exists(os.path.join(cav_zen, f"{cav.TABLE}.uexp"))
+    same_data = have_zen and (open(os.path.join(cav_zen, f"{cav.TABLE}.uexp"), "rb").read()
+                              == open(os.path.join(cav_dir, f"{cav.TABLE}.uexp"), "rb").read())
+    back = uasset_json(os.path.join(cav_dir, f"{cav.TABLE}.uasset"), os.path.join(check, "caverns.back.json"))
+    got = caverns_rows(back)
+    want_ok = [g[0] for g in got] == [r[0] for r in cav.ROWS]
+    for (name, src, fields, tags), g in zip(cav.ROWS, got):
+        for k, idx in (("ItemID", 1), ("Min", 2), ("Max", 3), ("PercentChance", 4), ("NumRolls", 5)):
+            if k in fields and fields[k] != g[idx]:
+                want_ok = False
+        if any(t not in g[6] for t in tags.values()):
+            want_ok = False
+    names_cover = have_zen and zen_name_count(open(os.path.join(cav_zen, f"{cav.TABLE}.uheader"), "rb").read()) >= len(cav.ROWS)
+    good = have_zen and same_data and want_ok and names_cover
+    say(f"   {'✅' if good else '❌'} {cav.TABLE}: в контейнере по пути сундука: {have_zen} · данные = записанным: {same_data} · "
+        f"строки = рецепт: {want_ok} · имён хватает: {names_cover}")
+    for g in got:
+        say(f"      {g}")
+    ok = ok and good
     return 0 if ok else 1
 
 

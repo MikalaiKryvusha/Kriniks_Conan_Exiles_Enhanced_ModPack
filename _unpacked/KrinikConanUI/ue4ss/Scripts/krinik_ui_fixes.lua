@@ -40,6 +40,33 @@ local function log(fmt, ...)
     print(string.format("[%s] " .. fmt .. "\n", MOD, ...))
 end
 
+-- The strip's place on screen — the hub rows «Плашка трупа: по горизонтали / по высоте», a SHIFT in % of the screen from the game's own place, by
+-- default left of the hero in third person (`[OWNER]` 2026-11-02 08:57 «дать настройку их положения на экране через наши настройки модов? По высоте и
+-- по горизонтали?» · «по умолчанию сделать их в левой части экрана, чтобы в виде от третьего лица они не поверх героя были, а левее героя»). A RENDER
+-- translation: the layout and the Left-while-loot alignment above stay as they are; the horizontal shift applies only while the strip is centred
+-- (with the loot window it already stands at the left edge). [NOT-TESTED]
+local settings = require("krinik_settings")
+local STRIP_X_DEFAULT, STRIP_Y_DEFAULT = -22, 0   -- % of the screen width / height (−15 left the strip over the hero's head, frame s2f 10:40); the hub's defaults are the same numbers
+local STRIP_SCALE_DEFAULT, STRIP_BACK_DEFAULT = 0.70, 0.60   -- the owner 10:54: 30 % smaller, backing 60 %
+local function place_strip(ci, strip, centred)
+    local wll = StaticFindObject("/Script/UMG.Default__WidgetLayoutLibrary")
+    local vp, sc = wll:GetViewportSize(ci), wll:GetViewportScale(ci)
+    if not (sc and sc > 0) then return end
+    local x = centred and settings.get("ui_strip_x", STRIP_X_DEFAULT) or 0
+    local y = settings.get("ui_strip_y", STRIP_Y_DEFAULT)
+    local want = { X = x / 100 * vp.X / sc, Y = y / 100 * vp.Y / sc }
+    local t = strip.RenderTransform.Translation
+    if math.abs(t.X - want.X) > 0.5 or math.abs(t.Y - want.Y) > 0.5 then strip:SetRenderTranslation(want) end
+    -- size and backing: the hub rows «Плашка трупа: размер / фон» (`[OWNER]` 2026-11-02 10:54 «фон 60, меньше на» · «30» · «даем это настройкой в моде UI
+    -- криника»); the kit pak ships the same defaults (kit-conanui-edit.py STRIP_SCALE / STRIP_BACKING_ALPHA), these apply the player's choice. [NOT-TESTED]
+    local k = settings.get("ui_strip_scale", STRIP_SCALE_DEFAULT)
+    local s = strip.RenderTransform.Scale
+    if math.abs(s.X - k) > 0.001 then strip:SetRenderScale({ X = k, Y = k }) end
+    local a = settings.get("ui_strip_back", STRIP_BACK_DEFAULT)
+    local bc = strip.BrushColor
+    if math.abs(bc.A - a) > 0.001 then strip:SetBrushColor({ R = bc.R, G = bc.G, B = bc.B, A = a }) end
+end
+
 -- Left while the window shows loot, Center otherwise; touches the slot only when the value changes.
 local function align(ci)
     if not (ci and ci:IsValid()) then return end
@@ -53,6 +80,7 @@ local function align(ci)
         slot:SetHorizontalAlignment(want)
         stats.changes = stats.changes + 1
     end
+    place_strip(ci, strip, want == ALIGN.center)
 end
 
 -- 1.3.0 — the corpse prompt on two CENTRED lines (KUMM plan 36 W6; `[OWNER]` «центрируй» · «строчки центрируй» · 2026-10-30 19:48–19:50,

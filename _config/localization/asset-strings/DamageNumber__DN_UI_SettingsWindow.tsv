@@ -17,3 +17,17 @@ prop:ScaleSection.HorizontalBoxSlot_1/Padding/Left	20
 # «Сохранить» (okayLabel) и «Отмена» (TextBlock_54) слипались (кадр 18:12) — кегль 12 → 10.
 prop:okayLabel/Font/Size	10
 prop:TextBlock_54/Font/Size	10
+# 2026-11-01 (KUMM bugs/64 п. 49): список «Сворачивать в угол» показывал английские «Top Left» … «Bottom Right». Это литералы байткода, не FText:
+# PopulateControls зовёт AddOption четыре раза и SetSelectedOption, GetAnchorIndex переводит выбранную строку в номер угла переключателем по строке
+# (AnchorName), в сохранение уходит ЧИСЛО RestoreAnchor — строка не сохраняется. `lit:` меняет литерал во всём байткоде ассета, поэтому
+# добавление, выбор и переключатель меняются вместе (тот же путь, что п. 48 у Simple Minimap).
+lit:Top Left	Вверху слева
+lit:Top Right	Вверху справа
+lit:Bottom Left	Внизу слева
+lit:Bottom Right	Внизу справа
+# Кадр 12:32: поле списка (SizeBox_6, ширина 120 под «Top Left») резало «Вверху слева» до «Вверху слев» — шире на 30.
+prop:SizeBox_6/WidthOverride	150
+# 2026-11-01 (KUMM researches/conan-mod-settings-hub/xevyr-settings-recon.md): author bug — the colour handlers of the event graph preview the opacity
+# as 0.30 + v*0.55 (dmgWidget:ApplyTheme), while the slider saves w_Opacity = 0.30 + v*0.65 and InitializeControls reads it back with 0.65: after a colour
+# pick the meter looked more transparent than saved until the next start. Both preview constants (float-widened doubles, @uexp+23275, +23605) -> 0.65.
+dbl:ExecuteUbergraph_DN_UI_SettingsWindow	0.550000011920929	0.6499999761581421

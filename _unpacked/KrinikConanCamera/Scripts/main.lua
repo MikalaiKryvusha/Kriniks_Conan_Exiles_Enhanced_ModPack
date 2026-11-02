@@ -1003,6 +1003,38 @@ local function mute_foreign_camera()
     end
 end
 
+-- ====== КОЛЕСО В ПРИЦЕЛЕ ЛУКА — ВЫБОР СТРЕЛ, А НЕ ЗУМ (KUMM bugs/78) ======
+-- `[OWNER]` 2026-11-02 14:22–14:23 «а как выбирать стрел при натяжении?» · (колесо в прицеле) · «зум камеры меняется». Колесо получают двое: родной
+-- зум героя (CameraZoomIn/Out, шаг — CameraZoomAmount, который держит этот мод) и Arrow Quick Swap (InpAxisKeyEvt_MouseWheelAxis → CycleAmmoSelection).
+-- Пока герой целится, шаг зума — 0: колесо остаётся за выбором стрел, дистанция камеры не трогается. «Целится» — флаг самого Arrow Quick Swap
+-- AllowShowingUI (= подсостояние 16), прочитанный в его UpdateDisplayUI: мод зовёт её на входе в прицел и на выходе (байткод, конспект
+-- ArrowQuickSwap.md) — событие, не опрос; тот же перехват уже держит KrinikConanArchery. Без Arrow Quick Swap перехват не встаёт и колесо зумит,
+-- как в игре. [TESTED: 2026-11-02 · настоящие ПКМ и колесо: в прицеле штанга 230 при шаге 0, стрела меняется; вне прицела 230 → 250 · KUMM
+-- testcases/reports/2026-11-02_conan-wheel-in-bow-aim.md]
+local AQS_CLASS = "/Game/Mods/ArrowQuickSwap/AQS_Actor_Component.AQS_Actor_Component_C"
+local bow_aim = false
+local aqs_hooked = false
+local function on_aqs_display(ctx)
+    local comp = ctx:get()
+    if not (comp and comp:IsValid()) then return end
+    local owner = comp:GetOwner()
+    if not (owner and owner:IsValid() and owner:IsPlayerControlled()) then return end
+    local now = comp.AllowShowingUI == true
+    if now == bow_aim then return end
+    bow_aim = now
+    if now then
+        pcall(function() owner.CameraZoomAmount = 0 end)   -- сразу, не дожидаясь сторожа (30 мс): первый щелчок в прицеле тоже не зумит
+    end
+    log("прицел лука: %s — колесо %s", now and "вход" or "выход", now and "выбирает стрелы, зум стоит" or "снова зумит")
+end
+local function hook_aqs()
+    if aqs_hooked then return end
+    local ok, err = pcall(RegisterHook, AQS_CLASS .. ":UpdateDisplayUI", function(ctx) pcall(on_aqs_display, ctx) end)
+    aqs_hooked = ok
+    log(ok and "колесо в прицеле: перехват UpdateDisplayUI поставлен" or ("колесо в прицеле: перехват не встал — " .. tostring(err)))
+end
+NotifyOnNewObject(AQS_CLASS, function() ExecuteInGameThread(function() pcall(hook_aqs) end) end)
+
 local function keep_target_body()
     -- Глушение чужой камеры - ПЕРВЫМ и до любого возврата ниже: оно не зависит
     -- ни от того, взяли ли мы штангу, ни от того, владеем ли целью. Иначе в
@@ -1153,6 +1185,8 @@ local function keep_target_body()
             elseif cfg.zoom_step and cfg.zoom_step > 0 then
                 want_step = cfg.zoom_step
             end
+            -- В прицеле лука колесо — выбор стрел Arrow Quick Swap, а не дистанция камеры (раздел «КОЛЕСО В ПРИЦЕЛЕ ЛУКА» выше): шаг родного зума — 0.
+            if bow_aim then want_step = 0 end
 
             local keep = {
                 { "TP_SpringArmInterpSpeed",       cfg.zoom_interp_speed },

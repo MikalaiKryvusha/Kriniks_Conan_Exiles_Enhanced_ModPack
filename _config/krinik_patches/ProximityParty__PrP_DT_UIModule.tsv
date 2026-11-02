@@ -1,0 +1,2 @@
+enum:PrP_Settings/Category	EGUIModuleCategory::Popup	EGUIModuleCategory::Modal
+rbool:PrP_Settings/CloseOnESC	False	True

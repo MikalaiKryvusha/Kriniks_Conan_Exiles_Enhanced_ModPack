@@ -20,6 +20,9 @@ local SECTIONS = {
     "krinik_shout_fade",     -- enemy shouts (game subtitles) appear in place, fade in and out 0.2 s via a mirror line (2026-10-31, plan 36 W29)
     "krinik_minimap_coords", -- Simple Minimap coordinates inside the ring on a clock-style plate (2026-10-31, plan 36 W4)
     "krinik_mod_settings",   -- the «Моды Krinik'а» settings hub skeleton: our module table merged, our kit window's rows (2026-10-31, plan 38)
+    "krinik_vignette",       -- strength of the screen-edge vignettes (hunger, thirst, low health), 0 = off (2026-11-01, plan 40 phase 1)
+    "krinik_mods_button",    -- «Настройки модов» in the inventory's bottom bar opens «Моды Krinik'а» (2026-11-01, plan 40 phase 3, step 1)
+    "krinik_pickup_prompt",  -- a light «E Взять» over sticks, stones, fibre, berries… (foliage pickups), checked once a second (2026-11-01, plan 42)
 }
 
 for _, name in ipairs(SECTIONS) do

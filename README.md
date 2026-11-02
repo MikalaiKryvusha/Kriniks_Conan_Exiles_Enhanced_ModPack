@@ -6,7 +6,7 @@
 
 # Krinik's Conan Exiles Enhanced ModPack
 
-<h3 align="center"><em>Сборка модов для Conan Exiles Enhanced 3.0.1 — версия 1.0.0.</em></h3>
+<h3 align="center"><em>Сборка модов для Conan Exiles Enhanced 3.0.1 — версия 0.9.0.</em></h3>
 
 <p align="center">
   <a href="#russian"><img src="https://img.shields.io/badge/Русский-C0392B?style=for-the-badge" alt="Русский"></a>
@@ -15,7 +15,7 @@
 </p>
 
 [![Лицензия: MIT](https://img.shields.io/badge/Лицензия-MIT-FF1A8C.svg?style=flat-square)](LICENSE)
-[![Версия сборки](https://img.shields.io/badge/Версия_сборки-1.0.0-FF1A8C.svg?style=flat-square)](#1-общие-сведения)
+[![Версия сборки](https://img.shields.io/badge/Версия_сборки-0.9.0-FF1A8C.svg?style=flat-square)](#1-общие-сведения)
 [![Игра](https://img.shields.io/badge/Conan_Exiles_Enhanced-3.0.1-brightgreen.svg?style=flat-square)](#3-установка)
 [![Моды](https://img.shields.io/badge/Модов-7_+_64-8E44AD.svg?style=flat-square)](#2-состав-сборки)
 
@@ -31,7 +31,7 @@
 
 ### 1.1. Основные положения
 
-1. Krinik Mod Pack 1.0.0 от 31.10.2026 — первый выпуск сборки. Сборка рассчитана на Conan Exiles Enhanced 3.0.1 (билд CL-379176), а прежде собиралась под версии игры 2.1.1 и 2.2.3.
+1. Krinik Mod Pack 0.9.0 от 02.11.2026 — первый выпуск сборки для Conan Exiles Enhanced 3.0.1; ранняя бета-версия сборки для версии игры 2.2.3 публиковалась на PlayGround под номером 1.0.0. Что не доделано и войдёт в версию 1.0.0 — в главе «Известные проблемы и планы на 1.0.0» руководства пользователя. Сборка рассчитана на Conan Exiles Enhanced 3.0.1 (билд CL-379176), а прежде собиралась под версии игры 2.1.1 и 2.2.3.
 2. Состав сборки и порядок загрузки модов задаёт манифест `modpack.json`. Раскатывает сборку по папке игры движок [KUMM](https://github.com/MikalaiKryvusha/kumm).
 3. Все моды сборки переведены на русский язык в терминах русской версии игры.
 4. Руководство пользователя — [docs/guide/Krinik-Conan-3.0.1-guide.pdf](docs/guide/Krinik-Conan-3.0.1-guide.pdf): возможности сборки, клавиши, состав, история версий.
@@ -108,7 +108,7 @@
 | 50 | [Better Tavern PATRONS](https://steamcommunity.com/sharedfiles/filedetails/?id=3729932396) | Wyrd-Oh | Посетителем таверны героя может стать почти любой раб игры. |
 | 51 | [Exiles Fishing](https://steamcommunity.com/sharedfiles/filedetails/?id=3718368769)<br><sub>KRINIK MODIFIED</sub> | Jaar F Love | Рыбалка: заброс, слежение за рыбой и вываживание; 60 видов рыбы в четырёх биомах. |
 | 52 | [Automatic Fish Trap](https://steamcommunity.com/sharedfiles/filedetails/?id=3720452046) | Fritzli | Ловушки для рыбы и моллюсков, в том числе глубоководная. |
-| 53 | [Caverns of Set](https://steamcommunity.com/sharedfiles/filedetails/?id=3722525736) | PNutt | Пещеры с поселением Akhlut Outpost между Логовом, Безымянным городом и Разбитыми источниками. |
+| 53 | [Caverns of Set](https://steamcommunity.com/sharedfiles/filedetails/?id=3722525736)<br><sub>KRINIK MODIFIED</sub> | PNutt | Пещеры с поселением Akhlut Outpost между Логовом, Безымянным городом и Разбитыми источниками; сундуки пещер наполняются добычей верхнего уровня. |
 | 54 | [Shemite City State](https://steamcommunity.com/sharedfiles/filedetails/?id=3755371705) | PNutt | Город-государство за стенами на западе саванны: подземелье и свои неигровые персонажи. |
 | 55 | [Ymir's Respite](https://steamcommunity.com/sharedfiles/filedetails/?id=3730427175) | PNutt | Пещерное подземелье с ареной босса на севере. |
 | 56 | [Al-Merayah Reborn](https://steamcommunity.com/sharedfiles/filedetails/?id=3718036277) | Xevyr | Возвращена вырезанная разработчиком Funcom разрушаемая крепость с неигровыми персонажами и осадой. |
@@ -186,7 +186,7 @@
 
 # Krinik's Conan Exiles Enhanced ModPack
 
-<h3 align="center"><em>A mod pack for Conan Exiles Enhanced 3.0.1 — version 1.0.0.</em></h3>
+<h3 align="center"><em>A mod pack for Conan Exiles Enhanced 3.0.1 — version 0.9.0.</em></h3>
 
 <p align="center">
   <a href="#russian"><img src="https://img.shields.io/badge/Русский-C0392B?style=for-the-badge" alt="Русский"></a>
@@ -195,7 +195,7 @@
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-FF1A8C.svg?style=flat-square)](LICENSE)
-[![Pack version](https://img.shields.io/badge/Pack_version-1.0.0-FF1A8C.svg?style=flat-square)](#1-general)
+[![Pack version](https://img.shields.io/badge/Pack_version-0.9.0-FF1A8C.svg?style=flat-square)](#1-general)
 [![Game](https://img.shields.io/badge/Conan_Exiles_Enhanced-3.0.1-brightgreen.svg?style=flat-square)](#3-installation)
 [![Mods](https://img.shields.io/badge/Mods-7_+_64-8E44AD.svg?style=flat-square)](#2-contents-of-the-pack)
 
@@ -211,7 +211,7 @@ The pack is installed, launched and removed from a single launcher window, and a
 
 ### 1.1. Basic provisions
 
-1. Krinik Mod Pack 1.0.0 (2026-10-31) is the first release of the pack. It targets Conan Exiles Enhanced 3.0.1 (build CL-379176); earlier it targeted game versions 2.1.1 and 2.2.3.
+1. Krinik Mod Pack 0.9.0 (2026-11-02) is the first release of the pack for Conan Exiles Enhanced 3.0.1; an early beta of the pack for game version 2.2.3 was published on PlayGround as 1.0.0. What is not done yet and goes into 1.0.0 is listed in the guide's chapter «Известные проблемы и планы на 1.0.0». It targets Conan Exiles Enhanced 3.0.1 (build CL-379176); earlier it targeted game versions 2.1.1 and 2.2.3.
 2. The manifest `modpack.json` defines what the pack contains and the order in which the mods load. The [KUMM](https://github.com/MikalaiKryvusha/kumm) engine deploys the pack into the game folder.
 3. Every mod in the pack is translated into Russian in the terms of the game's Russian version.
 4. The user guide is [docs/guide/Krinik-Conan-3.0.1-guide.pdf](docs/guide/Krinik-Conan-3.0.1-guide.pdf) (in Russian): features, keys, contents, version history.
@@ -288,7 +288,7 @@ Table 1 — Mods of the pack
 | 50 | [Better Tavern PATRONS](https://steamcommunity.com/sharedfiles/filedetails/?id=3729932396) | Wyrd-Oh | Almost any thrall of the game can become a patron of the hero's tavern. |
 | 51 | [Exiles Fishing](https://steamcommunity.com/sharedfiles/filedetails/?id=3718368769)<br><sub>KRINIK MODIFIED</sub> | Jaar F Love | Fishing: casting, tracking the fish and reeling in; 60 kinds of fish in four biomes. |
 | 52 | [Automatic Fish Trap](https://steamcommunity.com/sharedfiles/filedetails/?id=3720452046) | Fritzli | Traps for fish and shellfish, a deep-sea one among them. |
-| 53 | [Caverns of Set](https://steamcommunity.com/sharedfiles/filedetails/?id=3722525736) | PNutt | Caves with the Akhlut Outpost settlement. |
+| 53 | [Caverns of Set](https://steamcommunity.com/sharedfiles/filedetails/?id=3722525736)<br><sub>KRINIK MODIFIED</sub> | PNutt | Caves with the Akhlut Outpost settlement; the chests of the caves hold high-tier loot. |
 | 54 | [Shemite City State](https://steamcommunity.com/sharedfiles/filedetails/?id=3755371705) | PNutt | A walled city state in the west of the savannah, with a dungeon and its own NPCs. |
 | 55 | [Ymir's Respite](https://steamcommunity.com/sharedfiles/filedetails/?id=3730427175) | PNutt | A cave dungeon with a boss arena in the north. |
 | 56 | [Al-Merayah Reborn](https://steamcommunity.com/sharedfiles/filedetails/?id=3718036277) | Xevyr | The destructible fortress cut by Funcom comes back, with its NPCs and a siege. |

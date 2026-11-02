@@ -100,6 +100,27 @@
   .hub .pop b { display: block; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: #ece8df; margin-bottom: 4px; }
   .hub .pop::before { content: ""; position: absolute; left: 14px; top: -5px; width: 8px; height: 8px; background: rgba(18,19,20,.98);
                       border-left: 1px solid rgba(200,196,186,.45); border-top: 1px solid rgba(200,196,186,.45); transform: rotate(45deg); }
+.st{font-size:9px;letter-spacing:.02em;margin-left:6px;padding:0 4px;border:1px solid rgba(200,196,186,.38);color:#bdb8ad;white-space:nowrap}
+.st.p{color:#9a958c;border-style:dashed}
+.v7 .row .l,.v8 .row .l,.v9 .row .l{white-space:nowrap}
+.v7 .legend,.v8 .legend,.v9 .legend{font-size:10px;color:#9a958c;margin:2px 0 6px}
+/* 8–9 — плана 40.3 I6.2 (вариант А владельца 20:37: свой выбор цвета и свой захват клавиши в нашем окне). */
+.sw{width:120px;height:18px;margin:0 10px 0 0;display:flex;align-items:center;gap:6px;padding:0 4px;background:#18191a;border:1px solid rgba(200,196,186,.2);font-size:10px;color:#bdb8ad}
+.sw i{display:block;width:26px;height:10px;border:1px solid rgba(232,228,218,.5)}
+.sw.hot{border-color:#ece8df}
+.pal{position:absolute;z-index:6;width:236px;padding:10px 12px 10px;background:rgba(18,19,20,.98);border:1px solid rgba(200,196,186,.45);box-shadow:0 8px 24px rgba(0,0,0,.7);font-size:10px;color:#a9a59c}
+.pal .g{display:grid;grid-template-columns:repeat(8,22px);gap:5px;margin:6px 0 8px}
+.pal .g i{display:block;width:22px;height:16px;border:1px solid rgba(232,228,218,.25)}
+.pal .g i.cur{outline:1px solid #ece8df;outline-offset:2px}
+.pal .cmp{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.pal .cmp i{display:block;width:40px;height:14px;border:1px solid rgba(232,228,218,.4)}
+.pal .bb{display:flex;justify-content:flex-end;gap:6px}
+.key{width:120px;height:18px;margin:0 10px 0 0;display:flex;align-items:center;justify-content:center;background:#18191a;border:1px solid rgba(200,196,186,.2);font-size:10.5px;font-weight:700;color:#ece8df}
+.key.wait{border-color:#ece8df;color:#d9d6cf;font-weight:400;font-style:italic;animation:wait 1.2s ease-in-out infinite alternate}
+@keyframes wait{from{box-shadow:0 0 0 rgba(236,232,223,0)}to{box-shadow:0 0 6px rgba(236,232,223,.45)}}
+/* Отказ на занятую клавишу — всплывающая подсказка у поля поверх страницы, гаснет через 5 с; строки не двигаются (владелец 2026-11-02 07:23). */
+.refuse{position:absolute;z-index:6;padding:6px 10px;background:rgba(18,19,20,.98);border:1px solid rgba(215,154,138,.6);box-shadow:0 8px 24px rgba(0,0,0,.7);font-size:10.5px;color:#e3b2a5;white-space:nowrap}
+.refuse::before{content:"";position:absolute;right:52px;top:-5px;width:8px;height:8px;background:rgba(18,19,20,.98);border-left:1px solid rgba(215,154,138,.6);border-top:1px solid rgba(215,154,138,.6);transform:rotate(45deg)}
 </style>
 </head>
 <body>
@@ -204,14 +225,85 @@
   <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
 </div></div>
 
-<!-- 7 — хаб Xevyr: тот же вид для другого автора; строк его модов ещё нет — честный запасной ход «открыть окно мода» -->
+<!-- 7 — хаб Xevyr: тот же вид, страница The Damage Meter со строками из разведки 2026-11-01 (xevyr-settings-recon.md); пометки правила 23 -->
 <div class="win v7 hub" data-v="7"><div class="panel">
   <div class="head"><div class="title"><b>Моды Xevyr'а</b><i>·</i>Настройки</div><span class="btn">Закрыть без сохранения</span></div>
   <div class="body">
-    <div class="toc"><div class="on"><span>The Damage Meter</span></div><div><span>Proximity Party</span></div><div><span>Simple Minimap</span></div><div class="run"><span>Lore &amp; Loot Highlight</span></div></div>
-    <div class="opts"><div class="sec">The Damage Meter</div>
-      <div class="hatch">Здесь встанут настройки этого мода, когда его сохранение будет разобрано: те же шкалы, галочки и списки, что в окне Krinik.<br>
-      Пока — его собственное окно настроек.<br><span class="btn">Открыть окно мода</span></div></div>
+    <div class="toc"><div><span>Al-Merayah Reborn</span></div><div><span>Lore &amp; Loot Highlight</span></div><div><span>Proximity Party</span></div><div><span>Simple Minimap</span></div><div class="on"><span>The Damage Meter</span></div></div>
+    <div class="opts"><div class="sec">The Damage Meter <small>счётчик урона</small></div>
+      <div class="legend">Механики строк ещё нет: «будет сделано» — строка привяжется к настройке мода; цвета и клавиша получат свой выбор цвета и захват клавиши в нашем окне.</div>
+      <div class="row"><span class="l">Масштаб<span class="st">будет сделано</span></span><span class="slider"><b style="left:100%"></b></span><span class="val">1,0</span></div>
+      <div class="row"><span class="l">Непрозрачность<span class="st">будет сделано</span></span><span class="slider"><b style="left:85%"></b></span><span class="val">85 %</span></div>
+      <div class="row"><span class="l">Сворачивать в угол<span class="st">будет сделано</span></span><span class="drop">Вверху слева</span></div>
+      <div class="row"><span class="l">Пауза до новой стычки<span class="st">будет сделано</span></span><span class="slider"><b style="left:20%"></b></span><span class="val">7 с</span></div>
+      <div class="row"><span class="l">Частота обновления полос<span class="st">будет сделано</span></span><span class="slider"><b style="left:5%"></b></span><span class="val">0,1 с</span></div>
+      <div class="row"><span class="l">Время в журнале боя<span class="st">будет сделано</span></span><span class="check on"></span></div>
+      <div class="row"><span class="l">Цифры урона: игрок<span class="st">будет сделано</span></span><span class="check on"></span></div>
+      <div class="row"><span class="l">Цифры урона: под слежкой<span class="st">будет сделано</span></span><span class="check"></span></div>
+      <div class="row"><span class="l">Спрашивать о сбросе при входе<span class="st">будет сделано</span></span><span class="check"></span></div>
+      <div class="row"><span class="l">Цвет темы<span class="st">будет сделано</span></span><span class="drop">▇</span></div>
+      <div class="row"><span class="l">Цвет полосы игрока<span class="st">будет сделано</span></span><span class="drop">▇</span></div>
+      <div class="row"><span class="l">Цвета полос отслеживаемых (9)<span class="st">будет сделано</span></span><span class="drop">▇▇▇</span></div>
+      <div class="row"><span class="l">Клавиша вызова курсора<span class="st">будет сделано</span></span><span class="drop">F1</span></div>
+    </div>
+  </div>
+  <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
+</div></div>
+
+<!-- 8 — свой выбор цвета (план 40.3 I6.2): строка цвета показывает образец; щелчок открывает нашу палитру — образцы сборки, «было → станет»,
+     «Отмена» и «Принять» (владелец 2026-11-02 07:22: «кнопка не Выбрать. а Принять»). Одна палитра на все строки цвета трёх страниц Xevyr. Цвета палитры примерные.
+     Владелец 2026-11-02 07:20 по кадру прежнего макета (палитра раздвигала строки): «не нужно дыигать другие опции, выбор цвета открывать поп=апом поверх
+     окна, не жвигая другие пункты» — палитра стоит поверх страницы у образца, строки остаются на своих местах; место ставит скрипт внизу. -->
+<div class="win v8 hub" data-v="8"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Xevyr'а</b><i>·</i>Настройки</div><span class="btn">Закрыть без сохранения</span></div>
+  <div class="body">
+    <div class="toc"><div><span>Al-Merayah Reborn</span></div><div><span>Lore &amp; Loot Highlight</span></div><div><span>Proximity Party</span></div><div><span>Simple Minimap</span></div><div class="on"><span>The Damage Meter</span></div></div>
+    <div class="opts"><div class="sec">The Damage Meter <small>счётчик урона</small></div>
+      <div class="legend">Выбор цвета — нет механики, будет сделано: образец в строке; щелчок открывает палитру поверх окна, строки не сдвигаются.</div>
+      <div class="row"><span class="l">Масштаб<span class="st">будет сделано</span></span><span class="slider"><b style="left:100%"></b></span><span class="val">1,0</span></div>
+      <div class="row"><span class="l">Непрозрачность<span class="st">будет сделано</span></span><span class="slider"><b style="left:85%"></b></span><span class="val">85 %</span></div>
+      <div class="row"><span class="l">Сворачивать в угол<span class="st">будет сделано</span></span><span class="drop">Вверху слева</span></div>
+      <div class="row"><span class="l">Пауза до новой стычки<span class="st">будет сделано</span></span><span class="slider"><b style="left:20%"></b></span><span class="val">7 с</span></div>
+      <div class="row"><span class="l">Частота обновления полос<span class="st">будет сделано</span></span><span class="slider"><b style="left:5%"></b></span><span class="val">0,1 с</span></div>
+      <div class="row"><span class="l">Время в журнале боя<span class="st">будет сделано</span></span><span class="check on"></span></div>
+      <div class="row"><span class="l">Цифры урона: игрок<span class="st">будет сделано</span></span><span class="check on"></span></div>
+      <div class="row"><span class="l">Цифры урона: под слежкой<span class="st">будет сделано</span></span><span class="check"></span></div>
+      <div class="row"><span class="l">Спрашивать о сбросе при входе<span class="st">будет сделано</span></span><span class="check"></span></div>
+      <div class="row"><span class="l">Цвет темы<span class="st">будет сделано</span></span><span class="sw hot" id="pal-anchor"><i style="background:#7a2a22"></i>тёмно-красный</span></div>
+      <div class="row"><span class="l">Цвет полосы игрока<span class="st">будет сделано</span></span><span class="sw"><i style="background:#c9a54a"></i>золото</span></div>
+      <div class="row"><span class="l">Цвета полос отслеживаемых (9)<span class="st">будет сделано</span></span><span class="sw"><i style="background:#4f7a3a"></i><i style="background:#3a5f7a"></i><i style="background:#7a5a3a"></i></span></div>
+      <div class="row"><span class="l">Клавиша вызова курсора<span class="st">будет сделано</span></span><span class="key">F1</span></div>
+      <div class="pal" id="pal-pop">
+        Цвет темы
+        <div class="g">
+          <i style="background:#7a2a22"></i><i style="background:#a8432f" class="cur"></i><i style="background:#c9a54a"></i><i style="background:#e0cf8f"></i><i style="background:#4f7a3a"></i><i style="background:#2f5a46"></i><i style="background:#3a5f7a"></i><i style="background:#2b3d63"></i>
+          <i style="background:#5a3a7a"></i><i style="background:#7a3a5f"></i><i style="background:#7a5a3a"></i><i style="background:#4a3a2a"></i><i style="background:#d9d6cf"></i><i style="background:#8e8a82"></i><i style="background:#4a4845"></i><i style="background:#18191a"></i>
+        </div>
+        <div class="cmp">было <i style="background:#7a2a22"></i> станет <i style="background:#a8432f"></i></div>
+        <div class="bb"><span class="btn">Отмена</span><span class="btn">Принять</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
+</div></div>
+
+<!-- 9 — свой захват клавиши (план 40.3 I6.2): щелчок по полю — «Нажмите клавишу…»; клавиша, которую забирает игра (Esc, действия из Input.ini),
+     не принимается — под полем «Эта клавиша уже занята» (владелец 2026-11-01 23:34, без объяснений). Предупреждение обоих авторов: такая клавиша
+     запирает игрока. Строку-подпись «Принято: F2. Сохранится по „Сохранить“» владелец убрал 2026-11-02 07:21: «притнята F2, сохраниться - эту строоку убрать»;
+     принятая клавиша просто стоит в поле. Отказ — не строкой под полем (она двигала строки), а всплывающей подсказкой у поля поверх страницы: появляется
+     плавно, держится 5 с и плавно гаснет (владелец 2026-11-02 07:23: «эта клававиша уже занаята - не строчкорй показывать, которая двигает другие - а поп-апом,
+     который показывается на 5 секунд и скрывается» · «фейдом открывается и фейдом скрывается»); длина перехода 0,2 с — как у других переходов сборки ([AI]). -->
+<div class="win v9 hub" data-v="9"><div class="panel">
+  <div class="head"><div class="title"><b>Моды Xevyr'а</b><i>·</i>Настройки</div><span class="btn">Закрыть без сохранения</span></div>
+  <div class="body">
+    <div class="toc"><div><span>Al-Merayah Reborn</span></div><div><span>Lore &amp; Loot Highlight</span></div><div><span>Proximity Party</span></div><div class="on"><span>Simple Minimap</span></div><div><span>The Damage Meter</span></div></div>
+    <div class="opts"><div class="sec">Simple Minimap <small>миникарта</small></div>
+      <div class="legend">Захват клавиши — нет механики, будет сделано. Сверху — поле ждёт нажатия; ниже — отказ на клавишу, которую забирает игра: подсказка поверх окна плавно появляется, держится 5 с и плавно гаснет.</div>
+      <div class="row"><span class="l">Клавиша вызова курсора<span class="st">будет сделано</span></span><span class="key wait">Нажмите клавишу…</span></div>
+      <div class="row"><span class="l">Клавиша вызова курсора<span class="st">будет сделано</span></span><span class="key" id="refuse-anchor">F1</span></div>
+      <div class="row"><span class="l">Клавиша вызова курсора<span class="st">будет сделано</span></span><span class="key">F2</span></div>
+      <div class="refuse" id="refuse-pop">Эта клавиша уже занята</div>
+    </div>
   </div>
   <div class="foot"><span class="btn">Сбросить к исходным</span><span class="btns"><span class="btn">Сохранить</span><span class="btn">Сохранить и закрыть</span></span></div>
 </div></div>
@@ -231,6 +323,21 @@
                     'Крайнее левое положение выключает виньетку голода совсем. Жажда и малое здоровье настраиваются своими шкалами.'
     const panel = v5.querySelector('.panel'), r = ic.getBoundingClientRect(), p = panel.getBoundingClientRect()
     pop.style.left = (r.left - p.left - 13) + 'px'; pop.style.top = (r.bottom - p.top + 7) + 'px'; panel.append(pop)
+  }
+  // Палитра окна 8 — поверх страницы у образца: правым краем к правому краю образца, под строкой, а если внизу не хватает места — над строкой.
+  // Строки под палитрой не двигаются (владелец 2026-11-02 07:20).
+  const anc = document.getElementById('pal-anchor'), pal = document.getElementById('pal-pop')
+  if (anc && pal && pal.offsetParent) {
+    const panel = anc.closest('.panel'), opts = pal.offsetParent, a = anc.getBoundingClientRect(), o = opts.getBoundingClientRect(), p = panel.getBoundingClientRect()
+    pal.style.left = (a.right - o.left - pal.offsetWidth) + 'px'
+    const below = a.bottom - o.top + 4, above = a.top - o.top - 4 - pal.offsetHeight
+    pal.style.top = (a.bottom + 4 + pal.offsetHeight <= p.bottom - 6 ? below : above) + 'px'
+  }
+  // Отказ окна 9 — подсказка под полем клавиши поверх строк, правым краем к правому краю поля (стрелка смотрит в поле).
+  const ra = document.getElementById('refuse-anchor'), rp = document.getElementById('refuse-pop')
+  if (ra && rp && rp.offsetParent) {
+    const o = rp.offsetParent.getBoundingClientRect(), a = ra.getBoundingClientRect()
+    rp.style.left = (a.right - o.left - rp.offsetWidth + 4) + 'px'; rp.style.top = (a.bottom - o.top + 6) + 'px'
   }
   // Бегущая строка: сдвиг — на сколько имя длиннее ячейки (с полями); не длиннее — не едет. data-frozen — кадр для листа посреди хода.
   for (const cell of document.querySelectorAll('.hub .toc div')) {

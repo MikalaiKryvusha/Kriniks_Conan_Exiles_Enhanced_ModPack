@@ -19,7 +19,7 @@ ConanCameraControl в ue4ss\\Mods\\. Значит в архиве ОДНА па�
 файлов сверяется со списком, а содержимое - с источником побайтно. Архив,
 который никто не раскрыл, - это надежда, а не поставка.
 
-    python build-archive.py [--version 1.0.0]
+    python build-archive.py [--version 0.9.0]
 """
 
 import filecmp
@@ -124,7 +124,7 @@ def normalise_config(text):
 
 
 def main(argv):
-    version = argv[argv.index("--version") + 1] if "--version" in argv else "1.0.0"
+    version = argv[argv.index("--version") + 1] if "--version" in argv else "0.9.0"
     zip_path = os.path.join(OUT_DIR, "%s-%s.zip" % (MOD, version))
 
     for rel in PAYLOAD:

@@ -29,6 +29,13 @@ local FADE_S = 0.20                  -- «типа 200мс» — и появле
 local STEP_MS = 15                   -- шаг прозрачности: ≈ кадр на 60 Гц; значение берётся по часам, не по числу шагов
 local WATCH_MS = 50                  -- как часто проверять, стоит ли строка игры в списке (запаздывание начала скрытия ≤ 50 мс)
 local SUMMARY_S = 60
+-- Сколько фраза держится на экране самое меньшее, с: шкала «Сколько держится фраза врага» хаба (ключ ui_shout_hold); голос длиннее — строка живёт
+-- до его конца. 1 с ≈ как в игре (голос 0.9–1.75 с). `[OWNER]` 2026-11-01 08:49 «я бы в мод UI криника вынес настройку времени задержки отображения
+-- фраз на экране». Хранилище читается на каждом крике — поиск в таблице без цены.
+-- [TESTED: 2026-11-01 · живая игра, крики босса оазиса: 1 с — 1.01–1.99 (длина голоса), 4 с — 4.00–4.01, 9.5 с — 9.50–9.51 и смена фразы на месте ·
+--  KUMM testcases/reports/2026-11-01_conan-shout-hold-slider.md]
+local settings = require("krinik_settings")
+local HOLD_DEFAULT = 1.0
 
 local function log(fmt, ...) print(("[%s] " .. fmt .. "\n"):format(MOD, ...)) end
 local function valid(o) return o ~= nil and o:IsValid() end
@@ -100,6 +107,22 @@ local function sync_layout(m, container)
     m.slot:SetVerticalAlignment(s.VerticalAlignment)
 end
 
+local function hide(m, line)
+    if m.current ~= line then return end
+    m.current = nil
+    m.target = 0.0
+    tween(m)
+    log("фраза снята через %.2f с", os.clock() - m.shown)
+end
+
+local function hide_later(m, line, left)
+    ExecuteInGameThreadWithDelay(math.floor(left * 1000 + 0.5), function()
+        local t0 = os.clock()
+        pcall(hide, m, line)
+        measure(t0)
+    end)
+end
+
 local function watch(m, line)
     ExecuteInGameThreadWithDelay(WATCH_MS, function()
         local t0 = os.clock()
@@ -107,9 +130,10 @@ local function watch(m, line)
             if m.current ~= line then return end    -- пришла новая строка — за ней следит её собственная проверка
             local alive = valid(line) and valid(line:GetParent())
             if alive then watch(m, line); return end
-            m.current = nil
-            m.target = 0.0
-            tween(m)
+            -- голос смолк раньше срока шкалы — строка ждёт остаток; новая строка за это время сменит m.current, и это скрытие ничего не сделает
+            local left = settings.get("ui_shout_hold", HOLD_DEFAULT) - (os.clock() - m.shown)
+            if left > 0.02 then hide_later(m, line, left); return end
+            hide(m, line)
         end)
         measure(t0)
     end)
@@ -124,6 +148,7 @@ local function on_active(line)
     sync_layout(m, container)
     m.view:SetText(FText(line.TextView:GetText():ToString()))
     m.current = line
+    m.shown = os.clock()
     m.target = 1.0
     stats.shouts = stats.shouts + 1
     tween(m)

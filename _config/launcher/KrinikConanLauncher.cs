@@ -49,6 +49,8 @@ static class KrinikConanLauncher
     const string INSTALL_CMD = "install.cmd";
     // Архив кладут в папку игры или рядом с ней (путеводитель, «Установка»): игру ищем в папке лаунчера и выше на столько уровней.
     const int GAME_SEARCH_LEVELS = 3;
+    // Версия игры, под которую собрана сборка: заголовок окна, название игры и строка под её логотипом.
+    const string GAME_VERSION = "3.0.1";
 
     [STAThread]
     static void Main()
@@ -92,10 +94,12 @@ static class KrinikConanLauncher
         var game = FindGame();
         var form = new MetalWindow
         {
-            Text = $"Сборка модов Krinik Mod Pack {BuildInfo.PackVersion} для Conan Exiles Enhanced 3.0.1",
+            Text = $"Сборка модов Krinik Mod Pack {BuildInfo.PackVersion} для Conan Exiles Enhanced {GAME_VERSION}",
             // Заголовок — как в руководстве, без повторов (владелец 2026-10-31 17:21: «нахуя ты повторяешься????»); «для» — отдельно, мелко.
             Title = $"Сборка модов Krinik Mod Pack {BuildInfo.PackVersion}",
-            GameName = "Conan Exiles Enhanced 3.0.1",
+            GameName = $"Conan Exiles Enhanced {GAME_VERSION}",
+            GameVersion = GAME_VERSION,
+            PackVersion = BuildInfo.PackVersion,
             // Путь к игре — голый, без «Игра:» (18:39 «игра: - убрать, просто путь»); не нашли — короткая строка, что сделать.
             GamePath = game != null ? Path.GetDirectoryName(game) : "Игра не найдена: сборку — в папку игры",
             Links = BuildInfo.AuthorLinks,
@@ -105,6 +109,14 @@ static class KrinikConanLauncher
         // «Установить сборку» — тот же установщик install.cmd, что лежит рядом с лаунчером в корне архива (одна логика установки, окно — лицо над ней).
         // Владелец 2026-10-31 17:37: «У нас же лаунчер будет, который ставит сборку в автоматическом режиме».
         var install = ColumnButton("Установить сборку");
+        // «Руководство» — PDF руководства пользователя, который экспорт кладёт рядом с лаунчером (владелец 2026-11-01 09:18–09:19: «в лаунчер нужно
+        // добавить» · «кнопку открытия мануала пользователя» · «не текста»). Открывает его программа Windows для PDF.
+        // [TESTED: 2026-11-01 · snapshots fresh/installed at 384 dpi, no PDF at 96 dpi (greyed); the real click left to the owner · KUMM
+        //  testcases/reports/2026-11-01_conan-hub-height-info-dimming.md]
+        var guide = ColumnButton("Руководство");
+        var guidePdf = Path.Combine(Here, BuildInfo.GuidePdf);
+        guide.Enabled = File.Exists(guidePdf);
+        guide.Click += (s, e) => Process.Start(new ProcessStartInfo(guidePdf) { UseShellExecute = true });
         var feedback = ColumnButton("Отзыв");
         var uninstall = ColumnButton("Удалить сборку");
         // «Играть» — последняя и золотая (18:26 «гнопку играть - вниз, золотой»).
@@ -131,8 +143,8 @@ static class KrinikConanLauncher
             uninstall.Enabled = installed;
             form.GamePath = installed || game == null ? gamePath : gamePath + " · сборка не установлена";
             // Не установлена — «Удалить сборку» нет вовсе (владелец 2026-10-31 20:43: «удалить сборку кнопка не нужна, пока сборка не установлена»).
-            if (installed) form.SetColumn(new[] { feedback, uninstall }, play);
-            else form.SetColumn(new[] { feedback }, install, MetalWindow.INSTALL_FONT);
+            if (installed) form.SetColumn(new[] { guide, feedback, uninstall }, play);
+            else form.SetColumn(new[] { guide, feedback }, install, MetalWindow.INSTALL_FONT);
         };
         applyState();
 
@@ -149,10 +161,20 @@ static class KrinikConanLauncher
             var ask = MessageBox.Show(form, "Удалить сборку Krinik и вернуть игру в тот вид, в каком она была до установки сборки?\n\nЗакройте игру перед удалением.",
                                       "Удалить сборку", MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2);
             if (ask != DialogResult.Yes) return;
-            Process.Start(new ProcessStartInfo(uninstallCmd) { WorkingDirectory = Path.GetDirectoryName(uninstallCmd), UseShellExecute = true });
-            form.Close();
+            // Лаунчер остаётся открытым (`[OWNER]` 2026-11-02 08:36 «в отличие от «Удалить» - удалить не должна закрывать лаунчер»): как у установщика —
+            // когда окно удаления закрылось, лаунчер смотрит на игру снова, деинсталлятора нет — на месте «Играть» встаёт золотая «Установить сборку». [NOT-TESTED]
+            var p = Process.Start(new ProcessStartInfo(uninstallCmd) { WorkingDirectory = Path.GetDirectoryName(uninstallCmd), UseShellExecute = true });
+            if (p == null) return;
+            p.EnableRaisingEvents = true;
+            p.Exited += (s2, e2) => form.BeginInvoke(applyState);
         };
-        play.Click += (s, e) => Process.Start(new ProcessStartInfo(game) { WorkingDirectory = Path.GetDirectoryName(game) });
+        // «Играть» запускает игру и закрывает лаунчер — пока игра идёт, он не держит память и процессор (`[OWNER]` 2026-11-02 08:35 «когда игра запущена через
+        // лаунчер по ИГРАТЬ - лаунчер нужно закрывать, чтобы не ел ресурсы ПК»). Окно закрывается только когда процесс игры начался. [NOT-TESTED]
+        play.Click += (s, e) =>
+        {
+            var started = Process.Start(new ProcessStartInfo(game) { WorkingDirectory = Path.GetDirectoryName(game) });
+            if (started != null) form.Close();
+        };
 
         // «Отзыв»: инструкция игроку — как собрать отчёт, что приложить и куда писать (тот же порядок, что на втором листе путеводителя).
         // Это сообщение, поэтому — своя металлическая табличка, только пока открыто; картина вокруг остаётся чистой.
@@ -672,6 +694,22 @@ sealed class MetalWindow : Form
     const float PATH_PX = 12f, PATH_GAP = 10f;                                                 // .status: 12px Inter, margin-top 10
     const float LINKS_LEFT = 30f, LINKS_BOTTOM = 26f, LINK_PX = 13f, LINK_LINE = 1.7f, UNDERLINE_OFFSET = 2f; // .links: 13px/1.7 Inter
     const float ASIDE_GAP = 24f, ASIDE_ABOVE_LINKS = 14f, ASIDE_BELOW_TITLE = 16f;             // табличка «Отзыв» — её в макете нет
+    // Версии под логотипами — как в главном меню игры (_config/devkit/kit-conanui-edit.py): каждая под СВОИМ логотипом, по центру его сплошной
+    // части (альфа ≥ 64 — мягкая тень логотипа в счёт не идёт), на одном отступе от её низа, цветом строки меню. `[OWNER]` 2026-11-02 18:47
+    // «нужно, чтобы в лаунчере под логотипами были написаны версия игры и версия сборки, прям как в глвном меню мы сделали».
+    // Шрифт — засечный с ровными цифрами, как цифры версий в меню игры: Cambria Bold (в Windows с Vista). У Georgia цифры старого стиля
+    // («0.9.0» с выносными) — с меню не сходится (снимок 2026-11-02 18:57 +03:00); она — только запасная.
+    const float VER_PX = 13f, VER_SPACING = .04f, VER_GAP = 2f;                               // [AI] кегль 13 px — чуть крупнее строки пути
+    const FontStyle VER_STYLE = FontStyle.Bold;
+    static readonly FontFamily VersionFont = SystemFamily("Cambria", "Georgia");
+
+    static FontFamily SystemFamily(string name, string fallback)
+    {
+        try { return new FontFamily(name); }
+        catch (ArgumentException) { return new FontFamily(fallback); }
+    }
+    const int SOLID_ALPHA = 64;
+    static readonly Color VersionInk = Color.FromArgb(233, 213, 193);                          // LINE1_LINEAR меню, в sRGB
     // Подъём и высота строки шрифтов в долях кегля (hhea, как считает Chrome): базовые линии стоят там же, где в макете.
     const float OSWALD_ASC = 1.193f, OSWALD_LINE = 1.482f, INTER_ASC = .96875f, INTER_LINE = 1.2109f, INTER_UNDERLINE = 140f / 2048f;
     static readonly Color TitleInk = Metal.Html("#f7ecd6"), GameGold = Metal.Html("#ffd27e"), DlyaInk = Color.FromArgb(184, 255, 240, 215),
@@ -709,6 +747,8 @@ sealed class MetalWindow : Form
 
     public string Title { get; set; } = "";
     public string GameName { get; set; } = "";
+    public string GameVersion { get; set; } = "";
+    public string PackVersion { get; set; } = "";
     public string GamePath { get; set; } = "";
     public BuildInfo.Link[] Links { get; set; } = new BuildInfo.Link[0];
 
@@ -1007,10 +1047,10 @@ sealed class MetalWindow : Form
         c.Font = new Font("Georgia", px, FontStyle.Bold, GraphicsUnit.Pixel);
     }
 
-    static Run TextRun(string text, FontFamily family, float px, float spacing, float x, float baseline, Color color)
+    static Run TextRun(string text, FontFamily family, float px, float spacing, float x, float baseline, Color color, FontStyle style = FontStyle.Regular)
     {
         var path = new GraphicsPath();
-        Lettering.Add(path, text, family, FontStyle.Regular, px, spacing, x, baseline);
+        Lettering.Add(path, text, family, style, px, spacing, x, baseline);
         return new Run { Path = path, Color = color };
     }
 
@@ -1046,7 +1086,48 @@ sealed class MetalWindow : Form
             TextRun(game, Fonts.GameName, gamePx, GAME_SPACING * gamePx, gameX, gameTop + GAME_PX * OSWALD_ASC * s, GameGold)
             // «для» убрано: владелец 2026-10-31 19:57 «из лаунчера для убираем» (было слева от названия игры с 18:37).
         });
-        return top + rowH;
+        return Math.Max(top + rowH, LayoutVersions(s));
+    }
+
+    // Строка версии под каждым логотипом (константы VER_*). Возвращает низ самой нижней строки. [NOT-TESTED]
+    float LayoutVersions(float s)
+    {
+        float bottom = 0f, px = VER_PX * s;
+        var block = new List<Run>();
+        var fam = VersionFont;
+        float asc = (float)fam.GetCellAscent(VER_STYLE) / fam.GetEmHeight(VER_STYLE), line = (float)fam.GetLineSpacing(VER_STYLE) / fam.GetEmHeight(VER_STYLE);
+        foreach (var (logo, rect, text) in new[] { (logoGame, logoGameRect, GameVersion), (logoPack, logoPackRect, PackVersion) })
+        {
+            if (logo == null || string.IsNullOrEmpty(text)) continue;
+            RectangleF solid = SolidBox(logo);
+            float cx = rect.X + (solid.X + solid.Width / 2) * rect.Width;
+            float lineTop = rect.Y + solid.Bottom * rect.Height + VER_GAP * s;
+            float w = Lettering.Width(text, fam, VER_STYLE, px, VER_SPACING * px);
+            block.Add(TextRun(text, fam, px, VER_SPACING * px, cx - w / 2, lineTop + px * asc, VersionInk, VER_STYLE));
+            bottom = Math.Max(bottom, lineTop + px * line);
+        }
+        blocks.Add(block);
+        return bottom;
+    }
+
+    // Сплошная часть картинки (альфа ≥ SOLID_ALPHA) в долях её ширины и высоты; у логотипа сборки снизу мягкая тень, её не считаем.
+    static RectangleF SolidBox(Bitmap b)
+    {
+        var data = b.LockBits(new Rectangle(0, 0, b.Width, b.Height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
+        try
+        {
+            var row = new byte[data.Stride];
+            int minX = b.Width, maxX = -1, minY = b.Height, maxY = -1;
+            for (int y = 0; y < b.Height; y++)
+            {
+                Marshal.Copy(data.Scan0 + y * data.Stride, row, 0, data.Stride);
+                for (int x = 0; x < b.Width; x++)
+                    if (row[x * 4 + 3] >= SOLID_ALPHA) { if (x < minX) minX = x; if (x > maxX) maxX = x; if (y < minY) minY = y; maxY = y; }
+            }
+            if (maxX < 0) return new RectangleF(0f, 0f, 1f, 1f);
+            return new RectangleF((float)minX / b.Width, (float)minY / b.Height, (float)(maxX - minX + 1) / b.Width, (float)(maxY - minY + 1) / b.Height);
+        }
+        finally { b.UnlockBits(data); }
     }
 
     // Ссылки автора (.links): без заголовка (18:22 «автор сборки - убрать заголовок»), строка «Почта: адрес», адрес — золотом, подчёркнут.

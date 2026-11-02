@@ -57,8 +57,8 @@
 | 55 | Discord | Discord |
 | 56 | Reset confirmation on login | Спрашивать о сбросе при входе |
 | 57 | If you have saved data from a previous game session, ask to reset on login | Если остались данные прошлой игры, при входе спросить, стереть ли их |
-| 58 | Bar refresh rate (visual only) | Частота обновления полос (только вид) |
-| 59 | Updates bars with this frequency\nThe number represents a fraction of a second\n(eg. 0.2 = 5 times every second) | Как часто обновлять полосы\nЧисло — доля секунды\n(0.2 = 5 раз в секунду) |
+| 58 | Bar refresh rate (visual only) | Частота обновления полос |
+| 59 | Updates bars with this frequency\nThe number represents a fraction of a second\n(eg. 0.2 = 5 times every second) | Как часто обновлять полосы — только их вид, подсчёт урона не меняется\nЧисло — доля секунды\n(0.2 = 5 раз в секунду) |
 | 60 | Inactive time before new segment | Пауза до новой стычки |
 | 61 | Player Bar Color | Цвет полосы игрока |
 | 62 | The color used for the damage bar of the player in the main damage meter window | Цвет полосы урона игрока в главном окне счётчика |
@@ -72,7 +72,7 @@
 | 70 | When you minimize the main damage meter window (minus left of title), this is the corner the "restore" button goes to | Угол, куда уходит кнопка «развернуть», когда главное окно счётчика свёрнуто (минус слева от заголовка) |
 | 71 | Opacity | Непрозрачность |
 | 72 | Opacity of the windows\n(range 30%-95%) | Непрозрачность окон\n(от 30% до 95%) |
-| 73 | Mouse Hotkey | Клавиша мыши |
+| 73 | Mouse Hotkey | Клавиша вызова курсора |
 | 74 | Allows you to rebind the mouse interaction hotkey\n\nCareful, if you set it to something that the game doesn't let you use, you will have to use the console command to get back to this menu.\n\ndc damagemetersettings | Клавиша, при которой мышь управляет окнами\n\nОсторожно: если назначить клавишу, которую игра не пропускает, вернуться в это меню можно будет только консольной командой\n\ndc damagemetersettings |
 | 75 | Tracked Chars | Под слежкой |
 | 76 | Xevyr's Mods | Моды Xevyr |
@@ -4540,7 +4540,7 @@
 | 4542 | Alpha | Прозрачность |
 | 4543 | Quick select | Быстрый выбор |
 | 4544 | Show coordinates | Показывать координаты |
-| 4545 | Mouse Cursor Hotkey | Клавиша курсора мыши |
+| 4545 | Mouse Cursor Hotkey | Клавиша вызова курсора |
 | 4546 | Holding this key will let you use the mouse on the game screen so that you can interact with the minimap | Пока клавиша зажата, мышью можно пользоваться на экране игры — например, работать с миникартой |
 | 4547 | Rotate minimap | Вращать миникарту |
 | 4548 | Scale | Масштаб |
@@ -6616,7 +6616,7 @@
 | 6618 | Archer | Лучник |
 | 6619 | Battlefield | Поле боя |
 | 6620 | Inner (battlements) | Внутренние стены |
-| 6621 | Bailey | Внешний двор |
+| 6621 | Bailey | Двор цитадели |
 | 6622 | Keep | Цитадель |
 | 6623 | Bodyguard | Телохранитель |
 | 6624 | Mini Boss | Мини-босс |
@@ -6657,7 +6657,7 @@
 | 6659 | Battlefield NPC respawn time | Время возрождения: поле боя |
 | 6660 | Archer respawn time | Время возрождения: лучники |
 | 6661 | Battlement NPC respawn time | Время возрождения: стены |
-| 6662 | Bailey NPC respawn time | Время возрождения: внешний двор |
+| 6662 | Bailey NPC respawn time | Время возрождения: двор цитадели |
 | 6663 | Counterattack cooldown | Перерыв между контратаками |
 | 6664 | Counterattack squad size | Размер отряда контратаки |
 | 6665 | No Fatalities | Без добиваний |

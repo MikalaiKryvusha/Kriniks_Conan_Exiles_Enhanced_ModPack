@@ -1,0 +1,2 @@
+enum:DN_UI_Settings/Category	EGUIModuleCategory::Popup	EGUIModuleCategory::Modal
+rbool:DN_UI_Settings/CloseOnESC	False	True

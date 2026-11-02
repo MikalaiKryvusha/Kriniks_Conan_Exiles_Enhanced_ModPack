@@ -75,3 +75,6 @@ _unpacked/KrinikConanUI/*.pak
 # Лаунчер: exe и BuildInfo.g.cs собирает _config/release/build-docs.py из исходника и author_links.txt — в историю идёт исходник.
 _config/launcher/bin/
 _config/launcher/BuildInfo.g.cs
+
+# fetch-authors.mjs output (regenerated on demand)
+_config/public_release/authors.json

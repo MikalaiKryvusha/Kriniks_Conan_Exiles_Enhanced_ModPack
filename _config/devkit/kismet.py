@@ -16,6 +16,9 @@
 [TESTED: 2026-10-26 · разбор: 190 функций 7 ассетов (рыбалка, Hosav, EAA, включая графы событий) — размер в памяти = заголовку у всех;
  замена: 12 строк Exiles Fishing, все функции после замены снова сходятся; в игре панель по-русски, без падения, кадр 13:13 —
  KUMM/testcases/reports/2026-10-26_conan-fishing-bytecode-literals.md]
+Граф событий (2026-11-01): [TESTED: 2026-11-01 · регрессия: JaarFishing, Simple_Minimap, UIMod_Hosav пересобраны байт в байт; Simple Minimap «Показ
+ времени» по-русски, 20 точек входа сдвинуты, обработчик выбора в игре даёт timeDisplay 2/1/0 на «Игра»/«Компьютер»/«Сервер» ·
+ KUMM/testcases/reports/2026-11-01_conan-minimap-time-dropdown-ru.md]
 """
 import struct
 import sys
@@ -42,6 +45,8 @@ class Walker:
         self.flts = []      # (disk_pos значения, число) — EX_FloatConst
         self.ints = []      # (disk_pos значения, число) — EX_IntConst (правка `int:`, 2026-10-30: делитель «k» Hosav, план 36 W5c)
         self.bools = []     # (disk_pos токена, True|False) — EX_True / EX_False по порядку в функции (правка `bool:`, 2026-10-29)
+        self.calls = []     # (disk_pos индекса функции, индекс пакета) — EX_FinalFunction / EX_LocalFinalFunction (точки входа графа событий, 2026-11-01)
+        self.tops = []      # позиции в памяти операторов верхнего уровня — куда может прыгнуть точка входа
         self.ops = 0
 
     # ── примитивы ──
@@ -157,6 +162,8 @@ class Walker:
         elif t in (0x1B, 0x45):                                 # VirtualFunction, LocalVirtualFunction
             self.name(); self.until(0x16)
         elif t in (0x1C, 0x46, 0x63, 0x68):                     # FinalFunction, LocalFinalFunction, CallMulticastDelegate, CallMath
+            if t in (0x1C, 0x46):
+                self.calls.append((self.p, struct.unpack_from('<i', self.d, self.p)[0]))
             self.obj(); self.until(0x16)
         elif t == 0x1D:                                         # IntConst — место значения для правки `int:`
             self.ints.append((self.p, struct.unpack_from('<i', self.d, self.p)[0]))
@@ -247,6 +254,7 @@ class Walker:
 
     def run(self):
         while self.p < len(self.d):
+            self.tops.append(self.m)
             if self.expr() == 0x53 and self.p == len(self.d):
                 return
         raise Bad("нет EX_EndOfScript в конце")
@@ -309,24 +317,72 @@ def patch_script(script, mem, repl):
     return out, mem + delta, done
 
 
+def lit_shifts(script, repl):
+    """[(позиция литерала в памяти, на сколько он удлинится)] — по тем же правилам, что patch_script."""
+    w = Walker(script)
+    w.run()
+    return sorted((m, len(b'\x34' + repl[s].encode('utf-16-le') + b'\x00\x00') - n) for _, m, s, n in w.lits if s in repl)
+
+
+def fix_entries(script, uber):
+    """Точки входа графа событий в функции-заглушке: EX_FinalFunction / EX_LocalFinalFunction на экспорт графа + EX_IntConst(точка входа).
+    uber — {индекс пакета графа: [(позиция литерала, сдвиг)]}. Правка на месте (размер int32 тот же). Возвращает (байткод, [(граф, старая, новая)])."""
+    w = Walker(script)
+    w.run()
+    buf, moved, found = bytearray(script), [], set()
+    for pos, idx in w.calls:
+        if idx in uber and buf[pos + 4] == 0x1D:
+            found.add(idx)
+            e = struct.unpack_from('<i', buf, pos + 5)[0]
+            e2 = e + sum(d for m, d in uber[idx] if m < e)
+            if e2 != e:
+                struct.pack_into('<i', buf, pos + 5, e2)
+                moved.append((idx, e, e2))
+    return bytes(buf), moved, found
+
+
 def patch_uexp(blob, rows, repl):
     """Все функции ассета: rows — [(смещение, размер, вид, имя)] в порядке экспортов. Возвращает (новый .uexp, новые rows, отчёт).
-    Граф событий (ExecuteUbergraph_*) не правится: на его адреса ссылаются другие функции (точки входа)."""
+    Граф событий (ExecuteUbergraph_*) правится с 2026-11-01 (KUMM bugs/64 п. 48, «Показ времени» Simple Minimap): его внутренние переходы и
+    точки возобновления задержек (EX_SkipOffsetConst) пересчитывает patch_script, а точки входа — числа EX_IntConst в вызовах графа из
+    функций-заглушек событий — fix_entries. Самопроверка: каждая новая точка входа — начало оператора в новом графе."""
+    uber = {}                                   # индекс пакета графа (номер экспорта с 1) → сдвиги его литералов
+    for idx, (off, size, kind, name) in enumerate(rows, 1):
+        if kind == 'RawExport' and name.startswith('ExecuteUbergraph'):
+            for hdr, mem, disk, w in find_scripts(blob, off, off + size):
+                if any(s in repl for _, _, s, _ in w.lits):
+                    uber[idx] = lit_shifts(blob[hdr + 8:hdr + 8 + disk], repl)
+    entries = []                                # (граф, старая точка, новая точка)
+    called = set()                              # графы, чей вызов с точкой входа найден
+    new_tops = {}                               # граф → позиции операторов нового графа
     out = bytearray()
     new_rows, report = [], []
     cur = 0
+    idx_of = {r[0]: i for i, r in enumerate(rows, 1)}
     for off, size, kind, name in sorted(rows, key=lambda r: r[0]):
         out += blob[cur:off]
         chunk = blob[off:off + size]
         if kind == 'RawExport':
             parts, last = [], 0
             for hdr, mem, disk, w in find_scripts(blob, off, off + size):
-                if not any(s in repl for _, _, s, _ in w.lits):
+                has_lit = any(s in repl for _, _, s, _ in w.lits)
+                calls_uber = any(i in uber for _, i in w.calls)
+                if not has_lit and not calls_uber:
                     continue
-                if name.startswith('ExecuteUbergraph'):
-                    raise Bad(f"{name}: литерал в графе событий — правка не поддержана")
                 script = blob[hdr + 8:hdr + 8 + disk]
-                new, new_mem, done = patch_script(script, mem, repl)
+                if calls_uber and not name.startswith('ExecuteUbergraph'):
+                    script, moved, found = fix_entries(script, uber)
+                    entries += moved
+                    called |= found
+                    report += [(name, e, f'вход {e}', f'вход {e2}') for _, e, e2 in moved]
+                if has_lit:
+                    new, new_mem, done = patch_script(script, mem, repl)
+                else:
+                    new, new_mem, done = script, mem, []
+                if name.startswith('ExecuteUbergraph') and has_lit:
+                    w2 = Walker(new)
+                    w2.run()
+                    new_tops[idx_of[off]] = set(w2.tops)
                 d = len(new) - disk
                 rel = hdr - off
                 parts.append(chunk[last:rel] + struct.pack('<ii', new_mem, disk + d) + new)
@@ -338,6 +394,12 @@ def patch_uexp(blob, rows, repl):
         out += chunk
         cur = off + size
     out += blob[cur:]
+    for g in uber:
+        if g not in called:
+            raise Bad(f"граф {g}: правка литерала, но ни одной точки входа не найдено — сборка остановлена")
+    for g, e, e2 in entries:
+        if e2 not in new_tops.get(g, set()):
+            raise Bad(f"граф {g}: новая точка входа {e2} (была {e}) не начало оператора — сборка остановлена")
     by_old = dict(zip([r[0] for r in sorted(rows, key=lambda r: r[0])], new_rows))
     return bytes(out), [by_old[r[0]] for r in rows], report
 

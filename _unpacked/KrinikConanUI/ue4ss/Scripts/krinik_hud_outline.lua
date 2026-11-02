@@ -32,7 +32,7 @@ local done = {}   -- поля текущего HUD, которым шрифт у
 
 local function apply(hud_name)
     local n, skipped = 0, 0
-    for _, w in ipairs(FindAllOf("TextBlock") or {}) do
+    for _, w in ipairs(FindAllOf("TextBlock") or {}) do   -- templates-ok: kept by the LIVE HUD's instance name (`W_NewHealthUI_C_<n>`), templates lack it
         local full = ""
         pcall(function() full = w:GetFullName() end)
         if full:find(hud_name, 1, true) then
@@ -69,6 +69,10 @@ end
 -- ≈15:06 владелец: «11 кегль, отступ 2» (было 13 и 5)
 local F1_FONT_SIZE = 11
 local F1_GAP = 2
+local DPS_FILL = { R = 0.0, G = 0.0, B = 0.0, A = 0.20 }   -- фон кнопки свёрнутого счётчика: виден на 20 % (вариант 5, папка 49)
+local DPS_RIM = { R = 1.0, G = 1.0, B = 1.0, A = 0.25 }    -- белый контур, виден на 25 %
+local DPS_RIM_WIDTH = 1.0
+local DPS_CORNER = 3.0
 local function f1_label()
     local m = FindFirstOf("DN_UI_DmgWidget_C")
     if not m or not m:IsValid() then return end
@@ -79,9 +83,25 @@ local function f1_label()
     local hbox = StaticConstructObject(StaticFindObject("/Script/UMG.HorizontalBox"), tree, FName("KrinikF1Box"))
     local plate = StaticConstructObject(StaticFindObject("/Script/UMG.Border"), tree, FName("KrinikF1Plate"))
     local txt = StaticConstructObject(StaticFindObject("/Script/UMG.TextBlock"), tree, FName("KrinikF1Label"))
-    plate:SetBrush(border.Background)
+    -- Вид кнопки: тёмный фон виден на 20 %, тонкий белый контур на 25 %, минус и «F1» — без прозрачности (`[OWNER]` 2026-11-01 15:2x–15:34
+    -- «в свернутом состоянии dps мод нужно сделать прозрачным, оставить полоску, и дать белый контур» · «минус нужно сделать без прозрачности» ·
+    -- «а контур и фон с прозрачностью» · «вот второй слека вкрасиво» — вариант 5 папки отсмотра 49). Своя кисть RoundedBox вместо тёмной
+    -- текстуры мода; контур RenderOpacity не слушает — его прозрачность в собственном цвете (конспект KUMM DamageNumber.md).
+    local br = border.Background
+    br.DrawAs = 4                                                                      -- ESlateBrushDrawType::RoundedBox
+    br.TintColor = { SpecifiedColor = DPS_FILL, ColorUseRule = 0 }
+    br.OutlineSettings.Width = DPS_RIM_WIDTH
+    br.OutlineSettings.Color = { SpecifiedColor = DPS_RIM, ColorUseRule = 0 }
+    br.OutlineSettings.RoundingType = 0                                                -- FixedRadius
+    br.OutlineSettings.CornerRadii = { X = DPS_CORNER, Y = DPS_CORNER, Z = DPS_CORNER, W = DPS_CORNER }
+    plate:SetBrush(br)
     plate:SetBrushColor(border.BrushColor)
     plate:SetPadding(border.Padding)
+    -- `border.Background` пришёл ССЫЛКОЙ: правка выше дала контур и внешней рамке — вторая рамка вокруг «— F1» (кадр 15:36). Внешняя
+    -- не рисуется вовсе (DrawAs 0 — NoDrawType; прозрачный BrushColor контур не гасит).
+    local ob = border.Background
+    ob.DrawAs = 0
+    border:SetBrush(ob)
     border:SetBrushColor({ R = 0, G = 0, B = 0, A = 0 })
     border:SetPadding({ Left = 0, Top = 0, Right = 0, Bottom = 0 })
     local f = m.lbl_HotkeyHelp.Font
@@ -134,14 +154,102 @@ end)
 -- TextBlock_Temp в W_TestHudOverlay; перебор TextBlock — только когда кэш пуст или поле умерло (новый HUD). Привязки цвета у этих полей нет —
 -- поставленный цвет держится. Цвета — [AI] до взгляда владельца.
 -- [TESTED: 2026-10-30 · кейсы T1–T7: жара 20,1 красная, норма белая, холод −20,5 зелёная, без мигания на границе · KUMM testcases/reports/2026-10-30_conan-hud-temperature-colour.md]
-local TEMP_HOT, TEMP_COLD, TEMP_HYST = 20.0, -20.0, 1.0
-local TEMP_COLORS = {
-    hot  = { SpecifiedColor = { R = 1.0, G = 0.22, B = 0.18, A = 1.0 }, ColorUseRule = 0 },
-    cold = { SpecifiedColor = { R = 0.30, G = 1.0, B = 0.35, A = 1.0 }, ColorUseRule = 0 },
-    norm = { SpecifiedColor = { R = 1.0, G = 1.0, B = 1.0, A = 1.0 }, ColorUseRule = 0 },
-}
+-- 2026-11-01: `[OWNER]` «в виджете ХУДа температура 37, и белая» · «баг» · «все что на пороге и выше этого порога - красным» · «а все, что на пороге
+-- и ниже порога сильного холода - синим» (10:10). Ступени игры в Get_TempImage Hosav (байткод 3.0.1, 2026-11-01): жара 20 · 30 · 40 · 55, холод
+-- −20 · −30 · −40 · −55. «Сильный» порог — вторая ступень, ±30: по примеру владельца 37 °C (энергия ≈ 30) уже красное; «тепло» 20–30 — белое. [AI]
+-- Белое при красном свойстве (кадр 10:14) — причина найдена 10:19: поиск по имени поля брал ШАБЛОНЫ классов (`…W_SmoothHP_C:WidgetTree.TextBlock_TempText`,
+-- шаблон оверлея — «Default__» в их имени нет) и красил их, а живые поля на экране оставались белыми; шаблоны не умирают, и новые поля не искались.
+-- Живое поле — в дереве экземпляра: в полном имени `WidgetTree_<число>.` (урок KUMM EXP-0385 — FindFirstOf/FindAllOf отдают и шаблон).
+-- [TESTED: 2026-11-01 · жара 33 — красное на кадрах +5 с и +60 с (до правки белое), «тепло» 21 — белое, переход в холод ровно на −30,0 по журналу;
+--  синий кадром в холоде не снят · KUMM testcases/TC_conan_hud_temperature_thresholds_2026-11-01.md]
+-- 2026-11-01 10:47, уточнение владельца: `[OWNER]` «я заказывал синий, красный - с плавными переводами от белого к полностью насыщенному для холода
+-- и жары, и белый - для диапазона нормальных температур». Поэтому: норма (−20 … 20) белая; от края нормы до сильного порога цвет плавно идёт от
+-- белого к полному (20 → 30 к красному, −20 → −30 к синему); за сильным порогом — полный цвет. [AI] — границы «нормы» и «сильного» по ступеням игры.
+-- Плавный цвет не мигает на границе — гистерезис не нужен.
+-- [TESTED: 2026-11-01 · остывание 33,9 → 18,4 на пляже: полный красный, плавно к белому, норма белая — кадры глазом; холод кадром не снят ·
+--  KUMM testcases/TC_conan_hud_temperature_thresholds_2026-11-01.md R1]
+local TEMP_NORM_HOT, TEMP_STRONG_HOT = 20.0, 30.0
+local TEMP_NORM_COLD, TEMP_STRONG_COLD = -20.0, -30.0
+local TEMP_RED = { R = 1.0, G = 0.22, B = 0.18 }
+local TEMP_BLUE = { R = 0.25, G = 0.55, B = 1.0 }
+local TEMP_STEPS = 20          -- цвет меняется ступенями по 5 % перехода: глаз мельче не различит, а вызовов меньше
+-- 2026-11-01 13:15, владелец: `[OWNER]` «почему то до сих пор температура в худ белая на высоких значениях» · «внизу возле панели быстрых действий
+-- ванильный индикатор перегрева висит, то есть механика игры понимает, что герою жарко» · «но твой мод худа цифру держит белой при этом». Было:
+-- на пороге 20 — белый, и смесь в ЛИНЕЙНЫХ значениях UMG — энергия 23 (33 °C, значок перегрева игры горит) давала (1.00, 0.81, 0.80) — на глаз белый.
+-- Теперь: с первой ступени перегрева игры цвет сразу TEMP_MIN_TINT пути к полному и густеет к сильному порогу; смесь — в sRGB (как видит глаз),
+-- в UMG уходит линейное значение. [AI] 0.7 — на глаз владельца.
+local TEMP_MIN_TINT = 0.7
+local function clamp01(x) return x < 0 and 0 or (x > 1 and 1 or x) end
+local function to_srgb(x) return x ^ (1 / 2.2) end
+local function to_lin(x) return x ^ 2.2 end
+local function mix(to, t)
+    local function ch(c) return to_lin(1 + (to_srgb(c) - 1) * t) end
+    return { SpecifiedColor = { R = ch(to.R), G = ch(to.G), B = ch(to.B), A = 1.0 }, ColorUseRule = 0 }
+end
+-- ступень −STEPS … +STEPS: знак — холод или жара, величина — доля пути от белого к полному цвету; 0 — только в норме
+local function temp_step(e)
+    if e >= TEMP_NORM_HOT then
+        return math.max(1, math.floor(clamp01((e - TEMP_NORM_HOT) / (TEMP_STRONG_HOT - TEMP_NORM_HOT)) * TEMP_STEPS + 0.5))
+    end
+    if e <= TEMP_NORM_COLD then
+        return -math.max(1, math.floor(clamp01((TEMP_NORM_COLD - e) / (TEMP_NORM_COLD - TEMP_STRONG_COLD)) * TEMP_STEPS + 0.5))
+    end
+    return 0
+end
+local function tint(k) return TEMP_MIN_TINT + (1 - TEMP_MIN_TINT) * k / TEMP_STEPS end
+local function step_color(k)
+    if k > 0 then return mix(TEMP_RED, tint(k)) end
+    if k < 0 then return mix(TEMP_BLUE, tint(-k)) end
+    return mix(TEMP_RED, 0)
+end
 local TEMP_FIELDS = { TextBlock_TempText = true, TextBlock_Temp = true }
-local temp_blocks, temp_zone = {}, nil
+local temp_blocks, temp_zone = {}, nil   -- temp_zone — ступень цвета, поставленная полям последней
+
+-- Цвет — по ступени САМОЙ ИГРЫ (2026-11-01 13:2x): значок перегрева у быстрой панели — дебафф героя BP_AC_Buff_Heat_Stage<1…4> (холод —
+-- BP_AC_Buff_Cold_Stage<1…4>, /Game/Systems/Buffs/TemperatureBuffs/); при энергии 23 на герое висел Heat_Stage2, а значок горел и при ≈ 17,6
+-- (кадр 12:45, «30 °C» с сердцем Hosav) — пороги Hosav (±20) у игры не те. Ступень 1 — TEMP_MIN_TINT пути к полному цвету, ступень 4 — полный.
+-- Цена: обход 165 компонентов героя — 1,7 мс (замер пультом), поэтому спрашиваются только восемь классов ступеней (классы — кэш; ещё не
+-- загруженный класс ищется заново не чаще раза в 10 с), и только когда сменилась ступень энергии или пропал запомненный компонент дебаффа;
+-- в остальные секунды — одна проверка IsValid.
+local STAGE_BASE = "/Game/Systems/Buffs/TemperatureBuffs/BP_AC_Buff_"
+local STAGE_RETRY_S = 10.0
+local stage_cls, stage_miss_at = {}, {}
+local stage_comp, stage_k, stage_energy_step = nil, 0, nil
+local function stage_class(kind, s)
+    local key = kind .. s
+    local c = stage_cls[key]
+    if c then return c end
+    if stage_miss_at[key] and os.clock() - stage_miss_at[key] < STAGE_RETRY_S then return nil end
+    local name = "BP_AC_Buff_" .. kind .. "_Stage" .. s
+    c = StaticFindObject(STAGE_BASE .. kind .. "_Stage" .. s .. "." .. name .. "_C")
+    if c and c:IsValid() then stage_cls[key] = c; return c end
+    stage_miss_at[key] = os.clock()
+    return nil
+end
+local function game_stage(pawn, energy_step)
+    if stage_comp and stage_comp:IsValid() and energy_step == stage_energy_step then return stage_k end
+    stage_energy_step = energy_step
+    stage_comp, stage_k = nil, 0
+    for _, kind in ipairs({ "Heat", "Cold" }) do
+        for s = 1, 4 do
+            local c = stage_class(kind, s)
+            if c then
+                local a = pawn:K2_GetComponentsByClass(c)
+                if #a > 0 then
+                    stage_comp = a[1]:get()
+                    stage_k = kind == "Heat" and s or -s
+                    return stage_k
+                end
+            end
+        end
+    end
+    return 0
+end
+local function stage_color(k)
+    if k == 0 then return mix(TEMP_RED, 0) end
+    local t = TEMP_MIN_TINT + (1 - TEMP_MIN_TINT) * (math.abs(k) - 1) / 3
+    return mix(k > 0 and TEMP_RED or TEMP_BLUE, t)
+end
 
 local function temp_fields_alive()
     if #temp_blocks == 0 then return false end
@@ -157,17 +265,12 @@ local function on_energy(ctx)
     local mine = pawn.BPEnergyReceiver
     if not mine or not mine:IsValid() or mine:GetAddress() ~= recv:GetAddress() then return end   -- только приёмник героя
     local e = recv:GetEnergy(1)
-    -- Гистерезис: на границе энергия ходит 20,1 → 19,7 за 2 с (прогон 11:12) — без него текст мигал бы красным/белым. Вход в зону —
-    -- по ступени игры, выход — на TEMP_HYST дальше.
-    local zone
-    if temp_zone == "hot" and e > TEMP_HOT - TEMP_HYST then zone = "hot"
-    elseif temp_zone == "cold" and e < TEMP_COLD + TEMP_HYST then zone = "cold"
-    else zone = e >= TEMP_HOT and "hot" or (e <= TEMP_COLD and "cold" or "norm") end
+    local zone = game_stage(pawn, temp_step(e))
     local fresh = false
     if not temp_fields_alive() then
         temp_blocks = {}
         for _, tb in ipairs(FindAllOf("TextBlock") or {}) do
-            if tb:IsValid() and TEMP_FIELDS[tb:GetFName():ToString()] and not tb:GetFullName():find("Default__", 1, true) then
+            if tb:IsValid() and TEMP_FIELDS[tb:GetFName():ToString()] and tb:GetFullName():find("WidgetTree_%d+%.") then
                 temp_blocks[#temp_blocks + 1] = tb
             end
         end
@@ -175,8 +278,9 @@ local function on_energy(ctx)
     end
     if zone == temp_zone and not fresh then return end
     temp_zone = zone
-    for _, tb in ipairs(temp_blocks) do tb:SetColorAndOpacity(TEMP_COLORS[zone]) end
-    log(("температура: энергия %.1f → зона %s, полей %d%s"):format(e, zone, #temp_blocks, fresh and " (новые)" or ""))
+    local c = stage_color(zone)
+    for _, tb in ipairs(temp_blocks) do tb:SetColorAndOpacity(c) end
+    log(("температура: энергия %.1f → ступень игры %d (жара +, холод −), полей %d%s"):format(e, zone, #temp_blocks, fresh and " (новые)" or ""))
 end
 
 _G.__krinik_temp_fn = on_energy

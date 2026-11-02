@@ -1,0 +1,2 @@
+# 2026-11-02, KUMM bugs/78: Arrow Quick Swap service string «None» back untranslated (its CheckCustomBindings compares a key name with it)
+key:D71D7D204737C8044CCD97BC0B6B9301	None

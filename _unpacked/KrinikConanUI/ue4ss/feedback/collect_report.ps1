@@ -216,7 +216,7 @@ if ($Feedback) {
     Add-Type -Namespace KR -Name Box -MemberDefinition '[DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern int MessageBoxW(System.IntPtr h, string text, string caption, uint type);'
     $MB_OK_INFO_TOPMOST = 0x0 -bor 0x40 -bor 0x10000 -bor 0x40000   # MB_OK · MB_ICONINFORMATION · MB_SETFOREGROUND · MB_TOPMOST
     [void][KR.Box]::MessageBoxW([IntPtr]::Zero,
-        "Журналы игры собраны в файл на рабочем столе:`r`n$(Split-Path $zip -Leaf)`r`n`r`nОтправьте его автору сборки на почту $AUTHOR_MAIL`r`nи напишите пару слов: что понравилось, что сломалось.`r`n`r`nНомера компьютера и аккаунта и имя пользователя в файл не попали.",
+        "Журналы игры собраны в файл на рабочем столе:`r`n$(Split-Path $zip -Leaf)`r`n`r`nОтправьте его автору сборки на почту $AUTHOR_MAIL`r`nи напишите пару слов: что понравилось, что сломалось.`r`n`r`nНе беспокойтесь о личных данных: отчёт всегда полностью анонимен. Сборщик никогда не берёт имена пользователя и профилей, адреса, номера и ID компьютера и аккаунтов — так устроен каждый отчёт.",
         'Отзыв о сборке Krinik Mod Pack', $MB_OK_INFO_TOPMOST)
     $subject = 'Отзыв о сборке Krinik Mod Pack'
     $body = "Здравствуйте!`r`n`r`nМой отзыв:`r`n`r`n`r`nЖурналы игры собраны в файл $(Split-Path $zip -Leaf) на рабочем столе — перетащите его в это письмо.`r`n"
