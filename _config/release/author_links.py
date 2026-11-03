@@ -5,9 +5,9 @@
 
 Формат строки (слово владельца, дословно): "Текст до двоеточия"[OpenAI](https://openai.com)
 Вид в ридми и лаунчере: «Текст до двоеточия: OpenAI», где OpenAI — ссылка на https://openai.com (разделитель — двоеточие, SEPARATOR ниже).
-Короткий текст для лаунчера — необязательно, вторыми кавычками через черту: "Личные сообщения на PlayGround"|"PlayGround"[…](…):
+Короткий текст для лаунчера — необязательно, вторыми кавычками через черту: "Страница сборки на Nexus Mods"|"Nexus Mods"[…](…):
 ридми пишет длинный текст, лаунчер — короткий (владелец 2026-10-31 18:30 «просто плейграунд, без длинного текста» — о лаунчере).
-[TESTED: 2026-10-31 · parse(author_links.txt): «Почта» without a short text, «PlayGround» with one; the guide keeps the long text]
+[TESTED: 2026-10-31 · parse(author_links.txt): «Почта» without a short text, a link with one; the guide keeps the long text]
 """
 import re
 import sys

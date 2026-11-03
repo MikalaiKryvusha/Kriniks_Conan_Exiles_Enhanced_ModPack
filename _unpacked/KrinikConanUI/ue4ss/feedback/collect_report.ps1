@@ -200,7 +200,7 @@ if ($leaks.Count) {
 }
 Write-Host ''
 Write-Host "Готово: $zip" -ForegroundColor Green
-Write-Host 'Отправьте этот файл автору сборки на почту kotkrinik@yandex.ru или в личные сообщения на PlayGround (https://users.playground.ru/4580431/)'
+Write-Host 'Отправьте этот файл автору сборки на почту kotkrinik@yandex.ru или на странице сборки на Nexus Mods (https://www.nexusmods.com/conanexilesenhanced/mods/65)'
 Write-Host 'и опишите, что происходило в игре перед падением или ошибкой.'
 Write-Host 'Номера компьютера и аккаунта, имя пользователя и дамп памяти в отчёт не попали.'
 if ($Feedback) {

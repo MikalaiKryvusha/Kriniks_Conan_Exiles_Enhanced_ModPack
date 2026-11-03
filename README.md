@@ -31,7 +31,7 @@
 
 ### 1.1. Основные положения
 
-1. Krinik Mod Pack 0.9.0 от 02.11.2026 — первый выпуск сборки для Conan Exiles Enhanced 3.0.1; ранняя бета-версия сборки для версии игры 2.2.3 публиковалась на PlayGround под номером 1.0.0. Что не доделано и войдёт в версию 1.0.0 — в главе «Известные проблемы и планы на 1.0.0» руководства пользователя. Сборка рассчитана на Conan Exiles Enhanced 3.0.1 (билд CL-379176), а прежде собиралась под версии игры 2.1.1 и 2.2.3.
+1. Krinik Mod Pack 0.9.0 от 02.11.2026 — первый выпуск сборки для Conan Exiles Enhanced 3.0.1; ранняя бета-версия сборки для версии игры 2.2.3 выходила под номером 1.0.0. Что не доделано и войдёт в версию 1.0.0 — в главе «Известные проблемы и планы на 1.0.0» руководства пользователя. Сборка рассчитана на Conan Exiles Enhanced 3.0.1 (билд CL-379176), а прежде собиралась под версии игры 2.1.1 и 2.2.3.
 2. Состав сборки и порядок загрузки модов задаёт манифест `modpack.json`. Раскатывает сборку по папке игры движок [KUMM](https://github.com/MikalaiKryvusha/kumm).
 3. Все моды сборки переведены на русский язык в терминах русской версии игры.
 4. Руководство пользователя — [docs/guide/Krinik-Conan-3.0.1-guide.pdf](docs/guide/Krinik-Conan-3.0.1-guide.pdf): возможности сборки, клавиши, состав, история версий.
@@ -160,7 +160,7 @@
 ## 6. Ссылки
 
 - Почта: [kotkrinik@yandex.ru](mailto:kotkrinik@yandex.ru)
-- Личные сообщения на PlayGround: [users.playground.ru/4580431](https://users.playground.ru/4580431/)
+- Страница сборки на Nexus Mods: [nexusmods.com/conanexilesenhanced/mods/65](https://www.nexusmods.com/conanexilesenhanced/mods/65)
 - Публичный репозиторий сборки на GitHub: [github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack)
 
 ## 7. Правообладатели и отказ от ответственности
@@ -211,7 +211,7 @@ The pack is installed, launched and removed from a single launcher window, and a
 
 ### 1.1. Basic provisions
 
-1. Krinik Mod Pack 0.9.0 (2026-11-02) is the first release of the pack for Conan Exiles Enhanced 3.0.1; an early beta of the pack for game version 2.2.3 was published on PlayGround as 1.0.0. What is not done yet and goes into 1.0.0 is listed in the guide's chapter «Известные проблемы и планы на 1.0.0». It targets Conan Exiles Enhanced 3.0.1 (build CL-379176); earlier it targeted game versions 2.1.1 and 2.2.3.
+1. Krinik Mod Pack 0.9.0 (2026-11-02) is the first release of the pack for Conan Exiles Enhanced 3.0.1; an early beta of the pack for game version 2.2.3 was released as 1.0.0. What is not done yet and goes into 1.0.0 is listed in the guide's chapter «Известные проблемы и планы на 1.0.0». It targets Conan Exiles Enhanced 3.0.1 (build CL-379176); earlier it targeted game versions 2.1.1 and 2.2.3.
 2. The manifest `modpack.json` defines what the pack contains and the order in which the mods load. The [KUMM](https://github.com/MikalaiKryvusha/kumm) engine deploys the pack into the game folder.
 3. Every mod in the pack is translated into Russian in the terms of the game's Russian version.
 4. The user guide is [docs/guide/Krinik-Conan-3.0.1-guide.pdf](docs/guide/Krinik-Conan-3.0.1-guide.pdf) (in Russian): features, keys, contents, version history.
@@ -340,7 +340,7 @@ The report holds the game logs, crash records without memory dumps and the Lua m
 ## 6. Links
 
 - Email: [kotkrinik@yandex.ru](mailto:kotkrinik@yandex.ru)
-- Private messages on PlayGround: [users.playground.ru/4580431](https://users.playground.ru/4580431/)
+- Pack page on Nexus Mods: [nexusmods.com/conanexilesenhanced/mods/65](https://www.nexusmods.com/conanexilesenhanced/mods/65)
 - Public repository of the pack on GitHub: [github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack)
 
 ## 7. Rights holders and disclaimer

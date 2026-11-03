@@ -15,7 +15,7 @@
 // Числа раскладки — логические пиксели макета (окно 960×540 при 100 %), Windows умножает их на свой масштаб (HOUSE_RULES правило 17);
 // картинки — из исходников под 4K при 300 %, окно их только уменьшает; res/ делает make-res.py.
 // Ссылки автора и версия сборки не вписаны руками: их кладёт сюда _config/release/build-docs.py из author_links.txt и modpack.json
-// (файл BuildInfo.g.cs), один разбор на ридми и лаунчер; у ссылки в лаунчере — свой короткий текст («PlayGround», 18:30 «просто плейграунд»).
+// (файл BuildInfo.g.cs), один разбор на ридми и лаунчер; у ссылки в лаунчере — свой короткий текст («Nexus Mods»; правило короткого текста — 18:30 «просто плейграунд»).
 // Собирается компилятором C# из Visual Studio 2022 против .NET Framework 4.x — он встроен в Windows 10/11, игроку ставить нечего.
 // [TESTED: 2026-10-31 · live window at 100 % (PrintWindow; window region read back with GetWindowRgn) and the same render code at
 //  288 and 384 dpi (KRINIK_LAUNCHER_SNAPSHOT) compared with mockup 11 frame variant_11_play7.webp — layout, sizes, colours, centring,
@@ -184,7 +184,7 @@ static class KrinikConanLauncher
         report.Controls.Add(Text("1. Нажмите «Собрать отчёт». Игру закрывать не обязательно.", 11f, FontStyle.Regular, Ink));
         report.Controls.Add(Text("2. Дождитесь строки «Готово»: на рабочем столе появится файл Conan-report-<дата>_<время>.zip.", 11f, FontStyle.Regular, Ink));
         report.Controls.Add(Text("3. Приложите этот файл к письму автору сборки и напишите, что происходило в игре перед падением.", 11f, FontStyle.Regular, Ink));
-        report.Controls.Add(Text("Куда писать — ниже: почта и PlayGround автора. С вопросом по сборке пишите туда же, отчёт для этого не нужен.", 10f, FontStyle.Regular, Muted));
+        report.Controls.Add(Text("Куда писать — ниже: почта автора и страница сборки на Nexus Mods. С вопросом по сборке пишите туда же, отчёт для этого не нужен.", 10f, FontStyle.Regular, Muted));
         var collect = BigButton("Собрать отчёт");
         collect.Margin = new Padding(0, 6, 0, 0);
         var reportCmd = Path.Combine(Here, REPORT_CMD);
@@ -1089,7 +1089,8 @@ sealed class MetalWindow : Form
         return Math.Max(top + rowH, LayoutVersions(s));
     }
 
-    // Строка версии под каждым логотипом (константы VER_*). Возвращает низ самой нижней строки. [NOT-TESTED]
+    // Строка версии под каждым логотипом (константы VER_*). Возвращает низ самой нижней строки.
+    // [TESTED: 2026-11-02 · snapshots 288/144/96 dpi, each version centred under its logo · KUMM testcases/reports/2026-11-02_conan-release-0.9.0.md]
     float LayoutVersions(float s)
     {
         float bottom = 0f, px = VER_PX * s;

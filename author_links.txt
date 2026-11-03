@@ -6,5 +6,5 @@
 # После правки пересобрать: двойной щелчок по «build_docs_and_launcher.cmd» в корне сборки.
 
 "Почта"[kotkrinik@yandex.ru](mailto:kotkrinik@yandex.ru)
-"Личные сообщения на PlayGround"|"PlayGround"[users.playground.ru/4580431](https://users.playground.ru/4580431/)
+"Страница сборки на Nexus Mods"|"Nexus Mods"[nexusmods.com/conanexilesenhanced/mods/65](https://www.nexusmods.com/conanexilesenhanced/mods/65)
 "Публичный репозиторий сборки на GitHub"|"GitHub"[github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack)

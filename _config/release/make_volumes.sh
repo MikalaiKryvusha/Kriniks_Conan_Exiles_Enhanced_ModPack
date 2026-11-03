@@ -7,7 +7,12 @@
 # Steps: (1) the game's config back to the pack's etalon (deploy-config.py — the live game holds the agent's run settings); (2) Deploy-ModPack.ps1 -Export
 # with -ConfigFrom the game; (3) 7z a -tzip -mx0 -v700m; (4) every part ≤ 700 MiB; (5) 7z x the first part into <work>/check; (6) the file list and the
 # SHA-256 of every file equal the export's. Exit 0 — volumes ready; 1 — a check failed; 2 — usage / tools. The game must be CLOSED.
-# [NOT-TESTED]
+# Step 1 OVERWRITES the live game's Game.ini / GameUserSettings.ini (backup in _config/backup/<stamp>): after a release run on the owner's working game, copy
+# them back from that backup (release 0.9.0, 2026-11-02 — restored by hand).
+# Other part sizes without a new export: a 7-Zip zip volume is a plain byte cut of one zip, so `cat <name>.zip.0?? | split -b <bytes> -d -a 3
+# --numeric-suffixes=1 - <name>.zip.` gives the same archive in new parts (0.9.0 in three, 2026-11-03: SHA-256 of the stream equal, `7z t` OK).
+# GitHub release assets must be under 2 GiB each — parts for GitHub stay below that.
+# [TESTED: 2026-11-02 · two runs, 19 parts, «OK: 241 files, hashes equal» · KUMM testcases/reports/2026-11-02_conan-release-0.9.0.md]
 set -u
 WORK="${1:-}"; NAME="${2:-Krinik_Mod_Pack_0_9_0}"
 [ -z "$WORK" ] && { echo "usage: make_volumes.sh <work dir> [name]"; exit 2; }
