@@ -15,13 +15,16 @@
   - кнопка и пункты — ванильная кнопка игры WBP_ButtonBase (WidgetBlueprintLibrary:Create + SetLabel); IsHovered видит настоящий курсор;
   - список — VerticalBox, созданный в WidgetTree окна инвентаря (StaticConstructObject, как зеркало фраз в krinik_shout_fade) и положенный в тот же
     Overlay_0, где лежит нижняя панель: влево-вниз, над панелью (отступ снизу — желаемая высота панели), по ширине самого длинного пункта;
-  - клик — RegisterKeyBind(LMB) → игровой поток → IsHovered (события мыши UserWidget из Lua не приходят, EXP-0399); клик мимо списка и кнопки
-    закрывает список;
+  - щелчок — событие обёртки W_KrinikClickWrap вокруг кнопки и вокруг списка (её предпросмотр нажатия ЛКМ, игровой поток; модуль krinik_click.lua)
+    → маршрут по IsHovered; созданная из Lua кнопка FLX к щелчку мертва (баг 85, судья D2, прогон 2026-11-18 20:22). Щелчок мимо списка ловит
+    W_KrinikClickCatcher — прозрачный холст на всё окно инвентаря в корневом Overlay_0 под списком (виден, только пока список открыт), его
+    OnMouseButtonDown зовёт KrinikMouseDown. До 2026-11-18 щелчки ловила привязка клавиши UE4SS к ЛКМ с IsHovered — её Lua шёл в потоке цикла
+    событий UE4SS одновременно с игровым, это класс падения бага 85;
   - боковая вкладка Xevyr (XCS_W_Container — его быстрая панель: те же четыре мода, что в нашем подсписке) сворачивается при рождении
     своего окна (ниже); её модуль XCS_Panel живёт — по нему раздел паузы узнаёт «Снаряжение». Ассет общий для пяти паков Xevyr — правка в Lua,
     раз на рождение окна, без опроса;
   - одно окно за раз: перед открытием пункта закрываются (ActivateModule false) все окна из списка, что открыты.
-  Стоимость: без открытого инвентаря LMB возвращается на одной проверке флага; поиски по сцене — только на событии и на клике в инвентаре.
+  Стоимость: в игре без инвентаря раздел не исполняет ничего; поиски по сцене — только на событии вкладки и на щелчке по нашей кнопке.
   [NOT-TESTED]
 ]]
 
@@ -34,7 +37,7 @@ local VIS_VISIBLE, VIS_COLLAPSED, VIS_SELF_HIT_TEST_INVISIBLE = 0, 1, 4
 
 -- Пункты списка. Имена модов в подсписках — как в списке модов сборки и в руководстве (собственные имена модов); порядок — по алфавиту.
 -- Модуль — строка живой DT_UIModuleTable (обход окон 2026-11-01 16:4x: каждое открылось поверх инвентаря). Не вошли: ModControlPanel («Нет доступных
--- виджетов»), Pickup+_Settings (окно рисуется обрывками), IdeaPoet_EdAp_W_UI_MainMenu (редактор внешности — не настройки), PRMainMenu (ронял игру).
+-- виджетов»; убран из сборки 2026-11-03 — LBPR открывает своё окно), Pickup+_Settings (окно рисуется обрывками), IdeaPoet_EdAp_W_UI_MainMenu (редактор внешности — не настройки), PRMainMenu (ронял игру).
 local TOP = {
     { label = "Моды Krinik'а", module = "KrinikModSettings", hub = "krinik" },   -- hub: какой хаб покажет наше окно (krinik_mod_settings, план 40.3 I6.1)
     { label = "Моды Xevyr'а", sub = "xevyr" },
@@ -53,11 +56,14 @@ local SUB = {
         { label = "Emberlight", module = "EmberlightMasterConfig" },
         { label = "Enhanced Armory and Arsenal", module = "EAA_Armorsettings" },
         { label = "Hosav's Custom UI", module = "HosavUIsettings" },
+        -- LBPR 1.0.5 has its own settings window (its module row `LBPRWidgetID`) and never plugs into ModControlPanel — the panel left the build
+        -- (KUMM mods/ModControlPanel.md, 2026-11-03; `[AI]` by mandate — `[OWNER]` 22:39 «аналогичный вопрос про автономность работы»). [NOT-TESTED]
+        { label = "Less Building Placement Restrictions", module = "LBPRWidgetID" },
         { label = "Night Terrors", module = "NightTerrorsSettings" },
         { label = "Player Ignores Follower Collision", module = "PIFC_Settings" },
     },
 }
-local SLOTS = 6                        -- самый длинный показ: подсписок из пяти + «Назад»
+local SLOTS = 7                        -- самый длинный показ: подсписок «Прочее» из шести + «Назад» (LBPR, 2026-11-03)
 
 -- все модули окон списка — для «одно окно за раз» и для Esc раздела паузы
 local MODULES = {}
@@ -66,11 +72,34 @@ for _, key in ipairs({ "xevyr", "other" }) do for _, e in ipairs(SUB[key]) do MO
 
 local function log(fmt, ...) print(("[%s] " .. fmt .. "\n"):format(MOD, ...)) end
 local function valid(o) return o ~= nil and o:IsValid() end
+local click = require("krinik_click")
 
 local btn = nil          -- кнопка в панели
-local menu = nil         -- { vb, buttons = {}, bar } — список текущего окна инвентаря
-local shown = false      -- кнопка видна (вкладка «Снаряжение» открыта); LMB без него возвращается сразу
+local menu = nil         -- { vb, buttons = {}, bar, catcher } — список текущего окна инвентаря
+local shown = false      -- кнопка видна (вкладка «Снаряжение» открыта)
 local open_list = nil    -- nil — список закрыт; иначе таблица пунктов, что сейчас в нём
+local bwrap = nil        -- обёртка кнопки в панели
+local bwrap_tok = nil    -- метка её обработчика (krinik_click C.on): обработчик снимается по метке, старую обёртку ни о чём не спрашивают
+
+-- Окно инвентаря, в котором живут наши виджеты (судья 2026-11-20, круг 5, находка 4; круг 6, находка 1). Кнопка, её обёртка, список и ловушка
+-- принадлежат окну CraftingGUI_C, а игра уничтожает это окно при уходе на другую вкладку и при выходе из мира и рождает новое при возврате. Lua держит
+-- виджеты сырыми указателями: по старому адресу может жить другой объект, и valid() его не отличит (тот же класс, что C.off по старому виджету, баг 85).
+-- Поэтому каждая точка входа сначала ищет окно по ПОЛНОМУ ИМЕНИ среди живых (FindAllOf, правило контроллера хаба): окна нет — виджеты забываются, к ним
+-- никто не обращается, обработчики снимаются по меткам C.on. Поиск идёт только на событиях интерфейса (вкладка, закрытие, щелчок по нашей кнопке). [NOT-TESTED]
+local built_in = nil     -- полное имя окна CraftingGUI_C, где стоят наши виджеты
+local function window_alive(name)
+    for _, w in ipairs(FindAllOf("CraftingGUI_C") or {}) do
+        if w:IsValid() and w:GetFullName() == name then return true end
+    end
+    return false
+end
+local function forget_old_window()
+    if built_in == nil or window_alive(built_in) then return end
+    click.off(bwrap_tok)
+    if menu then click.off(menu.catcher_tok); click.off(menu.wrap_tok) end
+    log("окно инвентаря %s закрыто игрой: виджеты в нём забыты без обращения к ним", built_in)
+    btn, bwrap, bwrap_tok, menu, open_list, built_in = nil, nil, nil, nil, nil, nil
+end
 
 local function visible_hub()
     for _, w in ipairs(FindAllOf("CraftingGUI_C") or {}) do
@@ -112,12 +141,34 @@ end
 local function close_list()
     open_list = nil
     if menu and valid(menu.vb) then menu.vb:SetVisibility(VIS_COLLAPSED) end
+    if menu and valid(menu.catcher) then menu.catcher:SetVisibility(VIS_COLLAPSED) end
+end
+
+local on_click   -- ниже: щелчок по кнопке или по списку (маршрут по наведению)
+
+-- Обёртка W_KrinikClickWrap вокруг созданного виджета: её предпросмотр нажатия ЛКМ — событие игрового потока (krinik_click.lua), нажатие идёт
+-- дальше к детям. Сама обёртка мышь не ловит (SelfHitTestInvisible), её корень-Overlay — тоже.
+local function wrapped(w)
+    local wr = click.wrap()
+    if not valid(wr) then return nil end
+    local root = click.content(wr)
+    if not valid(root) then log("у обёртки нет корня"); return nil end
+    root:AddChildToOverlay(w)
+    wr:SetVisibility(VIS_SELF_HIT_TEST_INVISIBLE)
+    return wr, click.on(wr, function() if shown then on_click() end end)   -- the wrap and its handler's token (krinik_click C.off)
 end
 
 local function build_menu(cg)
     local bar = cg.ButtonBar
     if menu and valid(menu.vb) and valid(menu.bar) and menu.bar:GetFullName() == bar:GetFullName() then return menu end
+    -- the old window's widgets leave the handler table by their tokens — the old widgets themselves are never asked (judge 2026-11-20, bug 85 round 3, 1)
+    if menu then click.off(menu.catcher_tok); click.off(menu.wrap_tok) end
     local overlay = bar:GetParent()
+    -- Ловушка щелчка мимо списка — ПЕРВОЙ, под списком: Overlay рисует и ловит мышь по порядку детей, поздний — сверху. Overlay_0 — корень окна
+    -- инвентаря (2282 × 1272 на 4K, пульт 2026-11-18 19:4x): ловушка на заполнении покрывает всё окно и панель с нашей кнопкой — щелчок по кнопке при
+    -- открытом списке закрывает его, как раньше.
+    -- Сначала обёртка списка, потом ловушка: при сбое обёртки ловушка уже стояла в окне, и каждая следующая попытка добавляла ещё одну (судья
+    -- 2026-11-18, круг 2, находка 6). Обёртка в окно встаёт ПОСЛЕ ловушки, порядок детей прежний.
     local vb = StaticConstructObject(StaticFindObject("/Script/UMG.VerticalBox"), bar:GetOuter(), FName("VB_KrinikModsMenu"))
     -- Список не уже своей кнопки (кадр 4K 17:00: четыре пункта были уже «Настройки модов» — шов): SizeBox с наименьшей шириной кнопки;
     -- сам SizeBox мышь не ловит, пустой (список свёрнут) места не занимает.
@@ -125,7 +176,18 @@ local function build_menu(cg)
     pcall(function() btn:ForceLayoutPrepass(); local w = btn:GetDesiredSize().X; if w and w > 1 then box:SetMinDesiredWidth(w) end end)
     box:SetVisibility(VIS_SELF_HIT_TEST_INVISIBLE)
     box:SetContent(vb)
-    local slot = overlay:AddChildToOverlay(box)
+    local wrap, wrap_tok = wrapped(box)
+    if not valid(wrap) then log("обёртка списка не создана — список не построен"); return nil end
+    local catcher, catcher_tok = click.catcher(), nil
+    if valid(catcher) then
+        local cs = overlay:AddChildToOverlay(catcher)
+        pcall(function() cs:SetHorizontalAlignment(0); cs:SetVerticalAlignment(0) end)   -- Fill / Fill
+        catcher:SetVisibility(VIS_COLLAPSED)
+        catcher_tok = click.on(catcher, function() log("щелчок мимо списка — список закрыт"); close_list() end)
+    else
+        log("ловушка щелчка не создана — щелчок мимо списка его не закроет")
+    end
+    local slot = overlay:AddChildToOverlay(wrap)
     local h = BAR_HEIGHT_FALLBACK
     pcall(function() bar:ForceLayoutPrepass(); local y = bar:GetDesiredSize().Y; if y and y > 1 then h = y end end)
     slot:SetHorizontalAlignment(1)     -- Left
@@ -138,7 +200,7 @@ local function build_menu(cg)
         buttons[i] = b
     end
     vb:SetVisibility(VIS_COLLAPSED)
-    menu = { vb = vb, buttons = buttons, bar = bar }
+    menu = { vb = vb, buttons = buttons, bar = bar, catcher = catcher, wrap = wrap, catcher_tok = catcher_tok, wrap_tok = wrap_tok }
     log("список построен в окне инвентаря (%s), над панелью %.1f", cg:GetFName():ToString(), h)
     return menu
 end
@@ -147,10 +209,12 @@ local function show_list(items)
     local cg = visible_hub()
     if not cg then return end
     local m = build_menu(cg)
+    if not m then return end
     for i, b in ipairs(m.buttons) do
         local e = items[i]
         if e then set_label(b, e.label); b:SetVisibility(VIS_VISIBLE) else b:SetVisibility(VIS_COLLAPSED) end
     end
+    if valid(m.catcher) then m.catcher:SetVisibility(VIS_VISIBLE) end
     m.vb:SetVisibility(VIS_SELF_HIT_TEST_INVISIBLE)
     open_list = items
 end
@@ -181,18 +245,39 @@ local function choose(e)
     log("пункт «%s» — открыто окно %s (закрыто других окон: %d)", e.label, e.module, closed)
 end
 
+-- Маршрут щелчка — по наведению, как при привязке клавиши (IsHovered видит настоящий курсор на созданных кнопках); запускает его событие обёртки.
+on_click = function()
+    forget_old_window()
+    if not valid(btn) or not btn:IsVisible() then return end
+    if open_list and menu then
+        for i, b in ipairs(menu.buttons) do
+            if open_list[i] and valid(b) and b:IsHovered() then choose(open_list[i]); return end
+        end
+    end
+    if btn:IsHovered() then
+        if open_list then close_list() else show_list(TOP) end
+    end
+end
+
 -- ---------- кнопка ----------
 local function place()
     local cg = visible_hub()
     if not cg then return end
+    forget_old_window()
     local left = cg.ButtonBar.ButtonContainerLeft
-    if valid(btn) then
-        local par = btn:GetParent()
-        if valid(par) and par:GetFullName() == left:GetFullName() then btn:SetVisibility(VIS_SELF_HIT_TEST_INVISIBLE); return end   -- та же панель: только показать
+    if valid(btn) and valid(bwrap) then
+        local par = bwrap:GetParent()
+        -- та же панель: только показать. Видимость — у обёртки, не у кнопки: свёрнутая кнопка в обёртке оставляла в панели отступ слота BAR_GAP на
+        -- других вкладках (судья 2026-11-18, круг 2, находка 6)
+        if valid(par) and par:GetFullName() == left:GetFullName() then bwrap:SetVisibility(VIS_SELF_HIT_TEST_INVISIBLE); return end
     end
     if not valid(FindFirstOf("WBP_ButtonBase_C")) then log("класс WBP_ButtonBase_C не найден"); return end
+    click.off(bwrap_tok)
     btn = new_button(LABEL)
-    local slot = left:AddChild(btn)
+    bwrap, bwrap_tok = wrapped(btn)
+    if not valid(bwrap) then log("обёртка кнопки «%s» не создана", LABEL); return end
+    built_in = cg:GetFullName()
+    local slot = left:AddChild(bwrap)
     pcall(function()
         slot:SetVerticalAlignment(2)
         slot:SetPadding({ Left = BAR_GAP, Top = 0.0, Right = 0.0, Bottom = 0.0 })
@@ -241,50 +326,15 @@ log("рождение окна Xevyr: слежка %s", xev_ok and "встала
 _G.__krinik_mods_button = function(show)
     local ok, e = pcall(function()
         shown = show and true or false
+        forget_old_window()
         if show then
             place()
         else
             close_list()
-            if valid(btn) then btn:SetVisibility(VIS_COLLAPSED) end
+            if valid(bwrap) then bwrap:SetVisibility(VIS_COLLAPSED) end
         end
     end)
     if not ok then log("ошибка: %s", tostring(e)) end
 end
 
--- Esc раздела паузы: закрыть верхнее окно списка (у части окон модов нет своей кнопки с Escape). true — закрыто.
-_G.__krinik_mods_menu_esc = function()
-    local gmc = FindFirstOf("GUIModuleController")
-    if not valid(gmc) then return false end
-    for _, m in ipairs(MODULES) do
-        if gmc:IsModuleActive(FName(m)) then
-            gmc:ActivateModule(FName(m), false, false)
-            log("Esc: окно %s закрыто, инвентарь остаётся", m)
-            return true
-        end
-    end
-    return false
-end
-
-local function on_click()
-    if not valid(btn) or not btn:IsVisible() then return end
-    if open_list and menu then
-        for i, b in ipairs(menu.buttons) do
-            if open_list[i] and valid(b) and b:IsHovered() then choose(open_list[i]); return end
-        end
-    end
-    if btn:IsHovered() then
-        if open_list then close_list() else show_list(TOP) end
-        return
-    end
-    if open_list then close_list() end   -- клик мимо списка и кнопки
-end
-
-RegisterKeyBind(Key.LEFT_MOUSE_BUTTON, function()
-    if not shown then return end
-    ExecuteInGameThread(function()
-        local ok, e = pcall(on_click)
-        if not ok then log("клик: ошибка %s", tostring(e)) end
-    end)
-end)
-
-log("загружен: кнопка «%s» и её список (%d окон)", LABEL, #MODULES)
+log("загружен: кнопка «%s» и её список (%d окон), щелчки — событием обёртки KrinikPreview", LABEL, #MODULES)

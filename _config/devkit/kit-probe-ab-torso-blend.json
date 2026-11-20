@@ -1,0 +1,367 @@
+{
+ "ok": true,
+ "blends": [
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "from": [
+      "Использовать кэшированную позу 'PostEquipPose' · Pose"
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "from": [
+      "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+     ],
+     "default": ""
+    }
+   ],
+   "layers": [
+    {
+     "layer": 0,
+     "filters": [
+      {
+       "bone": "b_spine_1",
+       "depth": 3
+      }
+     ]
+    }
+   ],
+   "mesh_rot": "True",
+   "mesh_scale": "False",
+   "weights": "[1.000000]",
+   "lod": "-1",
+   "consumers": [
+    {
+     "node": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "pin": "BlendPose_0",
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "from": [
+        "Послойное смешивание на каждую кость · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "from": [
+        "Смешать позы по логическим операторам · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "from": [
+        "Get isCrouching · isCrouching"
+       ],
+       "default": ""
+      }
+     ],
+     "blend_time": "[0.100000, 0.100000]"
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "from": [
+      "Использовать кэшированную позу 'PostEquipPose' · Pose"
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "from": [
+      "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+     ],
+     "default": ""
+    }
+   ],
+   "layers": [
+    {
+     "layer": 0,
+     "filters": [
+      {
+       "bone": "b_pelvis",
+       "depth": 1
+      },
+      {
+       "bone": "b_L_clavicle",
+       "depth": -1
+      }
+     ]
+    }
+   ],
+   "mesh_rot": "True",
+   "mesh_scale": "False",
+   "weights": "[0.330000]",
+   "lod": "-1",
+   "consumers": [
+    {
+     "node": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "pin": "BasePose",
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "from": [
+        "Послойное смешивание на каждую кость · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "from": [
+        "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+       ],
+       "default": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "from": [
+      "Послойное смешивание на каждую кость · Pose"
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "from": [
+      "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+     ],
+     "default": ""
+    }
+   ],
+   "layers": [
+    {
+     "layer": 0,
+     "filters": [
+      {
+       "bone": "b_spine_3",
+       "depth": 1
+      }
+     ]
+    }
+   ],
+   "mesh_rot": "True",
+   "mesh_scale": "False",
+   "weights": "[0.440000]",
+   "lod": "-1",
+   "consumers": [
+    {
+     "node": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "pin": "BasePose",
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "from": [
+        "Послойное смешивание на каждую кость · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "from": [
+        "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+       ],
+       "default": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "from": [
+      "Послойное смешивание на каждую кость · Pose"
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "from": [
+      "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+     ],
+     "default": ""
+    }
+   ],
+   "layers": [
+    {
+     "layer": 0,
+     "filters": [
+      {
+       "bone": "b_R_clavicle",
+       "depth": 2
+      },
+      {
+       "bone": "b_L_clavicle",
+       "depth": 2
+      }
+     ]
+    }
+   ],
+   "mesh_rot": "True",
+   "mesh_scale": "False",
+   "weights": "[1.000000]",
+   "lod": "-1",
+   "consumers": [
+    {
+     "node": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "pin": "BasePose",
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "from": [
+        "Послойное смешивание на каждую кость · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "from": [
+        "Использовать кэшированную позу 'PostEquipPose' · Pose"
+       ],
+       "default": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "from": [
+      "Использовать кэшированную позу 'PostEquipPose' · Pose"
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "from": [
+      "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+     ],
+     "default": ""
+    }
+   ],
+   "layers": [
+    {
+     "layer": 0,
+     "filters": [
+      {
+       "bone": "b_pelvis",
+       "depth": 6
+      }
+     ]
+    }
+   ],
+   "mesh_rot": "True",
+   "mesh_scale": "False",
+   "weights": "[0.700000]",
+   "lod": "-1",
+   "consumers": [
+    {
+     "node": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "pin": "BasePose",
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "from": [
+        "Послойное смешивание на каждую кость · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "from": [
+        "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+       ],
+       "default": ""
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "from": [
+      "Послойное смешивание на каждую кость · Pose"
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "from": [
+      "Использовать кэшированную позу 'TorsoAttackPose' · Pose"
+     ],
+     "default": ""
+    }
+   ],
+   "layers": [
+    {
+     "layer": 0,
+     "filters": [
+      {
+       "bone": "b_R_clavicle",
+       "depth": 1
+      },
+      {
+       "bone": "b_L_clavicle",
+       "depth": 1
+      }
+     ]
+    }
+   ],
+   "mesh_rot": "True",
+   "mesh_scale": "False",
+   "weights": "[1.000000]",
+   "lod": "-1",
+   "consumers": [
+    {
+     "node": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "pin": "BasePose",
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "from": [
+        "Послойное смешивание на каждую кость · Pose"
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "from": [
+        "Использовать кэшированную позу 'PostEquipPose' · Pose"
+       ],
+       "default": ""
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

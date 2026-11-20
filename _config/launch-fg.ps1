@@ -12,14 +12,15 @@
 # moves to another window himself, that is his business (the 2026-10-25 lesson of launch-bg.ps1).
 #
 #   .\launch-fg.ps1
-#   .\launch-fg.ps1 -GameDir 'D:\Games\Conan Exiles 3.0.1' -HoldSec 60
+#   .\launch-fg.ps1 -GameDir '<game folder>' -HoldSec 60   (default: the first enabled target of targets.json)
 # [NOT-TESTED]
 
 param(
-  [string]$GameDir = 'D:\Games\Conan Exiles 3.0.1',
+  [string]$GameDir = '',
   [int]$HoldSec = 60,
   [int]$SettleSec = 3,
-  [string]$GameArgs = ''
+  [string]$GameArgs = '',
+  [switch]$OwnerAsked   # the agent's mark 'the owner asked for the game': the KUMM hook owner-presence checks his words (tools/hooks/.owner-ask.txt); the script itself ignores it
 )
 
 $ErrorActionPreference = 'Stop'
@@ -34,6 +35,7 @@ public class FgFG {
 }
 '@
 
+if (-not $GameDir) { . (Join-Path $PSScriptRoot 'game-target.ps1') }   # the first enabled target of targets.json (2026-11-13, KUMM plan 53)
 $exe = Join-Path $GameDir 'ConanSandbox\Binaries\Win64\ConanSandbox-Win64-Shipping.exe'
 # ONE GAME AT A TIME. Paid 2026-10-30 15:29: a launch interrupted by the owner had left a game running
 # (the check looked for "ConanSandbox.exe" - the process is ConanSandbox-Win64-Shipping), a second
@@ -41,12 +43,14 @@ $exe = Join-Path $GameDir 'ConanSandbox\Binaries\Win64\ConanSandbox-Win64-Shippi
 $running = @(Get-Process -Name 'ConanSandbox-Win64-Shipping' -ErrorAction SilentlyContinue)
 if ($running.Count) { Write-Output ("game already running, PID {0} - close it first (by PID)" -f (($running | ForEach-Object { $_.Id }) -join ', ')); exit 2 }
 # The moment of the agent's launch: close-crash-reporter.ps1 closes only reporters started after it (HOUSE_RULES par. 1, 2026-10-26).
-Set-Content -Path (Join-Path $env:TEMP 'kumm-conan-agent-launch.txt') -Value (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') -Encoding ASCII
+$scratch = Join-Path (Split-Path $PSScriptRoot -Parent) '_scratch'; if (-not (Test-Path $scratch)) { $null = New-Item -ItemType Directory $scratch }
+# the stamp lives in the pack's ignored _scratch, not %TEMP% (D:\Temp is the owner's folder, KUMM HOUSE_RULES rule 15, 2026-11-13)
+Set-Content -Path (Join-Path $scratch 'kumm-conan-agent-launch.txt') -Value (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') -Encoding ASCII
 if ($GameArgs) { $proc = Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) -ArgumentList $GameArgs -PassThru }
 else { $proc = Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) -PassThru }
 Write-Output ("[{0}] launched (foreground path), PID {1}" -f (Get-Date -Format HH:mm:ss), $proc.Id)
 
-$VK_MENU = 0x12; $KEYUP = 2; $SW_RESTORE = 9
+$VK_F24 = 0x87; $KEYUP = 2; $SW_RESTORE = 9
 $pulls = 0; $heldMs = 0
 $sw = [Diagnostics.Stopwatch]::StartNew()
 while ($sw.Elapsed.TotalSeconds -lt $HoldSec -and $heldMs -lt ($SettleSec * 1000)) {
@@ -54,10 +58,11 @@ while ($sw.Elapsed.TotalSeconds -lt $HoldSec -and $heldMs -lt ($SettleSec * 1000
   if ($game) {
     if ([FgFG]::GetForegroundWindow() -eq $game.MainWindowHandle) { $heldMs += 500 }
     else {
-      # The ALT tap is the documented way to let a background process call SetForegroundWindow at all.
+      # A key tap is the documented way to let a background process call SetForegroundWindow at all. F24, not Alt: Alt lands in the
+      # owner's window first (VS Code opens its menu) and Alt is the game's dodge - the game-front.ps1 rule of 2026-11-07 (judges 2026-11-13).
       $heldMs = 0
-      [FgFG]::keybd_event($VK_MENU, 0, 0, [UIntPtr]::Zero)
-      [FgFG]::keybd_event($VK_MENU, 0, $KEYUP, [UIntPtr]::Zero)
+      [FgFG]::keybd_event($VK_F24, 0, 0, [UIntPtr]::Zero)
+      [FgFG]::keybd_event($VK_F24, 0, $KEYUP, [UIntPtr]::Zero)
       $null = [FgFG]::ShowWindow($game.MainWindowHandle, $SW_RESTORE)
       $null = [FgFG]::SetForegroundWindow($game.MainWindowHandle)
       $pulls++

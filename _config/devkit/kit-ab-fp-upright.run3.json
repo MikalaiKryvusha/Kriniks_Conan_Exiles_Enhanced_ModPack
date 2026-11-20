@@ -1,0 +1,48 @@
+{
+ "ok": false,
+ "compile_vanilla": true,
+ "marks_vanilla": [
+  {
+   "graph": "KnockDownStart",
+   "node": "Плеер пространства смешивания 'BS1D_combat_knockdown'",
+   "msg": "Transition  из KnockDownStart в Ragdolling  is using an automatic transition rule but the source  Плеер пространства смешивания 'BS1D_combat_knockdown'  is set as looping.  Please clear the 'Loop' flag"
+  },
+  {
+   "graph": "JumpUp",
+   "node": "Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'",
+   "msg": "Transition  из JumpUp в Default  is using an automatic transition rule but the source  Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'  is set as looping.  Please clear the 'Loop Animation' flag"
+  }
+ ],
+ "selector_props": {
+  "blend_time": "[0.100000, 0.100000]",
+  "blend_type": "<AlphaBlendOption.LINEAR: 0>",
+  "transition_type": "<BlendListTransitionType.STANDARD_BLEND: 0>",
+  "child_update_mode": "ERR AnimNode_BlendListByBool: Failed to find property 'child_update_mode' for attribute 'child_update_mode' on 'AnimNode_BlendListByBool'"
+ },
+ "multi_threaded_update": "True",
+ "compile_threadsafe_variant": true,
+ "marks_threadsafe_variant": [
+  {
+   "graph": "KnockDownStart",
+   "node": "Плеер пространства смешивания 'BS1D_combat_knockdown'",
+   "msg": "Transition  из KnockDownStart в Ragdolling  is using an automatic transition rule but the source  Плеер пространства смешивания 'BS1D_combat_knockdown'  is set as looping.  Please clear the 'Loop' flag"
+  },
+  {
+   "graph": "JumpUp",
+   "node": "Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'",
+   "msg": "Transition  из JumpUp в Default  is using an automatic transition rule but the source  Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'  is set as looping.  Please clear the 'Loop Animation' flag"
+  }
+ ],
+ "error": "Traceback (most recent call last):\n  File \"D:/work/ai_sandbox/ConanExiles/_config/devkit/kit-ab-fp-upright.py\", line 189, in <module>\n    raise RuntimeError(\"control variant: compile %s — by design NOT saved\" % res[\"compile_threadsafe_variant\"])\nRuntimeError: control variant: compile True — by design NOT saved\n",
+ "steps": [
+  "vanilla compile: True, marked nodes 2",
+  "AnimGraph nodes: 492",
+  "selector bActiveValue fed by ['Get isPassive.isPassive']",
+  "call node NOT Boolean via /Script/Engine.KismetMathLibrary:Not_PreBool, pins ['A', 'ReturnValue']",
+  "call node OR Boolean via /Script/Engine.KismetMathLibrary:BooleanOR, pins ['A', 'B', 'ReturnValue']",
+  "link isAttacking -> NOT: True",
+  "link isPassive -> OR.A: True",
+  "link NOT -> OR.B: True",
+  "link OR -> selector.bActiveValue: True"
+ ]
+}

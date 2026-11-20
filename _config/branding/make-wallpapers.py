@@ -19,8 +19,9 @@ import os
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-GAME_LOGO = os.path.join(HERE, "conan-exiles-enhanced-logo.webp")
-PACK_LOGO = os.path.join(HERE, "krinik-modpack-logo.webp")
+LOGOS = os.path.join(HERE, "..", "..", "art", "logos")   # the pack root's art folder since 2026-11-18 (interview #040 Q2 A)
+GAME_LOGO = os.path.join(LOGOS, "conan-exiles-enhanced-logo.webp")
+PACK_LOGO = os.path.join(LOGOS, "krinik-modpack-logo.webp")
 FONT = os.path.join(HERE, "fonts", "Cardo-Bold.ttf")
 LAYOUTS = ("top-centre", "sky-left", "top-centre-digits-bottom", "stack-left")
 LOGO_H = 0.26          # logo height, share of the picture height — the owner: A2 «хорошо» 22:53, then «А3 лучше» + «чуть чуть меньше оба логотипа»
@@ -32,6 +33,12 @@ UNDER = 0.012          # [AI] gap between a logo and the digits under it, share 
 INK = (233, 213, 193)  # the prompt row ink of the game UI (measured 2026-10-30 21:22) — the logos' warm beige
 HALO_ALPHA = 210       # [AI] the dark halo behind the digits — legible on clouds and on sand
 HALO_BLUR = 0.08       # [AI] halo blur radius, share of the font size
+# A light drop shadow under the digits (`--shadow`): on the light V2 «Реализм» the halo alone left «3.1.1» unreadable over the pale towers
+# (the owner 2026-11-18 15:54 «не читается, нужна лёгкая тень»). Off by default, so the v1 wallpapers rebuild as they were.
+SHADOW_OFFSET = 0.035  # [AI] shadow offset down and right, share of the font size
+SHADOW_BLUR = 0.03     # [AI] shadow blur radius, share of the font size
+SHADOW_ALPHA = 190     # [AI] shadow opacity (0–255)
+shadow_on = False      # set by --shadow in main()
 
 
 def trimmed(path):
@@ -44,9 +51,14 @@ def fit_h(im, h):
 
 
 def digits(canvas, font, text, cx, cy):
-    """Draw text centred on (cx, cy) by its ink box, over a soft dark halo."""
+    """Draw text centred on (cx, cy) by its ink box, over a soft dark halo (and a light drop shadow with --shadow)."""
     l, t, r, b = font.getbbox(text)
     x, y = round(cx - (l + r) / 2), round(cy - (t + b) / 2)
+    if shadow_on:
+        off = max(1, round(font.size * SHADOW_OFFSET))
+        sh = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
+        ImageDraw.Draw(sh).text((x + off, y + off), text, font=font, fill=(0, 0, 0, SHADOW_ALPHA))
+        canvas.alpha_composite(sh.filter(ImageFilter.GaussianBlur(max(1, font.size * SHADOW_BLUR))))
     halo = Image.new("RGBA", canvas.size, (0, 0, 0, 0))
     stroke = max(2, font.size // 14)
     ImageDraw.Draw(halo).text((x, y), text, font=font, fill=(0, 0, 0, HALO_ALPHA), stroke_width=stroke, stroke_fill=(0, 0, 0, HALO_ALPHA))
@@ -85,11 +97,18 @@ def main():
     ap.add_argument("layout", choices=LAYOUTS)
     ap.add_argument("wallpaper")
     ap.add_argument("out")
-    ap.add_argument("--game", default="3.0.1")
-    ap.add_argument("--pack", default="0.9.0")
+    # Defaults — the game and the build of the pack's manifest (launcher.gameVersion, packVersion): the constants 3.0.1 / 0.9.0 outlived 0.9.1 (KUMM plans/55 R1).
+    import json
+    with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "modpack.json"), encoding="utf-8") as f:
+        manifest = json.load(f)
+    ap.add_argument("--game", default=manifest["launcher"]["gameVersion"])
+    ap.add_argument("--pack", default=manifest["packVersion"])
     ap.add_argument("--logo-h", type=float, default=LOGO_H, help="logo height, share of the picture height")
     ap.add_argument("--digit-h", type=float, default=DIGIT_H, help="digit font size, share of the picture height")
+    ap.add_argument("--shadow", action="store_true", help="a light drop shadow under the digits (light backgrounds)")
     a = ap.parse_args()
+    global shadow_on
+    shadow_on = a.shadow
     bg = Image.open(a.wallpaper).convert("RGBA")
     compose(bg, a.layout, a.game, a.pack, a.logo_h, a.digit_h)
     out = bg.convert("RGB")

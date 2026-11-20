@@ -1,0 +1,7 @@
+# EAA ships the game's /Game/Systems/Building/Placeables/BP_PL_Crafting_Station (the parent of every crafting station) as a copy from an older devkit:
+# every export = 3.0.1 except the event graph's «crafting ended» sound switch, which lacks the recipe categories 13-15 (a Switch on Enum re-saved against an
+# enum without them). The copy undid 3.1.0's crafting-queue fix (a station pauses its queue when the output inventory is full). The game's own cooked chunk
+# wins, byte for byte, re-taken at every build (KUMM plan 53, 2026-11-13; ConanExiles/_config/stale-copy-check.py --old reads the three copies).
+# The number is the sha1 of EAA's chunk this was judged on (the 2026-10-29 upload): a new author copy stops the build until it is read again.
+# After a build: stale-copy-check.py on the built pak must say «imports: … equal» and IDENTICAL (pack-raw keeps the old store entry of the package).
+game-chunk:30d0413c97bd1daf8da1564e9a942c38202ce781

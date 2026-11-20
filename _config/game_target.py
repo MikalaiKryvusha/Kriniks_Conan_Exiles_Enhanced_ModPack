@@ -5,23 +5,34 @@
 # освобождения чужого UE4SS.dll. Первый такой случай (deploy-localization.py, шаг 19 плана 33) починили одним файлом, и класс
 # остался. Теперь путь игры живёт в одном месте — targets.json, как у движка KUMM.
 #
-#   from game_target import GAME_DIR, sandbox   # sandbox('Saved', 'Logs', 'ConanSandbox.log')
+# 2026-11-13 (переезд на 3.1.0, KUMM план 53): тот же класс у папки-представления контейнеров игры — patch-mod-asset.py смотрел в
+# зашитое `_paksview-3.0.1`, build-level-mod.py — в `_paksview-2.2.3`. Имя цели (`name` в targets.json) даёт и имя представления.
+#
+#   from game_target import GAME_DIR, GAME_NAME, PAKS_VIEW, sandbox   # sandbox('Saved', 'Logs', 'ConanSandbox.log')
 # [NOT-TESTED]
 import json
 import os
 
 PACK = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+VIEWS_ROOT = r"D:\work\ai_sandbox"   # представления — жёсткие ссылки на контейнеры игры: тот же том D:, вне папки игры
 
 
-def game_dir():
+def target():
     data = json.load(open(os.path.join(PACK, 'targets.json'), encoding='utf-8'))
     for t in data.get('targets', []):
         if t.get('enabled', True):
-            return t['path']
+            return t
     raise SystemExit('В targets.json нет включённых целей')
 
 
-GAME_DIR = game_dir()
+def game_dir():
+    return target()['path']
+
+
+_T = target()
+GAME_DIR = _T['path']
+GAME_NAME = _T['name']
+PAKS_VIEW = os.path.join(VIEWS_ROOT, '_paksview-' + GAME_NAME)
 
 
 def sandbox(*parts):

@@ -1,0 +1,37 @@
+{
+ "ok": true,
+ "gains": {
+  "normal": [
+   1.5623,
+   0.9872,
+   0.4539
+  ],
+  "hovered": [
+   1.6082,
+   1.2698,
+   0.4701
+  ],
+  "pressed": [
+   0.2146,
+   0.1253,
+   0.032
+  ]
+ },
+ "before": {
+  "normal": "<Struct 'LinearColor' (0x000001F5058A3EE8) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+  "hovered": "<Struct 'LinearColor' (0x000001F5058A3FB8) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+  "pressed": "<Struct 'LinearColor' (0x000001F5058A4088) {r: 0.214600, g: 0.125300, b: 0.032000, a: 1.000000}>"
+ },
+ "after": {
+  "normal": "<Struct 'LinearColor' (0x000001F5058A3EE8) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+  "hovered": "<Struct 'LinearColor' (0x000001F5058A3FB8) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+  "pressed": "<Struct 'LinearColor' (0x000001F5058A4088) {r: 0.214600, g: 0.125300, b: 0.032000, a: 1.000000}>"
+ },
+ "textures": {
+  "normal": "/Game/Mods/KrinikConanUI/T_KrinikPlusGold.T_KrinikPlusGold",
+  "hovered": "/Game/Mods/KrinikConanUI/T_KrinikPlusGoldHover.T_KrinikPlusGoldHover",
+  "pressed": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_button_hover.T_Attributes_perk_button_hover"
+ },
+ "compiled": true,
+ "saved": true
+}

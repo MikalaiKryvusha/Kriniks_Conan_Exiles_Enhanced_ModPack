@@ -1,0 +1,1323 @@
+{
+ "ok": true,
+ "foliage_types": {
+  "FT_AfricanOilPalm01D_Desert": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01D_Desert.GFL_AfricanOilPalm01D_Desert",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F86A6747BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F86A6749F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01D_Desert.GFL_AfricanOilPalm01D_Desert",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_AfricanOilPalm02D_Desert": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02D_Desert.GFL_AfricanOilPalm02D_Desert",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76B7339BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76B733BF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02D_Desert.GFL_AfricanOilPalm02D_Desert",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_AfricanOilPalm03D_Desert": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03D_Desert.GFL_AfricanOilPalm03D_Desert",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76B7301BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76B7303F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03D_Desert.GFL_AfricanOilPalm03D_Desert",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_palmtree_siptah_01": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01.GFL_AfricanOilPalm01",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76CBD2BBC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76CBD2DF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01.GFL_AfricanOilPalm01",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm01.MI_AfricanOilPalm01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_palmtree_siptah_02": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02.GFL_AfricanOilPalm02",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76CBDF6BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76CBDF8F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02.GFL_AfricanOilPalm02",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm01.MI_AfricanOilPalm01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_palmtree_siptah_03": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03.GFL_AfricanOilPalm03",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76CBD32BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76CBD34F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03.GFL_AfricanOilPalm03",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm01.MI_AfricanOilPalm01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_small_palm_siptah_01": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm04.GFL_AfricanOilPalm04",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "5000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F783117FBC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7831181F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm04.GFL_AfricanOilPalm04",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm02.MI_AfricanOilPalm02",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_small_palm_siptah_02": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm05.GFL_AfricanOilPalm05",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "5000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F783118DBC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F783118FF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm05.GFL_AfricanOilPalm05",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm02.MI_AfricanOilPalm02",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "FT_small_palm_siptah_03": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_BananaPlant01.GFL_BananaPlant01",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "5000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F7831147BC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7831149F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_BananaPlant01.GFL_BananaPlant01",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_BananaPlant01.MI_BananaPlant01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Jungle_tall_palm_01_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Marketplace/Jungle_Pack_01/Trees/tall_palm_01.tall_palm_01",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76A8963BC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76A8965F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Marketplace/Jungle_Pack_01/Trees/tall_palm_01.tall_palm_01",
+    "nanite": {
+     "enabled": "False",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.AUTO: 0>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Marketplace/Jungle_Pack_01/Materials/tall_palm_01_Inst.tall_palm_01_Inst",
+      "parents": [
+       "/Game/Marketplace/Jungle_Pack_01/Materials/tall_palm_01.tall_palm_01"
+      ],
+      "wpo_connected": true,
+      "wpo_node": "MaterialExpressionMultiply",
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Marketplace/Jungle_Pack_01/Materials/palm_leave_P_01_Inst.palm_leave_P_01_Inst",
+      "parents": [
+       "/Game/Marketplace/Jungle_Pack_01/Materials/palm_leave_P_01.palm_leave_P_01"
+      ],
+      "wpo_connected": true,
+      "wpo_node": "MaterialExpressionMultiply",
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_MASKED: 1>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_TWO_SIDED_FOLIAGE: 6>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Engine/EngineMaterials/WorldGridMaterial.WorldGridMaterial",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "False",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Marketplace/Jungle_Pack_01/Materials/billboard_01.billboard_01",
+      "parents": [],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_MASKED: 1>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_DEFAULT_LIT: 1>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Marketplace/Jungle_Pack_01/Materials/palm_leave_P_01.palm_leave_P_01",
+      "parents": [],
+      "wpo_connected": true,
+      "wpo_node": "MaterialExpressionMultiply",
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_MASKED: 1>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_TWO_SIDED_FOLIAGE: 6>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Marketplace/Jungle_Pack_01/Materials/palm_leave_P_01.palm_leave_P_01",
+      "parents": [],
+      "wpo_connected": true,
+      "wpo_node": "MaterialExpressionMultiply",
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_MASKED: 1>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_TWO_SIDED_FOLIAGE: 6>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Marketplace/Jungle_Pack_01/Materials/palm_leave_P_01.palm_leave_P_01",
+      "parents": [],
+      "wpo_connected": true,
+      "wpo_node": "MaterialExpressionMultiply",
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_MASKED: 1>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_TWO_SIDED_FOLIAGE: 6>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_Palm_Desktop_01_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01.GFL_AfricanOilPalm01",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76A894EBC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76A8950F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01.GFL_AfricanOilPalm01",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm01.MI_AfricanOilPalm01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_Palm_Desktop_02_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02.GFL_AfricanOilPalm02",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76A8947BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76A8949F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02.GFL_AfricanOilPalm02",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm01.MI_AfricanOilPalm01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_Palm_Desktop_03_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03.GFL_AfricanOilPalm03",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76A8978BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76A897AF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03.GFL_AfricanOilPalm03",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm01.MI_AfricanOilPalm01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01.MI_AfricanOilPalmD01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_palm_small_01_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm04.GFL_AfricanOilPalm04",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F76A896ABC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F76A896CF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm04.GFL_AfricanOilPalm04",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm02.MI_AfricanOilPalm02",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_palm_small_02_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm05.GFL_AfricanOilPalm05",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F7C78C2BBC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7C78C2DF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm05.GFL_AfricanOilPalm05",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalm02.MI_AfricanOilPalm02",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_palm_small_03_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_BananaPlant01.GFL_BananaPlant01",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F7C8AB24BC) {min: 30000, max: 40000}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7C8AB26F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_BananaPlant01.GFL_BananaPlant01",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_BananaPlant01.MI_BananaPlant01",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_Palm_Swamp_Desktop_01_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01D.GFL_AfricanOilPalm01D",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F7D4E4EFBC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7D4E4F1F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm01D.GFL_AfricanOilPalm01D",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01_Damp.MI_AfricanOilPalmD01_Damp",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01_Damp.MI_AfricanOilPalmD01_Damp",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_Palm_Swamp_Desktop_02_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02D.GFL_AfricanOilPalm02D",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F7E3751DBC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7E3751FF9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm02D.GFL_AfricanOilPalm02D",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01_Damp.MI_AfricanOilPalmD01_Damp",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01_Damp.MI_AfricanOilPalmD01_Damp",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  },
+  "Tree_Palm_Swamp_Desktop_03_FoliageType": {
+   "class": "FoliageType_InstancedStaticMesh",
+   "props": {
+    "mesh": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03D.GFL_AfricanOilPalm03D",
+    "cast_shadow": "True",
+    "cast_dynamic_shadow": "True",
+    "cast_static_shadow": "True",
+    "cast_contact_shadow": "True",
+    "shadow_cache_invalidation_behavior": "<ShadowCacheInvalidationBehavior.AUTO: 0>",
+    "world_position_offset_disable_distance": "10000",
+    "evaluate_world_position_offset": "True",
+    "cull_distance": "<Struct 'Int32Interval' (0x000001F7E40794BC) {min: 0, max: 0}>",
+    "mobility": "<ComponentMobility.STATIC: 0>",
+    "use_as_occluder": "False",
+    "affect_distance_field_lighting": "True",
+    "lighting_channels": "<Struct 'LightingChannels' (0x000001F7E40796F9) {channel0: True, channel1: False, channel2: False}>",
+    "cast_shadow_as_two_sided": "False",
+    "cast_far_shadow": "n/a",
+    "visible_in_ray_tracing": "True"
+   },
+   "mesh": {
+    "path": "/Game/Environment/Foliage/Meshes/FLX/GFL_AfricanOilPalm03D.GFL_AfricanOilPalm03D",
+    "nanite": {
+     "enabled": "True",
+     "preserve_area": "n/a",
+     "explicit_tangents": "False",
+     "position_precision": "-2147483648",
+     "fallback_target": "<NaniteFallbackTarget.PERCENT_TRIANGLES: 1>",
+     "keep_percent_triangles": "1.0",
+     "displacement_uv_channel": "0"
+    },
+    "materials": [
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01_Damp.MI_AfricanOilPalmD01_Damp",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     },
+     {
+      "path": "/Game/Environment/Foliage/Materials/FLX/MI_AfricanOilPalmD01_Damp.MI_AfricanOilPalmD01_Damp",
+      "parents": [
+       "/FLX_Materials/Materials/Environment/Core/M_Foliage.M_Foliage"
+      ],
+      "wpo_connected": false,
+      "wpo_node": null,
+      "base_props": {
+       "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+       "two_sided": "True",
+       "shading_model": "<MaterialShadingModel.MSM_FROM_MATERIAL_EXPRESSION: 15>",
+       "always_evaluate_world_position_offset": "False",
+       "max_world_position_offset_displacement": "0.0",
+       "dithered_lod_transition": "False"
+      }
+     }
+    ]
+   }
+  }
+ },
+ "errors": []
+}

@@ -17,8 +17,9 @@ import numpy as np
 from PIL import Image
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-OURS = os.path.join(HERE, "krinik-modpack-logo.webp")
-GAME = os.path.join(HERE, "conan-exiles-enhanced-logo-3x.webp")
+LOGOS = os.path.join(HERE, "..", "..", "art", "logos")   # the pack root's art folder since 2026-11-18 (interview #040 Q2 A)
+OURS = os.path.join(LOGOS, "krinik-modpack-logo.webp")
+GAME = os.path.join(LOGOS, "conan-exiles-enhanced-logo-3x.webp")
 OPAQUE = 200          # a pixel counts as the letters' body above this alpha (the soft shadow stays out of the statistics)
 TEX_WIDTH = 1024      # the kit texture width of 2026-10-30 (1024×388)
 DARK_L = 70           # luminance under which a pixel is the letters' dark fill (≈ 76 % of the body in both logos, measured 2026-11-01)

@@ -1,0 +1,104 @@
+{
+ "ok": true,
+ "widgets": {
+  "LevelAttributeButton": {
+   "normal": {
+    "resource_object": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_button_default.T_Attributes_perk_button_default",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E3EE8) {specified_color: {r: 0.495466, g: 0.495466, b: 0.495466, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E3F00) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E3F08) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "hovered": {
+    "resource_object": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_button_hover.T_Attributes_perk_button_hover",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E3FB8) {specified_color: {r: 0.724268, g: 0.724268, b: 0.724268, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E3FD0) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E3FD8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "pressed": {
+    "resource_object": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_button_hover.T_Attributes_perk_button_hover",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E4088) {specified_color: {r: 0.384266, g: 0.384266, b: 0.384266, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E40A0) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E40A8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "disabled": {
+    "resource_object": "None",
+    "draw_as": "<SlateBrushDrawType.NO_DRAW_TYPE: 0>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E4158) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E4170) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E4178) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "color_and_opacity": "<Struct 'LinearColor' (0x000002751A7E4310) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+   "background_color": "<Struct 'LinearColor' (0x000002751A7E4320) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+   "content": null
+  },
+  "LevelCorruptionButton": {
+   "normal": {
+    "resource_object": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_corrupt_button_default.T_Attributes_perk_corrupt_button_default",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E48E8) {specified_color: {r: 0.495466, g: 0.495466, b: 0.495466, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E4900) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E4908) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "hovered": {
+    "resource_object": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_corrupt_button_hover.T_Attributes_perk_corrupt_button_hover",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E49B8) {specified_color: {r: 0.724268, g: 0.724268, b: 0.724268, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E49D0) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E49D8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "pressed": {
+    "resource_object": "/Game/UI/Textures/GUIs/Inventory/T_Attributes_perk_corrupt_button_hover.T_Attributes_perk_corrupt_button_hover",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E4A88) {specified_color: {r: 0.384266, g: 0.384266, b: 0.384266, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E4AA0) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E4AA8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "disabled": {
+    "resource_object": "None",
+    "draw_as": "<SlateBrushDrawType.NO_DRAW_TYPE: 0>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E4B58) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E4B70) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E4B78) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "color_and_opacity": "<Struct 'LinearColor' (0x000002751A7E4D10) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+   "background_color": "<Struct 'LinearColor' (0x000002751A7E4D20) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+   "content": null
+  },
+  "Btn_KrinikPagePrev": {
+   "normal": {
+    "resource_object": "/Game/Mods/KrinikConanUI/T_KrinikPageArrowL.T_KrinikPageArrowL",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E34E8) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E3500) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E3508) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "hovered": {
+    "resource_object": "/Game/Mods/KrinikConanUI/T_KrinikPageArrowLHover.T_KrinikPageArrowLHover",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E35B8) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E35D0) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E35D8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "pressed": {
+    "resource_object": "/Game/Mods/KrinikConanUI/T_KrinikPageArrowLHover.T_KrinikPageArrowLHover",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E3688) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E36A0) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E36A8) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "disabled": {
+    "resource_object": "/Game/Mods/KrinikConanUI/T_KrinikPageArrowLDim.T_KrinikPageArrowLDim",
+    "draw_as": "<SlateBrushDrawType.IMAGE: 3>",
+    "tint_color": "<Struct 'SlateColor' (0x000002751A7E3758) {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}>",
+    "image_size": "<Struct 'DeprecateSlateVector2D' (0x000002751A7E3770) {}>",
+    "margin": "<Struct 'Margin' (0x000002751A7E3778) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>"
+   },
+   "color_and_opacity": "<Struct 'LinearColor' (0x000002751A7E3910) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+   "background_color": "<Struct 'LinearColor' (0x000002751A7E3920) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+   "content": "TextBlock Txt_Btn_KrinikPagePrev"
+  }
+ }
+}

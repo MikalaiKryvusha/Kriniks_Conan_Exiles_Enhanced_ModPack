@@ -1,0 +1,5084 @@
+{
+ "ok": true,
+ "tree": [
+  {
+   "name": "LevelAttributeButton",
+   "class": "Button",
+   "parent": "Progress",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "LevelCorruptionButton",
+   "class": "Button",
+   "parent": "CorruptionButtonOverlay",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "Progress",
+   "class": "Overlay",
+   "parent": "HB_Info",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "CorruptionButtonOverlay",
+   "class": "Overlay",
+   "parent": "Danger_IDK_Why_This_Is_Here",
+   "slot": "SizeBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "AttributeCanvas",
+   "class": "CanvasPanel",
+   "parent": "Overlay_3",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "Overlay_3",
+   "class": "Overlay",
+   "parent": "Progress",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "CorruptionLabel",
+   "class": "GeneralText",
+   "parent": "CorruptionButtonOverlay",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "T_Current",
+   "class": "GeneralText",
+   "parent": "HorizontalBox_1",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "HorizontalBox_1",
+   "class": "HorizontalBox",
+   "parent": "Overlay_7",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "T_Label",
+   "class": "GeneralText",
+   "parent": "SizeBox_1",
+   "slot": "SizeBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "SizeBox_1",
+   "class": "SizeBox",
+   "parent": "VerticalBox_0",
+   "slot": "VerticalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "T_Mods",
+   "class": "GeneralText",
+   "parent": "HorizontalBox_1",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "HB_Info",
+   "class": "HorizontalBox",
+   "parent": "overlay",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "overlay",
+   "class": "Overlay",
+   "parent": "",
+   "slot": null,
+   "depth": 0
+  },
+  {
+   "name": "HorizontalBox_0",
+   "class": "HorizontalBox",
+   "parent": "VerticalBox_0",
+   "slot": "VerticalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "VerticalBox_0",
+   "class": "VerticalBox",
+   "parent": "HB_Info",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "Overlay_7",
+   "class": "Overlay",
+   "parent": "SizeBox_4",
+   "slot": "SizeBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "I_Icon",
+   "class": "Image",
+   "parent": "HB_Info",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "SizeBox_Corruption_Button",
+   "class": "SizeBox",
+   "parent": "HB_Info",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "SizeBox_4",
+   "class": "SizeBox",
+   "parent": "HorizontalBox_0",
+   "slot": "HorizontalBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "CorruptionButtonBG",
+   "class": "Image",
+   "parent": "CorruptionButtonOverlay",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "I_CurrentBackground",
+   "class": "Image",
+   "parent": "Overlay_7",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "img_background",
+   "class": "Image",
+   "parent": "overlay",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "Danger_IDK_Why_This_Is_Here",
+   "class": "SizeBox",
+   "parent": "SizeBox_Corruption_Button",
+   "slot": "SizeBoxSlot",
+   "depth": 0
+  },
+  {
+   "name": "IPB_ProgressBar",
+   "class": "W_AttributeProgressBar_C",
+   "parent": "Overlay_3",
+   "slot": "OverlaySlot",
+   "depth": 0
+  },
+  {
+   "name": "IPB_CorruptionBar",
+   "class": "W_AttributeCorruptionBar_C",
+   "parent": "Overlay_3",
+   "slot": "OverlaySlot",
+   "depth": 0
+  }
+ ],
+ "vars": [
+  "Description",
+  "SignalAttributeSelected",
+  "Label",
+  "SignalPreventPerkPurchase",
+  "SignalBranchedPerkPicked",
+  "SignalAttributeViewUpdated",
+  "SignalTryIncreaseAttribute",
+  "StatHolder",
+  "SignalTryCorruptAttribute",
+  "SignalRequestAttributeViewUpdate",
+  "IsFocusedAnimVisible"
+ ],
+ "graphs": [
+  "KeyNavOnInvokeBP",
+  "GetFullAttributeValue",
+  "UpdateView",
+  "GetRowName",
+  "UpdateFocusAnimation",
+  "GetInvestedPoints",
+  "SetIcon",
+  "SetIconVisibility",
+  "IsAnAttribute",
+  "EventGraph",
+  "SignalAttributeSelected",
+  "SignalPreventPerkPurchase",
+  "SignalBranchedPerkPicked",
+  "SignalAttributeViewUpdated",
+  "SignalTryIncreaseAttribute",
+  "SignalTryCorruptAttribute",
+  "SignalRequestAttributeViewUpdate"
+ ],
+ "nodes": {
+  "UpdateView#how": [
+   "get_graph_editor_by_name ok"
+  ],
+  "UpdateView": [
+   {
+    "title": "UpdateView",
+    "class": "K2Node_FunctionEntry",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CC10) {x: -688, y: -16}>",
+    "pins": [
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetText (Text)"
+      ]
+     },
+     {
+      "name": "AttributeValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "Value@To Text (Integer)"
+      ]
+     },
+     {
+      "name": "FullValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "CorruptionValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get T_Current",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CBE8) {x: -384, y: 53}>",
+    "pins": [
+     {
+      "name": "T_Current",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "General Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetText (Text)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "float / float",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B568) {x: 462, y: 129}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@To Float (Integer)"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@To Float (Integer)"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "Value@Clamp (Float)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "To Float (Integer)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B448) {x: 294, y: 127}>",
+    "pins": [
+     {
+      "name": "InInt",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "A@float / float"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetText (Text)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B2D0) {x: -212, y: -31}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateView"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "T_Current@Get T_Current"
+      ]
+     },
+     {
+      "name": "InText",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "ReturnValue@To Text (Integer)"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@InterpolateToPercent"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "To Text (Integer)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB60) {x: -451, y: 117}>",
+    "pins": [
+     {
+      "name": "Value",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "AttributeValue@UpdateView"
+      ]
+     },
+     {
+      "name": "bAlwaysSign",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": []
+     },
+     {
+      "name": "bUseGrouping",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "true",
+      "links": []
+     },
+     {
+      "name": "MinimumIntegralDigits",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "1",
+      "links": []
+     },
+     {
+      "name": "MaximumIntegralDigits",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "324",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "InText@SetText (Text)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Clamp (Float)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB30) {x: 630, y: 117}>",
+    "pins": [
+     {
+      "name": "Value",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@float / float"
+      ]
+     },
+     {
+      "name": "Min",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": []
+     },
+     {
+      "name": "Max",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "1.0",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "targetPercent@InterpolateToPercent"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get MaxAttributePointAllotment",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CAD0) {x: 38, y: 191}>",
+    "pins": [
+     {
+      "name": "MaxAttributePointAllotment",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "InInt@To Float (Integer)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "To Float (Integer)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA98) {x: 294, y: 191}>",
+    "pins": [
+     {
+      "name": "InInt",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "MaxAttributePointAllotment@Get MaxAttributePointAllotment"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "B@float / float"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ответвление",
+    "class": "K2Node_IfThenElse",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA50) {x: 1241, y: -16}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@InterpolateToPercent"
+      ]
+     },
+     {
+      "name": "Condition",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "AttributeCorrupts@Get AttributeCorrupts"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetVisibility"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Get AttributeCorrupts",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA30) {x: 1241, y: 104}>",
+    "pins": [
+     {
+      "name": "AttributeCorrupts",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Condition@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get MaxAttributePointAllotment",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA10) {x: 1908, y: 179}>",
+    "pins": [
+     {
+      "name": "MaxAttributePointAllotment",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "InInt@To Float (Integer)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "float / float",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C9E8) {x: 2332, y: 117}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@To Float (Integer)"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@To Float (Integer)"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "targetPercent@InterpolateToPercent"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "To Float (Integer)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C9A0) {x: 2164, y: 115}>",
+    "pins": [
+     {
+      "name": "InInt",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "A@float / float"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "To Float (Integer)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C968) {x: 2164, y: 179}>",
+    "pins": [
+     {
+      "name": "InInt",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "MaxAttributePointAllotment@Get MaxAttributePointAllotment"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Плавающее значение (с двойной точностью)",
+      "value": "0.0",
+      "links": [
+       "B@float / float"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C930) {x: 1518, y: -31}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Ответвление"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Widget Ссылка на объект",
+      "value": "",
+      "links": [
+       "IPB_CorruptionBar@Get IPB_CorruptionBar"
+      ]
+     },
+     {
+      "name": "InVisibility",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Visible",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@InterpolateToPercent"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get IPB_ProgressBar",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C910) {x: 701, y: 53}>",
+    "pins": [
+     {
+      "name": "IPB_ProgressBar",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "W Attribute Progress Bar Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@InterpolateToPercent"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "InterpolateToPercent",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C8E0) {x: 888, y: -31}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetText (Text)"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Interpolated Progress Bar Ссылка на объект",
+      "value": "",
+      "links": [
+       "IPB_ProgressBar@Get IPB_ProgressBar"
+      ]
+     },
+     {
+      "name": "targetPercent",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@Clamp (Float)"
+      ]
+     },
+     {
+      "name": "time",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "0.2",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "InterpolateToPercent",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C890) {x: 2500, y: -31}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetVisibility"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Interpolated Progress Bar Ссылка на объект",
+      "value": "",
+      "links": [
+       "IPB_CorruptionBar@Get IPB_CorruptionBar"
+      ]
+     },
+     {
+      "name": "targetPercent",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "0.0",
+      "links": [
+       "ReturnValue@float / float"
+      ]
+     },
+     {
+      "name": "time",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "0.2",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Get IPB_CorruptionBar",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C860) {x: 2303, y: 53}>",
+    "pins": [
+     {
+      "name": "IPB_CorruptionBar",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "W Attribute Corruption Bar Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@InterpolateToPercent"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get IPB_CorruptionBar",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C840) {x: 1518, y: 160}>",
+    "pins": [
+     {
+      "name": "IPB_CorruptionBar",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "W Attribute Corruption Bar Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C820) {x: -532, y: 275}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "FullValue@UpdateView"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C800) {x: 233, y: 275}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "InInt@To Float (Integer)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C7D0) {x: -532, y: 301}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "CorruptionValue@UpdateView"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C7B0) {x: 2103, y: 301}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "InInt@To Float (Integer)"
+      ]
+     }
+    ]
+   }
+  ],
+  "EventGraph#how": [
+   "get_graph_editor_by_name ok"
+  ],
+  "EventGraph": [
+   {
+    "title": "Событие Construct",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C790) {x: 96, y: 448}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Get Data Table Row AttributeDisplayData"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get Data Table Row AttributeDisplayData",
+    "class": "K2Node_GetDataTableRow",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C760) {x: 576, y: 448}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие Construct"
+      ]
+     },
+     {
+      "name": "DataTable",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Data Table Ссылка на объект",
+      "value": "/Game/UI/Inventory/Attributes/AttributeDisplayData.AttributeDisplayData",
+      "links": []
+     },
+     {
+      "name": "RowName",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Имя",
+      "value": "",
+      "links": [
+       "ReturnValue@GetRowName"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Set Label"
+      ]
+     },
+     {
+      "name": "RowNotFound",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "ReturnValue_Label_2_1CDEE47F4A852075F6D12E8AABD3888A",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Label@Set Label"
+      ]
+     },
+     {
+      "name": "ReturnValue_Icon_5_42BEAE2D4E4875866DA1FC9108B41585",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Texture 2D Ссылка на объект",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "ReturnValue_Description_8_80DFDDB34A892076B6B115AF527A63E6",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get T_Label",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C730) {x: 1568, y: 400}>",
+    "pins": [
+     {
+      "name": "T_Label",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "General Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetText (Text)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetText (Text)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6F8) {x: 1568, y: 432}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Set Label"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "T_Label@Get T_Label"
+      ]
+     },
+     {
+      "name": "InText",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Output_Get@Set Label"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetBrushFromTexture"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get I_Icon",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6E0) {x: 1776, y: 416}>",
+    "pins": [
+     {
+      "name": "I_Icon",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Image Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetBrushFromTexture"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetBrushFromTexture",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6C0) {x: 1776, y: 448}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetText (Text)"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Image Ссылка на объект",
+      "value": "",
+      "links": [
+       "I_Icon@Get I_Icon"
+      ]
+     },
+     {
+      "name": "Texture",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Texture 2D Ссылка на объект",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "bMatchSize",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Set Description"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Set Description",
+    "class": "K2Node_VariableSet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C698) {x: 2016, y: 480}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetBrushFromTexture"
+      ]
+     },
+     {
+      "name": "Description",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Cast To ConanCharacter"
+      ]
+     },
+     {
+      "name": "Output_Get",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C678) {x: 1312, y: 624}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "ReturnValue_Description_8_80DFDDB34A892076B6B115AF527A63E6@Get Data Table Row AttributeDisplayData"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C658) {x: 1936, y: 640}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Description@Set Description"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C638) {x: 1312, y: 592}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Texture 2D Ссылка на объект",
+      "value": "",
+      "links": [
+       "ReturnValue_Icon_5_42BEAE2D4E4875866DA1FC9108B41585@Get Data Table Row AttributeDisplayData"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Texture 2D Ссылка на объект",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C618) {x: 1696, y: 608}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Texture 2D Ссылка на объект",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Texture 2D Ссылка на объект",
+      "value": "",
+      "links": [
+       "Texture@SetBrushFromTexture"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Событие KeyNavOnSelected",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C5F8) {x: -2416, y: 768}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdateFocusAnimation"
+      ]
+     },
+     {
+      "name": "selected",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "InputPin@Узел переадресации",
+       "InputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "direction",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление EGUINavDirection",
+      "value": "None",
+      "links": [
+       "A@Не равно (перечисление)"
+      ]
+     },
+     {
+      "name": "previousOrNextWidget",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Root Widget Ссылка на объект",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Attribute Selected",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C5D0) {x: -768, y: 768}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Select"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Set Label",
+    "class": "K2Node_VariableSet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C5A8) {x: 1376, y: 464}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Get Data Table Row AttributeDisplayData"
+      ]
+     },
+     {
+      "name": "Label",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "ReturnValue_Label_2_1CDEE47F4A852075F6D12E8AABD3888A@Get Data Table Row AttributeDisplayData"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetText (Text)"
+      ]
+     },
+     {
+      "name": "Output_Get",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "InText@SetText (Text)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetIntStat",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C578) {x: 928, y: 1072}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Получить"
+      ]
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "mode",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EStatModifierMode",
+      "value": "Base",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "AttributeValue@UpdateView"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetOwningPlayerPawn",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1AFF0) {x: 2160, y: 576}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "User Widget Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Pawn Ссылка на объект",
+      "value": "",
+      "links": [
+       "Object@Cast To ConanCharacter"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateModifiers",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C528) {x: 0, y: 1536}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Получить"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get T_Mods",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C440) {x: 2784, y: 1488}>",
+    "pins": [
+     {
+      "name": "T_Mods",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "General Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetText (Text)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetText (Text)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C408) {x: 2784, y: 1536}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Ответвление"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "T_Mods@Get T_Mods"
+      ]
+     },
+     {
+      "name": "InText",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "ReturnValue@Выбрать"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Выбрать",
+    "class": "K2Node_Select",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C3F8) {x: 2272, y: 2006}>",
+    "pins": [
+     {
+      "name": "Option 0",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Result@Форматировать текст"
+      ]
+     },
+     {
+      "name": "Option 1",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Result@Форматировать текст"
+      ]
+     },
+     {
+      "name": "Index",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@integer > integer"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "InText@SetText (Text)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "integer > integer",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C3E0) {x: 1664, y: 1840}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@int - int"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Index@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "int - int",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C370) {x: 1152, y: 1728}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "A@integer > integer",
+       "A@Not Equal (Integer)",
+       "0@Форматировать текст",
+       "0@Форматировать текст"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Форматировать текст",
+    "class": "K2Node_FormatText",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C318) {x: 1680, y: 1936}>",
+    "pins": [
+     {
+      "name": "Format",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "NSLOCTEXT(\"[D0CF348E4279AA4FB387D4ADB362DE65]\", \"03E66575417B095312442EAA525F49B5\", \"({0})\")",
+      "links": []
+     },
+     {
+      "name": "0",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "ReturnValue@int - int"
+      ]
+     },
+     {
+      "name": "Result",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Option 0@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Форматировать текст",
+    "class": "K2Node_FormatText",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C300) {x: 1680, y: 2032}>",
+    "pins": [
+     {
+      "name": "Format",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Текст",
+      "value": "NSLOCTEXT(\"[D0CF348E4279AA4FB387D4ADB362DE65]\", \"458BA6F0454B77518C4FC6B44F13034C\", \"(+{0})\")",
+      "links": []
+     },
+     {
+      "name": "0",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "",
+      "links": [
+       "ReturnValue@int - int"
+      ]
+     },
+     {
+      "name": "Result",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Текст",
+      "value": "",
+      "links": [
+       "Option 1@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetIntStat",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C2E8) {x: 720, y: 1632}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Получить"
+      ]
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "mode",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EStatModifierMode",
+      "value": "Full",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "A@int - int",
+       "attributePoints@UpdatePipIcons"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetIntStat",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C298) {x: 720, y: 1824}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Получить"
+      ]
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "mode",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EStatModifierMode",
+      "value": "Base",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "B@int - int"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ответвление",
+    "class": "K2Node_IfThenElse",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C268) {x: 2032, y: 1552}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdatePipIcons"
+      ]
+     },
+     {
+      "name": "Condition",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Not Equal (Integer)"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetText (Text)"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Not Equal (Integer)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C250) {x: 1664, y: 1744}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@int - int"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Condition@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateModifiers",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C220) {x: 1616, y: 1008}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateView"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdateCorruptButtonVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "OnIntStatChanged",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C210) {x: 3808, y: 640}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": [
+       "Delegate@Assign Signal Int Stat Changed"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Ответвление"
+      ]
+     },
+     {
+      "name": "statHolder",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "A@Равно (перечисление)",
+       "A@Равно (перечисление)"
+      ]
+     },
+     {
+      "name": "newValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "deltaValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Assign Signal Int Stat Changed",
+    "class": "K2Node_AssignDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C1D8) {x: 4208, y: 464}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Bind Event to Signal Undistributed Points Changed"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Get StatHolder"
+      ]
+     },
+     {
+      "name": "Delegate",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Делегировать (по ссылке)",
+      "value": "",
+      "links": [
+       "OutputDelegate@OnIntStatChanged"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Событие OnMouseEnter",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C1B8) {x: -2416, y: 512}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdateFocusAnimation"
+      ]
+     },
+     {
+      "name": "MyGeometry",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Geometry Структура",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "MouseEvent",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Pointer Event Структура (по ссылке)",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Select",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C160) {x: -2416, y: 1360}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Deselect",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C150) {x: -2416, y: 1520}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Select",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C138) {x: -1008, y: 752}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Ответвление"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Attribute Selected"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "IncreaseAttribute",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C138) {x: -1488, y: 2368}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Try Increase Attribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "IncreaseAttribute",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C128) {x: -1168, y: 2688}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@On Clicked (LevelAttributeButton)"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Ответвление",
+    "class": "K2Node_IfThenElse",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C140) {x: -1264, y: 768}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateFocusAnimation"
+      ]
+     },
+     {
+      "name": "Condition",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "true",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Select"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Deselect"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Deselect",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C1B8) {x: -1008, y: 880}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "else@Ответвление"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Событие OnMouseLeave",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C1D8) {x: -2416, y: 1152}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdateFocusAnimation"
+      ]
+     },
+     {
+      "name": "MouseEvent",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Pointer Event Структура (по ссылке)",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "UpdateView",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C1C8) {x: 1360, y: 1008}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Получить"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AttributeValue",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "FullValue",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "CorruptionValue",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdateModifiers"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "OnAvailablePointsChanged",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C1F0) {x: 2848, y: 672}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": [
+       "Delegate@Bind Event to Signal Undistributed Points Changed"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Request Attribute View Update"
+      ]
+     },
+     {
+      "name": "currentPoints",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Равно (перечисление)",
+    "class": "K2Node_EnumEquality",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C218) {x: 4032, y: 768}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "",
+      "links": [
+       "statID@OnIntStatChanged"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "A@OR Boolean"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ответвление",
+    "class": "K2Node_IfThenElse",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C258) {x: 4240, y: 656}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@OnIntStatChanged"
+      ]
+     },
+     {
+      "name": "Condition",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@OR Boolean"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Request Attribute View Update"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "GetRowName",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C278) {x: 288, y: 592}>",
+    "pins": [
+     {
+      "name": "Attribute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Имя",
+      "value": "None",
+      "links": [
+       "RowName@Get Data Table Row AttributeDisplayData"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetIntStat",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C2C8) {x: 928, y: 1232}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Получить"
+      ]
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "mode",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EStatModifierMode",
+      "value": "Full",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "FullValue@UpdateView"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Play Sound 2D",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C2F0) {x: -1552, y: 1376}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetVisibility"
+      ]
+     },
+     {
+      "name": "Sound",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Sound Base Мягкая ссылка на объект",
+      "value": "/Game/Sound/SFX/Gui/gui_rollover_1_Cue.gui_rollover_1_Cue",
+      "links": []
+     },
+     {
+      "name": "VolumeMultiplier",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "1.000000",
+      "links": []
+     },
+     {
+      "name": "PitchMultiplier",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "1.000000",
+      "links": []
+     },
+     {
+      "name": "StartTime",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Плавающее значение (с одиночной точностью)",
+      "value": "0.000000",
+      "links": []
+     },
+     {
+      "name": "ConcurrencySettings",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Sound Concurrency Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Событие PostPipsPlacedOnCanvas",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C2F8) {x: 3504, y: -32}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Request Attribute View Update"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get AttributePointsRequired",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C320) {x: 3584, y: 240}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Perk Pip Ссылка на объект",
+      "value": "",
+      "links": [
+       "PickedPerk@Событие BranchedPerkPicked"
+      ]
+     },
+     {
+      "name": "AttributePointsRequired",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "Key@Find"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get SharedPerkPips",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C350) {x: 3904, y: 240}>",
+    "pins": [
+     {
+      "name": "SharedPerkPips",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Соответствие параметров Целое число значениям Shared Perk List Структура",
+      "value": "",
+      "links": [
+       "TargetMap@Find"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Find",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C368) {x: 3904, y: 272}>",
+    "pins": [
+     {
+      "name": "TargetMap",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Соответствие параметров Целое число значениям Shared Perk List Структура",
+      "value": "",
+      "links": [
+       "SharedPerkPips@Get SharedPerkPips"
+      ]
+     },
+     {
+      "name": "Key",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число (по ссылке)",
+      "value": "",
+      "links": [
+       "AttributePointsRequired@Get AttributePointsRequired"
+      ]
+     },
+     {
+      "name": "Value_SharedPerks",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Массив свойств 'Attribute Perk Pip Ссылка на объект'",
+      "value": "",
+      "links": [
+       "Array@For Each Loop"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Condition@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ответвление",
+    "class": "K2Node_IfThenElse",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C3E0) {x: 4064, y: 144}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие BranchedPerkPicked"
+      ]
+     },
+     {
+      "name": "Condition",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Find"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "Exec@For Each Loop"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "For Each Loop",
+    "class": "K2Node_MacroInstance",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C3F0) {x: 4320, y: 144}>",
+    "pins": [
+     {
+      "name": "Exec",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Ответвление"
+      ]
+     },
+     {
+      "name": "Array",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Массив свойств 'Attribute Perk Pip Ссылка на объект'",
+      "value": "",
+      "links": [
+       "Value_SharedPerks@Find"
+      ]
+     },
+     {
+      "name": "LoopBody",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Ответвление"
+      ]
+     },
+     {
+      "name": "Array Element",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Attribute Perk Pip Ссылка на объект",
+      "value": "",
+      "links": [
+       "A@Not Equal (Object)",
+       "self@Get PipHighlight"
+      ]
+     },
+     {
+      "name": "Array Index",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "Completed",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Not Equal (Object)",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C440) {x: 4624, y: 256}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Ссылка на объект",
+      "value": "",
+      "links": [
+       "Array Element@For Each Loop"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Ссылка на объект",
+      "value": "",
+      "links": [
+       "PickedPerk@Событие BranchedPerkPicked"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Condition@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ответвление",
+    "class": "K2Node_IfThenElse",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1AFF0) {x: 4768, y: 144}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "LoopBody@For Each Loop"
+      ]
+     },
+     {
+      "name": "Condition",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Not Equal (Object)"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetVisibility"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "CorruptAttribute",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C550) {x: -1776, y: 3184}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Try Corrupt Attribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "CorruptAttribute",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C560) {x: -1200, y: 2896}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@On Clicked (LevelCorruptionButton)"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "OR Boolean",
+    "class": "K2Node_CommutativeAssociativeBinaryOperator",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C570) {x: 4176, y: 816}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Равно (перечисление)"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Равно (перечисление)"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Condition@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Равно (перечисление)",
+    "class": "K2Node_EnumEquality",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C5A0) {x: 4032, y: 880}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "",
+      "links": [
+       "statID@OnIntStatChanged"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "CorruptedAttribute@Get CorruptedAttribute"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "B@OR Boolean"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get CorruptedAttribute",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C5F8) {x: 3824, y: 928}>",
+    "pins": [
+     {
+      "name": "CorruptedAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "B@Равно (перечисление)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdatePipIcons",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C600) {x: 1520, y: 1536}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Получить"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Entry Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "attributePoints",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "corruptedAttributePoints",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@SelectInt"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "DoesAttributeCorrupt",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C620) {x: 992, y: 1984}>",
+    "pins": [
+     {
+      "name": "attribute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "bPickA@SelectInt"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SelectInt",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C640) {x: 1232, y: 2016}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "ReturnValue@GetIntStat"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Целое число",
+      "value": "0",
+      "links": []
+     },
+     {
+      "name": "bPickA",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@DoesAttributeCorrupt"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "corruptedAttributePoints@UpdatePipIcons"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetIntStat",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C698) {x: 880, y: 2048}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Получить"
+      ]
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "ReturnValue@GetCorruptedAttribute"
+      ]
+     },
+     {
+      "name": "mode",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EStatModifierMode",
+      "value": "Full",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "A@SelectInt"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetCorruptedAttribute",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6A8) {x: 624, y: 1984}>",
+    "pins": [
+     {
+      "name": "attribute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "statID@GetIntStat"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateCorruptButtonVisibility",
+    "class": "K2Node_CustomEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6C8) {x: -1776, y: 3456}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetVisibility"
+      ]
+     },
+     {
+      "name": "CanCorruptAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "Index@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateCorruptButtonVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6D8) {x: 1872, y: 1008}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateModifiers"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "CanCorruptAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Attribute View Updated"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Branched Perk Picked",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C6E8) {x: 5664, y: 144}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetVisibility"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Attribute View Updated",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C708) {x: 2160, y: 1024}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateCorruptButtonVisibility"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Get PipHighlight",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C718) {x: 5376, y: 96}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Perk Pip Ссылка на объект",
+      "value": "",
+      "links": [
+       "Array Element@For Each Loop"
+      ]
+     },
+     {
+      "name": "PipHighlight",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Image Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C738) {x: 5344, y: 128}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Ответвление"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Widget Ссылка на объект",
+      "value": "",
+      "links": [
+       "PipHighlight@Get PipHighlight"
+      ]
+     },
+     {
+      "name": "InVisibility",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Hidden",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Branched Perk Picked"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Событие BranchedPerkPicked",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C758) {x: 3488, y: 144}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Ответвление"
+      ]
+     },
+     {
+      "name": "PickedPerk",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Attribute Perk Pip Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Get AttributePointsRequired",
+       "B@Not Equal (Object)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get MyAttribute",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C780) {x: 480, y: 1728}>",
+    "pins": [
+     {
+      "name": "MyAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "statID@GetIntStat",
+       "statID@GetIntStat",
+       "attribute@GetCorruptedAttribute",
+       "attribute@DoesAttributeCorrupt"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get MyAttribute",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C7A0) {x: 384, y: 1296}>",
+    "pins": [
+     {
+      "name": "MyAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "statID@GetIntStat",
+       "statID@GetIntStat",
+       "attribute@GetCorruptedAttribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get MyAttribute",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C7C0) {x: 160, y: 615}>",
+    "pins": [
+     {
+      "name": "MyAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "Attribute@GetRowName"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get MyAttribute",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C7F0) {x: 3840, y: 848}>",
+    "pins": [
+     {
+      "name": "MyAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "B@Равно (перечисление)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ссылка на себя",
+    "class": "K2Node_Self",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C818) {x: -1216, y: 2352}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": [
+       "AttributeEntry@Call Signal Try Increase Attribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Try Increase Attribute",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C828) {x: -1264, y: 2384}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@IncreaseAttribute"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AttributeEntry",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Entry Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Ссылка на себя"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "GetStatHolder",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C838) {x: 2752, y: 448}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Conan Character Ссылка на объект",
+      "value": "",
+      "links": [
+       "AsConan Character@Cast To ConanCharacter"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Set StatHolder"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetComponentByClass",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C858) {x: 2768, y: 304}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Actor Ссылка на объект",
+      "value": "",
+      "links": [
+       "AsConan Character@Cast To ConanCharacter"
+      ]
+     },
+     {
+      "name": "ComponentClass",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Actor Component Ссылка на класс",
+      "value": "/Script/ConanSandbox.ProgressionSystem",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Progression System Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Bind Event to Signal Undistributed Points Changed"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Bind Event to Signal Undistributed Points Changed",
+    "class": "K2Node_AddDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C878) {x: 3216, y: 464}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Set StatHolder"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Progression System Ссылка на объект",
+      "value": "",
+      "links": [
+       "ReturnValue@GetComponentByClass"
+      ]
+     },
+     {
+      "name": "Delegate",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Делегировать (по ссылке)",
+      "value": "",
+      "links": [
+       "OutputDelegate@OnAvailablePointsChanged"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Assign Signal Int Stat Changed"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Cast To ConanCharacter",
+    "class": "K2Node_DynamicCast",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C8A0) {x: 2496, y: 464}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Set Description"
+      ]
+     },
+     {
+      "name": "Object",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Ссылка на объект",
+      "value": "",
+      "links": [
+       "ReturnValue@GetOwningPlayerPawn"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Set StatHolder"
+      ]
+     },
+     {
+      "name": "CastFailed",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AsConan Character",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Conan Character Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@GetStatHolder",
+       "self@GetComponentByClass"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Set StatHolder",
+    "class": "K2Node_VariableSet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C8B8) {x: 2992, y: 480}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Cast To ConanCharacter"
+      ]
+     },
+     {
+      "name": "StatHolder",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "ReturnValue@GetStatHolder"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Bind Event to Signal Undistributed Points Changed"
+      ]
+     },
+     {
+      "name": "Output_Get",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Get StatHolder",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C8D8) {x: 3872, y: 576}>",
+    "pins": [
+     {
+      "name": "StatHolder",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Assign Signal Int Stat Changed"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Получить",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C8F8) {x: 384, y: 1024}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@SetVisibility"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdateView"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "StatHolder",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@GetIntStat",
+       "self@GetIntStat",
+       "self@GetIntStat"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Получить",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C918) {x: 368, y: 1552}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateModifiers"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@UpdatePipIcons"
+      ]
+     },
+     {
+      "name": "else",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "StatHolder",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@GetIntStat",
+       "self@GetIntStat",
+       "self@GetIntStat"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Try Corrupt Attribute",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C940) {x: -1536, y: 3200}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@CorruptAttribute"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AttributeEntry",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Entry Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Ссылка на себя"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Ссылка на себя",
+    "class": "K2Node_Self",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C968) {x: -1536, y: 3328}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": [
+       "AttributeEntry@Call Signal Try Corrupt Attribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C958) {x: 272, y: 912}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "CanCorruptAttribute@Событие UpdateAttributeView"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C988) {x: 1792, y: 912}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "CanCorruptAttribute@UpdateCorruptButtonVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Ссылка на себя",
+    "class": "K2Node_Self",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C9B0) {x: 3920, y: -64}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": [
+       "AttributeEntry@Call Signal Request Attribute View Update"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Request Attribute View Update",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C9E8) {x: 4480, y: 656}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Ответвление"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AttributeEntry",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Entry Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Ссылка на себя"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Ссылка на себя",
+    "class": "K2Node_Self",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1C9F0) {x: 4576, y: 624}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": [
+       "AttributeEntry@Call Signal Request Attribute View Update"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Request Attribute View Update",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA08) {x: 3136, y: 688}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@OnAvailablePointsChanged"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AttributeEntry",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Entry Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Ссылка на себя"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Ссылка на себя",
+    "class": "K2Node_Self",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA28) {x: 3232, y: 656}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": [
+       "AttributeEntry@Call Signal Request Attribute View Update"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Событие UpdateAttributeView",
+    "class": "K2Node_Event",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA48) {x: -432, y: 1024}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@SetVisibility"
+      ]
+     },
+     {
+      "name": "CanGiveAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Index@Выбрать"
+      ]
+     },
+     {
+      "name": "CanCorruptAttribute",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetCorruptedAttribute",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA60) {x: 688, y: 1424}>",
+    "pins": [
+     {
+      "name": "attribute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "MyAttribute@Get MyAttribute"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "statID@GetIntStat"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "GetIntStat",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CA78) {x: 928, y: 1392}>",
+    "pins": [
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Stat Holder Ссылка на объект",
+      "value": "",
+      "links": [
+       "StatHolder@Получить"
+      ]
+     },
+     {
+      "name": "statID",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ECharIntStatID",
+      "value": "HealthMax",
+      "links": [
+       "ReturnValue@GetCorruptedAttribute"
+      ]
+     },
+     {
+      "name": "mode",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EStatModifierMode",
+      "value": "Full",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Целое число",
+      "value": "0",
+      "links": [
+       "CorruptionValue@UpdateView"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get CorruptionLabel",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CAD0) {x: -2272, y: 1488}>",
+    "pins": [
+     {
+      "name": "CorruptionLabel",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "General Text Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetVisibility",
+       "self@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CAB0) {x: -2096, y: 1360}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Select"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Widget Ссылка на объект",
+      "value": "",
+      "links": [
+       "CorruptionLabel@Get CorruptionLabel"
+      ]
+     },
+     {
+      "name": "InVisibility",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "HitTestInvisible",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Play Sound 2D"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CAC0) {x: -2096, y: 1520}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Deselect"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Widget Ссылка на объект",
+      "value": "",
+      "links": [
+       "CorruptionLabel@Get CorruptionLabel"
+      ]
+     },
+     {
+      "name": "InVisibility",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Hidden",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Request Attribute View Update",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CAD8) {x: 3856, y: -32}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие PostPipsPlacedOnCanvas"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "AttributeEntry",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Attribute Entry Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@Ссылка на себя"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "On Clicked (LevelAttributeButton)",
+    "class": "K2Node_ComponentBoundEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CAF8) {x: -1520, y: 2704}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@IncreaseAttribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "On Clicked (LevelCorruptionButton)",
+    "class": "K2Node_ComponentBoundEvent",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB30) {x: -1536, y: 2912}>",
+    "pins": [
+     {
+      "name": "OutputDelegate",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Делегировать",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@CorruptAttribute"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get CorruptionButtonOverlay",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB10) {x: -1040, y: 3600}>",
+    "pins": [
+     {
+      "name": "CorruptionButtonOverlay",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Overlay Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB20) {x: -1040, y: 3456}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateCorruptButtonVisibility"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Widget Ссылка на объект",
+      "value": "",
+      "links": [
+       "CorruptionButtonOverlay@Get CorruptionButtonOverlay"
+      ]
+     },
+     {
+      "name": "InVisibility",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Visible",
+      "links": [
+       "ReturnValue@Выбрать"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Выбрать",
+    "class": "K2Node_Select",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB38) {x: -1472, y: 3552}>",
+    "pins": [
+     {
+      "name": "Option 0",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Hidden",
+      "links": []
+     },
+     {
+      "name": "Option 1",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "SelfHitTestInvisible",
+      "links": []
+     },
+     {
+      "name": "Index",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "CanCorruptAttribute@UpdateCorruptButtonVisibility"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "",
+      "links": [
+       "InVisibility@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get LevelAttributeButton",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B260) {x: 176, y: 976}>",
+    "pins": [
+     {
+      "name": "LevelAttributeButton",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Button Ссылка на объект",
+      "value": "",
+      "links": [
+       "self@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "SetVisibility",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B280) {x: 176, y: 1008}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие UpdateAttributeView"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Widget Ссылка на объект",
+      "value": "",
+      "links": [
+       "LevelAttributeButton@Get LevelAttributeButton"
+      ]
+     },
+     {
+      "name": "InVisibility",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Visible",
+      "links": [
+       "ReturnValue@Выбрать"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Получить"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Выбрать",
+    "class": "K2Node_Select",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B278) {x: -176, y: 1076}>",
+    "pins": [
+     {
+      "name": "Option 0",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Collapsed",
+      "links": []
+     },
+     {
+      "name": "Option 1",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "Visible",
+      "links": []
+     },
+     {
+      "name": "Index",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "CanGiveAttribute@Событие UpdateAttributeView"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление ESlateVisibility",
+      "value": "",
+      "links": [
+       "InVisibility@SetVisibility"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateFocusAnimation",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B2E0) {x: -2160, y: 496}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие OnMouseEnter"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "NewIsFocused",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "true",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Select"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Call Signal Attribute Selected",
+    "class": "K2Node_CallDelegate",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CB88) {x: -1696, y: 512}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Select"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "W Attribute Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Select",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CBA0) {x: -1904, y: 496}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateFocusAnimation"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Call Signal Attribute Selected"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateFocusAnimation",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1B568) {x: -1520, y: 752}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие KeyNavOnSelected"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "NewIsFocused",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Выбрать"
+      ]
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CBC0) {x: -2144, y: 720}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "selected@Событие KeyNavOnSelected"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CBD0) {x: -1360, y: 720}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "Condition@Ответвление"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "UpdateFocusAnimation",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CC10) {x: -2160, y: 1136}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@Событие OnMouseLeave"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "NewIsFocused",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "execute@Deselect"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Deselect",
+    "class": "K2Node_CallFunction",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1CC00) {x: -1904, y: 1136}>",
+    "pins": [
+     {
+      "name": "execute",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Исполнение",
+      "value": "",
+      "links": [
+       "then@UpdateFocusAnimation"
+      ]
+     },
+     {
+      "name": "self",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Self Ссылка на объект",
+      "value": "",
+      "links": []
+     },
+     {
+      "name": "then",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Исполнение",
+      "value": "",
+      "links": []
+     }
+    ]
+   },
+   {
+    "title": "Не равно (перечисление)",
+    "class": "K2Node_EnumInequality",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE1AFD8) {x: -2144, y: 874}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EGUINavDirection",
+      "value": "",
+      "links": [
+       "direction@Событие KeyNavOnSelected"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EGUINavDirection",
+      "value": "None",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "A@AND Boolean"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Выбрать",
+    "class": "K2Node_Select",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE18CF8) {x: -1520, y: 896}>",
+    "pins": [
+     {
+      "name": "Option 0",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@AND Boolean"
+      ]
+     },
+     {
+      "name": "Option 1",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "Index",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Равно (перечисление)"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "NewIsFocused@UpdateFocusAnimation"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "AND Boolean",
+    "class": "K2Node_CommutativeAssociativeBinaryOperator",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE19C20) {x: -1776, y: 896}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "ReturnValue@Не равно (перечисление)"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "false",
+      "links": [
+       "Option 0@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Get CachedControlMode",
+    "class": "K2Node_VariableGet",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE19818) {x: -1952, y: 1040}>",
+    "pins": [
+     {
+      "name": "CachedControlMode",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Перечисление EGUIControlMode",
+      "value": "e_Mouse",
+      "links": [
+       "A@Равно (перечисление)"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Равно (перечисление)",
+    "class": "K2Node_EnumEquality",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE19C90) {x: -1952, y: 976}>",
+    "pins": [
+     {
+      "name": "A",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EGUIControlMode",
+      "value": "",
+      "links": [
+       "CachedControlMode@Get CachedControlMode"
+      ]
+     },
+     {
+      "name": "B",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Перечисление EGUIControlMode",
+      "value": "e_Gamepad",
+      "links": []
+     },
+     {
+      "name": "ReturnValue",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "Index@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE19860) {x: -1648, y: 960}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "Option 1@Выбрать"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE195B0) {x: -2144, y: 960}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "selected@Событие KeyNavOnSelected"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации"
+      ]
+     }
+    ]
+   },
+   {
+    "title": "Узел переадресации",
+    "class": "K2Node_Knot",
+    "pos": "<Struct 'IntPoint' (0x000001B70FE196E8) {x: -1856, y: 960}>",
+    "pins": [
+     {
+      "name": "InputPin",
+      "dir": "<EdGraphPinDirection.EGPD_INPUT: 0>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "OutputPin@Узел переадресации"
+      ]
+     },
+     {
+      "name": "OutputPin",
+      "dir": "<EdGraphPinDirection.EGPD_OUTPUT: 1>",
+      "type": "Булево значение",
+      "value": "",
+      "links": [
+       "InputPin@Узел переадресации",
+       "B@AND Boolean"
+      ]
+     }
+    ]
+   }
+  ],
+  "UpdateAttributeView#how": [
+   "get_graph_editor_by_name ok",
+   "get_graph_editor ok"
+  ],
+  "UpdateAttributeView": "ERR Traceback (most recent call last):\n  File \"D:/work/ai_sandbox/ConanExiles/_config/devkit/kit-probe-w-attribute.py\", line 66, in <module>\n    for n in ed.list_all_nodes():\n             ^^^^^^^^^^^^^^^^^\nAttributeError: 'NoneType' object has no attribute 'list_all_nodes'\n"
+ }
+}

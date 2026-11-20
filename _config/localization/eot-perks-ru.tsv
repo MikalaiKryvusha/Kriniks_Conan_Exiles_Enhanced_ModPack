@@ -8,7 +8,7 @@ After being hit, evading further damage for 10s heals back some health.	Если
 Edict of Vivacity	Указ живости
 Falling below 35% max health instantly restores all of your stamina.	Когда здоровье падает ниже 35 % от наибольшего, запас сил сразу восполняется целиком.
 Edict of Ironhide	Указ железной шкуры
-All magic damage you take is reduced by 25 (flat), calculated after magic amp/resist. Magic damage reduced to 0 still has a small chance to proc its secondary effect.	Любой магический урон по вам меньше на 25 единиц — после усиления магии и защиты от неё. Даже сведённый к нулю, такой урон с малым шансом вызывает свой побочный эффект.
+All magic damage you take is reduced by 25 (flat), calculated after magic amp/resist. Magic damage reduced to 0 still has a small chance to proc its secondary effect.	Любой магический урон по вам уменьшается на 25 единиц. Уменьшение считается после усиления магии и защиты от неё. Даже сведённый к нулю, такой урон с малым шансом вызывает свой побочный эффект.
 Edict of Adaptation	Указ приспособления
 While wearing armors of different weights you gain bonus armor and bonus health.	В доспехах разного веса вы получаете добавочную броню и здоровье.
 Edict of Asceticism	Указ аскезы
@@ -26,7 +26,7 @@ Harvesting religious organs has a small chance to give you a Shard of Notion.	Д
 Doctrine of Evangelism	Учение проповеди
 Killing blows dealt by any thralls, pets, or golems currently following you have a chance to grant you a Shard of Notion.	Добивающий удар раба, питомца или голема, который следует за вами, может принести вам Осколок замысла.
 Edict of Obstinance	Указ упорства
-Falling below 20% max health knocks back all nearby enemies and heals a large amount of health over 6s. 90s cooldown.	Когда здоровье падает ниже 20 % от наибольшего, враги рядом отлетают, а вы за 6 с восполняете много здоровья. Перезарядка — 90 с.
+Falling below 20% max health knocks back all nearby enemies and heals a large amount of health over 6s. 90s cooldown.	Когда здоровье падает ниже 20 % от наибольшего, враги рядом отлетают, а вы за 6 с восполняете много здоровья. Перезарядка длится 90 с.
 Edict of Mettle	Указ стойкости
 When taking physical damage you gain 15% magic resist for 16s.	Физический урон по вам даёт +15 % защиты от магии на 16 с.
 Edict of Guts	Указ отваги
@@ -34,6 +34,6 @@ When taking any damage you have a 20% chance to instantly heal half of it back.	
 Edict of Doggedness	Указ несгибаемости
 Surviving a weapon attack that brings you below 10% health makes you immune to all further damage for 10 seconds.	Если удар оружием оставил вам меньше 10 % здоровья, 10 с вы неуязвимы для любого урона.
 Edict of Skittering	Указ увёртливости
-While knocked down you become immune to further damage until you get back up.	Пока вы сбиты с ног, урон вас не берёт — до тех пор, пока не встанете.
+While knocked down you become immune to further damage until you get back up.	Пока вы сбиты с ног и не встали, урон вас не берёт.
 Edict of Antigen	Указ иммунитета
 While below 15% max health all damage over time effects are cleansed and you become immune to new applications of them.	Пока здоровье ниже 15 % от наибольшего, все эффекты урона со временем снимаются, и новые вас не берут.

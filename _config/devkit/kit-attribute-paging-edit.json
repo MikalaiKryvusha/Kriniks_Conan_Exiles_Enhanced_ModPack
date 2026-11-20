@@ -1,0 +1,92 @@
+{
+ "ok": true,
+ "readback": [
+  {
+   "node": "To Float (Integer)",
+   "links": {
+    "InInt": [
+     "int - int.ReturnValue"
+    ],
+    "ReturnValue": [
+     "float / float.A"
+    ]
+   }
+  },
+  {
+   "node": "To Float (Integer)",
+   "links": {
+    "InInt": [
+     "Get MaxAttributePointAllotment.MaxAttributePointAllotment"
+    ],
+    "ReturnValue": [
+     "float / float.B"
+    ]
+   }
+  },
+  {
+   "node": "To Float (Integer)",
+   "links": {
+    "InInt": [
+     "Узел переадресации.OutputPin"
+    ],
+    "ReturnValue": [
+     "float / float.A"
+    ]
+   }
+  },
+  {
+   "node": "To Float (Integer)",
+   "links": {
+    "InInt": [
+     "Get MaxAttributePointAllotment.MaxAttributePointAllotment"
+    ],
+    "ReturnValue": [
+     "float / float.B"
+    ]
+   }
+  },
+  {
+   "node": "Get Page",
+   "links": {
+    "Page": [
+     "int * int.A"
+    ]
+   }
+  },
+  {
+   "node": "int * int",
+   "links": {
+    "A": [
+     "Get Page.Page"
+    ],
+    "B": [
+     "Get MaxAttributePointAllotment.MaxAttributePointAllotment"
+    ],
+    "ReturnValue": [
+     "int - int.B"
+    ]
+   }
+  },
+  {
+   "node": "int - int",
+   "links": {
+    "A": [
+     "Узел переадресации.OutputPin"
+    ],
+    "B": [
+     "int * int.ReturnValue"
+    ],
+    "ReturnValue": [
+     "To Float (Integer).InInt"
+    ]
+   }
+  }
+ ],
+ "steps": [
+  "member Page already there",
+  "bar chain: FullValue -> int - int.A",
+  "already shifted — nothing to do",
+  "compile: True",
+  "save: True"
+ ]
+}

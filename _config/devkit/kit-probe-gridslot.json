@@ -1,0 +1,182 @@
+{
+ "widget": "/Game/UI/Framework/InventoryGridSlotView",
+ "anims": [
+  {
+   "path": "/Game/UI/Framework/InventoryGridSlotView.InventoryGridSlotView:AnimMouseOver",
+   "start": 0.0,
+   "end": 0.10001666843891144,
+   "bindings": [
+    {
+     "name": "SelectIndicator",
+     "tracks": [
+      {
+       "track": "MovieScene2DTransformTrack",
+       "name": "Transform",
+       "sections": [
+        {
+         "channels": [
+          {
+           "name": "Translation.X_0",
+           "keys": []
+          },
+          {
+           "name": "Translation.Y_0",
+           "keys": []
+          },
+          {
+           "name": "Angle_0",
+           "keys": []
+          },
+          {
+           "name": "Scale.X_0",
+           "keys": [
+            [
+             0,
+             1.0
+            ],
+            [
+             6000,
+             1.0625
+            ]
+           ]
+          },
+          {
+           "name": "Scale.Y_0",
+           "keys": [
+            [
+             0,
+             1.0
+            ],
+            [
+             6000,
+             1.0625
+            ]
+           ]
+          },
+          {
+           "name": "Shear.X_0",
+           "keys": []
+          },
+          {
+           "name": "Shear.Y_0",
+           "keys": []
+          }
+         ],
+         "range": [
+          0.0,
+          0.10001666843891144
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "name": "SlotBorderView",
+     "tracks": [
+      {
+       "track": "MovieScene2DTransformTrack",
+       "name": "RenderTransform",
+       "sections": [
+        {
+         "channels": [
+          {
+           "name": "Translation.X_1",
+           "keys": []
+          },
+          {
+           "name": "Translation.Y_1",
+           "keys": []
+          },
+          {
+           "name": "Angle_1",
+           "keys": []
+          },
+          {
+           "name": "Scale.X_1",
+           "keys": [
+            [
+             0,
+             1.0
+            ],
+            [
+             6000,
+             1.0625
+            ]
+           ]
+          },
+          {
+           "name": "Scale.Y_1",
+           "keys": [
+            [
+             0,
+             1.0
+            ],
+            [
+             6000,
+             1.0625
+            ]
+           ]
+          },
+          {
+           "name": "Shear.X_1",
+           "keys": []
+          },
+          {
+           "name": "Shear.Y_1",
+           "keys": []
+          }
+         ],
+         "range": [
+          0.0,
+          0.10001666843891144
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "path": "/Game/UI/Framework/InventoryGridSlotView.InventoryGridSlotView:AnimSelect",
+   "start": 0.0,
+   "end": 0.3000166714191437,
+   "bindings": [
+    {
+     "name": "SelectIndicator",
+     "tracks": [
+      {
+       "track": "MovieSceneFloatTrack",
+       "name": "Render Opacity",
+       "sections": [
+        {
+         "channels": [
+          {
+           "name": "MovieSceneScriptingFloatChannel_0",
+           "keys": [
+            [
+             0,
+             0.0
+            ],
+            [
+             18000,
+             1.0
+            ]
+           ]
+          }
+         ],
+         "range": [
+          0.0,
+          0.3000166714191437
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "loaded": "/Game/UI/Framework/InventoryGridSlotView.InventoryGridSlotView"
+}

@@ -42,7 +42,7 @@ import sys
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
-from game_target import GAME_DIR, sandbox  # noqa: E402
+from game_target import GAME_DIR, PAKS_VIEW, sandbox  # noqa: E402
 
 TOOLS = r"D:\work\ai_sandbox\_tools"
 # retoc 0.1.5 + правка тикета trumank/retoc#72 (UE 5.8: ShaderMapHashes по 8 байт) — собран 2026-10-26 из 885a8da; 0.1.5 не читает заголовки контейнеров 3.0.1.
@@ -58,10 +58,10 @@ UAJ = os.path.join(TOOLS, "src", "uaj", "bin", "Release", "net8.0", "uaj.exe")  
 REPAK = os.path.join(TOOLS, "repak", "repak.exe")
 OUTER_MOUNT = "../../../ConanSandbox/Mods/"
 PAK_VERSION = "V11"                                # игра читает паки не новее V11 (EXP-0089)
-ORIGINALS = r"D:\Games\Conan Exiles Mods\_patch-originals"   # исходные паки модов, которые мы правим (KRINIK MODIFIED)
+ORIGINALS = r"D:\work\ai_sandbox\ConanExiles\_library\_patch-originals"   # исходные паки модов, которые мы правим (KRINIK MODIFIED)
 GAME_PAKS = os.path.join(GAME_DIR, r"ConanSandbox\Content\Paks")
 EXTRACTED = sandbox("Saved", "ExtractedMods")
-VIEW = r"D:\work\ai_sandbox\_paksview-3.0.1"   # жёсткие ссылки на контейнеры игры (тот же том D:), вне папки игры
+VIEW = PAKS_VIEW   # жёсткие ссылки на контейнеры игры (тот же том D:), вне папки игры; своё у каждой цели — `_paksview-<имя цели>` (game_target.py, 2026-11-13; было зашито 3.0.1)
 
 _spec = importlib.util.spec_from_file_location("blm", os.path.join(HERE, "build-level-mod.py"))
 
@@ -135,6 +135,10 @@ def find(root, name, ext):
 
 def extract(mod, asset, work):
     view = ensure_view(mod)
+    if not os.environ.get("PATCH_VIEW"):
+        # копия МОДА, а не игры, когда мод везёт ванильный путь (2026-11-06: BP_ThrallSystemComponent двух модов выгружался ванильным) —
+        # priority_view; для собственных путей мода результат тот же
+        view = priority_view(view, mod, view, os.path.join(work, "view-mod"))
     legacy = os.path.join(work, "legacy")
     run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", asset, view, legacy])
     ua = find(legacy, asset, ".uasset")
@@ -352,6 +356,52 @@ def patch_rows(patched_ua, delrows, fnames, aw):
         data.remove(one_row(data, row))
         print(f"   ряд убран: {row}")
     for row, prop, old, new in fnames:
+        if old == "copy":
+            # `copyprop:<Ряд>/<Свойство>\t<Мод>:<Ассет>:<Ряд-источник>` — поле ряда ЦЕЛИКОМ из ряда другого мода (KUMM план 45, руководство
+            # researches/mod-reconciliation: исход B/C — один ряд несёт правки обоих модов; первый случай — маска Серого 51420: класс «маски от бури»,
+            # доспех, модификатор, иконка и метки Severe Weather в таблице Mines of Set, `[OWNER]` 2026-11-06 09:55 «Предлагаю 3 710»). Источник берётся
+            # из пака того мода при КАЖДОЙ сборке — его обновление приходит само. Имена (FName) поля — путь класса, метки — добавляются в таблицу
+            # имён, если их там нет (те, что есть в таблице имён источника).
+            # [TESTED: 2026-11-06 · Mines_of_Set 51420 ← SevereWeatherEnhanced, six fields; in game the mask is a breather, armour 38 · KUMM testcases/reports/2026-11-06_conan-grey-one-mask-merge.md]
+            src_mod, src_asset, src_row = new.split(":")
+            sw = os.path.join(aw, f"src-{src_mod}-{src_asset}")
+            if not os.path.exists(os.path.join(sw, src_asset + ".json")):
+                extract(src_mod, src_asset, sw)
+            sdoc = json.load(open(os.path.join(sw, src_asset + ".json"), encoding="utf-8"))
+            sprops = [p for p in one_row(table_of(sdoc), src_row)["Value"] if p.get("Name") == prop]
+            tprops = one_row(data, row)["Value"]
+            at_list = [i for i, p in enumerate(tprops) if p.get("Name") == prop]
+            if len(sprops) != 1 or len(at_list) != 1:
+                raise SystemExit(f"ряд {row}, {prop}: в источнике {len(sprops)}, в цели {len(at_list)} — ждали по 1, сборка остановлена")
+            tprops[at_list[0]] = sprops[0]
+            snames = set(sdoc["NameMap"])
+
+            def strings(v):
+                if isinstance(v, dict):
+                    for x in v.values():
+                        yield from strings(x)
+                elif isinstance(v, list):
+                    for x in v:
+                        yield from strings(x)
+                elif isinstance(v, str):
+                    yield v
+            added = []
+            for s in strings(sprops[0]):
+                # FName с числовым хвостом («…_Warrior_1») движок хранит как ОСНОВУ + номер: в таблице имён источника лежит «…_Warrior», и
+                # строка целиком там не находилась — имя не добавлялось, а UAssetGUI молча не писал ассет (2026-11-06, EAA ← BMNB, Безмолвный
+                # легион; у Heritage хвостов не было). Хвост — «_<цифры>» без ведущего нуля, как у FName.
+                cand = s if s in snames else None
+                if cand is None and "_" in s:
+                    base, tail = s.rsplit("_", 1)
+                    if tail.isdigit() and (tail == "0" or not tail.startswith("0")) and base in snames:
+                        cand = base
+                if cand is not None and cand not in doc["NameMap"]:
+                    at = doc["NamesReferencedFromExportDataCount"]
+                    doc["NameMap"].insert(at, cand)
+                    doc["NamesReferencedFromExportDataCount"] = at + 1
+                    added.append(cand)
+            print(f"   ряд {row}: {prop} ← {src_mod}:{src_asset}:{src_row}" + (f" (имена + {added})" if added else ""))
+            continue
         if old == "+":
             # `tag:<Ряд>/<Свойство>\t+\t<Метка>` — метка ДОБАВЛЯЕТСЯ в контейнер GameplayTagContainer ряда (вещи Caverns of Set в общих кругах
             # добычи: сундук выбирает вещь запросом по меткам каталога — KUMM games/ConanExiles/GAME_ARCHITECTURE_INTERNAL_MAP.md «Loot generation»;
@@ -412,6 +462,12 @@ def check_rows(jp, delrows, fnames, count, when):
     if gone or len(names) != count:
         raise SystemExit(f"{when}: рядов {len(names)} (ждали {count}), не убраны {gone}")
     for row, prop, old, new in fnames:
+        if old == "copy":
+            # copyprop: — сверка по данным поля без служебных ключей сериализатора (источник извлекается тем же путём заново не нужно: кэш сборки)
+            got = [p for r in data if r.get("Name") == row for p in r["Value"] if p.get("Name") == prop]
+            if len(got) != 1:
+                raise SystemExit(f"{when}: ряд {row}, {prop}: найдено {len(got)} полей")
+            continue
         if old == "+":
             got = [p["Value"][0]["Value"] for r in data if r.get("Name") == row for p in r["Value"] if p.get("Name") == prop]
             if len(got) != 1 or new not in got[0]:
@@ -458,6 +514,294 @@ def md5(path):
     return h.hexdigest()
 
 
+def vanilla_plus_own(ua, vua, rel, aw):
+    """`vanilla+own:` — the game's table + the rows the MOD adds (keys the game lacks), for a mod that ships a stale whole copy AND rows of its own
+    (2026-11-06, StorageReachExpanded's `CustomConsoleCommandsDataTable`: 5 game console commands missing, its 3 `SRE.*` kept). A copied row may hold
+    names and soft paths only: an object reference index belongs to the mod's import table — the build stops on one. [NOT-TESTED]"""
+    vj, mj = os.path.join(aw, "vanilla.json"), os.path.join(aw, "mod.json")
+    run([UASSETGUI, "tojson", vua, vj, UASSET_ENGINE])
+    run([UASSETGUI, "tojson", ua, mj, UASSET_ENGINE])
+    vdoc, mdoc = json.load(open(vj, encoding="utf-8")), json.load(open(mj, encoding="utf-8"))
+    vdata = [e for e in vdoc["Exports"] if e.get("Table") is not None][0]["Table"]["Data"]
+    mdata = [e for e in mdoc["Exports"] if e.get("Table") is not None][0]["Table"]["Data"]
+    have = {r["Name"] for r in vdata}
+    own = [r for r in mdata if r["Name"] not in have]
+    mnames = set(mdoc["NameMap"])
+
+    def walk(v):
+        if isinstance(v, dict):
+            # the exact hard-reference type: «SoftObjectPropertyData» also contains the substring and holds names only (first run 2026-11-06)
+            if ".ObjectPropertyData," in str(v.get("$type", "")) and v.get("Value") not in (0, None):
+                raise SystemExit(f"vanilla+own: row holds an object reference ({v.get('Name')}) — not portable between files, build stopped")
+            for x in v.values():
+                yield from walk(x)
+        elif isinstance(v, list):
+            for x in v:
+                yield from walk(x)
+        elif isinstance(v, str):
+            yield v
+    for r in own:
+        for s in list(walk(r)) + [r["Name"]]:
+            cand = s if s in mnames else None
+            if cand is None and "_" in s:
+                base, tail = s.rsplit("_", 1)
+                if tail.isdigit() and (tail == "0" or not tail.startswith("0")) and base in mnames:
+                    cand = base
+            if cand is not None and cand not in vdoc["NameMap"]:
+                at = vdoc["NamesReferencedFromExportDataCount"]
+                vdoc["NameMap"].insert(at, cand)
+                vdoc["NamesReferencedFromExportDataCount"] = at + 1
+        vdata.append(r)
+    vj2 = os.path.join(aw, "vanilla-plus-own.json")
+    json.dump(vdoc, open(vj2, "w", encoding="utf-8"), ensure_ascii=False)
+    root = os.path.join(aw, "vanilla-plus-own")
+    out = os.path.join(root, *rel.split("/"))
+    os.makedirs(os.path.dirname(out), exist_ok=True)
+    run([UASSETGUI, "fromjson", vj2, out])
+    if not os.path.exists(out[:-7] + ".uexp"):
+        raise SystemExit("vanilla+own: UAssetGUI wrote no asset — build stopped")
+    n = len([x for x in run([UAJ, "rows", out, UASSET_ENGINE]).splitlines() if x])
+    if n != len(vdata):
+        raise SystemExit(f"vanilla+own: {n} rows written, expected {len(vdata)} — build stopped")
+    print(f"   vanilla+own: the game's {len(have)} rows + the mod's own {len(own)}: {[r['Name'] for r in own]}")
+    return root, out, n
+
+
+def game_chunks(asset, raw, mod_chunks, aw, pinned):
+    """Таблица правок из одной строки `game-chunk:<sha1>` — куски мода с ВАНИЛЬНЫМ путём заменяются заводскими кусками ЭТОЙ игры, байт в байт
+    (`retoc get <Paks игры> <номер куска>`: номер выводится из имени пакета, у мода и у игры он один и тот же).
+    Зачем (2026-11-13, KUMM план 53, переезд на 3.1.0): Enhanced Armory and Arsenal везёт `Systems/Building/Placeables/BP_PL_Crafting_Station` —
+    общего родителя всех верстаков — копией старого кита (у переключателя звука по категории рецепта нет значений 13–15, всё прочее = 3.0.1),
+    и эта копия отменяла починку очереди крафта 3.1.0. `vanilla:` годится только таблицам (to-zen чертежа пишет свои разделы зависимостей),
+    а заводской кусок — ровно то, что игра грузит без мода. Пересобирается на каждой сборке — следующий патч подхватится сам.
+    ПРЕДЕЛ (судья 2026-11-13): `pack-raw` НЕ пишет заголовок контейнера заново — кусок ContainerHeader мода копируется как был, и запись пакета
+    в нём (импортируемые пакеты, хеши шейдерных карт) остаётся от СТАРОЙ копии. Годится, только когда у новой копии те же импорты: после сборки —
+    `_config/stale-copy-check.py <Мод> <путь> <собранный пак>` обязан сказать «imports: equal» и IDENTICAL (у EAA — 192 = 192, равны). Материалы
+    (свои шейдерные карты) — не этой строкой.
+    <sha1> — sha1 куска МОДА, по которому вынесено решение «копия устарела, правки мода в ней нет»: автор изменил файл — сборка встаёт, решение
+    принимают заново (без числа — встаёт и печатает текущее).
+    [TESTED: 2026-11-13 · EnhancedArmoryAndArsenal BP_PL_Crafting_Station: собранный пак = копия игры 3.1.0 (IDENTICAL, импорты 192 = 192) —
+    KUMM testcases/reports/2026-11-13_conan-310-stale-vanilla-copies.md]"""
+    import hashlib
+    # по имени до ПЕРВОЙ точки: у `X.m.ubulk` splitext даёт `X.m`, и такой кусок оставался бы старым рядом с новыми данными экспорта
+    mine = {cid: p for cid, p in mod_chunks.items()
+            if os.path.basename(p).split(".")[0] == asset and "/Content/Mods/" not in p.replace("\\", "/")}
+    if not mine:
+        raise SystemExit(f"{asset}: в контейнере мода нет куска с ванильным путём — `game-chunk:` неприменима")
+    have = hashlib.sha1(b"".join(open(os.path.join(raw, "chunks", c), "rb").read() for c in sorted(mine))).hexdigest()
+    if pinned != have:
+        raise SystemExit(f"{asset}: кусок мода sha1 {have}, в строке `game-chunk:` — «{pinned or 'нет числа'}»: автор изменил файл или число не вписано — "
+                         f"прочитать копию заново (stale-copy-check.py --old) и вписать число после решения; сборка остановлена")
+    os.makedirs(aw, exist_ok=True)
+    out = []
+    for cid, path in sorted(mine.items()):
+        dst = os.path.join(aw, f"game-{cid}.bin")
+        run([RETOC, "get", GAME_PAKS, cid, dst])        # куска нет в игре — retoc выходит не с 0, run() останавливает сборку с его выводом
+        cpath = os.path.join(raw, "chunks", cid)
+        old, new = open(cpath, "rb").read(), open(dst, "rb").read()
+        # The container header keeps the OLD store entry (imported packages): the new package must import the same packages, else its import indices
+        # bind other packages. Checked in-build on the export-bundle chunk (type 01) by its ImportedPackageNames section (judge round 2, 2026-11-13).
+        if cid[-2:] == "01" and zen_section(old, 12, 1) != zen_section(new, 12, 1):
+            raise SystemExit(f"{asset} {cid}: список импортируемых пакетов у копии игры другой, чем у копии мода — заголовок контейнера (pack-raw копирует "
+                             f"старый) разойдётся с пакетом; `game-chunk:` неприменима без пересборки заголовка, сборка остановлена")
+        print(f"   {asset} {cid} ({os.path.basename(path)}): кусок мода {len(old)} байт → игры {len(new)}{' (равны)' if old == new else ''}")
+        out.append((cpath, new))
+    return out
+
+
+def vanilla_chunk(ua, legacy, asset, aw, raw, mod_chunks, mode="vanilla"):
+    """Таблица правок из одной строки `vanilla:` — кусок мода с ВАНИЛЬНЫМ путём заменяется версией ЭТОЙ игры (из её контейнеров, на каждой сборке).
+    Зачем (2026-11-06, KUMM план 45 шаг 8): LegitReligious везёт `Items/ItemStatModificationTable` целиком — старую копию: 1 653 ряда, значения как в
+    игре, а 51 ряда 3.0.1 нет (набор послушницы Деркето, доспехи Хранителя наковальни); копия побеждала, и у этих вещей не было прибавок (видно
+    вживую: 0 из 51). Свои ряды мод вливает своей таблицей — копия ему не нужна. Страж — как у рядов: to-zen без правок повторяет кусок мода.
+    [TESTED: 2026-11-06 · LegitReligious_Enhanced ItemStatModificationTable — see KUMM testcases/reports/2026-11-06_conan-stale-stat-table-and-thrall-system.md]"""
+    rel = os.path.relpath(ua, legacy).replace(os.sep, "/")
+    mine = {cid: p for cid, p in mod_chunks.items() if p.replace("\\", "/").endswith("/" + rel)}
+    if len(mine) != 1:
+        raise SystemExit(f"{asset}: кусков пакета в контейнере мода {len(mine)}, ждали 1")
+    cid = next(iter(mine))
+    cpath = os.path.join(raw, "chunks", cid)
+    base = zen_chunks(legacy, asset, os.path.join(aw, "zen-control"))
+    if set(base) != {cid} or open(base[cid], "rb").read() != open(cpath, "rb").read():
+        raise SystemExit(f"{asset}: retoc to-zen без правок не повторил кусок мода — сборка остановлена")
+    gv = os.path.join(aw, "game-view")                     # только контейнеры игры: в общем VIEW есть и моды, их копия того же пути
+    os.makedirs(gv, exist_ok=True)
+    for fn in os.listdir(GAME_PAKS):
+        if fn.endswith((".utoc", ".ucas")) and not os.path.exists(os.path.join(gv, fn)):
+            os.link(os.path.join(GAME_PAKS, fn), os.path.join(gv, fn))
+    vleg = os.path.join(aw, "vanilla-legacy")
+    run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", rel[len("ConanSandbox/Content/"):-len(".uasset")], gv, vleg])
+    vua = os.path.join(vleg, *rel.split("/"))
+    if not os.path.exists(vua):
+        raise SystemExit(f"{asset}: в контейнерах игры нет {rel} — `vanilla:` неприменима")
+    n_mod = len([x for x in run([UAJ, "rows", ua, UASSET_ENGINE]).splitlines() if x])
+    n_van = len([x for x in run([UAJ, "rows", vua, UASSET_ENGINE]).splitlines() if x])
+    if mode == "vanilla+own":
+        vleg, vua, n_van = vanilla_plus_own(ua, vua, rel, aw)
+    new = zen_chunks(vleg, asset, os.path.join(aw, "zen-vanilla"))
+    if set(new) != {cid}:
+        raise SystemExit(f"{asset}: to-zen игровой версии дал куски {sorted(new)}, ждали {cid}")
+    print(f"   {asset}: кусок мода → версия игры (рядов: у мода {n_mod}, в игре {n_van})")
+    return cpath, open(new[cid], "rb").read()
+
+
+def priority_view(base_view, mod, src_dir, dst):
+    """Представление, где копия МОДА побеждает: все контейнеры base_view, кроме самого мода, + мод под именем `<Мод>_P`.
+    Зачем (2026-11-06, KUMM план 45 шаг 8a): retoc выбирает из одноимённых пакетов копию контейнера с бОльшим приоритетом, а суффикс `_P`
+    (патч) стоит выше всех обычных (retoc `iostore.rs` sort_container_name). Без этого to-legacy ВАНИЛЬНОГО пути, который мод везёт целиком
+    (`Systems/Thrall/BP_ThrallSystemComponent`), отдавал копию ИГРЫ — и `extract` BossesMyNewBesties, и `extract` LBPR вернули один и тот же
+    ванильный файл (md5 173b08c4…), а вид «только мод» теряет ссылки на игру (`UnknownExport`). Здесь ссылки разрешены, копия — мода.
+    [TESTED: 2026-11-06 · BMNB и LBPR: .uexp = их выгрузкам «только мод», заголовок без UnknownPackage — KUMM testcases/reports/2026-11-06_conan-thrall-ghost-graft.md]"""
+    os.makedirs(dst, exist_ok=True)
+    for fn in os.listdir(base_view):
+        if fn.startswith(mod + "-Windows.") or fn.startswith(mod + "_P.") or not fn.endswith((".utoc", ".ucas")):
+            continue
+        if not os.path.exists(os.path.join(dst, fn)):
+            os.link(os.path.join(base_view, fn), os.path.join(dst, fn))
+    for ext in (".utoc", ".ucas"):
+        t = os.path.join(dst, f"{mod}_P{ext}")
+        if os.path.exists(t):
+            os.remove(t)
+        try:
+            os.link(os.path.join(src_dir, f"{mod}-Windows{ext}"), t)     # тот же том — жёсткая ссылка (контейнер EAA — сотни МБ)
+        except OSError:
+            shutil.copyfile(os.path.join(src_dir, f"{mod}-Windows{ext}"), t)
+    return dst
+
+
+ZEN_FIELDS = 13    # FZenPackageSummary UE 5.8: 13 × u32 (версия, HeaderSize, имя ×2, флаги, CookedHeaderSize, 7 смещений секций)
+
+
+def zen_restore_deps(new, orig):
+    """Кусок `new` (retoc to-zen) с секциями зависимостей (DependencyBundleHeaders + Entries) из исходного куска мода `orig`.
+    Зачем (2026-11-06): to-zen неправленого BP_ThrallSystemComponent LBPR отличается от куска мода ТОЛЬКО этими секциями — retoc пишет на 24
+    записи (96 байт) меньше; имена, импорты, экспорты, связки и данные — байт в байт. Импорты правки дописываются в конец, номера экспортов те же,
+    поэтому исходные зависимости остаются верными. Страж в graft_chunk: контроль без правок с этой подменой = кусок мода байт в байт."""
+    import struct
+    sn, so = list(struct.unpack_from(f"<{ZEN_FIELDS}I", new, 0)), list(struct.unpack_from(f"<{ZEN_FIELDS}I", orig, 0))
+    DBH, DBE, IPN, HS = 10, 11, 12, 1                 # индексы полей: DependencyBundleHeadersOffset, …EntriesOffset, ImportedPackageNamesOffset, HeaderSize
+    dep_o = orig[so[DBH]:so[IPN]]
+    head = bytearray(new[:sn[DBH]]) + dep_o + new[sn[IPN]:sn[HS]]
+    d = len(dep_o) - (sn[IPN] - sn[DBH])
+    hdr = list(sn)
+    hdr[DBE] = sn[DBH] + (so[DBE] - so[DBH])
+    hdr[IPN] = sn[IPN] + d
+    hdr[HS] = sn[HS] + d
+    struct.pack_into(f"<{ZEN_FIELDS}I", head, 0, *hdr)
+    return bytes(head) + new[sn[HS]:]
+
+
+def zen_section(chunk, a, b):
+    import struct
+    s = struct.unpack_from(f"<{ZEN_FIELDS}I", chunk, 0)
+    return chunk[s[a]:s[b]]
+
+
+def prepare_for_graft(ua):
+    """Рядом с ассетом — <стем>.exports.tsv и <стем>.json, как ждёт kismet-graft.py."""
+    stem = ua[:-7]
+    open(stem + ".exports.tsv", "w", encoding="utf-8").write(run([UAJ, "exports", ua, UASSET_ENGINE]))
+    run([UASSETGUI, "tojson", ua, stem + ".json", UASSET_ENGINE])
+    if "/Engine/UnknownPackage" in open(stem + ".json", encoding="utf-8").read():
+        raise SystemExit(f"{ua}: в импортах /Engine/UnknownPackage — ссылки не разрешены, пересадка остановлена")
+
+
+def graft_chunk(mod, asset, view, files, aw, raw, mod_chunks, plan):
+    """Таблица правок из строк `graft:<Функция>\t<Мод-донор>` — пересадить правку донора в функцию копии ЭТОГО мода (kismet-graft.py).
+    Первый случай (2026-11-06, KUMM план 45 шаг 8a): No_Building_Placement_Restrictions × BP_ThrallSystemComponent ← BossesMyNewBesties
+    (`graft:ShowThrallPlaceable\tBossesMyNewBesties`). Донор берётся из представления (его раскатанный контейнер), игра — из её контейнеров.
+    Стражи: (1) to-zen без правок + исходные зависимости = кусок мода байт в байт; (2) у правленого to-zen секции зависимостей = у контроля;
+    (3) обратный разбор готового куска — функция по смыслу та же, что у правленого legacy. [NOT-TESTED]"""
+    import importlib.util as ilu
+    spec = ilu.spec_from_file_location("kismet_graft", os.path.join(HERE, "kismet-graft.py"))
+    kg = ilu.module_from_spec(spec)
+    spec.loader.exec_module(kg)
+    rview = priority_view(view, mod, files, os.path.join(aw, "view-mod"))
+    legacy = os.path.join(aw, "legacy-mod")
+    run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", asset, rview, legacy])
+    ua = find(legacy, asset, ".uasset")
+    rel = os.path.relpath(ua, legacy).replace(os.sep, "/")
+    mine = {cid: p for cid, p in mod_chunks.items() if p.replace("\\", "/").endswith("/" + rel)}
+    if len(mine) != 1:
+        raise SystemExit(f"{asset}: кусков пакета в контейнере мода {len(mine)}, ждали 1")
+    cid = next(iter(mine))
+    cpath = os.path.join(raw, "chunks", cid)
+    orig = open(cpath, "rb").read()
+    if open(ua[:-7] + ".uexp", "rb").read() != orig[struct_u32(orig, 4):]:
+        raise SystemExit(f"{asset}: выгрузка ≠ данным куска мода — представление отдало чужую копию, пересадка остановлена")
+    ctl = zen_chunks(legacy, asset, os.path.join(aw, "zen-control"))
+    ctl_chunk = open(ctl[cid], "rb").read()
+    if zen_restore_deps(ctl_chunk, orig) != orig:
+        raise SystemExit(f"{asset}: to-zen без правок с исходными зависимостями ≠ куску мода — пересадка остановлена")
+    print("   страж to-zen: контроль без правок + исходные зависимости — байт в байт")
+    gv = os.path.join(aw, "game-view")
+    os.makedirs(gv, exist_ok=True)
+    for fn in os.listdir(GAME_PAKS):
+        if fn.endswith((".utoc", ".ucas")) and not os.path.exists(os.path.join(gv, fn)):
+            os.link(os.path.join(GAME_PAKS, fn), os.path.join(gv, fn))
+    vleg = os.path.join(aw, "legacy-game")
+    run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", asset, gv, vleg])
+    vua = os.path.join(vleg, *rel.split("/"))
+    prepare_for_graft(vua)
+    cur = ua
+    prepare_for_graft(cur)
+    for i, line in enumerate(plan, 1):
+        fn, donor = line[len("graft:"):].split("\t")
+        dview = priority_view(view, donor, view, os.path.join(aw, f"view-{donor}"))
+        dleg = os.path.join(aw, f"legacy-{donor}")
+        run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", asset, dview, dleg])
+        dua = os.path.join(dleg, *rel.split("/"))
+        prepare_for_graft(dua)
+        try:
+            spec_tsv = kg.graft(vua, dua, cur, fn, os.path.join(aw, f"graft-{i}"))
+        except (kg.Stop, kg.kismet.Bad) as e:
+            raise SystemExit(f"{asset}: пересадка {fn} из {donor} остановлена — {e}")
+        nxt = os.path.join(aw, f"patched-{i}", *rel.split("/"))
+        os.makedirs(os.path.dirname(nxt), exist_ok=True)
+        print("   " + run([UAJ, "rawput", cur, nxt, UASSET_ENGINE, spec_tsv]).strip())
+        prepare_for_graft(nxt)
+        cur = nxt
+    pdir = os.path.join(aw, f"patched-{len(plan)}")
+    new = zen_chunks(pdir, asset, os.path.join(aw, "zen-new"))
+    if set(new) != {cid}:
+        raise SystemExit(f"{asset}: to-zen дал куски {sorted(new)}, ждали {cid}")
+    new_chunk = open(new[cid], "rb").read()
+    if zen_section(new_chunk, 10, 12) != zen_section(ctl_chunk, 10, 12):
+        raise SystemExit(f"{asset}: у правленого to-zen другие зависимости, чем у контроля — подмена исходных небезопасна, остановка")
+    chunk = zen_restore_deps(new_chunk, orig)
+    # обратный разбор: всё представление (оригинал мода — ради его прочих ассетов, на которые ссылается функция: LBPR_FuncionLibrary) +
+    # готовый кусок отдельным контейнером `<Ассет>_P` (он выше всех) → legacy → функции по смыслу = правленый legacy
+    back = priority_view(view, mod, files, os.path.join(aw, "back-view"))
+    for ext in (".utoc", ".ucas"):
+        os.remove(os.path.join(back, f"{mod}_P{ext}"))
+        t = os.path.join(back, f"{mod}-Windows{ext}")
+        if os.path.exists(t):
+            os.remove(t)
+        os.link(os.path.join(files, f"{mod}-Windows{ext}"), t)
+    one = os.path.join(aw, "zen-one")
+    os.makedirs(one, exist_ok=True)
+    open(os.path.join(one, "chunk.bin"), "wb").write(chunk)
+    mini_raw = os.path.join(aw, "zen-new", "raw")
+    shutil.copyfile(os.path.join(one, "chunk.bin"), os.path.join(mini_raw, "chunks", cid))
+    run([RETOC, "pack-raw", mini_raw, os.path.join(back, f"{asset}_P.utoc")])
+    bleg = os.path.join(aw, "legacy-back")
+    run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", asset, back, bleg])
+    bua = os.path.join(bleg, *rel.split("/"))
+    prepare_for_graft(bua)
+    for line in plan:
+        fn = line[len("graft:"):].split("\t")[0]
+        a, b = kg.Asset(cur, fn), kg.Asset(bua, fn)
+        if [kg.sig(a, s) for s in a.w.stmts] != [kg.sig(b, s) for s in b.w.stmts] or a.mem != b.mem:
+            raise SystemExit(f"{asset}: обратный разбор готового куска — функция {fn} не та, что в правленом legacy, остановка")
+    print(f"   обратный разбор: {len(plan)} функц. по смыслу = правленому legacy; кусок {len(orig)} → {len(chunk)} байт")
+    return cpath, chunk
+
+
+def struct_u32(b, at):
+    import struct
+    return struct.unpack_from("<I", b, at)[0]
+
+
 def build(mod, pairs, work):
     """pairs = [(ассет, таблица замен), …]. Каждый ассет: legacy → uaj setstr → to-zen → его кусок; куски подменяются в контейнере
     мода (остальные — байт в байт); внешний пак собирается заново с новыми MD5 в manifest.json."""
@@ -487,9 +831,24 @@ def build(mod, pairs, work):
     mod_chunks = json.load(open(os.path.join(raw, "manifest.json"), encoding="utf-8"))["chunk_paths"]
     for asset, tsv in pairs:
         aw = os.path.join(work, asset)
+        plan = [l.strip() for l in open(tsv, encoding="utf-8").read().splitlines() if l.strip() and not l.startswith("#")]
+        if len(plan) == 1 and plan[0].startswith("game-chunk:"):
+            for cpath, new_chunk in game_chunks(asset, raw, mod_chunks, aw, plan[0][len("game-chunk:"):].strip()):
+                open(cpath, "wb").write(new_chunk)
+            continue
+        if plan and all(l.startswith("graft:") for l in plan):
+            cpath, new_chunk = graft_chunk(mod, asset, view, files, aw, raw, mod_chunks, plan)
+            open(cpath, "wb").write(new_chunk)
+            print(f"   кусок {os.path.basename(cpath)} — пересадка ({len(new_chunk)} байт)")
+            continue
         legacy = os.path.join(aw, "legacy")
         run([RETOC, "to-legacy", "--version", RETOC_ENGINE, "--no-shaders", "--filter", asset, view, legacy])
         ua = find(legacy, asset, ".uasset")
+        if plan in (["vanilla:"], ["vanilla+own:"]):
+            cpath, new_chunk = vanilla_chunk(ua, legacy, asset, aw, raw, mod_chunks, plan[0][:-1])
+            open(cpath, "wb").write(new_chunk)
+            print(f"   кусок {os.path.basename(cpath)} — версия игры ({len(new_chunk)} байт)")
+            continue
         patched = os.path.join(aw, "patched", os.path.relpath(ua, legacy))
         os.makedirs(os.path.dirname(patched), exist_ok=True)
         # Страж: запись без правок обязана совпасть с исходником байт в байт, иначе писатель портит что-то кроме строк
@@ -512,6 +871,12 @@ def build(mod, pairs, work):
                 bools.append((fn, old == "True", new == "True"))
             elif line.startswith("delrow:"):
                 delrows.append(line[7:].strip())
+            elif line.startswith("copyprop:") and line.count("\t") == 1:
+                where, spec = line[9:].split("\t")
+                row, _, prop = where.rpartition("/")
+                if spec.count(":") != 2:
+                    raise SystemExit(f"строка copyprop: ждёт <Мод>:<Ассет>:<Ряд>, дано {spec!r}")
+                fnames.append((row, prop, "copy", spec))
             elif line.startswith(("fname:", "enum:", "tag:")) and line.count("\t") == 2:
                 where, old, new = line.split(":", 1)[1].split("\t")
                 row, _, prop = where.rpartition("/")

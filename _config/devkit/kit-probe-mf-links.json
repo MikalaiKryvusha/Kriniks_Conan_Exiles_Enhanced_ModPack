@@ -1,0 +1,66 @@
+{
+ "ok": true,
+ "nodes": [
+  {
+   "node": "#0 FunctionOutput",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#9 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#16 SetMaterialAttributes",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#18 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#19 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#57 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#59 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#60 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#261 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#271 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#280 RotateAboutAxis",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  },
+  {
+   "node": "#336 SetMaterialAttributes",
+   "inputs": [],
+   "err": "MaterialEditingLibrary: Failed to convert parameter 'material' when calling function 'MaterialEditingLibrary.GetInputsForMaterialExpression' on 'Default__MaterialEditingLibrary'\n  TypeError: NativizeProperty: Cannot nativize 'MaterialFunction' as 'Material' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'MaterialFunction' as 'Object' (allowed Class type: 'Material')"
+  }
+ ],
+ "errors": []
+}

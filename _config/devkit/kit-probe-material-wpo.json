@@ -1,0 +1,108 @@
+{
+ "ok": true,
+ "materials": {
+  "/FLX_Materials/Materials/Environment/Core/M_Foliage": {
+   "class": "Material",
+   "props": {
+    "use_material_attributes": "True",
+    "blend_mode": "<BlendMode.BLEND_OPAQUE: 0>",
+    "two_sided": "True",
+    "always_evaluate_world_position_offset": "False",
+    "max_world_position_offset_displacement": "0.0",
+    "used_with_instanced_static_meshes": "True",
+    "used_with_nanite": "True",
+    "dithered_lod_transition": "False",
+    "is_masked": "n/a"
+   },
+   "inputs": {
+    "MP_WORLD_POSITION_OFFSET": null,
+    "MP_MATERIAL_ATTRIBUTES": "MaterialExpressionMaterialFunctionCall",
+    "MP_OPACITY_MASK": null
+   },
+   "expressions": [
+    [
+     "Func:MF_Branches",
+     1
+    ],
+    [
+     "Func:MF_CavityDirt_Foliage",
+     1
+    ],
+    [
+     "Func:MF_Env_Common",
+     1
+    ],
+    [
+     "Func:MF_FLX-TreeMotion",
+     1
+    ],
+    [
+     "Func:MF_FLX_UVPivot_WPO",
+     1
+    ],
+    [
+     "Func:MF_FellingDissolve",
+     1
+    ],
+    [
+     "Func:MF_Foliage-Lighting",
+     1
+    ],
+    [
+     "Func:MF_FoliageRain",
+     1
+    ],
+    [
+     "Func:MF_FoliageScatter",
+     1
+    ],
+    [
+     "Func:MF_FoliageSnow",
+     1
+    ],
+    [
+     "Func:MF_Foliage_AO",
+     1
+    ],
+    [
+     "Func:MF_Foliage_LandscapeBlend",
+     1
+    ],
+    [
+     "Func:MF_Foliage_PlayerBending",
+     1
+    ],
+    [
+     "Func:MF_Foliage_SSS",
+     1
+    ],
+    [
+     "Func:MF_FuncomFunctions_Foliage",
+     1
+    ],
+    [
+     "Func:MF_Leaves",
+     1
+    ],
+    [
+     "Func:MF_MossDeposition_Foliage",
+     1
+    ],
+    [
+     "Func:MF_PlantMask_Debug",
+     1
+    ],
+    [
+     "Func:MF_Trunk",
+     1
+    ],
+    [
+     "Func:MF_WPOAttenuation_Foliage",
+     1
+    ]
+   ],
+   "usage_wpo_in_shaders": "n/a"
+  }
+ },
+ "errors": []
+}

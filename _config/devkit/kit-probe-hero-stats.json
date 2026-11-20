@@ -1,0 +1,497 @@
+{
+ "ok": true,
+ "at": "2026-11-14T15:11:38+03:00",
+ "requested": {
+  "enums": [
+   "ECharIntStatID",
+   "ECharFloatStatID"
+  ],
+  "textures": [
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_01",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_02",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_03",
+   "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_04"
+  ]
+ },
+ "enums": {
+  "ECharIntStatID": {
+   "doc": "EChar Int Stat ID\r\n\r\n**C++ Source:**\r\n\r\n- **Module**: ConanSandbox\r\n- **File**: StatHolder.h\r\n",
+   "members": [
+    {
+     "py": "HEALTH_MAX",
+     "value": 0,
+     "name": "HEALTH_MAX"
+    },
+    {
+     "py": "HEALTH_CURRENT",
+     "value": 1,
+     "name": "HEALTH_CURRENT"
+    },
+    {
+     "py": "FEAT_POINTS_USED",
+     "value": 2,
+     "name": "FEAT_POINTS_USED"
+    },
+    {
+     "py": "FEAT_POINTS_TOTAL",
+     "value": 3,
+     "name": "FEAT_POINTS_TOTAL"
+    },
+    {
+     "py": "LEVEL",
+     "value": 4,
+     "name": "LEVEL"
+    },
+    {
+     "py": "STAMINA_CURRENT",
+     "value": 5,
+     "name": "STAMINA_CURRENT"
+    },
+    {
+     "py": "STAMINA_MAX",
+     "value": 6,
+     "name": "STAMINA_MAX"
+    },
+    {
+     "py": "CONSCIOUSNESS_CURRENT",
+     "value": 7,
+     "name": "CONSCIOUSNESS_CURRENT"
+    },
+    {
+     "py": "CONSCIOUSNESS_MAX",
+     "value": 8,
+     "name": "CONSCIOUSNESS_MAX"
+    },
+    {
+     "py": "THRALL_ID",
+     "value": 9,
+     "name": "THRALL_ID"
+    },
+    {
+     "py": "THRALL_TIER",
+     "value": 10,
+     "name": "THRALL_TIER"
+    },
+    {
+     "py": "GENDER",
+     "value": 11,
+     "name": "GENDER"
+    },
+    {
+     "py": "KNOCKBACK_DEFENSE",
+     "value": 12,
+     "name": "KNOCKBACK_DEFENSE"
+    },
+    {
+     "py": "FACTION",
+     "value": 13,
+     "name": "FACTION"
+    },
+    {
+     "py": "ATTRIBUTE_HEALTH",
+     "value": 14,
+     "name": "ATTRIBUTE_HEALTH"
+    },
+    {
+     "py": "ATTRIBUTE_STAMINA",
+     "value": 15,
+     "name": "ATTRIBUTE_STAMINA"
+    },
+    {
+     "py": "ATTRIBUTE_ENCUMBRANCE",
+     "value": 16,
+     "name": "ATTRIBUTE_ENCUMBRANCE"
+    },
+    {
+     "py": "ATTRIBUTE_MIGHT",
+     "value": 17,
+     "name": "ATTRIBUTE_MIGHT"
+    },
+    {
+     "py": "ATTRIBUTE_ACCURACY",
+     "value": 18,
+     "name": "ATTRIBUTE_ACCURACY"
+    },
+    {
+     "py": "ATTRIBUTE_ATHLETICISM",
+     "value": 19,
+     "name": "ATTRIBUTE_ATHLETICISM"
+    },
+    {
+     "py": "ATTRIBUTE_METABOLISM",
+     "value": 20,
+     "name": "ATTRIBUTE_METABOLISM"
+    },
+    {
+     "py": "ATTRIBUTE_RESILIENCE",
+     "value": 21,
+     "name": "ATTRIBUTE_RESILIENCE"
+    },
+    {
+     "py": "ITEM_CONTAINER_SIZE",
+     "value": 22,
+     "name": "ITEM_CONTAINER_SIZE"
+    },
+    {
+     "py": "HEALTH_BAR_STYLE",
+     "value": 23,
+     "name": "HEALTH_BAR_STYLE"
+    },
+    {
+     "py": "ENDURANCE_CURRENT",
+     "value": 24,
+     "name": "ENDURANCE_CURRENT"
+    },
+    {
+     "py": "ENDURANCE_MAX",
+     "value": 25,
+     "name": "ENDURANCE_MAX"
+    },
+    {
+     "py": "STAGGER_RESISTANCE",
+     "value": 26,
+     "name": "STAGGER_RESISTANCE"
+    },
+    {
+     "py": "ATTRIBUTE_LEADERSHIP",
+     "value": 27,
+     "name": "ATTRIBUTE_LEADERSHIP"
+    },
+    {
+     "py": "ATTRIBUTE_SUMMONING",
+     "value": 28,
+     "name": "ATTRIBUTE_SUMMONING"
+    },
+    {
+     "py": "ATTRIBUTE_ABBERATION",
+     "value": 29,
+     "name": "ATTRIBUTE_ABBERATION"
+    },
+    {
+     "py": "ATTRIBUTE_SCOURGE",
+     "value": 30,
+     "name": "ATTRIBUTE_SCOURGE"
+    },
+    {
+     "py": "IDLE_EMOTE",
+     "value": 31,
+     "name": "IDLE_EMOTE"
+    },
+    {
+     "py": "AUTOMATION_WORKORDER_LIMIT",
+     "value": 32,
+     "name": "AUTOMATION_WORKORDER_LIMIT"
+    },
+    {
+     "py": "MINIMUM_HEALTH_CAP",
+     "value": 33,
+     "name": "MINIMUM_HEALTH_CAP"
+    },
+    {
+     "py": "E_CHAR_INT_STAT_ID_MAX",
+     "value": 34,
+     "name": "E_CHAR_INT_STAT_ID_MAX"
+    }
+   ]
+  },
+  "ECharFloatStatID": {
+   "doc": "EChar Float Stat ID\r\n\r\n**C++ Source:**\r\n\r\n- **Module**: ConanSandbox\r\n- **File**: StatHolder.h\r\n",
+   "members": [
+    {
+     "py": "THRALL_CRAFTING_SPEED",
+     "value": 0,
+     "name": "THRALL_CRAFTING_SPEED"
+    },
+    {
+     "py": "THRALL_CRAFTING_COST",
+     "value": 1,
+     "name": "THRALL_CRAFTING_COST"
+    },
+    {
+     "py": "THRALL_CRAFTING_FUEL",
+     "value": 2,
+     "name": "THRALL_CRAFTING_FUEL"
+    },
+    {
+     "py": "THRALL_ENTERTAINER_POTENCY",
+     "value": 3,
+     "name": "THRALL_ENTERTAINER_POTENCY"
+    },
+    {
+     "py": "DAMAGE_MODIFIER_MELEE",
+     "value": 4,
+     "name": "DAMAGE_MODIFIER_MELEE"
+    },
+    {
+     "py": "DAMAGE_MODIFIER_RANGED",
+     "value": 5,
+     "name": "DAMAGE_MODIFIER_RANGED"
+    },
+    {
+     "py": "NATURAL_ARMOR",
+     "value": 6,
+     "name": "NATURAL_ARMOR"
+    },
+    {
+     "py": "THRALL_CORRUPTION_CLEANSE_POTENCY",
+     "value": 7,
+     "name": "THRALL_CORRUPTION_CLEANSE_POTENCY"
+    },
+    {
+     "py": "THRALL_CORRUPTION_CLEANSE_LIMIT",
+     "value": 8,
+     "name": "THRALL_CORRUPTION_CLEANSE_LIMIT"
+    },
+    {
+     "py": "ARMOR",
+     "value": 9,
+     "name": "ARMOR"
+    },
+    {
+     "py": "ENCUMBRANCE_WEIGHT",
+     "value": 10,
+     "name": "ENCUMBRANCE_WEIGHT"
+    },
+    {
+     "py": "KILLED_XP_MODIFIER",
+     "value": 11,
+     "name": "KILLED_XP_MODIFIER"
+    },
+    {
+     "py": "CURRENT_ENCUMBRANCE",
+     "value": 12,
+     "name": "CURRENT_ENCUMBRANCE"
+    },
+    {
+     "py": "TEMPERATURE_MODIFICATION",
+     "value": 13,
+     "name": "TEMPERATURE_MODIFICATION"
+    },
+    {
+     "py": "PENIS_SCALE_MODIFIER",
+     "value": 14,
+     "name": "PENIS_SCALE_MODIFIER"
+    },
+    {
+     "py": "KNOCKBACK_FRAGILITY_DR",
+     "value": 15,
+     "name": "KNOCKBACK_FRAGILITY_DR"
+    },
+    {
+     "py": "KNOCKBACK_THRESHOLD_DR",
+     "value": 16,
+     "name": "KNOCKBACK_THRESHOLD_DR"
+    },
+    {
+     "py": "BUILDING_DAMAGE_MULTIPLIER",
+     "value": 17,
+     "name": "BUILDING_DAMAGE_MULTIPLIER"
+    },
+    {
+     "py": "CREATURE_DAMAGE_UI",
+     "value": 18,
+     "name": "CREATURE_DAMAGE_UI"
+    },
+    {
+     "py": "CREATURE_PENETRATION_UI",
+     "value": 19,
+     "name": "CREATURE_PENETRATION_UI"
+    },
+    {
+     "py": "ENDURANCE_DAMAGE_RESISTANCE",
+     "value": 20,
+     "name": "ENDURANCE_DAMAGE_RESISTANCE"
+    },
+    {
+     "py": "STAGGER_SPEED_REDUCTION",
+     "value": 21,
+     "name": "STAGGER_SPEED_REDUCTION"
+    },
+    {
+     "py": "HEAT_INSULATION",
+     "value": 22,
+     "name": "HEAT_INSULATION"
+    },
+    {
+     "py": "COLD_INSULATION",
+     "value": 23,
+     "name": "COLD_INSULATION"
+    },
+    {
+     "py": "MAX_CORRUPTION_INCREASE",
+     "value": 24,
+     "name": "MAX_CORRUPTION_INCREASE"
+    },
+    {
+     "py": "MINIMUM_CORRUPTION",
+     "value": 25,
+     "name": "MINIMUM_CORRUPTION"
+    },
+    {
+     "py": "RESIST_DANCER_CORRUPTION_HEAL",
+     "value": 26,
+     "name": "RESIST_DANCER_CORRUPTION_HEAL"
+    },
+    {
+     "py": "BONUS_STR_WEAPON_DMG",
+     "value": 27,
+     "name": "BONUS_STR_WEAPON_DMG"
+    },
+    {
+     "py": "BONUS_AGI_WEAPON_DMG",
+     "value": 28,
+     "name": "BONUS_AGI_WEAPON_DMG"
+    },
+    {
+     "py": "BONUS_CARRY_CAPACITY",
+     "value": 29,
+     "name": "BONUS_CARRY_CAPACITY"
+    },
+    {
+     "py": "BONUS_FOLLOWER_DAMAGE",
+     "value": 30,
+     "name": "BONUS_FOLLOWER_DAMAGE"
+    },
+    {
+     "py": "BONUS_CONCUSSIVE_DAMAGE",
+     "value": 31,
+     "name": "BONUS_CONCUSSIVE_DAMAGE"
+    },
+    {
+     "py": "CORRUPTION_REQUIREMENT_REDUCTION",
+     "value": 32,
+     "name": "CORRUPTION_REQUIREMENT_REDUCTION"
+    },
+    {
+     "py": "BONUS_SUMMON_LIFESPAN",
+     "value": 33,
+     "name": "BONUS_SUMMON_LIFESPAN"
+    },
+    {
+     "py": "BONUS_SUMMON_HEALTH",
+     "value": 34,
+     "name": "BONUS_SUMMON_HEALTH"
+    },
+    {
+     "py": "BONUS_CORRUPTION_DAMAGE",
+     "value": 35,
+     "name": "BONUS_CORRUPTION_DAMAGE"
+    },
+    {
+     "py": "BONUS_CARRY_WEIGHT",
+     "value": 36,
+     "name": "BONUS_CARRY_WEIGHT"
+    },
+    {
+     "py": "STABILITY_LOSS_MULTIPLIER",
+     "value": 37,
+     "name": "STABILITY_LOSS_MULTIPLIER"
+    },
+    {
+     "py": "AUTOMATION_RADIUS",
+     "value": 38,
+     "name": "AUTOMATION_RADIUS"
+    },
+    {
+     "py": "AUTOMATION_MOVEMENT_SPEED",
+     "value": 39,
+     "name": "AUTOMATION_MOVEMENT_SPEED"
+    },
+    {
+     "py": "WEAPON_MAX_REACH_MULTIPLIER",
+     "value": 40,
+     "name": "WEAPON_MAX_REACH_MULTIPLIER"
+    },
+    {
+     "py": "ARMOR_PENETRATION_BONUS",
+     "value": 41,
+     "name": "ARMOR_PENETRATION_BONUS"
+    },
+    {
+     "py": "E_CHAR_FLOAT_STAT_ID_MAX",
+     "value": 42,
+     "name": "E_CHAR_FLOAT_STAT_ID_MAX"
+    }
+   ]
+  }
+ },
+ "textures": {
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_01": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_02": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_03": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  },
+  "/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_04": {
+   "size": [
+    44,
+    44
+   ],
+   "exported": true
+  }
+ },
+ "problems": []
+}

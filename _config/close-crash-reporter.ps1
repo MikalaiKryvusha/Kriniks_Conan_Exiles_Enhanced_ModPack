@@ -9,7 +9,7 @@
 #
 # Which reporter is "ours": StartTime >= the agent's launch moment and the exe lies inside the game
 # install. The launch moment comes from -Since or from the stamp launch-bg.ps1 writes
-# (%TEMP%\kumm-conan-agent-launch.txt). No stamp and no -Since -> nothing is closed: the owner's own
+# (the pack's _scratch\kumm-conan-agent-launch.txt). No stamp and no -Since -> nothing is closed: the owner's own
 # game session may have crashed, and his report window is his.
 #
 #   .\close-crash-reporter.ps1
@@ -18,12 +18,13 @@
 
 param(
   [string]$Since = '',
-  [string]$GameDir = 'D:\Games\Conan Exiles 3.0.1',
+  [string]$GameDir = '',
   [string]$Name = 'CrashReportClient'
 )
 
 $ErrorActionPreference = 'Stop'
-$stamp = Join-Path $env:TEMP 'kumm-conan-agent-launch.txt'
+if (-not $GameDir) { . (Join-Path $PSScriptRoot 'game-target.ps1') }   # the first enabled target of targets.json (2026-11-13, KUMM plan 53)
+$stamp = Join-Path (Join-Path (Split-Path $PSScriptRoot -Parent) '_scratch') 'kumm-conan-agent-launch.txt'
 
 if ($Since) { $t0 = [datetime]::Parse($Since) }
 elseif (Test-Path $stamp) { $t0 = [datetime]::Parse((Get-Content $stamp -TotalCount 1)) }

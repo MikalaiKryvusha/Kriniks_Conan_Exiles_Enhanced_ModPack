@@ -3,7 +3,7 @@
 # до 2026-10-26 вечера сканер искал только UTF-8, и 550 строк числились «не сверить» (KUMM bugs/64 п. 7b).
 # Выход: счётчики по видам; --list печатает ключи вида «crlf» и «none». Код 1 — есть исходники вида «crlf» (опись врёт байтам).
 import csv, os, sys, collections
-ROOT = r"D:\Games\Conan Exiles Mods\_text-extract-3.0.1"
+ROOT = r"D:\work\ai_sandbox\ConanExiles\_library\_text-extract-3.0.1"
 CSV = r"D:\work\ai_sandbox\ConanExiles\_config\localization\all-mods-ftext.csv"
 
 def forms(s):

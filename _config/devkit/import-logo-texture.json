@@ -1,12 +1,27 @@
 {
  "ok": true,
- "imported": [
-  "/Game/Mods/KrinikConanUI/T_KrinikModpackLogo.T_KrinikModpackLogo"
- ],
- "saved": true,
- "asset": "/Game/Mods/KrinikConanUI/T_KrinikModpackLogo.T_KrinikModpackLogo",
- "size": [
-  1024,
-  388
+ "textures": [
+  {
+   "imported": [
+    "/Game/Mods/KrinikConanUI/T_KrinikPlusGold.T_KrinikPlusGold"
+   ],
+   "saved": true,
+   "asset": "/Game/Mods/KrinikConanUI/T_KrinikPlusGold.T_KrinikPlusGold",
+   "size": [
+    50,
+    50
+   ]
+  },
+  {
+   "imported": [
+    "/Game/Mods/KrinikConanUI/T_KrinikPlusGoldHover.T_KrinikPlusGoldHover"
+   ],
+   "saved": true,
+   "asset": "/Game/Mods/KrinikConanUI/T_KrinikPlusGoldHover.T_KrinikPlusGoldHover",
+   "size": [
+    50,
+    50
+   ]
+  }
  ]
 }

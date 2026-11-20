@@ -100,7 +100,7 @@
 ### 📦 Установка
 
 1. Убедитесь, что установлена игра Conan Exiles Enhanced 3.0.1 (билд CL-379176).
-2. Скачайте в одну папку все 7 частей архива из списка **Assets** внизу страницы: с `Krinik_Mod_Pack_0_9_0.zip.001` по `Krinik_Mod_Pack_0_9_0.zip.007`, всего 12,7 ГБ.
+2. Скачайте в одну папку все 7 частей архива из списка **Assets** внизу страницы: с `Krinik_Mod_Pack_0_9_0.zip.001` по `Krinik_Mod_Pack_0_9_0.zip.007`, всего 12,4 ГБ.
 3. Откройте первую часть, `Krinik_Mod_Pack_0_9_0.zip.001`, в 7-Zip или WinRAR и распакуйте сборку в папку игры, где лежит `ConanSandbox.exe`.
 4. Запустите `KrinikConanLauncher.exe` из папки сборки и нажмите «Установить сборку», затем «Играть».
 5. Сборка ставит полноэкранный режим 3840 × 2160. Если разрешение экрана ниже 4K, смените его в настройках игры.
@@ -202,7 +202,7 @@ The contents of the pack, the mod authors and the rights holders are in the [REA
 ### 📦 Installation
 
 1. Make sure Conan Exiles Enhanced 3.0.1 (build CL-379176) is installed.
-2. Download all 7 archive parts from the **Assets** list at the bottom of this page into one folder: `Krinik_Mod_Pack_0_9_0.zip.001` to `Krinik_Mod_Pack_0_9_0.zip.007`, 12.7 GB in total.
+2. Download all 7 archive parts from the **Assets** list at the bottom of this page into one folder: `Krinik_Mod_Pack_0_9_0.zip.001` to `Krinik_Mod_Pack_0_9_0.zip.007`, 12.4 GB in total.
 3. Open the first part, `Krinik_Mod_Pack_0_9_0.zip.001`, in 7-Zip or WinRAR and unpack the pack into the game folder, the one that holds `ConanSandbox.exe`.
 4. Run `KrinikConanLauncher.exe` from the pack folder and press «Установить сборку» (Install the pack), then «Играть» (Play).
 5. The pack sets the game to fullscreen 3840 × 2160. If your screen resolution is below 4K, change it in the game settings.

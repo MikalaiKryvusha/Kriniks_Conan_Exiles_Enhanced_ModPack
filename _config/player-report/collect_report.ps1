@@ -19,6 +19,9 @@
 
 param([string]$GameDir = '', [string]$OutDir = '', [switch]$Feedback)
 $AUTHOR_MAIL = 'kotkrinik@yandex.ru'
+# Второй путь отзыва — Issues публичного репозитория сборки: автор принимает там и сообщения о сбоях, и запросы на улучшение
+# (KUMM plans/55 D-fb, слово владельца 2026-11-17 21:11). [NOT-TESTED]
+$ISSUES_URL = 'https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/issues'
 
 $ErrorActionPreference = 'Stop'
 $here = $PSScriptRoot
@@ -200,8 +203,9 @@ if ($leaks.Count) {
 }
 Write-Host ''
 Write-Host "Готово: $zip" -ForegroundColor Green
-Write-Host 'Отправьте этот файл автору сборки на почту kotkrinik@yandex.ru или на странице сборки на Nexus Mods (https://www.nexusmods.com/conanexilesenhanced/mods/65)'
-Write-Host 'и опишите, что происходило в игре перед падением или ошибкой.'
+Write-Host "Отправьте этот файл автору сборки письмом на почту $AUTHOR_MAIL или приложите его к сообщению в разделе Issues на GitHub:"
+Write-Host $ISSUES_URL
+Write-Host 'Опишите, что происходило в игре перед падением или ошибкой.'
 Write-Host 'Номера компьютера и аккаунта, имя пользователя и дамп памяти в отчёт не попали.'
 if ($Feedback) {
     # Полноэкранная игра закрывает собой Проводник и письмо (прогон 2026-10-31 01:32: оба открылись ЗА игрой) — она свёрнута в начале;
@@ -216,10 +220,10 @@ if ($Feedback) {
     Add-Type -Namespace KR -Name Box -MemberDefinition '[DllImport("user32.dll", CharSet = CharSet.Unicode)] public static extern int MessageBoxW(System.IntPtr h, string text, string caption, uint type);'
     $MB_OK_INFO_TOPMOST = 0x0 -bor 0x40 -bor 0x10000 -bor 0x40000   # MB_OK · MB_ICONINFORMATION · MB_SETFOREGROUND · MB_TOPMOST
     [void][KR.Box]::MessageBoxW([IntPtr]::Zero,
-        "Журналы игры собраны в файл на рабочем столе:`r`n$(Split-Path $zip -Leaf)`r`n`r`nОтправьте его автору сборки на почту $AUTHOR_MAIL`r`nи напишите пару слов: что понравилось, что сломалось.`r`n`r`nНе беспокойтесь о личных данных: отчёт всегда полностью анонимен. Сборщик никогда не берёт имена пользователя и профилей, адреса, номера и ID компьютера и аккаунтов — так устроен каждый отчёт.",
+        "Журналы игры собраны в файл на рабочем столе:`r`n$(Split-Path $zip -Leaf)`r`n`r`nОтправьте этот файл автору сборки письмом на почту $AUTHOR_MAIL`r`nили приложите его к сообщению в разделе Issues на GitHub:`r`n$ISSUES_URL`r`n`r`nНапишите пару слов: что понравилось, что сломалось.`r`n`r`nИмена пользователя и профилей, адреса, номера и ID компьютера и аккаунтов в отчёт не входят.",
         'Отзыв о сборке Krinik Mod Pack', $MB_OK_INFO_TOPMOST)
     $subject = 'Отзыв о сборке Krinik Mod Pack'
-    $body = "Здравствуйте!`r`n`r`nМой отзыв:`r`n`r`n`r`nЖурналы игры собраны в файл $(Split-Path $zip -Leaf) на рабочем столе — перетащите его в это письмо.`r`n"
+    $body = "Здравствуйте!`r`n`r`nМой отзыв:`r`n`r`n`r`nЖурналы игры собраны в файл $(Split-Path $zip -Leaf) на рабочем столе. Перетащите этот файл в письмо.`r`n"
     Start-Process ("mailto:{0}?subject={1}&body={2}" -f $AUTHOR_MAIL, [uri]::EscapeDataString($subject), [uri]::EscapeDataString($body))
 }
 exit 0

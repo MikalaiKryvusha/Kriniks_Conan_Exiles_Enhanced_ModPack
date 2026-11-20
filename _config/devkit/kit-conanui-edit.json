@@ -2,21 +2,27 @@
  "ok": true,
  "steps": [
   "loaded /Game/UI/Widgets/HUD/Interact/WBP_ContainerInfo.WBP_ContainerInfo",
-  "OverlaySlot_5: <HorizontalAlignment.H_ALIGN_CENTER: 2> -> <HorizontalAlignment.H_ALIGN_CENTER: 2>, padding <Struct 'Margin' (0x0000021D6C3FBEC8) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
-  "OverlaySlot_3: <HorizontalAlignment.H_ALIGN_CENTER: 2> -> <HorizontalAlignment.H_ALIGN_CENTER: 2>, padding <Struct 'Margin' (0x0000021D6C58F8E8) {left: 500.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
-  "OverlaySlot_5 padding -> <Struct 'Margin' (0x0000021D6C3FBEC8) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
-  "W_QuickLootPanel grid padding (35.0, 35.0) -> <Struct 'Margin' (0x0000021CC07104C8) {left: 35.000000, top: 10.000000, right: 35.000000, bottom: 10.000000}>",
-  "W_QuickLootPanel WidgetSwitcherTooltips padding (20.0, 20.0) -> <Struct 'Margin' (0x0000021CC0710348) {left: 20.000000, top: 10.000000, right: 20.000000, bottom: 10.000000}>",
-  "W_QuickLootPanel LootButtonLabel_1 padding (0.0, 20.0) -> <Struct 'Margin' (0x0000021CBED903D0) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
+  "OverlaySlot_5: <HorizontalAlignment.H_ALIGN_CENTER: 2> -> <HorizontalAlignment.H_ALIGN_CENTER: 2>, padding <Struct 'Margin' (0x0000014B4F462F88) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
+  "OverlaySlot_3: <HorizontalAlignment.H_ALIGN_CENTER: 2> -> <HorizontalAlignment.H_ALIGN_CENTER: 2>, padding <Struct 'Margin' (0x0000014B5E6CAA28) {left: 500.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+  "OverlaySlot_5 padding -> <Struct 'Margin' (0x0000014B4F462F88) {left: 120.000000, top: 0.000000, right: 120.000000, bottom: 0.000000}>",
+  "W_QuickLootPanel grid padding (35.0, 35.0) -> <Struct 'Margin' (0x0000014AA52C05C8) {left: 35.000000, top: 10.000000, right: 35.000000, bottom: 10.000000}>",
+  "W_QuickLootPanel WidgetSwitcherTooltips padding (20.0, 20.0) -> <Struct 'Margin' (0x0000014AA52C0AC8) {left: 20.000000, top: 10.000000, right: 20.000000, bottom: 10.000000}>",
+  "W_QuickLootPanel LootButtonLabel_1 padding (0.0, 20.0) -> <Struct 'Margin' (0x0000014AA50B2740) {left: 0.000000, top: 0.000000, right: 20.000000, bottom: 0.000000}>",
   "HotkeyHoldPromptVisibility members {'ALWAYS': 2, 'DEFAULT': 0, 'NEVER': 1}",
   "W_QuickLootPanel W_HotkeyIcon_3 hold_prompt_visibility -> <HotkeyHoldPromptVisibility.NEVER: 1>",
   "W_QuickLootPanel W_HotkeyIcon_4 hold_prompt_visibility -> <HotkeyHoldPromptVisibility.NEVER: 1>",
   "W_QuickLootPanel LootButtonLabel_1 text -> Забрать все (удерж.)",
   "W_QuickLootPanel LootButtonLabel_2 text -> Забрать все (удерж.)",
   "W_ItemIconTooltipView Text_Content auto_wrap_text/wrap_text_at (False, 800.0) -> (False, 800.0)",
-  "W_AttributeInfoEntry_PerkView PerkDescription padding top/bottom (10.0, 10.0) -> <Struct 'Margin' (0x0000021D51CA2A50) {left: 0.000000, top: 10.000000, right: 0.000000, bottom: 10.000000}>",
-  "W_ActionTutorial Icon valign/padding (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000021C3288FE80) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 1.000000}>) -> (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000021C3288FE80) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 1.000000}>)",
-  "W_ActionTutorial PostText valign/padding (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000021C32881E10) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>) -> (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000021C32881E10) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>)",
+  "W_AttributeInfoEntry_PerkView PerkDescription padding top/bottom (14.0, 14.0) -> <Struct 'Margin' (0x0000014A793FBE30) {left: 0.000000, top: 14.000000, right: 0.000000, bottom: 14.000000}>",
+  "W_EnemyHealthbar Container_Skull padding top 4.0 -> <Struct 'Margin' (0x0000014B28416408) {left: 0.000000, top: 4.000000, right: 0.000000, bottom: 0.000000}>",
+  "W_DialogueNPCInfo Container render scale 0.7, brush colour alpha 0.6000000238418579 -> 0.6",
+  "W_PlaceableInfo Container render scale 0.7, brush colour alpha 0.6000000238418579 -> 0.6",
+  "W_SimpleInfo Container render scale 0.7, brush colour alpha 0.6000000238418579 -> 0.6",
+  "W_ThrallInfo Container render scale 0.7, brush colour alpha 0.6000000238418579 -> 0.6",
+  "W_DBNORevive Container render scale 0.7, brush colour alpha 0.6000000238418579 -> 0.6",
+  "W_ActionTutorial Icon valign/padding (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000014A13D12660) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 1.000000}>) -> (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000014A13D12660) {left: -2.000000, top: 0.000000, right: -2.000000, bottom: 1.000000}>)",
+  "W_ActionTutorial PostText valign/padding (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000014A154B5CD0) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>) -> (<VerticalAlignment.V_ALIGN_BOTTOM: 3>, <Struct 'Margin' (0x0000014A154B5CD0) {left: 4.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>)",
   "WBP_ContainerInfo T_CorpseText1 already present",
   "line1 font Cardo-SC-Bold_Font size 18.0",
   "Content padding L/R (140.0, 140.0) -> (140.0, 140.0)",
@@ -27,12 +33,20 @@
   "W_MainMenu_MainMenu: feedback 195x40 at (628.7939453125, 326.9425048828125, 0.0)",
   "W_MainMenu_MainMenu: game logo (384.0, 192.0) pad (72.0, 120.0, 0.0); ours 427x162 at (507.53375244140625, 131.20957946777344, 0.0) (right); versions under both",
   "W_IngameMenu: feedback 195x40 at (0.0, 325.2353210449219, 703.7200317382812)",
-  "W_IngameMenu: game logo (512.0, 256.0) pad (0.0, 88.0, 72.0); ours 422x160 at (0.0, 131.34654235839844, 595.4527587890625) (left); versions under both"
+  "W_IngameMenu: game logo (512.0, 256.0) pad (0.0, 88.0, 72.0); ours 422x160 at (0.0, 131.34654235839844, 595.4527587890625) (left); versions under both",
+  "W_Carousel: AnimBackgroundFadeOut no-op, end 0.000033 s, keys ['Background MaskOffset_0=0.0..0.0']",
+  "InventoryGridSlotView: AnimSelect instant, end 0.000033 s, keys ['SelectIndicator MovieSceneScriptingFloatChannel_0=0.0..1.0']"
  ],
  "saved": true,
  "saved_ql": true,
  "saved_tt": true,
  "saved_perk": true,
+ "saved_eh": true,
+ "saved_W_DialogueNPCInfo": true,
+ "saved_W_PlaceableInfo": true,
+ "saved_W_SimpleInfo": true,
+ "saved_W_ThrallInfo": true,
+ "saved_W_DBNORevive": true,
  "saved_at": true,
  "saved_line1": true,
  "menu_backdrop": {
@@ -54,5 +68,19 @@
   ]
  },
  "saved_W_MainMenu_MainMenu": true,
- "saved_W_IngameMenu": true
+ "saved_W_IngameMenu": true,
+ "carousel": {
+  "keys": [
+   "Background MaskOffset_0=0.0..0.0"
+  ],
+  "end_time": 3.333333370392211e-05
+ },
+ "saved_carousel": true,
+ "gridslot": {
+  "keys": [
+   "SelectIndicator MovieSceneScriptingFloatChannel_0=0.0..1.0"
+  ],
+  "end_time": 3.333333370392211e-05
+ },
+ "saved_gridslot": true
 }

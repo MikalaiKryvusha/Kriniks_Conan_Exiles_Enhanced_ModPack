@@ -1,0 +1,4 @@
+# Запуск 8 — Quick Win r.Nanite.Streaming.NumInitialRootPages (KUMM researches/conan-oblivion-perffix-recon): читается на старте; A = умолчание 2048, B = 3072 через ini-temp.py add <ini> q8 …; смотреть ПЕРВЫЙ (холодный) облёт — замирание раз за сессию
+#read r.Nanite.Streaming.NumInitialRootPages
+q8-cold
+q8-F1

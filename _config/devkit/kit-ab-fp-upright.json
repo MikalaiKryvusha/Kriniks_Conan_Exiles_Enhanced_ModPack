@@ -1,0 +1,120 @@
+{
+ "ok": true,
+ "parent_class": "ERR AnimBlueprint: Failed to find property 'parent_class' for attribute 'parent_class' on 'AnimBlueprint'",
+ "vanilla_calls": [
+  {
+   "graph": "HandlePickup",
+   "node": "GetWeaponItemPrimary",
+   "class": "K2Node_CallFunction",
+   "inputs": {
+    "self": [
+     "Get CombatBP.CombatBP"
+    ]
+   }
+  },
+  {
+   "graph": "UpdateBlendspaces",
+   "node": "GetWeaponItemPrimary",
+   "class": "K2Node_CallFunction",
+   "inputs": {
+    "self": [
+     "Get CombatBP.CombatBP"
+    ]
+   }
+  },
+  {
+   "graph": "EventGraph",
+   "node": "GetWeaponItemPrimary",
+   "class": "K2Node_CallFunction",
+   "inputs": {
+    "self": [],
+    "Character": [
+     "Get CombatBP.CombatBP"
+    ]
+   }
+  },
+  {
+   "graph": "MountsGraph",
+   "node": "GetWeaponItemPrimary",
+   "class": "K2Node_CallFunction",
+   "inputs": {
+    "self": [
+     "Get CombatBP.CombatBP"
+    ]
+   }
+  }
+ ],
+ "compile_vanilla": true,
+ "marks_vanilla": [
+  {
+   "graph": "KnockDownStart",
+   "node": "Плеер пространства смешивания 'BS1D_combat_knockdown'",
+   "msg": "Transition  из KnockDownStart в Ragdolling  is using an automatic transition rule but the source  Плеер пространства смешивания 'BS1D_combat_knockdown'  is set as looping.  Please clear the 'Loop' flag"
+  },
+  {
+   "graph": "JumpUp",
+   "node": "Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'",
+   "msg": "Transition  из JumpUp в Default  is using an automatic transition rule but the source  Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'  is set as looping.  Please clear the 'Loop Animation' flag"
+  }
+ ],
+ "marks_edited": [
+  {
+   "graph": "KnockDownStart",
+   "node": "Плеер пространства смешивания 'BS1D_combat_knockdown'",
+   "msg": "Transition  из KnockDownStart в Ragdolling  is using an automatic transition rule but the source  Плеер пространства смешивания 'BS1D_combat_knockdown'  is set as looping.  Please clear the 'Loop' flag"
+  },
+  {
+   "graph": "JumpUp",
+   "node": "Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'",
+   "msg": "Transition  из JumpUp в Default  is using an automatic transition rule but the source  Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'  is set as looping.  Please clear the 'Loop Animation' flag"
+  }
+ ],
+ "variant": "full",
+ "compile_edited": true,
+ "readback_event_then": [
+  "Ответвление.execute"
+ ],
+ "readback_selector": [
+  [
+   "Get KrinikFirstPersonUpright.KrinikFirstPersonUpright"
+  ]
+ ],
+ "steps": [
+  "vanilla compile: True, marked nodes 2",
+  "selector bActiveValue fed by ['Get isPassive.isPassive']",
+  "add member KrinikFirstPersonUpright: True",
+  "link KrinikFirstPersonUpright -> selector.bActiveValue: True",
+  "update event: Событие BlueprintUpdateAnimation, then -> ['UpdateVarsFromCombatBP.execute']",
+  "call node OR Boolean via /Script/Engine.KismetMathLibrary:BooleanOR, pins ['A', 'B', 'ReturnValue']",
+  "branch pins in ['execute', 'Condition'] out ['then', 'else']",
+  "set pins in ['execute', 'KrinikFirstPersonUpright'] out ['then', 'Output_Get']",
+  "call node NOT Boolean via /Script/Engine.KismetMathLibrary:Not_PreBool, pins ['A', 'ReturnValue']",
+  "call node AND Boolean via /Script/Engine.KismetMathLibrary:BooleanAND, pins ['A', 'B', 'ReturnValue']",
+  "call node OR Boolean via /Script/Engine.KismetMathLibrary:BooleanOR, pins ['A', 'B', 'ReturnValue']",
+  "link isAttacking -> NOT: True",
+  "link not attacking -> AND.B: True",
+  "call node GetWeaponItemPrimary via /Script/ConanSandbox.AnimInstanceHumanMalePlayer:GetWeaponItemPrimary, pins ['self', 'Character', 'ReturnValue']",
+  "link CombatBP -> GetWeaponItemPrimary.Character: True",
+  "call node GetWeaponArcheType via /Script/ConanSandbox.GameItem:GetWeaponArcheType, pins ['self', 'ReturnValue']",
+  "call node To Integer (Byte) via /Script/Engine.KismetMathLibrary:Conv_ByteToInt, pins ['InByte', 'ReturnValue']",
+  "call node Equal (Integer) via /Script/Engine.KismetMathLibrary:EqualEqual_IntInt, pins ['A', 'B', 'ReturnValue']",
+  "link item -> GetWeaponArcheType.self: True",
+  "link archetype -> ToInt: True",
+  "link int -> ==.A: True",
+  "==.B = 3: True",
+  "link bow -> AND.A: True",
+  "link isPassive -> OR.A: True",
+  "link bow held, not drawn -> OR.B: True",
+  "link value -> Set KrinikFirstPersonUpright: True",
+  "link isThirdPerson -> skip.A: True",
+  "link isNPC -> skip.B: True",
+  "link skip -> Branch.Condition: True",
+  "link update event -> Branch: True",
+  "link Branch.True -> the game's chain: True",
+  "link Branch.False -> Set: True",
+  "link Set -> the game's chain: True",
+  "compile: True, marked nodes 2",
+  "save: True",
+  "cook list: added FilesToCook=Mods/KrinikConanArchery/Content/Master_AnimBP/AB_human_male.uasset"
+ ]
+}

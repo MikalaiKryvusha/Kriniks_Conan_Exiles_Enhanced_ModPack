@@ -7,7 +7,8 @@
     1. merges our table into the game's DT_UIModuleTable ONCE, at the main menu's birth (ModController CDO MergeDataTables — phase 0, proven);
     2. when our module opens: writes every text from SETTINGS below (title, buttons, mod names, labels, «i», hints), sets the slider ranges and
        every control to the STORED value (krinik_settings — <game>\ConanSandbox\Saved\KrinikSettings.lua), selects the first live mod;
-    3. routes a real left click (RegisterKeyBind — UserWidget mouse events never fire here, EXP-0399; the «ОТЗЫВ» plate's route) to the hovered
+    3. routes a real left click (the window's blueprint event KrinikMouseDown from its OnPreviewMouseButtonDown override — bug 85; a hook on the
+       native UserWidget mouse events never fires, EXP-0399) to the hovered
        element: a mod name → its page; «i» → the explanation plate; «Сбросить к исходным» → the page's controls to the defaults (not saved);
        «Сохранить» → the store written, the sections told (krinik_settings.on_change); «Сохранить и закрыть»; «Закрыть без сохранения» → closed,
        the store untouched (the next opening reads the store again, so an unsaved change is gone);
@@ -70,18 +71,18 @@ local PAGES = {
         { id = "cam_dist", kind = "slider", default = 315, min = 150, max = 800, step = 5, hint = "в сантиметрах",
           label = "Расстояние до героя", info = "Расстояние, которое ставят клавиши «+» и «−» цифрового блока; колесо мыши приближает и отдаляет камеру как обычно." },
         { id = "cam_pitch", kind = "slider", default = -2, min = -15, max = 15, step = 1, hint = "в градусах",
-          label = "Наклон взгляда", info = "Наклоняет камеру вверх или вниз, не сдвигая её; ноль — как в игре без мода." },
+          label = "Наклон взгляда", info = "Наклоняет камеру вверх или вниз, не сдвигая её. При нуле камера смотрит так же, как в игре без мода." },
         { id = "cam_zoom_min", kind = "slider", default = 130, min = 130, max = 400, step = 10,
           label = "Ближе всего к герою", info = "Самое близкое расстояние колеса мыши; ещё ближе камера переходит к виду от первого лица." },
         { id = "cam_zoom_max", kind = "slider", default = 2125, min = 500, max = 3000, step = 25,
           label = "Дальше всего от героя", info = "Самое дальнее расстояние, на которое колесо мыши отводит камеру." },
         { id = "cam_sharp", kind = "check", default = false,
-          label = "Резкий зум", info = "Включено — колесо переставляет камеру сразу; выключено — камера доезжает плавно." },
+          label = "Резкий зум", info = "Когда настройка включена, колесо мыши переставляет камеру сразу. Когда выключена, камера доезжает до нового расстояния плавно." },
         -- the number is TP_SpringArmInterpSpeed: bigger = the camera reaches the new distance sooner = a SHARPER zoom; «Плавность … больше — быстрее»
         -- read backwards (`[OWNER]` 2026-11-01 10:05 «плавность зума больше - быстрее. каким боком быстрее к плавности? может Больше - резче?»).
         -- The label became «Скорость», so the pair is «больше — быстрее»: `[OWNER]` 2026-11-01 14:30 «Раньше была Плавность. Плавность резче, а
         -- скорость - быстрее !!» — a label and its hint / «i» are ONE pair: change the noun → re-read the hint and the «i».
-        { id = "cam_zoom_smooth", kind = "slider", default = 9, min = 1, max = 20, step = 1, hint = "больше — быстрее",
+        { id = "cam_zoom_smooth", kind = "slider", default = 9, min = 1, max = 20, step = 1, hint = "большее число ускоряет",
           label = "Скорость зума", info = "Как быстро камера доезжает до нового расстояния после щелчка колеса: чем больше число, тем быстрее." },
     } },
     { key = "ui", name = "KrinikConanUI", note = "интерфейс сборки", rows = {
@@ -92,7 +93,7 @@ local PAGES = {
         { id = "ui_blink_weight", kind = "slider", default = 0.90, min = 0.50, max = 0.95, step = 0.05, scale = 100, unit = " %",
           label = "Мигание веса", info = "Когда ноша доходит до этой доли предела, значок веса начинает мигать." },
         { id = "ui_menu_slow", kind = "slider", default = 1 / 0.03, min = 1, max = 50, step = 1, hint = "во сколько раз",
-          label = "Мир замедляется в меню", info = "Пока открыты инвентарь, сундук или станция, мир идёт медленнее: голод, жажда и враги ждут героя. Шкала задаёт, во сколько раз медленнее; 1 — мир не замедляется." },
+          label = "Мир замедляется в меню", info = "Пока открыты инвентарь, сундук или станция, мир идёт медленнее: голод, жажда и враги ждут героя. Шкала задаёт, во сколько раз медленнее. При значении 1 мир не замедляется." },
         { id = "ui_craft", kind = "check", default = true,
           label = "Крафт в меню без замедления", info = "Пока мир в меню почти стоит, вещи, которые изготавливает герой, готовятся за обычное время." },
         -- krinik_shout_fade reads it at every shout; 1 s ≈ the game's own (a line lives as long as its voice, 0.9–1.75 s). `[OWNER]` 2026-11-01 08:49
@@ -111,18 +112,18 @@ local PAGES = {
         -- и по горизонтали?»); «E Взять» stands by its RIGHT edge at the crosshair dot, on the dot's line — default just left of the dot (`[OWNER]` 14:22 «слишком
         -- далеко плашка от центра» · «поднять выше в одну линию с точной прицела, и правее»; was −14 / +6 from the plate's middle). [TESTED: 2026-11-02 · 4K frame N6 · KUMM testcases/reports/2026-11-02_conan-pickup-native-probe.md]
         { id = "ui_pickup_x", kind = "slider", default = -1, min = -45, max = 45, step = 1, unit = " %",
-          label = "«E Взять»: по горизонтали", info = "Куда сдвинута подсказка «E Взять» от прицела: влево — меньше нуля, вправо — больше, в долях ширины экрана." },
+          label = "«E Взять»: по горизонтали", info = "Сдвигает подсказку «E Взять» от прицела по горизонтали, в долях ширины экрана. Число меньше нуля сдвигает её влево, число больше нуля сдвигает вправо." },
         { id = "ui_pickup_y", kind = "slider", default = 0, min = -45, max = 45, step = 1, unit = " %",
-          label = "«E Взять»: по высоте", info = "Куда сдвинута подсказка «E Взять» от прицела: вверх — меньше нуля, вниз — больше, в долях высоты экрана." },
+          label = "«E Взять»: по высоте", info = "Сдвигает подсказку «E Взять» от прицела по вертикали, в долях высоты экрана. Число меньше нуля поднимает её, число больше нуля опускает." },
         { id = "ui_strip_x", kind = "slider", default = -22, min = -40, max = 40, step = 1, unit = " %",
-          label = "Плашка трупа: по горизонтали", info = "Куда сдвинута плашка над трупом или сундуком: влево — меньше нуля, вправо — больше. Пока открыто окно добычи, плашка стоит у левого края." },
+          label = "Плашки: по горизонтали", info = "Сдвигает плашки над трупом, сундуком, постройкой, рабом и собеседником по горизонтали. Число меньше нуля сдвигает их влево, число больше нуля сдвигает вправо. Пока открыто окно добычи, плашка стоит у левого края." },
         { id = "ui_strip_y", kind = "slider", default = 0, min = -40, max = 40, step = 1, unit = " %",
-          label = "Плашка трупа: по высоте", info = "Куда сдвинута плашка над трупом или сундуком: вверх — меньше нуля, вниз — больше." },
+          label = "Плашки: по высоте", info = "Сдвигает плашки над трупом, сундуком, постройкой, рабом и собеседником по вертикали. Число меньше нуля поднимает их, число больше нуля опускает." },
         -- the strip's size and backing (krinik_ui_fixes): `[OWNER]` 2026-11-02 10:54 «фон 60, меньше на» · «30» · «даем это настройкой в моде UI криника». [NOT-TESTED]
         { id = "ui_strip_scale", kind = "slider", default = 0.70, min = 0.40, max = 1.20, step = 0.05, scale = 100, unit = " %",
-          label = "Плашка трупа: размер", info = "Размер плашки над трупом или сундуком: 100 % — как в игре." },
+          label = "Плашки: размер", info = "Задаёт размер плашек над трупом, сундуком, постройкой, рабом и собеседником. При 100 % плашки такого же размера, как в игре без мода." },
         { id = "ui_strip_back", kind = "slider", off_at_zero = true, default = 0.60, min = 0.0, max = 1.0, step = 0.05, scale = 100, unit = " %",
-          label = "Плашка трупа: фон", info = "Насколько плотен тёмный фон под плашкой: в крайнем левом положении фона нет, текст остаётся." },
+          label = "Плашки: фон", info = "Насколько плотен тёмный фон под плашками: в крайнем левом положении фона нет, текст остаётся." },
     } },
     { key = "arc", name = "KrinikConanArchery", note = "лук и стрелы", rows = {
         { id = "arc_ballistics", kind = "check", default = true,
@@ -246,7 +247,7 @@ local PAGES = {
         { id = "dm_followers", kind = "color9", default = "cdo",
           label = "Цвета полос отслеживаемых", info = "Цвета полос урона спутников под слежкой, по одному на каждого из девяти." },
         { id = "dm_refresh", kind = "slider", default = 0.2, min = 0.05, max = 1.0, step = 0.05, hint = "в секундах",
-          label = "Частота обновления полос", info = "Как часто перерисовываются полосы урона в окне счётчика: меньше — живее, больше — спокойнее." },
+          label = "Частота обновления полос", info = "Задаёт, как часто перерисовываются полосы урона в окне счётчика. При меньшем числе полосы обновляются чаще и двигаются живее, при большем обновляются реже и двигаются спокойнее." },
         { id = "dm_segment", kind = "slider", default = 7, min = 5, max = 15, step = 1, hint = "в секундах",
           label = "Пауза до новой стычки", info = "Сколько секунд без ударов счётчик ждёт, прежде чем начать считать новую стычку отдельно." },
         { id = "dm_key", kind = "key", default = "F1", label = "Клавиша вызова курсора",
@@ -276,42 +277,107 @@ local function in_hub(p) return LIVE[p.key] and (p.hub or "krinik") == hub end
 
 local function log(fmt, ...) print(("[%s] " .. fmt .. "\n"):format(MOD, ...)) end
 local function valid(o) return o ~= nil and o:IsValid() end
+-- Another mod's class or class default object, loaded when it is not in memory yet. Since 3.1.0 the game loads only ModController classes at startup
+-- (Funcom's notes 2026-11-12; KUMM researches/conan_patch_3_1_0 §3 A.1) and StaticFindObject never loads: a save-game class of Damage Meter,
+-- Proximity Party, Simple Minimap or LLHighlight may be absent until that mod's code touches it — its hub page then showed no values. A CDO path
+-- «Pkg.Default__X_C» loads through its class «Pkg.X_C» (UE4SS LoadAsset takes the full object path «Pkg.Obj»). [NOT-TESTED]
+local find_missed = {}
+local function find_loaded(path)
+    local o = StaticFindObject(path)
+    if valid(o) then return o end
+    local class_path = path:gsub("%.Default__", ".", 1)
+    pcall(function() LoadAsset(class_path) end)
+    o = StaticFindObject(path)
+    -- not found even after the load: an asset renamed in a mod's re-upload, or the mod is absent — one line per path (judge round 2, F8)
+    if not valid(o) and not find_missed[path] then find_missed[path] = true; log("class not found even after LoadAsset: %s", path) end
+    return o
+end
 local function str(n) return type(n) == "string" and n or (n and n.ToString and n:ToString()) or tostring(n) end
 
--- ---- 1. the module table merge (phase 0) ----------------------------------------------------------------------------------------------
-local merged = false
+-- ---- 1. our tables merged into the game's, once (phase 0; the perks since 2026-11-10) -------------------------------------------------
+-- MERGES[1] — the module table (our settings window's row). MERGES[2] — placeholder perks 21–40 (KUMM plan 49 step 2, the owner's order 2026-11-10 10:28):
+-- DT_KrinikPerks (kit-krinik-perks.py: four Живучесть rows at 25 / 30 / 35 / 40, row struct PerksTableRow) into PerksTable. The game's attribute widgets read
+-- PerksTable directly (its referencers: W_Attribute, W_Attributes, BP_PerkSystemComponent), so merged rows reach the pips and the right column with no hook;
+-- PerksTable may not be loaded at the main menu — `load` lets the merge load it by its full path. [NOT-TESTED] for the perks
+-- PLACEHOLDER_PERKS: выключено 2026-11-10 19:1x по слову владельца («Заглушки с перков пока что можно убрать, запомнить, как они делаются, потом будем
+-- придумывать новые ряды перков»). DT_KrinikPerks остаётся в паке как образец; рецепт новых рядов — KUMM plans/49, раздел «Recipe: perk rows past 20».
+-- true — вернуть заглушки (или подставить сюда будущую таблицу настоящих перков). [NOT-TESTED]
+local PLACEHOLDER_PERKS = false
+local MERGES = {
+    { label = "merge", main = MAIN_TABLE, ours = OUR_TABLE, row = ROW },
+}
+if PLACEHOLDER_PERKS then
+    MERGES[2] = { label = "perks merge", main = "/Game/Systems/Perks/PerksTable.PerksTable", ours = "/Game/Mods/KrinikConanUI/DT_KrinikPerks.DT_KrinikPerks",
+      row = "Krinik_Vitality_25", load = true }
+end
 
-local function count_rows(dt)
+local function count_rows(dt, row)
     local n, has = 0, false
     dt:ForEachRow(function(name, _)
         n = n + 1
-        if str(name) == ROW then has = true end
+        if str(name) == row then has = true end
     end)
     return n, has
 end
 
-local function merge(why)
-    if merged then return end
+local function merge(m, why)
+    if m.done then return end
     local t0 = os.clock()
-    local main = StaticFindObject(MAIN_TABLE)
-    if not valid(main) then log("merge (%s): %s not loaded yet", why, MAIN_TABLE); return end
-    local ours = StaticFindObject(OUR_TABLE)
-    if not valid(ours) then ours = LoadAsset(OUR_TABLE) end   -- the FULL object path «Pkg.Obj»: the package path alone returns nil (2026-10-31 19:30)
-    if not valid(ours) then log("merge (%s): our table %s not found", why, OUR_TABLE); return end
+    local main = StaticFindObject(m.main)
+    if not valid(main) and m.load then main = LoadAsset(m.main) end
+    if not valid(main) then log("%s (%s): %s not loaded yet", m.label, why, m.main); return end
+    local ours = StaticFindObject(m.ours)
+    if not valid(ours) then ours = LoadAsset(m.ours) end   -- the FULL object path «Pkg.Obj»: the package path alone returns nil (2026-10-31 19:30)
+    if not valid(ours) then log("%s (%s): our table %s not found", m.label, why, m.ours); return end
     local mc = StaticFindObject(MOD_CONTROLLER_CDO)
-    if not valid(mc) then log("merge (%s): %s not found", why, MOD_CONTROLLER_CDO); return end
-    local n0, h0 = count_rows(main)
+    if not valid(mc) then log("%s (%s): %s not found", m.label, why, MOD_CONTROLLER_CDO); return end
+    local n0, h0 = count_rows(main, m.row)
+    if h0 then m.done = true; return end   -- our row is already there (a mods reload): no second merge (judge round 3)
     local ok, err = pcall(function() mc:MergeDataTables(main, ours) end)
-    local n1, h1 = count_rows(main)
-    merged = h1
-    log("merge (%s): call %s%s; rows %d -> %d; %s present %s -> %s; %.2f ms", why, ok and "ok" or "FAILED", ok and "" or (" " .. tostring(err)),
-        n0, n1, ROW, tostring(h0), tostring(h1), (os.clock() - t0) * 1000)
+    local n1, h1 = count_rows(main, m.row)
+    m.done = h1
+    log("%s (%s): call %s%s; rows %d -> %d; %s present %s -> %s; %.2f ms", m.label, why, ok and "ok" or "FAILED", ok and "" or (" " .. tostring(err)),
+        n0, n1, m.row, tostring(h0), tostring(h1), (os.clock() - t0) * 1000)
 end
 
-NotifyOnNewObject(MENU_CLASS, function(m)
-    if merged or m:GetFullName():find("Default__", 1, true) then return end
-    ExecuteInGameThreadWithDelay(MERGE_DELAY_MS, function() merge("main menu") end)
+local function all_merged()
+    for _, m in ipairs(MERGES) do if not m.done then return false end end
+    return true
+end
+
+NotifyOnNewObject(MENU_CLASS, function(menu)
+    if all_merged() or menu:GetFullName():find("Default__", 1, true) then return end
+    ExecuteInGameThreadWithDelay(MERGE_DELAY_MS, function()
+        for _, m in ipairs(MERGES) do merge(m, "main menu") end
+    end)
 end)
+
+-- PerksTable may be loaded at the main menu by OUR LoadAsset alone, and a Lua local does not root it: if the GC unloads it before the world, the game reloads a
+-- clean table and the placeholders vanish while `done` stays true (judge round 1, 2026-11-10). So the perks merge is re-checked when the attribute screen
+-- builds a row — one row-count of ≈ 55 rows per row birth, only while «Хар-ки» opens (a window opening may lag; HOUSE_RULES rule 7 / the 1 ms rule is gameplay).
+-- Also at the world HUD's birth, long before the first «Хар-ки» (the row-birth check runs a tick after the rows exist, so an unloaded table would miss the
+-- first opening — judge round 2). [NOT-TESTED]
+local function recheck_perks(why)
+    local m = MERGES[2]
+    if not m then return end   -- заглушки выключены (PLACEHOLDER_PERKS)
+    local main = StaticFindObject(m.main)
+    if not valid(main) then return end
+    local _, has = count_rows(main, m.row)
+    if not has then
+        m.done = false
+        merge(m, why)
+    end
+end
+-- the world HUD of the build is Hosav's (the same path as krinik_hud_outline / krinik_hud_blink use). Registered only with the placeholders on: with
+-- PLACEHOLDER_PERKS false every HUD and attribute-row birth queued a call that did nothing (KUMM judge round 2 of bug 93's batch, finding 6, 2026-11-13).
+if MERGES[2] then
+    for _, cls in ipairs({ "/Game/Mods/UIMod_Hosav/W_NewHealthUI.W_NewHealthUI_C", "/Game/UI/Inventory/Attributes/W_Attribute.W_Attribute_C" }) do
+        NotifyOnNewObject(cls, function(w)
+            if w:GetFullName():find("Default__", 1, true) then return end
+            ExecuteInGameThread(function() recheck_perks(cls:match("%.([%w_]+)$")) end)
+        end)
+    end
+end
 
 -- ---- 2. the open window ---------------------------------------------------------------------------------------------------------------
 local win = nil          -- the live window while open; nil — the LMB bind returns at once
@@ -938,7 +1004,7 @@ local AUTHORS = {
             local s = statics()
             local sg = s:LoadGameFromSlot(a.slot, 0)
             -- a new slot (the player never pressed the author's «Подтвердить») starts from the class defaults — its colours are the component's then too
-            if not valid(sg) then sg = s:CreateSaveGameObject(StaticFindObject(a.class)) end
+            if not valid(sg) then sg = s:CreateSaveGameObject(find_loaded(a.class)) end
             for id, f in pairs(a.fields) do sg[f] = v[id] end
             local ok = s:SaveGameToSlot(sg, a.slot, 0)
             log("llh: applied by UpdateSettings, slot %s saved: %s", a.slot, tostring(ok))
@@ -996,7 +1062,7 @@ end
 local function read_slot(a)
     local s = statics()
     local sg = s:LoadGameFromSlot(a.slot, 0)
-    if not valid(sg) then sg = StaticFindObject(a.cdo) end
+    if not valid(sg) then sg = find_loaded(a.cdo) end
     if not valid(sg) then return nil end
     local t = {}
     for id, f in pairs(a.fields) do t[id] = from_ue(KIND[id], sg[f[1]]) end
@@ -1004,7 +1070,7 @@ local function read_slot(a)
 end
 -- the class defaults of a slot author (the «Сбросить к исходным» value of a row whose default is «cdo» — the Damage Meter's nine bar colours)
 local function read_cdo(a)
-    local sg = StaticFindObject(a.cdo)
+    local sg = find_loaded(a.cdo)
     if not valid(sg) then return nil end
     local t = {}
     for id, f in pairs(a.fields) do t[id] = from_ue(KIND[id], sg[f[1]]) end
@@ -1312,15 +1378,39 @@ local function on_click()
         end
     end
 end
-RegisterKeyBind(Key.LEFT_MOUSE_BUTTON, function()
-    if not win then return end            -- play: one boolean (criterion 7)
-    -- the evidence line: a click on «Сохранить» did not route in run 1 (2026-10-31 20:48) though the button reads hovered — does the bind fire at all?
-    log("LMB (window open)")
-    ExecuteInGameThread(function()
-        local ok, err = pcall(on_click)
-        if not ok then log("click failed: %s", tostring(err)) end
+-- Esc of this window: the kit's OnPreviewKeyDown calls our event KrinikEsc (bug 85, 2026-11-18; until then a UE4SS key bind of the pause section did
+-- it — the crash class); it closes the window the way «Закрыть» does: state reset, then the module closed by the UFunction so the camera's and the pack
+-- manager's hooks see it (judge 2026-11-18 R4 — a bare TryCloseWindow skipped both). Hooked at the first opening with the click event (hook_clicks).
+local ESC_EVENT = "/Game/Mods/KrinikConanUI/W_KrinikModSettings.W_KrinikModSettings_C:KrinikEsc"
+
+-- The click arrives as the window's own blueprint event (bug 85, 2026-11-18): kit-krinik-click-events.py overrides OnPreviewMouseButtonDown of
+-- W_KrinikModSettings — a LEFT button press anywhere in the window calls our custom event KrinikMouseDown and returns Unhandled, so sliders, the key
+-- selector and the rest still get the press. The hook runs on the game thread; on_click runs on the next game-thread pass (outside Slate's routing,
+-- as the key bind's ExecuteInGameThread did). Until 2026-11-18 a RegisterKeyBind(LMB) did it on UE4SS's event-loop thread — the crash class of bug 85.
+-- The class is loaded with the window, so the hook is set at the first opening (hook_clicks below).
+-- [TESTED: 2026-11-18 · K4 real mouse (a checkbox both ways, a page), K5 real Esc «closed (Esc)» · KUMM testcases/reports/2026-11-18_conan-keybinds-wrap-run.md]
+local CLICK_EVENT = "/Game/Mods/KrinikConanUI/W_KrinikModSettings.W_KrinikModSettings_C:KrinikMouseDown"
+local clicks_hooked = false
+local function hook_clicks()
+    if clicks_hooked then return end
+    clicks_hooked = true
+    local ok, e = pcall(RegisterHook, CLICK_EVENT, function()
+        if not win then return end
+        ExecuteInGameThread(function()
+            local ok2, err = pcall(on_click)
+            if not ok2 then log("click failed: %s", tostring(err)) end
+        end)
     end)
-end)
+    log("click event hook %s", ok and "set" or ("NOT set: " .. tostring(e)))
+    local ok3, e3 = pcall(RegisterHook, ESC_EVENT, function()
+        if not win then return end
+        ExecuteInGameThread(function()
+            local ok4, err = pcall(close_window, "Esc")
+            if not ok4 then log("Esc close failed: %s", tostring(err)) end
+        end)
+    end)
+    log("Esc event hook %s", ok3 and "set" or ("NOT set: " .. tostring(e3)))
+end
 
 -- ---- 4. while open: the «i» hover and the marquee -------------------------------------------------------------------------------------
 local function watch(w)
@@ -1380,6 +1470,19 @@ RegisterHook("/Script/ConanSandbox.GUIModuleController:ActivateModule", function
         for _, w in ipairs(FindAllOf(WINDOW_CLASS) or {}) do
             if valid(w) and not w:GetFullName():find("Default__", 1, true) and w:IsVisible() then
                 win = w
+                hook_clicks()
+                -- KrinikEsc comes from the window's OnPreviewKeyDown, which a key reaches only on the focus path: the window is made focusable and takes
+                -- the focus at its opening (run 2026-11-18 20:4x: not focusable → a posted Esc passed it by; focusable + focused → Esc closed it, hub stayed)
+                -- One pcall per step, each failure logged: a throw in SetUserFocus skipped SetKeyboardFocus and left Esc dead with no trace (judge
+                -- 2026-11-18, round 2, finding 4).
+                for _, step in ipairs({
+                    { "bIsFocusable", function() w.bIsFocusable = true end },
+                    { "SetUserFocus", function() w:SetUserFocus(FindFirstOf("PlayerController")) end },
+                    { "SetKeyboardFocus", function() w:SetKeyboardFocus() end },
+                }) do
+                    local oks, es = pcall(step[2])
+                    if not oks then log("focus step %s failed: %s", step[1], tostring(es)) end
+                end
                 local t0 = os.clock()
                 local okf, err = pcall(fill_window)
                 log("window %s opened: filled %s%s in %.2f ms", w:GetFName():ToString(), okf and "ok" or "FAILED ", okf and "" or tostring(err),
@@ -1392,4 +1495,4 @@ RegisterHook("/Script/ConanSandbox.GUIModuleController:ActivateModule", function
     end)
 end)
 
-log("loaded: merge at the main menu, window filled at opening from %s, LMB routed only while open", settings.PATH)
+log("loaded: merge at the main menu, window filled at opening from %s, clicks by the window's KrinikMouseDown event", settings.PATH)

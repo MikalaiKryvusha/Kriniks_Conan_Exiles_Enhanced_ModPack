@@ -1,0 +1,234 @@
+# rows of dm-fish-ru.tsv translated but whose key is absent from Game/ru/Game.locres (KUMM translation notes «An entry lost by the build»)
+# row	asset	EN (first 70)
+1045	IL_WBP_SpeechBubble	This is a teste 
+1046	IL_WBP_SpeechBubble1	Text Block dssfdsfdsfdsdsdsfdsfdsfdsf Text Block dssfdsfdsfdsdsdsfdsfd
+1794	W_MCP_DropDownText	Example Help Text
+1796	W_MCP_DropDownText	Example Text Line 1{LineBreak}Example Text Line 2
+1798	W_AmbushWidget_AdminAndUser	Example MultiUser Widget
+1827	NAS_DT_ExcludedLocations	This entry should be mostly temporary until Funcom fixes Warmaker to q
+1907	Caverns_of_Set_Feat_Table	XX_Desc: Set's Divine Pacification
+1909	Caverns_of_Set_Feat_Table	XX_Desc: Axe of the Grey Ancients
+1911	Caverns_of_Set_Feat_Table	XX_Desc: Mace of the GreyAncients
+1913	Caverns_of_Set_Feat_Table	XX_Desc: Sword of the Grey Ancients
+1915	Caverns_of_Set_Feat_Table	XX_Desc: Great axe of the Grey Ancients
+1917	Caverns_of_Set_Feat_Table	XX_Desc: Warhammer of the Grey Ancients
+1919	Caverns_of_Set_Feat_Table	XX_Desc: Great sword of the Grey Ancients
+1921	Caverns_of_Set_Feat_Table	XX_Desc: Bow of the Grey Ancients
+1923	Caverns_of_Set_Feat_Table	XX_Desc: Daggers of the Grey Ancients
+1925	Caverns_of_Set_Feat_Table	XX_Desc: Katana of the Grey Ancients
+1927	Caverns_of_Set_Feat_Table	XX_Desc: Spear of the Grey Ancients
+1929	Caverns_of_Set_Feat_Table	XX_Desc: Shield of the Grey Ancients
+1931	Caverns_of_Set_Feat_Table	XX_Desc: Shortsword of the Grey Ancients
+1933	Caverns_of_Set_Feat_Table	XX_Desc: Grey One Armor
+1935	Caverns_of_Set_Feat_Table	XX_Desc: Grey One Banner
+1937	Caverns_of_Set_Feat_Table	XX_Desc: Altar of Tranquility
+1939	Caverns_of_Set_Feat_Table	XX_Desc: Blessed Forge of Set
+1941	Caverns_of_Set_Feat_Table	XX_Desc: Smelting Furnace of Set
+1943	Caverns_of_Set_Feat_Table	XX_Desc:Caverns of Set Taxidermist
+1945	Caverns_of_Set_Feat_Table	XX_Desc: Sets Healing Tincture
+2093	Shemite_CS_Feat_Table	XX_Desc: Irukian Builder
+2118	Shemite_CS_Feat_Table	XX_Desc: Shemite Statues
+2277	Feat_Table_Ymirs_Respite	XX_Desc: Ymir's Consecrated Axes
+2314	Feat_Table_Ymirs_Respite	Ymir's Divine Armory (Not Used)
+2315	Feat_Table_Ymirs_Respite	XX_Desc: Ymir's Divine Armory_TEST
+2317	Feat_Table_Ymirs_Respite	XX_Desc: Ymir's Divine Armory
+2319	Feat_Table_Ymirs_Respite	XX_Desc: Tools of the Aesir
+2321	Feat_Table_Ymirs_Respite	XX_Desc: Forge of Ymir
+2323	Feat_Table_Ymirs_Respite	XX_Desc: Ymir's Summoned
+2326	ItemTable_Ymirs_Respite	Ymir's Divine Forge NOT IN USE
+3180	WO_WPB_RT_RidingModeRoot	Confirmation text
+3233	EoT_AC_Buff_PersistentEquipmentBuff_Base	Persistent Equipment Buff Base
+3236	StackingBuffTestMerge	Stack test merge
+3329	EoT_E_DangerZoneShape	NYI Sector
+3330	EoT_E_DangerZoneShape	NYI Arc
+3331	EoT_E_DangerZoneShape	NYI Disc
+3332	EoT_E_DangerZoneShape	NYI Torus
+3420	EoT_DT_CooldownEntries	Desecration - Test Desecration Location
+4040	EoT_DT_Religious_Item_Add	XX_Serpent-stamped Javelin Projectile
+4041	EoT_DT_Religious_Item_Add	XX_Yoggite Bone Spear Projectile
+4042	EoT_DT_Religious_Item_Add	XX_Glacier-shard Projectile
+4043	EoT_DT_Religious_Item_Add	XX_Skewer of the First Pack Projectile
+4372	EoT_DT_CooldownEntries	SibilantPoison_Display Name
+4564	W_TooltipWidget_Copy	Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec hendrer
+4573	SM_W_DEBUG	Avg Frame Time: {t}
+4662	SB_Log_Item_UI	[ Location some extra long text ]
+4832	W_LBPR_Tab_Template	Header Text
+4833	W_LBPR_Tab_Template	Option 2 (ComboBox)
+4834	W_LBPR_Tab_Template	Option 4 (SpinBox)
+4835	W_LBPR_Tab_Template	Option 5 (InputKeySelector)
+4836	W_LBPR_Tab_Template	Option 1 (Toggle)
+5023	Tot_FL_FlowChartHelper	Truncate to Integer
+6202	dt_Feat_Table	XX_Desc: ArrowMonarch
+6204	dt_Feat_Table	XX_Desc: Armors_RepairKit
+6206	dt_Feat_Table	XX_Desc: Royal_Crown
+6214	dt_Feat_Table	XX_Desc: Sword_Dragon_red_volcanic
+6216	dt_Feat_Table	XX_Desc: Sword 2 hands LongClaw
+6218	dt_Feat_Table	XX_Desc: Spear_Shaman_Venom_Infused
+6220	dt_Feat_Table	XX_Desc: Axe_Viking
+6222	dt_Feat_Table	XX_Desc: Axe_Undead
+6224	dt_Feat_Table	XX_Desc: Dagger_SkullFire
+6226	dt_Feat_Table	XX_Desc: Spear_Graved_Glaive
+6228	dt_Feat_Table	XX_Desc: Dagger_Mystical_Underworld
+6230	dt_Feat_Table	XX_Desc: Torch
+6232	dt_Feat_Table	XX_Desc: Sword_of_victory
+6234	dt_Feat_Table	XX_Desc: Harley_Quinn_Bat
+6236	dt_Feat_Table	XX_Desc: Axe_Medieval
+6238	dt_Feat_Table	XX_Desc: Khari_RedSnake
+6241	dt_Feat_Table	XX_Desc: Gold_Bow
+6242	dt_Feat_Table	XX_Desc: Bow and crossbow Monarch
+6244	dt_Feat_Table	XX_Desc: Katana_Flower
+6246	dt_Feat_Table	XX_Desc: Sword_Fr0stDragun
+6248	dt_Feat_Table	XX_Desc: Spear_Gold
+6250	dt_Feat_Table	XX_Desc: RedSnake_Arrow
+6252	dt_Feat_Table	XX_Desc: GreenSnake_Arrow
+6254	dt_Feat_Table	XX_Desc: PurpleSnake_Arrow
+6256	dt_Feat_Table	XX_Desc: WhiteSnake_Arrow
+6258	dt_Feat_Table	XX_Desc: Arrow_Dragon
+6260	dt_Feat_Table	XX_Desc: Slaver_Guard
+6262	dt_Feat_Table	XX_Desc: Dancer_Zamorian
+6264	dt_Feat_Table	XX_Desc: QueenRoyal_Armor
+6265	dt_Feat_Table	XX_Desc: Wakizashi
+6267	dt_Feat_Table	XX_Desc: Heels
+6269	dt_Feat_Table	XX_Desc: Axe_and_Hammer 2 Hands
+6271	dt_Feat_Table	XX_Desc: Lasso Of The Dead 
+6273	dt_Feat_Table	XX_Desc: Skirt
+6275	dt_Feat_Table	XX_Desc: Short
+6277	dt_Feat_Table	XX_Desc: The_Massacreur
+6279	dt_Feat_Table	XX_Desc: Dagger_Claws
+6281	dt_Feat_Table	XX_Desc: TopLight Victorian
+6283	dt_Feat_Table	XX_Desc: String_Line
+6285	dt_Feat_Table	XX_Desc: CamoLight
+6287	dt_Feat_Table	XX_Desc: Glasses
+6289	dt_Feat_Table	XX_Desc: Sword_Of_Pirate
+6290	dt_Feat_Table	XX_Desc: Shield
+6292	dt_Feat_Table	XX_Desc: Khukuri
+6294	dt_Feat_Table	XX_Desc: Sword_Of_Dragon
+6296	dt_Feat_Table	XX_Desc: Spear_Of_Dragon
+6298	dt_Feat_Table	XX_Desc: TopLight Vanir
+6299	dt_Feat_Table	XX_Desc: Skin
+6301	dt_Feat_Table	XX_Desc: Obsidian Purple Tools
+6303	dt_Feat_Table	XX_Desc: Ingredient
+6305	dt_Feat_Table	XX_Desc: Harley Quinn
+6307	dt_Feat_Table	XX_Desc: Dagger_Of_Dragon
+6309	dt_Feat_Table	XX_Desc: Dragon_Bow T1
+6310	dt_Feat_Table	XX_Desc: Hunting_Bow
+6312	dt_Feat_Table	XX_Desc: Steampunk_Hat_Glasses
+6314	dt_Feat_Table	XX_Desc: Hammer_UnDead
+6316	dt_Feat_Table	XX_Desc: Bikini
+6318	dt_Feat_Table	XX_Desc: Gardiane
+6320	dt_Feat_Table	XX_Desc: Dragon_BowT2
+6322	dt_Feat_Table	XX_Desc: Construction_HammerT2
+6324	dt_Feat_Table	XX_Desc: Royal Tools
+6326	dt_Feat_Table	XX_Desc: Weapon_RepairKit
+6328	dt_Feat_Table	XX_Desc: DragonShieldT2
+6668	AMR_UI_CustomTooltip	Text Block asdf asdf asdf sdaf asdf asdf asdf asdf asd fasdf sdaf asdf
+7070	Ancient_Civ_ItemTable	Ancient Civ TEST (no available
+7072	Ancient_Civ_ItemTable	material test
+7233	W_EL_MasterConfig_View	Emberlight / Players
+7633	DT_Ember_Items	Water Block Half TEST
+8012	DT_Ember_Feats	XX_Desc: Furniture Maker
+8014	DT_Ember_Feats	XX_Desc: Master Tanner
+8036	DT_Ember_Feats	XX_Desc: Master Tamer
+8097	DT_Ember_Items	Needs Text
+8109	DT_Ember_Items	TEST Trail Saddle 
+8253	DT_Ember_Items	Test Item
+8262	DT_Ember_Items	Water Block TEST
+11738	HA_ItemTable	(HA) Testing Hat
+12160	BP_HA_Withering_Debuff_T1	WitheringProc (+1)
+12161	BP_HA_Withering_Debuff_T2	WitheringProc (+2)
+12162	BP_HA_Withering_Debuff_T3	WitheringProc (+3)
+12163	BP_HA_Withering_Debuff_T4	WitheringProc (+4)
+12290	W_acs_Wardrobe	Wardrobe - Placeholder Text
+12295	W_acs_AccessorySlot	SLOT NAME
+12319	W_acs_ViewAllSection	Section Title
+12438	BP_HA_ProjectileWeapon_NoPerks_Parent	XX_Failed to get Socket_Projectile for {character} using {weapon}; rev
+12496	AC_acs_AccessorySystem	Rigid Skeletal Accessory has no valid mesh for male or female!
+12497	AC_acs_AccessorySystem	Rigid Static Accessory has no valid mesh for male or female!
+12498	AC_acs_AccessorySystem	Standard accessory has no equipment variation data! Make sure the equi
+12500	AC_acs_AccessorySystem	Customisation Component is returning invalid!
+12501	AC_acs_AccessorySystem	Rigid accessory is missing accessory data!
+13214	HA_ItemTable	xx_Steel Throwing Axe
+13217	HA_ItemTable	xx_Jeweled Throwing Knife
+13219	HA_ItemTable	xx_Serpent Throwing Knife
+13221	HA_ItemTable	xx_Iron Throwing Knife
+13223	HA_ItemTable	xx_Ancient Throwing Axe
+13382	HA_ItemTable	xx_Shovel Throwing Axe
+13405	HA_ItemTable	xx_FIreball Throwing Axe
+13693	HA_ItemTable	xx_Knight Throwing Knife
+13695	HA_ItemTable	xx_Tanto Throwing Knife
+13697	HA_ItemTable	xx_Hunting Throwing Knife
+13699	HA_ItemTable	xx_Desert Throwing Knife
+13701	HA_ItemTable	xx_Goblin Throwing Knife
+13713	HA_ItemTable	xx_Ancient Throwing Knife
+13737	HA_ItemTable	xx_Iron Throwing Cup
+14499	HA_ItemTable	xx_Farmscythe Throwing Axe
+14624	HA_ItemTable	xx_Gilded Throwing Knife
+14642	HA_ItemTable	xx_Wicked Throwing Knife
+14722	HA_ItemTable	(HA) xx_Grenade_Ammo
+14899	HA_ItemTable	xx_Book Throwing Axe
+15584	HA_ItemTable	xx_Raven Throwing Knife
+15656	HA_ItemTable	xx_Ram Throwing Axe
+15735	HA_ItemTable	(HA) Testing Sword
+15795	HA_ItemTable	(HA) Flask of Testing
+15796	HA_ItemTable	Provides whatever buff I need to test
+15812	HA_ItemTable	xx_Throwing Honey Dipper
+15816	HA_ItemTable	xx_Holy Orb Throwing Axe
+15921	HA_ItemTable	xx_Ram Throwing Shield
+16244	HA_ItemTable	xx_Desert Devotee Throwing Knives
+16417	HA_ItemTableOverwrites	xx_Throwing Axe of the Bat
+17835	DT_EAA_Feats	A1 Big
+17989	DT_EAA_Itemtable	Debug Item
+18918	DT_EAA_Itemtable	Debug Test with Tags
+18919	DT_EAA_Itemtable	Debug Test without Tags
+20126	BP_EAA_Skilltree_General	Already Perked Title
+20127	BP_EAA_Skilltree_General	Already Perked Text
+20130	BP_EAA_Skilltree_General	Class Missing Title
+20131	BP_EAA_Skilltree_General	Class Missing Text
+20132	BP_EAA_Skilltree_General	Pre Perk Title
+20133	BP_EAA_Skilltree_General	Pre Perk Text
+20277	W_acs_AccessoryPanel	WARDROBE - PLACEHOLDER TEXT
+20658	DT_EAA_EmotesDataTable	XX_Threaten Skeletal Serpentman
+20724	DT_EAA_EmotesDataTable	XX_Sitting IdleVar
+20726	DT_EAA_EmotesDataTable	XX_Hide SmokeDemon
+20727	DT_EAA_EmotesDataTable	XX_Idle Doel Curlup
+20728	DT_EAA_EmotesDataTable	XX_Goblin Resting
+20729	DT_EAA_EmotesDataTable	XX_Goblin Eating
+20730	DT_EAA_EmotesDataTable	XX_Goblin Sifting Trash 1
+20731	DT_EAA_EmotesDataTable	XX_Goblin Giving Orders
+20732	DT_EAA_EmotesDataTable	XX_Goblin Taunting
+20733	DT_EAA_EmotesDataTable	XX_Goblin Sifting Trash 2
+20734	DT_EAA_EmotesDataTable	XX_DemonSpider Resting
+20735	DT_EAA_EmotesDataTable	XX_DemonSpider Spinning Webs
+20736	DT_EAA_EmotesDataTable	XX_DemonSpider Scanning
+20737	DT_EAA_EmotesDataTable	XX_DemonSpider Giving Orders
+20738	DT_EAA_EmotesDataTable	XX_DemonSpider Eating
+20739	DT_EAA_EmotesDataTable	XX_DemonSpider Guarding
+20740	DT_EAA_EmotesDataTable	XX_Werewolf Sifting Trash
+20744	DT_EAA_EmotesDataTable	XX_Birdmen Preening
+20745	DT_EAA_EmotesDataTable	XX_Harpy Preening
+20746	DT_EAA_EmotesDataTable	XX_BatDemon Preening
+20747	DT_EAA_EmotesDataTable	XX_Fiend Resting
+20748	DT_EAA_EmotesDataTable	XX_Fiend Guarding
+20788	DT_EAA_EmotesDataTable	XX_Fatality Shortsword
+20789	DT_EAA_EmotesDataTable	XX_Fatality Sword Two Hand
+20790	DT_EAA_EmotesDataTable	XX_Fatality Hammer Two Hand
+20791	DT_EAA_EmotesDataTable	XX_Fatality Dual Axes
+20792	DT_EAA_EmotesDataTable	XX_Fatality Daggers
+20793	DT_EAA_EmotesDataTable	XX_Fatality Axe One Hand
+20794	DT_EAA_EmotesDataTable	XX_Fatality Axe Two Hand
+20795	DT_EAA_EmotesDataTable	XX_Fatality Spear Two Hand
+20796	DT_EAA_EmotesDataTable	XX_Fatality Katana Two Hand
+20797	DT_EAA_EmotesDataTable	XX_Fatality Mace One Hand
+21071	DT_EAA_Itemtable	Debug Super Hammer /Admin Edition
+21073	DT_EAA_Itemtable	Debug only
+21214	DT_EAA_Itemtable	XX_Thrown Axe
+21704	DT_EAA_Itemtable	XX_Magic Blade of the Kinscourge
+21741	DT_EAA_Itemtable	Dev Item
+21956	DT_EAA_Itemtable	Debug Soul Steal
+21957	DT_EAA_Itemtable	Debug Head
+21958	DT_EAA_Itemtable	Debug Torso
+21959	DT_EAA_Itemtable	Debug Gloves
+21960	DT_EAA_Itemtable	Debug Pants
+21961	DT_EAA_Itemtable	Debug Shoes
+22092	DT_EAA_Itemtable	XXDev: Vanguard
+22093	DT_EAA_Itemtable	not used for players and admins, piss off

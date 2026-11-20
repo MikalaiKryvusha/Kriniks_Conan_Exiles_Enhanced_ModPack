@@ -1,0 +1,37 @@
+To: support@nexusmods.com  (send as a REPLY to the ticket 276571 thread, so it stays in the same ticket)
+Subject: Re: Quarantine review request - Krinik Mod Pack 0.9.0 (Conan Exiles Enhanced, mod 65) - ticket 276571
+
+Hello,
+
+A follow-up on ticket 276571 from 3 November. The main file "Krinik Mod Pack 0.9.0" of
+https://www.nexusmods.com/conanexilesenhanced/mods/65 is still quarantined.
+
+Here are complete build steps for the only compiled file of my own, KrinikConanLauncher.exe.
+My first message gave the compiler command but did not name the build script - sorry for that.
+
+Source: https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack
+(the launcher's code is one file, _config/launcher/KrinikConanLauncher.cs; window images in
+_config/launcher/res/, the icon in _config/branding/icon/)
+
+Requirements: Windows 10/11, Python 3, the C# compiler of Visual Studio 2022 (Community or
+Build Tools; the script finds MSBuild\Current\Bin\Roslyn\csc.exe), .NET Framework 4.x (part of Windows).
+
+Steps:
+  1. git clone https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack.git
+  2. cd Kriniks_Conan_Exiles_Enhanced_ModPack
+  3. python _config/release/build-docs.py --no-pdf
+     (the script writes _config/launcher/BuildInfo.g.cs - the pack version and the author's links -
+     and compiles the launcher; --no-pdf skips printing the user guide)
+  4. The result: _config/launcher/bin/KrinikConanLauncher.exe
+
+I checked these steps today on a fresh clone: the build gives a file of exactly the same size as the
+one in the archive (4,429,824 bytes). The SHA-256 differs only because the C# compiler stamps every
+build uniquely; the next release will be compiled with -deterministic, so its hash can be compared directly.
+
+The other files are as described in my first message: the two UE4SS files are the unmodified official
+build (links and SHA-256 there), the scripts are plain text, and there are no nested archives.
+
+If anything else would help - an archive without the launcher, more details - I will gladly do it.
+
+Thank you,
+Mikalai Kryvusha (kotkrinik)

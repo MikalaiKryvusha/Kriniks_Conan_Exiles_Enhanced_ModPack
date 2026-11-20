@@ -193,9 +193,44 @@ local function hero_component(class_path)
     if c and c:IsValid() then return c end
     return nil
 end
+-- 2026-11-07: то же на «Параметрах» (окно характеристик W_CharacterStatsWindow — тоже с портретом героя). `[OWNER]` 2026-11-07 ≈10:10 «все еще с большой
+-- задеркой показываются свойства одоного мода на экране, где героя вигурка - не первый слева, а там где-то в центре»: значки школ магии EoT появлялись между
+-- 0,3 и 1,5 с (кадры 10:2x) — его вторая Delay 0.1 (возврат в 1060, «Character Stats Window Activated») под временем хаба 0.03. Delay заглушена в паке
+-- (KRINIK MODIFIED, строка flt:…@2), здесь — вызов точки 1060 по рождению портрета, пока окно характеристик на экране. Код за 1060 заново спрашивает мир
+-- (module:GetWindowRoot → приведение к W_CharacterStatsWindow_C → портрет → Create + AddChild), но module и isActive — ОБЩИЕ переменные трёх событий мода
+-- (снаряжение, характеристики, карусель пишут одни K2Node_CustomEvent_module / _isActive): перед вызовом ставим их сами — модуль окна характеристик, true;
+-- значки уже есть в этом окне — второй раз не вставляем (окно рождается дважды за открытие). [NOT-TESTED]
+local EOT_STATS_ENTRY = 1060
+local STATS_MODULE = "CharacterStatsWindow"
+local EOT_MAGIC_DISPLAY = "EoT_W_CharInfoMagicDisplay_C"
+local function inject_eot_stats()
+    local gmc = FindFirstOf("GUIModuleController")
+    if not live(gmc) then return 0 end
+    local module = gmc:GetModule(FName(STATS_MODULE))
+    if not live(module) then return 0 end
+    local win = module:GetWindowRoot()
+    if not (live(win) and win:IsInViewport()) then return 0 end
+    local win_name = win:GetFullName()
+    for _, w in ipairs(FindAllOf(EOT_MAGIC_DISPLAY) or {}) do
+        local ok, p = pcall(function() return w:GetParent():GetFullName() end)
+        if ok and p and p:find(win_name, 1, true) then return 2 end      -- значки уже стоят в этом окне
+    end
+    local c = hero_component(EOT_CLASS)
+    if not c then return 0 end
+    c.K2Node_CustomEvent_module = module
+    c.K2Node_CustomEvent_isActive = true
+    local ok, e = pcall(function() c:ExecuteUbergraph_EoT_AC_InterfaceInjectorComponent(EOT_STATS_ENTRY) end)
+    if not ok then log("EoT (характеристики): вставка упала: %s", tostring(e)); return 0 end
+    return 1
+end
 local function inject_late_mods()
     inject_pending = false
-    if not last_state[EQUIPMENT_MODULE] then return end
+    if not last_state[EQUIPMENT_MODULE] then
+        local t0 = os.clock()
+        local r = inject_eot_stats()
+        if r > 0 then log("портрет героя в окне характеристик — значки EoT: %s (%.2f мс)", r == 1 and "вставлены" or "уже стояли", (os.clock() - t0) * 1000) end
+        return
+    end
     local t0 = os.clock()
     local eaa, eot, ind = 0, 0, 0
     local c = hero_component(EAA_CLASS)
@@ -258,12 +293,53 @@ local CRAFT_SPEEDUP = true
 -- Выключатель — строка «Крафт в меню без замедления» хаба «Моды Krinik'а» (ключ ui_craft, KUMM план 38 этап 2); выключен — множитель 1.0, чтобы
 -- не остался прежний 0.03 от включённого. [NOT-TESTED]
 local settings = require("krinik_settings")
+-- Баг 94 (KUMM): множитель вписывается в ДЛИТЕЛЬНОСТЬ предмета, когда тот встаёт в очередь — «Сделать 10» ставит текущий лук и стопку из девяти, и обе
+-- записи несли 0.03 после закрытия хаба: девять луков за ≈ 2 с вместо ≈ 22 (владелец 2026-11-13 09:46 «Я закрываю хаб - и они МГНОВЕННО изготавляются»;
+-- воспроизведено его путём 2026-11-14, кейс C2). Данные очереди — статы её RecipeItem: 16 — длительность в секундах игры (игра читает его каждый тик:
+-- стат, поставленный чуть выше прошедшего, доделал лук за ≈ 1.5 с), 9 — прошедшее время у предмета в работе, 17 — исходная длительность рецепта.
+-- Поэтому при КАЖДОЙ смене множителя предметы очереди переводятся в новый масштаб: 16 и 9 × (новый / старый) — доля готовности сохраняется, начатое
+-- до меню в меню идёт с прежней настоящей скоростью, начатое в меню после него — тоже.
+-- [TESTED: 2026-11-14 · C2f — после закрытия хаба по луку в ≈ 3 с (было девять за ≈ 2 с), C5 — в снова открытом хабе тоже ≈ 3 с, E1 — в меню Esc партия стоит, после него снова ≈ 3 с · KUMM testcases/reports/2026-11-14_conan-craft-hub-close-rescale.md]
+local STAT_ELAPSED, STAT_DURATION = 9, 16
+local function rescale_queue(q, factor)
+    local n, moved, failed = 0, 0, 0
+    pcall(function() n = q.ItemList:GetArrayNum() end)
+    for i = 1, n do
+        local it = q.ItemList[i]
+        local okv, valid = pcall(function() return it:IsValid() end)  -- пустая ячейка очереди — пустая ссылка (судья 2026-11-14 F3: не путать её со сбоем)
+        if okv and valid then
+            local ok = pcall(function()
+                if not it:HasFloatStat(STAT_DURATION) then return end
+                -- при сжатии сначала прошедшее, потом длительность: между двумя записями прошедшее не обгоняет длительность (судья F2)
+                local has_elapsed = it:HasFloatStat(STAT_ELAPSED)
+                if factor < 1 and has_elapsed then it:SetFloatStat(STAT_ELAPSED, it:GetFloatStat(STAT_ELAPSED) * factor, true) end
+                it:SetFloatStat(STAT_DURATION, it:GetFloatStat(STAT_DURATION) * factor, true)
+                if factor >= 1 and has_elapsed then it:SetFloatStat(STAT_ELAPSED, it:GetFloatStat(STAT_ELAPSED) * factor, true) end
+                moved = moved + 1
+            end)
+            if not ok then failed = failed + 1 end
+        end
+    end
+    return moved, failed
+end
+-- Меню по Esc множитель НЕ меняет (судья F1, F5): Esc — пауза, начатое там стоит, как до правки; партия, переведённая в 0.0001, ушла бы в сохранение при
+-- выходе в главное меню и доделалась бы мгновенно после загрузки. Множитель очереди и масштаб всех её записей поэтому всегда одно и то же число — живой
+-- `CraftTimeMultiplier`: отдельная переменная масштаба разошлась с ним, когда хаб приняли за Esc (2026-11-14 11:21, после ESC-меню, открытого и закрытого
+-- пультом: партия встала с 0.0001 при масштабе 1.0 и после закрытия доделалась разом).
 local function hero_craft_multiplier(value)
     if not settings.get("ui_craft", CRAFT_SPEEDUP) then value = 1.0 end
     for _, q in ipairs(FindAllOf("CraftingQueue") or {}) do
         if q:IsValid() and q:GetFullName():find("BasePlayerChar_C", 1, true) then
-            q.CraftTimeMultiplier = value
-            log("крафт героя: CraftTimeMultiplier = %s", tostring(value))
+            local old = q.CraftTimeMultiplier
+            local target = (math.abs(value - ESC_DILATION) < 1e-9) and old or value
+            if old and old > 0 and math.abs(target - old) > 1e-6 then
+                local moved, failed = rescale_queue(q, target / old)
+                if moved > 0 or failed > 0 then
+                    log("крафт героя: очередь переведена %s → %s, записей %d, сбоев %d", tostring(old), tostring(target), moved, failed)
+                end
+            end
+            q.CraftTimeMultiplier = target
+            log("крафт героя: CraftTimeMultiplier = %s", tostring(target))
         end
     end
 end
@@ -453,6 +529,23 @@ local function cached_gmc()
     return gmc_obj
 end
 
+local loading_obj, loading_wait = nil, 0
+local function loading_screen_up()
+    if not (loading_obj and loading_obj:IsValid()) then
+        loading_obj = nil
+        if loading_wait > 0 then loading_wait = loading_wait - 1; return false end
+        loading_wait = SEARCH_EVERY
+        searches = searches + 1
+        for _, w in ipairs(FindAllOf("W_IngameLoadingScreen_C") or {}) do
+            if w and w:IsValid() and not w:GetFName():ToString():find("Default__", 1, true) then loading_obj = w; break end
+        end
+        if not loading_obj then return false end
+    end
+    local up = false
+    pcall(function() up = loading_obj:IsInViewport() end)
+    return up
+end
+
 -- 💥 ОПЛАЧЕНО КРЭШЕМ 16.09.2026 21:49. Здесь стоял опрос нативной gmc:IsModuleActive(name) раз в
 -- 250 мс — игра упала на загрузке мира с EXCEPTION_ACCESS_VIOLATION (0x70), стек целиком в
 -- UE4SS.dll. Урок: pcall НЕ защищает от нарушения доступа в нативном коде; неверный тип аргумента
@@ -473,6 +566,11 @@ local function poll()
     if not ok then return end
     local in_world = hero_in_world()
     if on and not in_world then on = false end
+    -- 🩹 Баг 79 (KUMM bugs/79, 2026-11-03): экран загрузки В МИРЕ (телепорт, путевой камень, возрождение) — тоже полноэкранный, а герой жив.
+    -- Мод замедлял мир до 0.03, и загрузка вставала: герой висел в воздухе, пока время не вернули руками. Экран загрузки — не наше меню:
+    -- время не трогаем и снимаем взвод, как при загрузке мира. Объект экрана ищется только при открытом полноэкранном интерфейсе и не
+    -- чаще раза в SEARCH_EVERY опросов. [NOT-TESTED]
+    if on and loading_screen_up() then on = false; armed = false end
     -- ⚠️ СНАЧАЛА УВИДЕТЬ ЗАКРЫТЫМ. Оплачено 13.09 23:06: экран ЗАГРУЗКИ мира тоже полноэкранный, а живой
     -- герой в этот момент уже есть — мод замедлил время, и загрузка встала на 82 %. Поэтому пауза
     -- «взводится» только после того, как в мире полноэкранный интерфейс хоть раз увиден закрытым;
@@ -506,6 +604,15 @@ local function poll()
     -- 0.6.0: ЧЕГО ХОТИМ прямо сейчас — одно число, а не «пауза вкл/выкл». Так два разных
     -- замедления (ESC и меню с вкладками) живут без второго флага, и переход между ними
     -- происходит сам собой, если игрок открыл ESC поверх меню.
+    -- Баг 100 (KUMM): признак Esc живёт по событиям модулей, и потерянное «закрыт» залипало навсегда — IngameMenu, открытый пультом, игра заменила своим
+    -- SML_ModList и закрыла только его; следующий хаб шёл как Esc (0.0001, 2026-11-14 11:21). Когда полноэкранный интерфейс ЗАКРЫЛСЯ (переход «был → нет»,
+    -- модалки нет), никакого меню Esc открытым остаться не может — признак сбрасывается. Именно переход: сброс при любом «нет» срабатывал между
+    -- активацией модуля Esc и подъёмом флага полноэкранного окна, и само меню Esc получало 0.03 (прогон B100 11:32).
+    -- [TESTED: 2026-11-14 · B100b: Esc 0.0001 → закрыт → «признак ESC-меню сброшен» → хаб 0.03 · KUMM testcases/reports/2026-11-14_conan-esc-flag-reset.md]
+    if fullscreen_was and not on and not modal and next(esc_open) ~= nil then
+        for k in pairs(esc_open) do esc_open[k] = nil end
+        log("признак ESC-меню сброшен: полноэкранных окон нет")
+    end
     local esc = false
     for _ in pairs(esc_open) do esc = true; break end
     local want = NORMAL_DILATION
@@ -535,49 +642,14 @@ else
     log("ОШИБКА: LoopInGameThreadWithDelay нет в этой сборке UE4SS — опрос не запущен")
 end
 
--- ===================== 0.11.0: ESC В ОКНЕ МОДА ПОВЕРХ ХАБА ЗАКРЫВАЕТ ТОЛЬКО ЭТО ОКНО =====================
--- Слово владельца 29.10: Esc в окне рыбалки или Hosav закрывал весь хаб — «нужно сразу мод рыбалки закрывать» (KUMM план 36, STATUS 22:58 п. 1).
--- Окна игры поверх вкладки (выбор перка, бонусы невольника) — модули Modal, и их закрывает собственная кнопка «Отмена» с KeyShortcutName
--- «Escape» (FLXButtonBase). Окна модов нативно переведены в Modal (KRINIK MODIFIED, таблицы модулей Exiles Fishing и Hosav: хаб под окном
--- живёт), но такой кнопки у них нет: панель рыбалки глотает Esc и не закрывается (прогон 2026-10-29 23:5x). Добавить её в чужой блюпринт
--- наши приборы не умеют, поэтому Esc ловится здесь — событием клавиши, без опроса: окно модуля закрывается родным RootWidget.TryCloseWindow
--- (пультом 23:5x: панель закрылась, хаб на «Снаряжении», IsModuleActive сбросился). Класс окна — WidgetClass строки модуля в таблице мода.
--- Цена — только на нажатие Esc: до двух IsModuleActive и перебор экземпляров одного класса окна. Аргумент IsModuleActive — FName, не строка
--- (падение 16.09, выше). Экземпляров окна бывает несколько: игра создаёт окно заново при каждом открытии, а закрытое живёт до сборки мусора —
--- FindFirstOf вернул закрытое, и Esc при втором открытии панели не сработал (прогон 2026-10-30 00:08, два экземпляра, первый open=false).
--- [NOT-TESTED]
-local MOD_WINDOWS = {
-    { module = "ExilesFishingTuning", class = "W_EFT_Panel_C" },        -- Exiles Fishing, DT_Fishing_UIModule
-    { module = "HosavUIsettings", class = "W_ExampleWidget_User_C" },   -- Hosav's Custom UI, UIModuleTable_UIH
-    -- ours (KUMM plan 38, 2026-10-31 19:33): the row's CloseOnESC does not close a mod Modal window either — a real Esc left it open (case K8)
-    { module = "KrinikModSettings", class = "W_KrinikModSettings_C" },  -- the «Моды Krinik'а» hub, DT_KrinikUIModule (section krinik_mod_settings)
-}
-local function close_mod_window_on_esc()
-    local gmc = FindFirstOf("GUIModuleController")
-    if not live(gmc) then return end
-    for _, m in ipairs(MOD_WINDOWS) do
-        if gmc:IsModuleActive(FName(m.module)) then
-            for _, w in ipairs(FindAllOf(m.class) or {}) do
-                if live(w) and w:IsOpen() then
-                    w:TryCloseWindow()
-                    log("Esc: окно %s закрыто, хаб под ним остаётся", m.module)
-                    return
-                end
-            end
-        end
-    end
-    -- 0.16.0: окна из списка «Настройки модов» (Xevyr, «Прочее»; krinik_mods_button.lua) — модуль закрывается сам, без класса окна
-    if _G.__krinik_mods_menu_esc then _G.__krinik_mods_menu_esc() end
-end
-local esc_ok, esc_err = pcall(function()
-    RegisterKeyBind(Key.ESCAPE, function()
-        ExecuteInGameThread(function()
-            local ok, e = pcall(close_mod_window_on_esc)
-            if not ok then log("Esc: ошибка %s", tostring(e)) end
-        end)
-    end)
-end)
-log("Esc для окон модов: %s", esc_ok and "клавиша назначена" or ("НЕ назначена: " .. tostring(esc_err)))
+-- ===================== Esc В ОКНЕ МОДА ПОВЕРХ ХАБА (0.11.0 → снято 2026-11-18, KUMM bugs/85) =====================
+-- С 0.11.0 (2026-10-30) Esc в окне чужого мода поверх хаба закрывала привязка клавиши UE4SS (RegisterKeyBind): её Lua шёл в потоке цикла событий UE4SS
+-- одновременно с Lua этого мода в игровом потоке — класс падения бага 85. Замены на событии игры нет: разведка 2026-11-18 19:4x (Esc, посланный окну)
+-- показала, что десять окон списка «Настройки модов» (рыбалка, Hosav, AMR, LLH, Proximity Party, Damage Meter, Emberlight, EAA, PIFC и наше) глотают
+-- Esc сами, а вставленная из Lua кнопка с ярлыком Escape к нажатию мертва (прогон 20:22, с владельцем — GameInstance и с владельцем — окно). Решение
+-- `[AI]` 2026-11-18 20:3x, сказано владельцу в чате: падение критичнее удобства — Esc чужих окон снят до родной правки их паков (баг 108); наше окно
+-- закрывает Esc своим событием блюпринта KrinikEsc (krinik_mod_settings). Simple Minimap и Night Terrors закрываются по Esc сами.
+
 
 -- 0.15.0 (2026-10-30, KUMM plan 36 W11): моды Криника — НАВЕРХУ списка модов в меню по Esc (Simple Modlist), остальные — в порядке загрузки.
 -- `[OWNER]` «это только отображение, не ордер загрузки, наши моды вверху для красоты» · 2026-10-30 21:08 (интервью 027, вариант A).
@@ -593,15 +665,19 @@ local function krinik_mods_on_top()
         if not w:GetFullName():find("Default__", 1, true) and live(w) then
             local box = w.ModListBox
             local text = box:GetText():ToString()
-            if text:match(KRINIK_PREFIX) then return end
             local top, rest = {}, {}
             for line in text:gmatch("[^\n]+") do
                 if line:match(KRINIK_PREFIX) then top[#top + 1] = line else rest[#rest + 1] = line end
             end
             if #top == 0 then return end
+            local n = #top
             for _, l in ipairs(rest) do top[#top + 1] = l end
-            box:SetText(FText(table.concat(top, "\n")))
-            log("список модов: Криник наверху (%d из %d строк), %.2f мс", #top - #rest, #top, (os.clock() - t0) * 1000)
+            local sorted = table.concat(top, "\n")
+            -- Already in order — nothing to do (a repeat is harmless). Until 2026-11-18 the test was «the text STARTS with Krinik», and since 3.1.x
+            -- KrinikConanGraphics loads first: the list began with it and the other eight Krinik mods stayed at the bottom (bug 85 run 21:17, frame).
+            if sorted == text:gsub("\n+$", "") then return end
+            box:SetText(FText(sorted))
+            log("список модов: Криник наверху (%d из %d строк), %.2f мс", n, #top, (os.clock() - t0) * 1000)
             return
         end
     end
@@ -631,4 +707,49 @@ watch_character_display()   -- 0.9.0
 ExecuteInGameThreadWithDelay(60000, function() log("СЧЁТ через 1 мин: вызовов ActivateModule %d", hook_calls) end)
 ExecuteInGameThreadWithDelay(300000, function() log("СЧЁТ через 5 мин: вызовов ActivateModule %d", hook_calls) end)
 
-log("загружен 0.16.0. Замедление, пока открыт полноэкранный интерфейс; меню с вкладками %.4f, ESC %.4f (баг 12: 0.0001 в меню убивало нажатия); в панели инвентаря только «Настройки модов», кнопка Hosav свёрнута; вставки EAA и EoT — по рождению портрета; пауза хаба — и по событию «Снаряжения»; Esc в окне мода закрывает только окно; рыбалка загорается при наведении; подсказки рыбалки без мерцания; ускорение крафта %s.", MENU_DILATION, ESC_DILATION, CRAFT_SPEEDUP and "ВКЛ" or "выкл")
+-- ===================== 0.17.0 (2026-11-07): ЕДА И ПИТЬЁ В ХАБЕ — ЗНАЧКИ ГОЛОДА И ЖАЖДЫ СРАЗУ =====================
+-- `[OWNER]` 2026-11-07 10:59 «при съедании или выпивании чего-то в инвентаре, из-за замедления мира - проценты голода и жажды увеличиваются или медленно или
+-- с задержкой» · 11:00 «нужно исправить по аналогии, как исправляли по крафту». Замер 12:3x: сытость растёт СРАЗУ (0 → 7 в миг еды); медлят значки у портрета
+-- (WBP_HungerGauge / WBP_ThirstGauge, родитель WBP_RadialStatusElement): опрос PollCurrentValue по таймеру игрового времени (≈ 10 с под 0.03) и доводка числа
+-- за Duration 0.1 игровой секунды (≈ 3.3 с). Как у крафта (там множитель очереди = замедлению): после AddFood / AddDrink / IncreaseFood / IncreaseDrink /
+-- SetFoodCurrent / SetDrinkCurrent — только пока мир замедлен — видимые значки сразу опрашиваются, а их Duration = 0.1 × замедление (те же 0.1 реальной
+-- секунды, что вне хаба). Событие, не опрос; вне хаба не делает ничего. [NOT-TESTED] как код (живой опыт пультом 12:3x: значок дошёл до цели < 1 с)
+local GAUGE_BASE_DURATION = 0.1           -- WBP_RadialStatusElement.Duration, прочитано живьём 2026-11-07
+local HUNGER_CLASS = "/Game/Systems/Hunger/BP_HungerSystem.BP_HungerSystem_C"
+local gauge_fixes = 0
+local function gauges_now()
+    local gs = StaticFindObject("/Script/Engine.Default__GameplayStatics")
+    local pc = FindFirstOf("PlayerController")
+    if not (gs and pc and pc:IsValid()) then return end
+    local dil = gs:GetGlobalTimeDilation(pc)
+    if dil >= 0.999 then return end                       -- мир не замедлен: значки идут сами
+    for _, cn in ipairs({ "WBP_HungerGauge_C", "WBP_ThirstGauge_C" }) do
+        for _, g in ipairs(FindAllOf(cn) or {}) do
+            if g:IsValid() and g:IsVisible() then
+                g.Duration = GAUGE_BASE_DURATION * dil
+                g:PollCurrentValue()
+            end
+        end
+    end
+    gauge_fixes = gauge_fixes + 1
+    if gauge_fixes <= 5 then log("еда/питьё в хабе: значки голода и жажды опрошены сразу (замедление %.3f)", dil) end
+end
+_G.__krinik_pause_gauges_fn = gauges_now
+local function hook_hunger()
+    if _G.__krinik_pause_gauges_hooked then return end
+    _G.__krinik_pause_gauges_hooked = true
+    for _, fn in ipairs({ "AddFood", "AddDrink", "IncreaseFood", "IncreaseDrink", "SetFoodCurrent", "SetDrinkCurrent" }) do
+        local ok, e = pcall(function()
+            RegisterHook(HUNGER_CLASS .. ":" .. fn, function()
+                local f = _G.__krinik_pause_gauges_fn
+                if f then pcall(f) end
+            end)
+        end)
+        if not ok then log("еда/питьё: перехват %s не встал — %s", fn, tostring(e)) end
+    end
+    log("еда/питьё: перехваты системы голода поставлены")
+end
+-- класс системы голода готов, когда рождается герой
+NotifyOnNewObject("/Game/Characters/BasePlayerChar.BasePlayerChar_C", function() ExecuteInGameThread(function() pcall(hook_hunger) end) end)
+
+log("загружен 0.17.0. Замедление, пока открыт полноэкранный интерфейс; меню с вкладками %.4f, ESC %.4f (баг 12: 0.0001 в меню убивало нажатия); в панели инвентаря только «Настройки модов», кнопка Hosav свёрнута; вставки EAA и EoT — по рождению портрета; пауза хаба — и по событию «Снаряжения»; Esc в окне мода закрывает только окно; рыбалка загорается при наведении; подсказки рыбалки без мерцания; ускорение крафта %s.", MENU_DILATION, ESC_DILATION, CRAFT_SPEEDUP and "ВКЛ" or "выкл")

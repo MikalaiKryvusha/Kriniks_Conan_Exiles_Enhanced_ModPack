@@ -26,8 +26,11 @@ ru_by_en = {}
 ru_by_key = {}   # строки таблицы «key:<КЛЮЧ>[,<КЛЮЧ>…]» — перевод ОДНОГО ключа, а не всех строк с тем же английским
 skipped = []
 for num, en, ru in rows:
-    en_c = en.replace('\\n', '\n')
-    ru_c = ru.replace('\\n', '\n')
+    # «¦» → «|» (2026-11-07, KUMM translation notes «An entry lost by the build»): build-ru-table.py escapes the pipe of a cell as «¦» for the markdown
+    # table; read back unescaped, the EN never matched the mod's source — Pickup+'s hint «If set to < 100 = off | Max. = 5000 …» stayed English
+    # (join-report: NO-KEY with «¦»). The table's own text is ours: a genuine «¦» does not occur in it.
+    en_c = en.replace('\\n', '\n').replace('¦', '|')
+    ru_c = ru.replace('\\n', '\n').replace('¦', '|')
     # 2026-10-25: «Small/Medium/Large» — и размер шрифта Hosav (мужской род), и размер рыбы (женский); перевод по
     # английскому слову был один на все моды, и поздняя строка перебивала раннюю («Мелкий / Средняя / Крупный»).
     if en_c.startswith('key:'):

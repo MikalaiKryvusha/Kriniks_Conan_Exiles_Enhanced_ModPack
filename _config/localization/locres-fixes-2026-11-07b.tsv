@@ -1,0 +1,11 @@
+# old translation<TAB>new translation — applied by _config/devkit/locres-set-tr.py to Game/ru/Game.locres; source dm-fish-ru.tsv rows 6659–6662, 1209, 8388, 7534 edited the same move
+# KUMM bugs/64 item 13 (our Russian wider than the mods' fixed slots), the window walk 2026-11-07 09:0x: Al-Merayah's longest label pushed its value box past the
+# panel; «Сохранить настройки» ran over the button's icon (Emberlight master config and farming settings — one source string «Save Settings» for every mod);
+# two farming descriptions were cut at the panel's right edge.
+Время возрождения: поле боя	Возрождение: поле боя
+Время возрождения: лучники	Возрождение: лучники
+Время возрождения: стены	Возрождение: стены
+Время возрождения: двор цитадели	Возрождение: двор цитадели
+Сохранить настройки	Сохранить
+Множитель выработки материалов. Чем выше значение, тем больше материалов\nнакапливается со временем	Множитель выработки материалов.\nЧем выше значение, тем больше материалов накапливается со временем
+Игроки смогут прятать каменные кольца и земляные холмики у декоративных деревьев	Игроки смогут прятать каменные кольца и земляные\nхолмики у декоративных деревьев

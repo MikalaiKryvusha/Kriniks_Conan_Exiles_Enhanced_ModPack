@@ -1,0 +1,5 @@
+# Запуск 7 — Quick Win p.MaxPayloadSize (KUMM researches/conan-oblivion-perffix-recon): значение читается на старте; A = умолчание 100000, B = 10000000 через ini-temp.py add <ini> q7
+#read p.MaxPayloadSize p.Chaos.AccelerationStructureTimeSlicingMaxQueueSizeBeforeForce
+q7-warmup
+q7-F1
+q7-F2

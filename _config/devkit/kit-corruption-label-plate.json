@@ -1,0 +1,10 @@
+{
+ "ok": true,
+ "steps": [
+  "label font size 14.0; the plate's bottom 26.7 units above the diamond's centre",
+  "graph: the plate's SetVisibility nodes are there — skipped",
+  "compile: True"
+ ],
+ "links": [],
+ "saved": true
+}

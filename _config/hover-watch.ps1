@@ -30,9 +30,10 @@ param(
   # -PultCmd: instead of moving the cursor to -At, write this line to the KrinikAgentRemote cmd.txt at t=0 (e.g. a hub tab switch); -At is then
   # only the anchor of -Box and the cursor stays at -Away. Added 2026-10-29 for the hub bottom bar (the owner: "knizu knopki prygayut").
   [string]$PultCmd = '',
-  [string]$PultFile = 'D:\Games\Conan Exiles 3.0.1\ConanSandbox\Binaries\Win64\ue4ss\Mods\KrinikAgentRemote\cmd.txt'
+  [string]$PultFile = ''   # default: the remote's cmd.txt in the first enabled target of targets.json (2026-11-13)
 )
 $ErrorActionPreference = 'Stop'
+if (-not $PultFile) { . (Join-Path $PSScriptRoot 'game-target.ps1'); $PultFile = Join-Path $GameDir 'ConanSandbox\Binaries\Win64\ue4ss\Mods\KrinikAgentRemote\cmd.txt' }
 Add-Type -AssemblyName System.Drawing
 Add-Type @"
 using System;

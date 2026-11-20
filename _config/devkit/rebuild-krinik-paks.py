@@ -13,6 +13,7 @@ Enhanced Armory and Arsenal 131 → 362), а тома архива сборки 
     python -I -X utf8 rebuild-krinik-paks.py --install       # то же и поставить сошедшиеся в библиотеку и в игру
     python -I -X utf8 rebuild-krinik-paks.py --only Simple_Minimap [--install]
     … --keep                                                  # не убирать черновик сошедшихся (по умолчанию убирается поимённо)
+    … --against-original                                      # автор обновил мод (новый пак в ORIGINALS): разойтись вправе только ассеты рецепта
 Код 0 — все сошлись; 1 — хоть один не сошёлся или не собрался. Пишет только в черновик (WORK) и, с --install, в библиотеку и папку модов игры.
 Черновик сошедшегося мода убирается сразу после сверки (и установки); не сошедшийся остаётся для разбора.
 [NOT-TESTED]
@@ -31,9 +32,9 @@ _spec = importlib.util.spec_from_file_location("pma", os.path.join(HERE, "patch-
 pma = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(pma)
 
-LIBRARY = r"D:\Games\Conan Exiles Mods\mods"
+LIBRARY = r"D:\work\ai_sandbox\ConanExiles\_library\mods"
 GAME_MODS = os.path.join(pma.GAME_DIR, r"ConanSandbox\Mods")
-WORK = os.environ.get("REBUILD_WORK", r"D:\Temp\kumm-rebuild-krinik")
+WORK = os.environ.get("REBUILD_WORK", r"D:\work\ai_sandbox\ConanExiles\_scratch\rebuild-krinik")
 
 
 def unpack_outer(pak, out):
@@ -53,16 +54,25 @@ def unpack_outer(pak, out):
     return files, raw
 
 
-def same_inside(old_pak, new_pak, work):
-    """Куски контейнера и прочие файлы обёртки равны байт в байт. Возвращает (ok, текст)."""
+def same_inside(old_pak, new_pak, work, expect=()):
+    """Куски контейнера и прочие файлы обёртки равны байт в байт. Возвращает (ok, текст).
+    expect — ассеты, чей рецепт НАМЕРЕННО изменён (`--expect-changed <Ассет>`, KUMM план 45, 2026-11-06: маска Серого 51420 сведена в таблицу Mines
+    of Set — кусок Caverns_of_Set_Item_Table обязан разойтись, остальные 3732 — нет). Разошедшийся кусок прощается, только если его путь называет
+    такой ассет; без ключа — прежняя строгость. [TESTED: 2026-11-06 · Mines_of_Set: без ключа «куски разошлись: 1 из 3733», с ключом — сошлось ·
+    KUMM testcases/reports/2026-11-06_conan-grey-one-mask-merge.md]"""
     of, oraw = unpack_outer(old_pak, os.path.join(work, "cmp-old"))
     nf, nraw = unpack_outer(new_pak, os.path.join(work, "cmp-new"))
     oc, nc = sorted(os.listdir(os.path.join(oraw, "chunks"))), sorted(os.listdir(os.path.join(nraw, "chunks")))
     if oc != nc:
         return False, f"наборы кусков разные: {len(oc)} против {len(nc)}"
     diff = [c for c in oc if not filecmp.cmp(os.path.join(oraw, "chunks", c), os.path.join(nraw, "chunks", c), shallow=False)]
-    if diff:
-        return False, f"куски разошлись: {len(diff)} из {len(oc)} (первый {diff[0]})"
+    paths = json.load(open(os.path.join(nraw, "manifest.json"), encoding="utf-8")).get("chunk_paths", {}) if expect else {}
+    allowed = [c for c in diff if any(f"/{a}.uasset" in str(paths.get(c, "")).replace("\\", "/") for a in expect)]
+    unexpected = [c for c in diff if c not in allowed]
+    if unexpected:
+        return False, f"куски разошлись: {len(diff)} из {len(oc)} (первый неожиданный {unexpected[0]})"
+    if expect and not allowed:
+        return False, f"объявлен изменённым {list(expect)}, но его кусок не разошёлся — рецепт не подействовал"
     # Заголовок контейнера (кусок типа 06) игра читает при монтировании как есть, несжатым: сжатый заголовок — «Failed to mount IoStore container …
     # Failed reading 1104 bytes» (Player Ignores Follower Collision, 2026-10-30 00:47; сверка кусков этого не видела — retoc читает и сжатый).
     hdr = [c for c in nc if c.endswith("06")]
@@ -79,7 +89,8 @@ def same_inside(old_pak, new_pak, work):
     bad = [f for f in of_ if os.path.isfile(os.path.join(of, f)) and not filecmp.cmp(os.path.join(of, f), os.path.join(nf, f), shallow=False)]
     if bad:
         return False, f"файлы обёртки разошлись: {bad}"
-    return True, f"кусков {len(oc)} — байт в байт, файлов обёртки {len(of_)} — равны"
+    changed = f", из них намеренно изменены {len(allowed)} ({', '.join(expect)})" if allowed else ""
+    return True, f"кусков {len(oc)} — байт в байт{changed}, файлов обёртки {len(of_)} — равны"
 
 
 def remove_by_enumeration(top):
@@ -113,10 +124,20 @@ def mb(p):
     return os.path.getsize(p) / 1048576
 
 
+def recipe_assets(args):
+    """Ассеты рецепта `krinikBuild.args` = [<Мод>, <Ассет>, <таблица>, (<таблица2>, <Ассет2>)…]: всё, что не таблица (.tsv)."""
+    return [a for a in args[1:] if not a.lower().endswith(".tsv")]
+
+
 def main():
     install = "--install" in sys.argv
     keep = "--keep" in sys.argv
     only = sys.argv[sys.argv.index("--only") + 1] if "--only" in sys.argv else None
+    expect = [sys.argv[i + 1] for i, a in enumerate(sys.argv) if a == "--expect-changed"]
+    # --against-original (2026-11-13, переезд на 3.1.0, KUMM план 53): автор выложил новую версию, её пак лёг в ORIGINALS. Сверять с тем, что стоит
+    # в библиотеке, бессмысленно — там прежняя версия автора, разойдутся тысячи кусков. Сверяем с НОВЫМ оригиналом: разойтись вправе только ассеты
+    # рецепта (их правка), все прочие куски и файлы обёртки — байт в байт как у автора. [NOT-TESTED]
+    against_original = "--against-original" in sys.argv
     manifest = json.load(open(os.path.join(PACK, "modpack.json"), encoding="utf-8"))
     jobs = []
     for m in manifest["mods"]:
@@ -152,7 +173,11 @@ def main():
             print(f"   НЕ СОБРАН (код {r.returncode}):\n{r.stdout[-1500:]}\n{r.stderr[-800:]}")
             continue
         orig = os.path.join(pma.ORIGINALS, mod + ".pak")
-        ok, why = same_inside(current, built, work)
+        if against_original:
+            ok, why = same_inside(orig, built, work, expect or recipe_assets(rb["args"]))
+            why = "против нового оригинала: " + why
+        else:
+            ok, why = same_inside(current, built, work, expect)
         line = f"   оригинал {mb(orig):.1f} МБ · стоит {mb(current):.1f} · новый {mb(built):.1f} — {why}"
         if not ok:
             failed += 1

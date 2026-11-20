@@ -1,0 +1,54 @@
+{
+ "ok": true,
+ "steps": [
+  "W_KrinikClickWrap: OnPreviewMouseButtonDown already calls KrinikPreview — skipped",
+  "W_KrinikClickWrap: OnMouseButtonDoubleClick already calls KrinikPreview — skipped",
+  "W_KrinikClickWrap: compile True",
+  "W_KrinikClickWrap: saved True",
+  "W_KrinikClickCatcher: OnMouseButtonDown already calls KrinikMouseDown — skipped",
+  "W_KrinikClickCatcher: OnMouseButtonDoubleClick already calls KrinikMouseDown — skipped",
+  "W_KrinikClickCatcher: compile True",
+  "W_KrinikClickCatcher: saved True",
+  "W_KrinikModSettings: OnPreviewMouseButtonDown already calls KrinikMouseDown — skipped",
+  "W_KrinikModSettings: OnPreviewKeyDown already calls KrinikEsc — skipped",
+  "W_KrinikModSettings: OnMouseButtonDoubleClick already calls KrinikMouseDown — skipped",
+  "W_KrinikModSettings: compile True",
+  "W_KrinikModSettings: saved True",
+  "W_MainMenu_MainMenu: KrinikFeedbackClicked already there — skipped",
+  "W_MainMenu_MainMenu: compile True",
+  "W_MainMenu_MainMenu: saved True",
+  "W_IngameMenu: KrinikFeedbackClicked already there — skipped",
+  "W_IngameMenu: compile True",
+  "W_IngameMenu: saved True"
+ ],
+ "links": [],
+ "parts": {
+  "wrap": true,
+  "catcher": true,
+  "window": true,
+  "menu_main": true,
+  "menu_ingame": true,
+  "cook": {
+   "F:\\CEUE5Devkit\\UE4\\Content\\Mods\\KrinikConanUI\\Local\\CookInfo.ini": "added 0",
+   "D:\\work\\ai_sandbox\\ConanExiles\\_unpacked\\KrinikConanUI\\kit\\CookInfo.ini": "added 0"
+  }
+ },
+ "menu_backdrop": {
+  "BackgroundMovies": [
+   "/Game/Movies/TitleScreen_Claws.TitleScreen_Claws",
+   "/Game/Movies/TitleScreen_Icefield.TitleScreen_Icefield",
+   "/Game/Movies/TitleScreen_Jungle.TitleScreen_Jungle",
+   "/Game/Movies/TitleScreen_UnnamedCity.TitleScreen_UnnamedCity",
+   "/Game/Movies/TitleScreen_Volcano.TitleScreen_Volcano",
+   "/Game/Movies/TitleScreen_WineCellar.TitleScreen_WineCellar"
+  ],
+  "BackgroundMovieTextures": [
+   "/Game/Movies/MediaTextures/TitleScreen_Claws_Tex.TitleScreen_Claws_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_Icefield_Tex.TitleScreen_Icefield_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_Jungle_Tex.TitleScreen_Jungle_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_UnnamedCity_Tex.TitleScreen_UnnamedCity_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_Volcano_Tex.TitleScreen_Volcano_Tex",
+   "/Game/Movies/MediaTextures/TitleScreen_WineCellar_Tex.TitleScreen_WineCellar_Tex"
+  ]
+ }
+}

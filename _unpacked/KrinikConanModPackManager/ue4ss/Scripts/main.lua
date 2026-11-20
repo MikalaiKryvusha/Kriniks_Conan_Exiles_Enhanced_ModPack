@@ -205,10 +205,15 @@ local function mounted_paks()
         log("игровой журнал не открылся (%s)", path)
         return nil          -- nil = "не знаю", это НЕ то же самое, что "ноль"
     end
+    -- Conan 3.1.0 (2026-11-13, KUMM plan 53) changed the lines: 3.0.1 wrote «Mounting mod pak file: …/Mods/<Pak>.pak», 3.1.0 writes «Mounting mod
+    -- '<title>' (folder '<Pak>' …)» and, on success, «Mod '<title>' (<Pak>) mounted successfully from …/Mods/<Pak>.pak.» — a small «m», and the first
+    -- capital «Pak» line names the extracted «<Pak>-Windows.pak». The case-sensitive «Mount» / «Pak» test saw none of them: «ни один из 66 модов не
+    -- загружен» with every pak mounted. Now any «mount» in any case; on a 3.1.0 success line the pak is the one after «from». [NOT-TESTED]
     local seen = {}
     for line in f:lines() do
-        if line:find("Mount", 1, true) or line:find("Pak", 1, true) then
-            local pak = line:match("([^/\\'\"]+)%.pak")
+        local low = line:lower()
+        if low:find("mount", 1, true) then
+            local pak = line:match("mounted successfully from .-([^/\\'\"]+)%.pak") or line:match("([^/\\'\"]+)%.pak")
             if pak then seen[pak:lower()] = true end
         end
     end

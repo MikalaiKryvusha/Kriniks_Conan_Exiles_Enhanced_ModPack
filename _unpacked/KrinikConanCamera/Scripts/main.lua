@@ -1884,8 +1884,57 @@ rescan = function()
 end
 
 -- ---------------------------------------------------------- горячие клавиши
-local function bind(key, fn)
-    RegisterKeyBind(key, function() ExecuteInGameThread(fn) end)
+-- ⚠️ КЛАВИШИ — СОБЫТИЕМ ИГРОВОГО ПОТОКА, НЕ RegisterKeyBind (2026-11-07, KUMM bugs/85). Обработчик RegisterKeyBind UE4SS зовёт в своём цикле
+-- событий, а этот мод в тот же миг исполняет Lua в игровом потоке (перехваты, отложенные действия) — без общего замка, в одном состоянии Lua:
+-- куча портится, игра падает (так упала стрельба из лука 2026-11-07 21:17). Здесь привязка лишь кладёт действие в таблицу по ИМЕНИ клавиши
+-- движка, а нажатие приходит родным событием героя-блюпринта «любая клавиша» (InpActEvt_AnyKey_K2Node_InputKeyEvent_1, имя снято с ассета
+-- BasePlayerChar 2026-11-07) — в игровом потоке, поэтому действие зовётся сразу, без ExecuteInGameThread. Ctrl — IsInputKeyDown контроллера.
+-- Прежняя развязка «голая клавиша / с Ctrl» сохранена: без Ctrl — plain, с Ctrl — ctrl. [NOT-TESTED]
+local VK_KEY_NAME = {
+    [0x60] = "NumPadZero", [0x61] = "NumPadOne", [0x62] = "NumPadTwo", [0x63] = "NumPadThree", [0x64] = "NumPadFour",
+    [0x65] = "NumPadFive", [0x66] = "NumPadSix", [0x67] = "NumPadSeven", [0x68] = "NumPadEight", [0x69] = "NumPadNine",
+    [0x6A] = "Multiply", [0x6B] = "Add", [0x6D] = "Subtract", [0x6E] = "Decimal", [0x6F] = "Divide",
+}
+local key_actions = {}                  -- [имя клавиши движка] = { plain = fn, ctrl = fn }
+local function put_key(key, slot, fn)
+    local name = VK_KEY_NAME[key]
+    if not name then
+        log("клавиша 0x%X не привязана: нет её имени в VK_KEY_NAME", key or -1)
+        return false
+    end
+    key_actions[name] = key_actions[name] or {}
+    key_actions[name][slot] = fn
+    return true
+end
+local function bind(key, fn) return put_key(key, "plain", fn) end
+
+local ANY_KEY_EVENT = "/Game/Characters/BasePlayerChar.BasePlayerChar_C:InpActEvt_AnyKey_K2Node_InputKeyEvent_1"
+local CTRL_KEYS = { "LeftControl", "RightControl" }
+local key_errors = 0
+local function on_any_key(ctx, key)
+    local a = key_actions[key:get().KeyName:ToString()]
+    if not a then return end                                -- чужая клавиша — одна проверка таблицы
+    local hero = ctx:get()
+    local pc = hero and hero:IsValid() and hero:GetController() or nil
+    local ctrl = false
+    if pc and pc:IsValid() then
+        for _, k in ipairs(CTRL_KEYS) do
+            if pc:IsInputKeyDown({ KeyName = FName(k) }) then ctrl = true; break end
+        end
+    end
+    local fn = ctrl and a.ctrl or (not ctrl and a.plain) or nil
+    if fn then fn() end
+end
+local function install_key_hook()
+    if _G.__conan_cam_keys then return end
+    local ok, err = pcall(function()
+        RegisterHook(ANY_KEY_EVENT, function(ctx, key)
+            local okk, errk = pcall(on_any_key, ctx, key)
+            if not okk and key_errors < 5 then key_errors = key_errors + 1; log("ошибка клавиши: %s", tostring(errk)) end
+        end)
+    end)
+    _G.__conan_cam_keys = ok
+    log("клавиши камеры: событие героя «любая клавиша» %s", ok and "подписано" or ("НЕ подписано: " .. tostring(err)))
 end
 
 -- ⚠️ ПРИВЯЗКА С МОДИФИКАТОРОМ. Заведено 10.09.2026: цифровой блок занят у нас
@@ -1899,20 +1948,8 @@ local function bind_ctrl(key, fn)
     -- повесить команду на ГОЛУЮ клавишу - то есть вернуть ровно тот конфликт,
     -- ради снятия которого всё и затевалось. Класс знакомый: «встало» не равно
     -- «встало так, как задумано» (EXP-0071).
-    if type(ModifierKey) ~= "table" or ModifierKey.CONTROL == nil then
-        log("МОДИФИКАТОРЫ НЕ ПОДДЕРЖАНЫ этой сборкой UE4SS - клавиша 0x%X НЕ привязана "
-            .. "(вешать её без Ctrl нельзя: столкнётся с игрой)", key)
-        return false
-    end
-    local ok = pcall(function()
-        RegisterKeyBind(key, { ModifierKey.CONTROL }, function() ExecuteInGameThread(fn) end)
-    end)
-    if not ok then
-        -- Молчаливый отказ тут недопустим: клавиша просто не сработает, и
-        -- владелец будет жать её впустую. Говорим вслух.
-        log("привязка с Ctrl не удалась для кода 0x%X - модификаторы не поддержаны", key)
-    end
-    return ok
+    -- С 2026-11-07 Ctrl читается в событии клавиши (IsInputKeyDown контроллера, выше) — голая клавиша Ctrl-действие не запускает.
+    return put_key(key, "ctrl", fn)
 end
 
 local function nudge(field, amount)
@@ -1978,24 +2015,134 @@ local function set_neck_hidden(ctx, hidden)
     if hidden then hero.Mesh:HideBoneByName(FName(FP_HIDDEN_BONE), 0)   -- 0 = PBO_None: физику не трогать
     else hero.Mesh:UnHideBoneByName(FName(FP_HIDDEN_BONE)) end
 end
+-- ТЕНЬ ОТ ПЕРВОГО ЛИЦА (KUMM bugs/98; владелец 2026-11-13 16:06 «от стрелы тень есть, а где от всего остального?»). Игра в SwitchToFirstPersonCamera
+-- ВЫКЛЮЧАЕТ CastShadow у всех частей тела, у лука и стрелы в нём (замер пультом 17:16, _config/fp-shadow-flags.lua; от третьего лица — включено).
+-- ПОРЯДОК: у функции блюпринта (путь /Game/…) UE4SS зовёт перехват ПОСЛЕ её тела (документация RegisterHook: путь не /Script/ — «callback after»;
+-- судья, раунд 2, 2026-11-13; подтверждено в игре 19:49 — запись в перехвате первого лица увидела тени уже выключенными: «с тенью 1 сеток, вернули 0»).
+-- Поэтому имена сеток С ТЕНЬЮ записываются, когда тени точно включены: при появлении героя и в перехвате SwitchToThirdPersonCamera (тело уже вернуло
+-- тени); в перехвате SwitchToFirstPersonCamera (тело уже выключило) тень сразу включается тем записанным сеткам, у которых она сейчас выключена.
+-- Сетки, тёмные по замыслу (огонь факела, застрявшие в герое стрелы врагов, эффекты баффов), в запись не попадают и остаются тёмными. Запись — по
+-- полному имени героя (чужая пешка не путает) и по полным именам сеток (за время между записью и возвратом предмет могут сменить; мёртвый объект из
+-- Lua роняет игру мимо pcall). Тень невидимых частей (CastHiddenShadow) не ставим: голова схлопнута скрытием кости шеи, её тень вернёт план 52.
+-- Предмет, взятый в руки после записи, получит тень после следующей записи (переключения в третье лицо). [NOT-TESTED]
+local FP_WALK_DEPTH, FP_WALK_MAX = 6, 80
+local mesh_classes = nil
+local tp_shadow_names = {}   -- [полное имя героя] = { [полное имя сетки] = true }
+local function fp_mesh_classes()
+    if not mesh_classes then
+        local list = {}
+        for _, path in ipairs({ "/Script/Engine.SkinnedMeshComponent", "/Script/Engine.StaticMeshComponent" }) do
+            local k = StaticFindObject(path)
+            if k and k:IsValid() then list[#list + 1] = k else log("тень: класс %s не найден", path) end
+        end
+        mesh_classes = list
+    end
+    return mesh_classes
+end
+-- обход сеток героя и надетого: fn(c) на каждой сетке; ошибка одной ветки (и самого взятия ребёнка) не обрывает соседей — считается, первая пишется
+-- в журнал; упор в FP_WALK_MAX отмечается (дальше сетки не просмотрены)
+local function walk_hero_meshes(hero, fn)
+    local classes, seen, errors, first_err, capped = fp_mesh_classes(), 0, 0, nil, false
+    local function walk(c, depth)
+        if not c or not c:IsValid() or depth > FP_WALK_DEPTH then return end
+        if seen >= FP_WALK_MAX then capped = true; return end
+        seen = seen + 1
+        local ok, err = pcall(function()
+            for _, k in ipairs(classes) do if c:IsA(k) then fn(c); return end end
+        end)
+        if not ok then errors = errors + 1; first_err = first_err or tostring(err) end
+        local ok2, err2 = pcall(function() c.AttachChildren:ForEach(function(_, e)
+            local ok3, err3 = pcall(function() walk(e:get(), depth + 1) end)
+            if not ok3 then errors = errors + 1; first_err = first_err or tostring(err3) end
+        end) end)
+        if not ok2 then errors = errors + 1; first_err = first_err or tostring(err2) end
+    end
+    walk(hero.Mesh, 0)
+    return seen, errors, first_err, capped
+end
+local function walk_note(seen, errors, err, capped, t0)
+    return ("просмотрено %d%s; ошибок %d%s; %.0f мс"):format(seen, capped and " (упор, дальше не смотрел)" or "", errors,
+        err and (" — " .. err) or "", (os.clock() - t0) * 1000)
+end
+-- запись имён сеток с тенью; why — когда (появление героя / третье лицо)
+local function record_tp_shadows(hero, why)
+    if not hero or not hero:IsValid() then return end
+    local t0, names, n = os.clock(), {}, 0
+    local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
+        if c.CastShadow then names[c:GetFullName()] = true; n = n + 1 end
+    end)
+    tp_shadow_names[hero:GetFullName()] = names
+    log("тень: записано сеток с тенью %d (%s); %s", n, why, walk_note(seen, errors, err, capped, t0))
+end
+local function restore_fp_shadows(hero)
+    if not hero or not hero:IsValid() then log("тень от первого лица: героя нет — пропуск"); return end
+    local names = tp_shadow_names[hero:GetFullName()]
+    if not names then log("тень от первого лица: записи третьего лица нет — пропуск"); return end
+    local t0, lit = os.clock(), 0
+    local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
+        if not c.CastShadow and names[c:GetFullName()] then c:SetCastShadow(true); lit = lit + 1 end
+    end)
+    log("тень от первого лица: игра выключила, мы вернули %d; %s", lit, walk_note(seen, errors, err, capped, t0))
+end
+local function player_hero()
+    local pc = FindFirstOf("FunCombat_PlayerController_C")
+    local hero = pc and pc:IsValid() and pc:K2_GetPawn() or nil
+    return hero and hero:IsValid() and hero or nil
+end
 local function install_fp_neck_hooks()
+    -- запись при каждом появлении героя (и после смерти), если он сейчас не в первом лице — до установки перехватов, которые ставятся один раз
+    local hero = player_hero()
+    if hero then
+        local fp = false
+        pcall(function() fp = hero.AdjustableCamera:IsActive() end)
+        if not fp then pcall(record_tp_shadows, hero, "появление героя") end
+    end
     if _G.__conan_cam_fp_neck then return end
     local ok1 = pcall(function()
-        RegisterHook(HERO_BP .. ":SwitchToFirstPersonCamera", function(ctx) pcall(set_neck_hidden, ctx, true) end)
+        RegisterHook(HERO_BP .. ":SwitchToFirstPersonCamera", function(ctx)
+            pcall(set_neck_hidden, ctx, true)
+            local ok, e = pcall(restore_fp_shadows, ctx:get())
+            if not ok then log("тень от первого лица: возврат не удался — %s", tostring(e)) end
+        end)
     end)
     local ok2 = pcall(function()
-        RegisterHook(HERO_BP .. ":SwitchToThirdPersonCamera", function(ctx) pcall(set_neck_hidden, ctx, false) end)
+        RegisterHook(HERO_BP .. ":SwitchToThirdPersonCamera", function(ctx)
+            pcall(set_neck_hidden, ctx, false)
+            local ok, e = pcall(record_tp_shadows, ctx:get(), "третье лицо")
+            if not ok then log("тень: запись не удалась — %s", tostring(e)) end
+        end)
     end)
     _G.__conan_cam_fp_neck = ok1 and ok2
     log("шея от первого лица: перехват %s", (ok1 and ok2) and "встал" or "НЕ встал")
 end
+
+-- Запись сеток с тенью, когда герой собран и мир загружен: рождение HUD героя (Hosav, `W_NewHealthUI_C` — тот же признак у секций KrinikConanUI).
+-- Игра сама зовёт SwitchToThirdPersonCamera при создании героя, и та запись видит недостроенное дерево (2026-11-13 19:52:29: «записано 1, просмотрено
+-- 12» против 11 / 25 у собранного героя); отложенная запись через 6 с после рождения героя не сработала — пешка ещё не во владении игрока (19:58).
+-- Шаблон класса (Default__) отбрасывается. [NOT-TESTED]
+NotifyOnNewObject("/Game/Mods/UIMod_Hosav/W_NewHealthUI.W_NewHealthUI_C", function(w)
+    if w:GetFullName():find("Default__", 1, true) then return end
+    ExecuteInGameThreadWithDelay(2000, function()
+        local h = player_hero()
+        local fp = false
+        if h then pcall(function() fp = h.AdjustableCamera:IsActive() end) end
+        if h and not fp then pcall(record_tp_shadows, h, "HUD героя") end
+    end)
+end)
 
 -- Персонаж появляется позже загрузки мода, поэтому ловим его появление.
 -- Класс — из серверного дампа; если имя на клиенте другое, поможет ручной
 -- пересбор по клавише (Numpad 0) и строки dump_candidates в журнале.
 NotifyOnNewObject("/Script/ConanSandbox.BasePlayerChar", function()
     ExecuteInGameThreadWithDelay(1500, rescan)
-    ExecuteInGameThreadWithDelay(1600, function() pcall(install_fp_neck_hooks) end)
+    -- Клавиши нумпада (bugs/85) — в ТОМ ЖЕ отложенном действии, что и шея: своё отдельное действие с той же задержкой 2026-11-07 21:39 не
+    -- исполнилось ни разу (ни строки в журнале), а шея встала — UE4SS пропускает готовое действие, пока исполняется другое (LuaMod.cpp
+    -- сборки 8333063, m_is_currently_executing_game_action). [NOT-TESTED]
+    ExecuteInGameThreadWithDelay(1600, function()
+        pcall(install_fp_neck_hooks)
+        local ok, err = pcall(install_key_hook)
+        if not ok then log("клавиши камеры: ошибка подписки %s", tostring(err)) end
+    end)
     -- Персонаж появился - значит его блюпринт-класс уже загружен, и только
     -- теперь на его функцию зума можно повесить перехват.
     if try_install_zoom_hook then
@@ -3040,6 +3187,9 @@ try_install_zoom_hook = function()
     -- Перехват шеи от первого лица — здесь же: сюда доходят, когда класс героя уже загружен (подписка на появление
     -- героя в этой сборке не срабатывает — прогон 2026-10-29 10:52: перехват зума встал, строки о шее не было). [NOT-TESTED]
     pcall(install_fp_neck_hooks)
+    -- Клавиши нумпада (bugs/85) — тоже здесь: из события появления героя 2026-11-07 не встали ни отдельным, ни общим с шеей действием (22:05).
+    local okk, errk = pcall(install_key_hook)
+    if not okk then log("клавиши камеры: ошибка подписки %s", tostring(errk)) end
     if zoom_hook_path then return end
     zoom_hook_tries = zoom_hook_tries + 1
     local installed = {}

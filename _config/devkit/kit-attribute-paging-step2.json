@@ -1,0 +1,18 @@
+{
+ "ok": true,
+ "steps": [
+  "the «+» slot: halign <HorizontalAlignment.H_ALIGN_LEFT: 1> valign <VerticalAlignment.V_ALIGN_CENTER: 2> padding <Struct 'Margin' (0x000001ED32368388) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+  "tree: Btn_KrinikPagePrev reused",
+  "tree: Btn_KrinikPagePrev draws the diamond — no glyph added (the look pass owns the content)",
+  "tree: Btn_KrinikPageNext reused",
+  "tree: Btn_KrinikPageNext draws the diamond — no glyph added (the look pass owns the content)",
+  "children: {'Btn_KrinikPagePrev': 2, 'Btn_KrinikPageNext': 3, 'Txt_KrinikPage': 4, 'AttributeCanvas': 2}",
+  "pips canvas visibility (vanilla): <SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>",
+  "compile after the tree: True",
+  "UpdateView: the prefix is already there — skipped",
+  "EventGraph: the arrow clicks are already there — skipped",
+  "compile: True",
+  "save: True"
+ ],
+ "links": []
+}

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # arrow-stand.sh <verb> [arg] — the archery stand by the remote, ONE remote call per verb (KUMM plan 36 W13, EXP-0405).
 #
 # WHY. Four stands of 2026-10-31 morning failed on the same rakes: «the nearest humanoid» was the hero's own companion (0.8 m, 6.2 m), an actor kept
@@ -15,7 +16,7 @@ cd "$(dirname "$0")" || exit 2
 VERB="${1:-info}"; ARG="${2:-}"
 CLASS="${CLASS:-BP_NPC_Wildlife_Kappa_Green_C}"
 CLASS_PATH="${CLASS_PATH:-/Game/Characters/NPCs/Primates/Blueprints/BP_NPC_Wildlife_Kappa_Green.BP_NPC_Wildlife_Kappa_Green_C}"
-RES="/d/Games/Conan Exiles 3.0.1/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/result.txt"
+RES="$GAME_UNIX/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/result.txt"
 
 # The nearest live instance of CLASS to the hero, class defaults and templates filtered (corpse-stand.sh); t = the actor, td = its distance in m.
 # NAME=<actor name> pins the target: the Exiled Lands hold many wild Kappas (8 within 200 m of the oasis, 2026-10-31 11:03), one walked in mid-stand.

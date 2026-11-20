@@ -23,6 +23,10 @@ local SECTIONS = {
     "krinik_vignette",       -- strength of the screen-edge vignettes (hunger, thirst, low health), 0 = off (2026-11-01, plan 40 phase 1)
     "krinik_mods_button",    -- «Настройки модов» in the inventory's bottom bar opens «Моды Krinik'а» (2026-11-01, plan 40 phase 3, step 1)
     "krinik_pickup_prompt",  -- a light «E Взять» over sticks, stones, fibre, berries… (foliage pickups), checked once a second (2026-11-01, plan 42)
+    -- "krinik_loot_rim" OFF since 2026-11-07: the kit makes the cell's AnimSelect instant (the rim no longer lingers on the walk's last cell), and the
+    -- owner's word 10:57 «не нужно её прятать даже на короткий момент» — the section hid the other rims 350 ms after a take. The file stays for the record.
+    "krinik_hub_controller", -- our hub page controller: the old page until the new one is complete, lazy pages, minimap row on our map (2026-11-07, KUMM plan 48)
+    "krinik_attr_pips",      -- the perk pips of an attribute row follow its page (1–20, 21–40 …): placeholder perks past 20 (2026-11-10, KUMM plan 49 step 3)
 }
 
 for _, name in ipairs(SECTIONS) do

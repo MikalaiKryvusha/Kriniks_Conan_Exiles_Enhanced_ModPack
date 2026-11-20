@@ -6,7 +6,7 @@
 {name} will be remembered.	{name} не забудут.
 {name} grudgingly ate {item}.	{name} нехотя ест: {item}.
 {name} choked down some {item}.	{name} с трудом проглатывает: {item}.
-{name} loved the {item} - delicious!	{name} в восторге: {item} — объедение!
+{name} loved the {item} - delicious!	{name} в восторге от угощения: {item}. Очень вкусно!
 A feast! {name} praised the {item}.	Пир! {name} хвалит: {item}.
 {name} ate {item}.	{name} ест: {item}.
 {name} enjoyed some {item}.	{name} с удовольствием ест: {item}.
@@ -14,7 +14,7 @@ A feast! {name} praised the {item}.	Пир! {name} хвалит: {item}.
 {name} joined the settlement.	{name} теперь живёт в поселении.
 {name} now calls this place home.	{name} называет это место домом.
 {name} left the settlement.	{name} уходит из поселения.
-{name} advanced to rank {count} in {need}.	{name}: {need} — ранг {count}.
+{name} advanced to rank {count} in {need}.	{name} получает ранг {count}: {need}.
 {name} grew more skilled in {need} (rank {count}).	{name} набирается опыта: {need}, ранг {count}.
 {name} is running low on {need}.	{name}: на исходе {need}.
 {name} moved into {item}.	{name} заселяется: {item}.

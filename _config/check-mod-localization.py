@@ -48,7 +48,7 @@ import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
 from game_target import GAME_DIR, sandbox   # путь игры — из targets.json (2026-10-25: 2.2.3 удалена)
 GAME_MODS = sandbox('Mods')
-LIB_WORKSHOP = r"D:\Games\Conan Exiles Mods\mods\_workshop"
+LIB_WORKSHOP = r"D:\work\ai_sandbox\ConanExiles\_library\mods\_workshop"
 
 CHUNK = 8 << 20          # 8 МБ за раз
 TAIL = 512               # нахлёст, чтобы не разрезать путь на границе кусков

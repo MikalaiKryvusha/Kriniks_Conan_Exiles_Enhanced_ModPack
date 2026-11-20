@@ -1,5 +1,5 @@
 --[==[===========================================================================
-  KrinikConanArchery 0.9.0 — лук героя: стрела из лука в точку прицела, вид стрелы и прицела
+  KrinikConanArchery 0.9.1 — лук героя: стрела из лука в точку прицела, вид стрелы и прицела
   (до 2026-10-28 — KrinikArrowAim; `[OWNER]` «мод KrinikConanAim переименовываем в KrinikConanArchery» · 2026-10-28 20:39)
   KUMM план 36 п. 32, 35–37. 0.3.0 — схема владельца 2026-10-27 18:4x:
   `[OWNER]` «из камеры по линии прицела в момент выстрела пускаем луч щуп -
@@ -89,6 +89,7 @@ local CFG = {
     -- выстрел в ПКМ прикладке от третьего лица при начале нового натяжения» · 2026-10-28 ≈20:12. Цель 0 при зажатой ПКМ сразу после прицела
     -- переписываем обратно на прицел в том же перехвате, до тика контроллера.
     hold_aim_on_redraw = true,
+    sprint_unzoom   = true,    -- зум прицела уступает спринту и сам возвращается после него при зажатой ПКМ (KUMM bugs/93, 2026-11-16)
     -- `[OWNER]` «Камеру при прикладке от перового лица нужно двигать не резко, а плавно, условно, за 500 мс в позицию прикладки, и за 500 мс -
     -- возврат к обычной после прикладки» · 2026-10-28
     fp_shift_ms     = 500,
@@ -118,6 +119,14 @@ local CFG = {
     summary_s       = 60.0,
     -- 1.0.0: стрелы остаются в трупе (`[OWNER]` 2026-11-01 09:11, ниже раздел «стрелы в трупе»)
     keep_in_corpse      = true,
+    -- Натяжение по Проворству (`[OWNER]` 2026-11-07 21:43 «каждый пункт Пропорства должен уменьшать время натяжения лука на 1%» · «прогрессивно»;
+    -- 21:46 «суппер, так и делаем» — основа 5 с при Проворстве 0): полное натяжение = draw_base_s × draw_per_point^Проворство, от нажатия.
+    draw_by_agility     = true,
+    head_damage_mult    = 2.0,     -- стрела героя в голову (`[OWNER]` 2026-11-07 21:57 «увеличивает урон в 2 раза»)
+    head_xp_mult        = 2.0,     -- первый же удар героя по мобу — в голову и убил («x2 опыта»)
+    miss_alert_cm       = 1000,    -- стрела героя упала — мобы в этом радиусе «слышат» героя (`[OWNER]` 2026-11-07 21:50 «в 10 метрах»); 0 — выкл
+    draw_base_s         = 5.0,
+    draw_per_point      = 0.99,
     corpse_find_ms      = 150,     -- труп рождается рядом со смертью: ищем его после уборки существа
     corpse_radius_cm    = 400,     -- копия дальше этого от трупа — не его стрела
     corpse_arrow_life_s = 900,     -- срок копии в трупе, когда у трупа нет своего срока ([AI] 15 мин)
@@ -129,6 +138,12 @@ local CFG = {
     -- Список выбора стрел мода Arrow Quick Swap при натяжении (`[OWNER]` 2026-11-02 12:54–12:56 «если есть из чего выбирать - показывается, если не из чего
     -- выбирать - не показывается» · «если выключена - то он никогда не показывается, даже не мерцает ни чуть-чуть»): шкала хаба arc_ammo_list.
     ammo_list           = true,
+    -- Вид тела от первого лица (KUMM план 52; `[OWNER]` 2026-11-13 15:25 «A — тело видно, сделано по-индустриальному.»): пока лук в руках и не натянут,
+    -- верх тела не наклоняется вслед за взглядом — опустив взгляд, видишь руки и лук. Доли — `[AI]` вариант Б подбора 2026-11-14 22:59 (рука с луком
+    -- 31° от центра при −55, 11° при −80; родное 77° / 76°); какой вид — глаз владельца (страница вариантов A / Б).
+    fp_body_look        = true,
+    fpl_neck            = 1.0,     -- доля наклона взгляда, которую берёт шея (сборка анимблюпринта — 0.5)
+    fpl_spine           = 1.0,     -- насколько снимаем боевой наклон спины (1.0 — верх тела прямой; сборка — 0.85)
 }
 
 local TAG = "[KrinikConanArchery] "
@@ -332,6 +347,7 @@ local copy_errors = 0
 local CORPSE_LATE_S = 2.0
 local last_corpse, last_corpse_t = nil, -1e9
 local on_corpse_born                      -- объявлена ниже, в разделе «стрелы в трупе»
+local on_corpse_hit                       -- тоже ниже: стрела, попавшая в уже мёртвое тело (2026-11-07)
 
 -- Журнал первых копий: где игра поставила копию относительно точки удара (родная стрела — ≈ 62 см: копия считается от хвоста).
 NotifyOnNewObject(DUMMY_CLASS, function(dummy)
@@ -340,6 +356,10 @@ NotifyOnNewObject(DUMMY_CLASS, function(dummy)
             if on_corpse_born and last_corpse and os.clock() - last_corpse_t < CORPSE_LATE_S then
                 local okc, errc = pcall(on_corpse_born, last_corpse)   -- [NOT-TESTED] кейс A10
                 if not okc and copy_errors < 5 then copy_errors = copy_errors + 1; log("ошибка поздней стрелы в трупе: %s", tostring(errc)) end
+            end
+            if on_corpse_hit then
+                local okh, errh = pcall(on_corpse_hit, dummy)
+                if not okh and copy_errors < 5 then copy_errors = copy_errors + 1; log("ошибка стрелы в мёртвом теле: %s", tostring(errh)) end
             end
             local ok, err = pcall(function()
                 if not dummy:IsValid() or dummies_seen >= CFG.log_shots then return end
@@ -377,6 +397,165 @@ local ARROW_TIP_FALLBACK_CM = 76.0   -- SM_basic_wood_arrow: Z −0.3…76.1 (з
 local STOP_FUNC = "/Game/Items/Weapons/BP_BaseProjectile.BP_BaseProjectile_C:StopProjectileInternal"
 local VISUALS_CAP = 64                -- стрел в полёте одновременно куда меньше; переполнение = актёры, ушедшие без остановки, — реестр чистится целиком
 local visuals, visuals_n, stop_hooked = {}, 0, false
+
+-- Промах будит моба (`[OWNER]` 2026-11-07 21:50 «промах из лука пмо мобу, если стрела ударилась об землю … или об стену. или об предмет - где-то рядом
+-- в 10 метрах от моба - должна приводить к тому, что моб узнает об присутсткии героя и начинает к нему бежать для нападения на героя, словно слышит, что
+-- стрела рядом с ним упала»). Разведка пультом 2026-11-07 21:5x: у моба (BaseNPC_C) есть BPTargetDistributionComponent_C — его список ненависти;
+-- UpdatedHeardActors(NewHeardActors) — родное событие «услышал актёров», дальше игра сама решает CanEngageTarget (фракция, питомцы, рабы). Своё
+-- AIPerception у моба — только зрение (AISense_NewSight) и слух Конана по скрытности, поэтому ReportNoiseEvent не подходит. Здесь: стрела ГЕРОЯ
+-- остановилась (земля, стена, предмет, тело) — каждому мобу в CFG.miss_alert_cm от точки остановки — «услышал героя». Попавший в моба выстрел
+-- его и так злит; лишний вызов безвреден. Поиск мобов — раз на стрелу, по событию игры. [NOT-TESTED]
+local TDC_CLASS = "/Game/Systems/AI/NewAI/BPTargetDistributionComponent.BPTargetDistributionComponent_C"
+local alert_logged = 0
+local function alert_near(arrow)
+    local radius = CFG.miss_alert_cm or 0
+    if radius <= 0 then return end
+    local t0 = os.clock()
+    local hero = arrow:GetInstigator()
+    if not (hero and hero:IsValid()) then return end
+    local tdc_class = StaticFindObject(TDC_CLASS)
+    if not (tdc_class and tdc_class:IsValid()) then return end
+    local p = arrow:K2_GetActorLocation()
+    local near, heard = 0, 0
+    -- Кто рядом — родной запрос физики SphereOverlapActors (тела класса Pawn = ObjectTypeQuery3, индекс 2; фильтр — класс моба BaseNPC_C), а не
+    -- FindAllOf по всем NPC мира: тот стоил 12 мс на стрелу (прогон 2026-11-07 22:17) при бюджете модов 1 мс на кадр.
+    local npc_class = StaticFindObject("/Game/Characters/BaseNPC.BaseNPC_C")
+    if not (npc_class and npc_class:IsValid()) then return end
+    local out = {}
+    StaticFindObject("/Script/Engine.Default__KismetSystemLibrary"):SphereOverlapActors(arrow, { X = p.X, Y = p.Y, Z = p.Z }, radius, { 2 },
+        npc_class, {}, out)
+    for i = 1, #out do
+        local npc = out[i]:get()
+        if npc and npc:IsValid() and npc ~= hero then
+            near = near + 1
+            local tdc = npc:GetComponentByClass(tdc_class)
+            if tdc and tdc:IsValid() and pcall(function() tdc:UpdatedHeardActors({ hero }) end) then heard = heard + 1 end
+        end
+    end
+    if alert_logged < CFG.log_shots or near > 0 then
+        alert_logged = alert_logged + 1
+        log("стрела упала: мобов в %.0f м — %d, «услышали» %d (%.2f мс)", radius / 100, near, heard, (os.clock() - t0) * 1000)
+    end
+end
+
+-- ------------------------------------------------------------- выстрел в голову
+-- `[OWNER]` 2026-11-07 21:57 «попадаение у голову увеличивает урон в 2 раза. Убийство моба попадаем у голову с ОДНОГО выстрела первого - x2 опыта, что
+-- показывается в виджете с полученным за убийство опытом.» · «Если были героем игрока нанесены любые другие удары по этому мобу, то x2 больше за убийство в
+-- голову не засчитывается. Убить нужно именно первым ваншотам в голову».
+-- Как устроено в игре (байткод BP_CollisionComponent.TakeProjectileDamage 3.0.1, kismet-trace 2026-11-07): родной множитель урона стрелы
+-- (GetProjectileDamageOverDistance) уходит параметром DamageMultiplier в ApplyDamageSpecific(Type, DamageStructure, Combo, AttackBlocked, DamagedActor,
+-- HitFromDirection, HitInfo, EventInstigator, DamageCauser, DamageMultiplier) — там же кость удара (HitInfo.BoneName). Опыт за моба — поле
+-- BP_XPHolder_C.xpToGive у самого моба (пульт 2026-11-07). Здесь — пре-перехват ApplyDamageSpecific, игровой поток, один вызов на удар:
+--   * удар героя стрелой (DamageCauser — снаряд BP_BaseProjectile) в кость, чьё имя содержит «head» → DamageMultiplier × CFG.head_damage_mult;
+--   * ПЕРВЫЙ удар героя по этому мобу и он в голову → xpToGive × CFG.head_xp_mult на время удара; моб выжил — через кадр родное число назад;
+--   * любой удар героя (стрела, меч) метит моба «бит героем» — дальше удвоения опыта нет. Реестр меток — по полному имени моба, предел 512. [NOT-TESTED]
+local PROJECTILE_BASE = "/Game/Items/Weapons/BP_BaseProjectile.BP_BaseProjectile_C"
+local XP_HOLDER = "/Game/Systems/Progression/BP_XPHolder.BP_XPHolder_C"
+local HEAD_HIT_FUNC = "/Game/Systems/Combat/BP_CollisionComponent.BP_CollisionComponent_C:ApplyDamageSpecific"
+local HEAD_HIT_ALL_FUNC = "/Game/Systems/Combat/BP_CollisionComponent.BP_CollisionComponent_C:ApplyDamageAll"
+local hit_by_hero, hit_by_hero_n = {}, 0
+local xp_raised = {}                      -- полное имя моба → { holder, native }: опыт поднят на удар, ждёт возврата
+local head_logged, head_errors = 0, 0
+local function restore_xp(key)
+    local r = xp_raised[key]
+    if not r then return end
+    xp_raised[key] = nil
+    pcall(function() if r.holder:IsValid() then r.holder.xpToGive = r.native end end)
+end
+local function is_hero_controller(ctl)
+    return ctl and ctl:IsValid() and ctl:IsA(StaticFindObject("/Script/Engine.PlayerController"))
+end
+-- ⚠️ ЗДЕСЬ ТОЛЬКО МЕТКА «бит героем». UE4SS 1181 зовёт обработчик блюпринт-функции ПОСЛЕ её тела (EXP-0487): запись множителя и опыта отсюда
+-- опаздывала — гиена 2147453068 умерла в 22:42:09.131, «×2» записан в 22:42:09.136. Для метки опоздание безвредно: она нужна следующим ударам.
+local function on_apply_damage(_, _, _, _, _, damaged, _, _, instigator)
+    local victim = damaged:get()
+    if not (victim and victim:IsValid() and is_hero_controller(instigator:get())) then return end
+    local key = victim:GetFullName()
+    restore_xp(key)                         -- удар по живому мобу: поднятый выстрелом в голову опыт — назад (если отложенный возврат выпал)
+    if not hit_by_hero[key] then
+        if hit_by_hero_n >= 512 then hit_by_hero, hit_by_hero_n = {}, 0 end
+        hit_by_hero[key] = true; hit_by_hero_n = hit_by_hero_n + 1
+    end
+end
+
+-- Решение «в голову» — ДО урона: стрела отдаёт свой множитель функцией GetProjectileDamageOverDistance (её зовёт TakeProjectileDamage цели ПЕРВОЙ,
+-- раньше ApplyDamageAll — порядок снят пультом 22:46); обработчик срабатывает, когда она вернула множитель, а урон ещё не нанесён, — выходной
+-- параметр удваивается здесь. Кость: попадание в этот миг нигде не хранится (поля стрелы — пульт 22:46; луч по типам Pawn/PhysicsBody отдаёт
+-- капсулу или ничего), поэтому — родной FindClosestBone_K2 сетки жертвы с физическим телом, к точке, где стрела остановилась (проба 22:51:
+-- точки у головы / спины / таза → b_head / b_spine_2 / b_spine_1). Жертва — ближайший моб в HEAD_VICTIM_CM от стрелы. Опыт ×2 — тоже здесь,
+-- до смерти: первый удар героя по мобу + голова. [NOT-TESTED]
+local HEAD_VICTIM_CM = 300
+local PDOD_FUNC = "/Game/Items/Weapons/BP_BaseProjectile.BP_BaseProjectile_C:GetProjectileDamageOverDistance"
+local function on_projectile_multiplier(ctx, mult)
+    local arrow = ctx:get()
+    if not (arrow and arrow:IsValid()) then return end
+    local hero = arrow:GetInstigator()
+    if not (hero and hero:IsValid() and hero:IsPlayerControlled()) then return end
+    local p = arrow:K2_GetActorLocation()
+    local px, py, pz = p.X, p.Y, p.Z
+    local out = {}
+    StaticFindObject("/Script/Engine.Default__KismetSystemLibrary"):SphereOverlapActors(arrow, { X = px, Y = py, Z = pz }, HEAD_VICTIM_CM, { 2 },
+        StaticFindObject("/Game/Characters/BaseNPC.BaseNPC_C"), {}, out)
+    local victim, bone, best = nil, nil, 1e18
+    for i = 1, #out do
+        local a = out[i]:get()
+        if a and a:IsValid() and a ~= hero then
+            local bl = {}
+            local b = a.Mesh:FindClosestBone_K2({ X = px, Y = py, Z = pz }, bl, 0.0, true):ToString()
+            local d = (bl.X - px) ^ 2 + (bl.Y - py) ^ 2 + (bl.Z - pz) ^ 2
+            if d < best then victim, bone, best = a, b, d end
+        end
+    end
+    if not victim or not bone:lower():find("head", 1, true) then return end
+    local m = mult:get()
+    mult:set(m * CFG.head_damage_mult)
+    local key = victim:GetFullName()
+    local first = not hit_by_hero[key]
+    local xp_note = ""
+    if first then
+        local holder = victim:GetComponentByClass(StaticFindObject(XP_HOLDER))
+        if holder and holder:IsValid() then
+            local native_xp = holder.xpToGive
+            holder.xpToGive = native_xp * CFG.head_xp_mult
+            xp_raised[key] = { holder = holder, native = native_xp }
+            xp_note = (" · опыт %s → %s на этот удар"):format(tostring(native_xp), tostring(holder.xpToGive))
+            -- Через 100 мс удар и смерть уже прошли: погиб — опыт выдан удвоенным, выжил — родное число назад (и на следующем ударе героя).
+            ExecuteInGameThreadWithDelay(100, function() restore_xp(key) end)
+        end
+    end
+    if head_logged < CFG.log_shots then
+        head_logged = head_logged + 1
+        log("выстрел в голову: %s, кость %s (%.0f см от стрелы) — урон ×%.1f (множитель %.2f → %.2f), первый удар героя: %s%s",
+            victim:GetFName():ToString(), bone, math.sqrt(best), CFG.head_damage_mult, m, m * CFG.head_damage_mult, tostring(first), xp_note)
+    end
+end
+local function hook_head_hits()
+    if _G.__krinik_head_hooked then return end
+    -- По СУЩЕСТВУ урон идёт ApplyDamageAll (те же параметры без первого Type), а ApplyDamageSpecific — только по предметам и земле: диагностика
+    -- пультом 2026-11-07 22:36 — попадания в гиен: TakeProjectileDamage → ApplyDamageAll → ApplyAllDamageModifications → ApplyDamageModifiers ×3,
+    -- ни одного ApplyDamageSpecific (первая сборка поэтому не удвоила ни одного выстрела в голову: антилопа «+953 XP», кадр владельца 22:34).
+    local ok, err = pcall(function()
+        RegisterHook(HEAD_HIT_FUNC, function(...)
+            local okh, errh = pcall(on_apply_damage, ...)
+            if not okh and head_errors < 5 then head_errors = head_errors + 1; log("ошибка выстрела в голову: %s", tostring(errh)) end
+        end)
+        RegisterHook(HEAD_HIT_ALL_FUNC, function(ctx, ds, co, ab, damaged, dir, info, inst, causer, mult)
+            local okh, errh = pcall(on_apply_damage, ctx, nil, ds, co, ab, damaged, dir, info, inst, causer, mult)
+            if not okh and head_errors < 5 then head_errors = head_errors + 1; log("ошибка выстрела в голову: %s", tostring(errh)) end
+        end)
+        RegisterHook(PDOD_FUNC, function(ctx, mult)
+            local okh, errh = pcall(on_projectile_multiplier, ctx, mult)
+            if not okh and head_errors < 5 then head_errors = head_errors + 1; log("ошибка выстрела в голову (множитель): %s", tostring(errh)) end
+        end)
+    end)
+    _G.__krinik_head_hooked = ok
+    log("выстрел в голову: перехват ApplyDamageSpecific %s", ok and "поставлен" or ("не встал — " .. tostring(err)))
+end
+-- Герой появился — его BP_CollisionComponent уже загружен; ставим сразу, чтобы удары мечом до первого выстрела тоже метили мобов.
+NotifyOnNewObject("/Script/ConanSandbox.BasePlayerChar", function()
+    ExecuteInGameThread(function() pcall(hook_head_hits) end)
+end)
+
 local function hook_stop()
     stop_hooked = true
     local ok, err = pcall(RegisterHook, STOP_FUNC, function(ctx)
@@ -389,6 +568,8 @@ local function hook_stop()
                 vis:SetVisibility(false, false)
                 log("удар: крупная стрела спрятана (видна: %s), в полёте своих стрел %d", tostring(vis:IsVisible()), visuals_n)
             end
+            local oka, erra = pcall(alert_near, a)       -- только стрелы героя есть в реестре visuals
+            if not oka and alert_logged < 1000 then alert_logged = alert_logged + 100; log("ошибка «промах будит моба»: %s", tostring(erra)) end
         end
     end)
     log("гашение крупной стрелы при ударе: %s", ok and "подписано" or ("ошибка " .. tostring(err)))
@@ -416,7 +597,7 @@ local function add_visual_arrow(actor)
         log("крупная стрела: сетка %s ×%.1f, конец по Z %.1f см, сдвиг %.1f см", sm:GetFName():ToString(), s, max_z, max_z * (1.0 - s))
     end
     pm:SetVisibility(false, false)   -- только сама сетка: след и прочие дети родной сетки видимы
-    if not stop_hooked then hook_stop() end
+    if not stop_hooked then hook_stop(); pcall(hook_head_hits) end
     if visuals_n >= VISUALS_CAP then visuals, visuals_n = {}, 0 end
     visuals[actor:GetAddress()] = vis; visuals_n = visuals_n + 1
 end
@@ -610,20 +791,11 @@ local function sync_later(ms)
     end)
 end
 RegisterHook("/Script/ConanSandbox.QuickLootPanel:SlotItemAddedOrRemoved", function() sync_later(50) end)
--- Разделка туши зверя (E у каппы — «Разделать труп») уносит стрелу из добычи трупа, но окно добычи не открывается и его событие молчит
--- (кейс A13, 23:55: стрел в добыче 1 → 0, древко осталось). Поводом служит сама E: после нажатия — одна сверка через 2.5 с (анимация разделки),
--- только пока есть трупы со стрелами; не таймер. [NOT-TESTED]
-RegisterKeyBind(Key.E, function()
-    if next(corpse_arrows) then sync_later(2500) end
-end)
--- Полное окно добычи (E у трупа каппы открыло его, 23:57): «Взять всё» по Q и перетаскивание мышью унесли стрелы (4 → 0), древки остались 4 —
--- событие быстрой добычи там молчит. Q и левая кнопка — тоже повод; сверка — один подсчёт на труп со стрелами. [NOT-TESTED]
-RegisterKeyBind(Key.Q, function()
-    if next(corpse_arrows) then sync_later(300) end
-end)
-RegisterKeyBind(Key.LEFT_MOUSE_BUTTON, function()
-    if next(corpse_arrows) then sync_later(300) end
-end)
+-- Разделка туши зверя (E у каппы) и полное окно добычи («Взять всё» по Q, перетаскивание мышью) уносят стрелы мимо события быстрой добычи
+-- (кейс A13, 2026-11-01 23:55–23:57). До 2026-11-07 поводом служили клавиши E / Q / ЛКМ через RegisterKeyBind — и это ронял игру: UE4SS зовёт
+-- обработчик клавиши в своём потоке, а этот мод в тот же миг исполняет Lua в игровом потоке (перенос стрел на труп) без общего замка — куча Lua
+-- одна на мод, она портится (KUMM bugs/85, падение 2026-11-07 21:17 при убийстве беса стрелой). Клавиши сняты. Пока не найдено событие игрового
+-- потока для разделки и полного окна, их древки остаются в трупе до его исчезновения (конспект мода → Open). [NOT-TESTED]
 
 local function rebirth(corpse, recs)
     if not corpse or not corpse:IsValid() then return end
@@ -674,6 +846,41 @@ local function rebirth(corpse, recs)
         if not ok then corpse_log_error(err) end
     end
     log("стрелы в трупе: %s — к трупу прицеплено %d (игра уберёт их с существом), пропущено %d, срок %.0f с", corpse:GetFName():ToString(), moved, skipped, life)
+end
+
+-- Стрела в УЖЕ мёртвое тело (`[OWNER]` 2026-11-07 21:41 «когда моб умер, но в его тело ещё стреляют - эти стрелы тоже нужно класть в добычу моба»):
+-- копия такой стрелы рождается прицепленной к сетке трупа (хозяин родителя — CorpseBase, а не существо). Как у стрел, перенесённых при смерти:
+-- одна стрела того же предмета — в добычу трупа, древко остаётся в теле, пока стрела лежит в добыче (sync_corpse_arrows), срок древка — срок трупа.
+-- Подбор древка по E выключен (IsLootable false) — иначе одну стрелу можно взять дважды: из тела и из добычи. Зовётся с рождения копии (+100 мс,
+-- игровой поток), один раз на копию (taken_copies). [NOT-TESTED]
+local corpse_base_class
+on_corpse_hit = function(dummy)
+    if not CFG.keep_in_corpse or not dummy:IsValid() then return end
+    local dname = dummy:GetFullName()
+    if taken_copies[dname] then return end
+    local par = dummy.RootComponent:GetAttachParent()
+    local corpse = par and par:IsValid() and par:GetOwner() or nil
+    corpse_base_class = corpse_base_class or StaticFindObject(CORPSE_CLASS)
+    if not (corpse and corpse:IsValid() and corpse_base_class and corpse:IsA(corpse_base_class)) then return end
+    local item = dummy.ProjectileItemTemplateID
+    local inv = corpse:GetComponentByClass(StaticFindObject("/Script/ConanSandbox.ItemInventory"))
+    if not (item and item > 0 and inv and inv:IsValid()) then
+        log("стрела в мёртвом теле: %s — нет предмета (%s) или добычи трупа", corpse:GetFName():ToString(), tostring(item))
+        return
+    end
+    taken_copies[dname] = true
+    inv:AddItemTemplate(item, -1, FName("None"), 1, true, 1.0, 0.0)
+    local life = corpse:GetLifeSpan()
+    if not life or life <= 0 then life = CFG.corpse_arrow_life_s end
+    dummy:SetLifeSpan(life)
+    dummy.IsLootable = false
+    local key = corpse:GetFullName()
+    corpse_arrows[key] = corpse_arrows[key] or { corpse = corpse, inv = inv, items = {} }
+    local per = corpse_arrows[key].items
+    per[item] = per[item] or {}
+    table.insert(per[item], dummy)
+    log("стрела в мёртвом теле: %s, кость %s — стрела %d в добычу трупа (в добыче %d), древко на %.0f с", corpse:GetFName():ToString(),
+        dummy.RootComponent:GetAttachSocketName():ToString(), item, inv:GetNumberOfItemsByTemplate(item), life)
 end
 
 on_corpse_born = function(corpse)       -- local выше: его зовёт и рождение поздней копии (стрела, которая убила)
@@ -910,6 +1117,178 @@ local function hook_settle()
     log(ok and "тетива: перехват конца атаки поставлен" or ("тетива: перехват не встал — " .. tostring(err)))
 end
 
+-- ------------------------------------------------- зум прицела и спринт (KUMM bugs/93, кейсы Z1–Z6)
+-- `[OWNER]` 2026-11-16 18:40 «нужно сделать адекватно зум в комбинации со спринтом» · «герой в прикладке - есть зум … Начали спринт - зум отменяется. Если ПКМ
+-- удерживается, а спринт закончился - возвращается зум автоматически.» · «герой не в прикладке. Начали бежать спринтом. Делаем прикладку - зум не делается, так
+-- как герой в спринте. Спринт остановился, ПКМ прикладки удерживается - зум автоматически срабатывает.» (дословно — в баге 93).
+-- Как (карта игры «Как контроллер считает обзор»): у контроллера три режима — FieldOfView 0 обычный (107,5°), 1 прицел (×0,5; наш перехват ставит
+-- aim_fov_deg), 2 спринт (×0,95, его ставит сама игра на бегу — поэтому «прикладка, потом спринт» зум уже снимала). Камеру ведёт только переход
+-- FieldOfViewChange(длительность, режим) — голый SetFieldOfViewTarget камеру не двигает; FieldOfViewReset откатывает к ПРЕДЫДУЩЕЙ цели (не к обычной) —
+-- здесь не зовётся. Решения — на событие смены спринта (подсостояние 7, OnSubstateChanged_Sprint класса BaseBPCombat_C — путь через BasePlayerChar_C не
+-- встаёт, 2026-11-16), не опросом; вызовы — отложенно, не изнутри перехвата (EXP-0349). Пульт 2026-11-16 18:55: прицел стоя → режим 1, 75°; бег → режим 2,
+-- 102,1°; прицел, запрошенный в спринте, — наш перехват погасил зум. Бег прибором sprint-run-probe не отпускает клавишу — режим 2 после него держится; конец
+-- спринта и возврат зума проверяются только настоящими клавишами. [NOT-TESTED]
+-- Одна локальная на весь раздел: главный блок у предела Lua в 200 локальных (конспект мода).
+local SZ = {
+    EVENTS = {   -- функция объявлена в родителе героя: встаёт путь BaseBPCombat_C (2026-11-16), путь героя — запасной
+        "/Game/Characters/BaseBPCombat.BaseBPCombat_C:OnSubstateChanged_Sprint",
+        "/Game/Characters/BasePlayerChar.BasePlayerChar_C:OnSubstateChanged_Sprint",
+    },
+    SPRINT = 7,              -- ECharacterSubState.h: Sprinting 7; натяжение — 11 атака, 15 заряд, 16 удержание
+    HOLD = 16,               -- удержание натяжения: рвётся первым, когда натяжение обрывает игра
+    TIRED = 14,              -- усталость: входит в той же строке самописца, где уходит 16 (21:12, t 27.14), держится секунды; с ней ПКМ не натягивает (t 0.65)
+    FOV_SPRINT = 2,          -- режим обзора спринта контроллера (×0,95)
+    CHANGE_S = 0.1,          -- длительность перехода — как родной FieldOfViewChangeDuration
+    AFTER_MS = 120,          -- после смены спринта: родной переход обзора на этом событии успевает раньше нашего
+    -- приземление (и любая смена режима движения): родитель героя — тот же BaseBPCombat_C; зовётся для всех существ, отсев — IsPlayerControlled
+    LANDED = "/Game/Characters/BaseBPCombat.BaseBPCombat_C:HandleOnMovementModeChanged",
+    SPRINT_KEY = "/Game/Characters/BasePlayerChar.BasePlayerChar_C:SprintAction",   -- Shift нажат / отпущен (параметр Pressed; пульт 21:1x)
+    TAKEOFF_S = 0.25,        -- спринт, покинутый за столько до отрыва, — прыжок из спринта (порядок «отрыв» и «выход из 7» не прочитан)
+    -- Правило раздела (`[OWNER]` 21:09 «Намудрил ты» — упрощено после судьи, раунд 4): возвращаем ТОЛЬКО тот прицельный зум, который сами забрали
+    -- (took); решает состояние, а не повод: ПКМ зажата, удержание 16 живо, спринта нет. Поводы перепроверить — конец спринта, приземление, клавиша
+    -- спринта, начало удержания. От первого лица ПКМ режим 1 не ставит — took не взводится, зум там не появится. [NOT-TESTED]
+    took = false,
+    -- Прыжок из спринта — тоже спринт: полёт и окно после касания до возврата 7 (35 мс … 0,6 с — судья, раунды 3 и 4), пока спринт не отпущен.
+    from_sprint = false,
+    logged = {},             -- свой счётчик на каждую строку журнала: частая строка не вытесняет редкую (судья, раунд 2)
+}
+function SZ.in_substate(pawn, s)
+    local out = {}
+    pawn:InSubstate(s, out)
+    return out.Success == true
+end
+-- Спринт не отпущен: bTrySprint (клавиша или переключатель) или сама клавиша — натяжение в прыжке гасит bTrySprint при зажатой клавише (самописец 20:53, t 24.27).
+function SZ.held(pawn)
+    if pawn.bTrySprint == true then return true end
+    local ok, k = pcall(function() return pawn.SprintKeyIsDown end)
+    return ok and k == true
+end
+-- Спринт для обзора — подсостояние 7 ИЛИ полёт с зажатым спринтом: прыжок выводит из 7 на время полёта (`[OWNER]` 2026-11-16 20:51 «если в спринте
+-- прыгать - камера приближается - не нужно, я же всё равно в спринте, хоть и прыгаю, я продолжаю держать спринт кнопку» · 20:54 «бегу в спринте,
+-- прицеливаюсшь, бегу в спринте в прицеле, прыгаю - камера приближается пока лечу в прыжке»; самописец 20:53: в полёте 102° → 75°, на земле назад 102°). [NOT-TESTED]
+function SZ.sprinting(pawn)
+    if not (pawn ~= nil and pawn:IsValid()) then return false end
+    if SZ.in_substate(pawn, SZ.SPRINT) then return true end
+    if SZ.from_sprint and not SZ.held(pawn) then SZ.from_sprint = false end
+    return SZ.from_sprint
+end
+function SZ.log(fmt, ...)
+    local n = SZ.logged[fmt] or 0
+    if n < CFG.log_shots then SZ.logged[fmt] = n + 1; log(fmt, ...) end
+end
+-- Возврат прицельного зума (Z3, Z5): только тот прицел, что МЫ сделали обзором спринта (режим 2 — от первого лица прицел обзор не меняет), ПКМ зажата,
+-- ЖИВОЕ удержание натяжения (16), спринта нет (и в полёте с зажатым спринтом — тоже спринт). Самописец 20:45: спринт и натяжение рвутся сами при зажатых
+-- Shift и ПКМ (16 уходит первым — похоже на выносливость); по «11 или 15» зум входил, а через 0,15 с конец натяжения выводил из прицела — 102° → 75° → 108°.
+-- Три повода: конец спринта, начало удержания (16 приходит ≈ 0,5 с после нажатия — Shift, отпущенный раньше, иначе оставлял 102° на всё натяжение;
+-- судья, раунд 2), приземление (Shift отпущен в полёте). [NOT-TESTED]
+function SZ.zoom_back(pawn, why)
+    if not SZ.took or not CFG.sprint_unzoom or not (pawn and pawn:IsValid() and pawn:IsPlayerControlled()) then return end
+    local c = pawn.BP_PlayerFovController
+    if not (c and c:IsValid()) then return end
+    if not rmb_held(c) then SZ.took = false; return end   -- прикладка кончилась — возвращать нечего
+    if c.FieldOfView ~= SZ.FOV_SPRINT or not SZ.in_substate(pawn, SZ.HOLD) or SZ.sprinting(pawn) then return end
+    SZ.took = false
+    c:FieldOfViewChange(SZ.CHANGE_S, FOV_AIM)
+    SZ.log("зум и спринт: " .. why .. ", ПКМ зажата, натяжение держится — прицельный зум вернулся")   -- своя строка журнала на каждый повод
+end
+-- Один отложенный шаг игры с журналом ошибок (судья, раунд 2: молчаливый pcall прятал сбой).
+function SZ.later(ms, f)
+    local function run()
+        local ok, err = pcall(f)
+        if not ok and errors < 5 then errors = errors + 1; log("зум и спринт: ошибка — %s", tostring(err)) end
+    end
+    if ms > 0 then ExecuteInGameThreadWithDelay(ms, run) else ExecuteInGameThread(run) end
+end
+-- Z8 (`[OWNER]` 21:02 «остался микролаг на отпускании натяжки по усталости» · 21:13 «микро лаг сейчас есть на усталости»): усталость рвёт удержание, лук
+-- опускается, а прицел игра снимает лишь с концом натяжения — через 0,26 с (самописец 21:12: t 27.14 → 27.40, камера стоит, кадр без просадок). Конец
+-- уведомления заряда при усталости (14) и прицеле — выход из прицела сразу, родным переходом. Решает наблюдённое состояние, не событие с догадкой. [NOT-TESTED]
+function SZ.tired_out(pawn)
+    if not CFG.sprint_unzoom or not (pawn and pawn:IsValid() and pawn:IsPlayerControlled()) then return end
+    local c = pawn.BP_PlayerFovController
+    if not (c and c:IsValid()) or c.FieldOfView ~= FOV_AIM or not SZ.in_substate(pawn, SZ.TIRED) then return end
+    c:FieldOfViewChange(SZ.CHANGE_S, FOV_DEFAULT)
+    SZ.log("усталость: удержание сорвалось — прицел снят сразу")
+end
+-- Повод перепроверить — через AFTER_MS (родные переходы на этих событиях успевают раньше нашего); нечего возвращать — ничего не планируем.
+function SZ.recheck(pawn, why)
+    if SZ.took then SZ.later(SZ.AFTER_MS, function() SZ.zoom_back(pawn, why) end) end
+end
+-- Спринт начался (Z2): игра сама ставит режим спринта; если прицел всё ещё держится — переход в режим спринта (зум забран — took). Спринт кончился — повод.
+function SZ.on_changed(pawn, entered)
+    if not CFG.sprint_unzoom or not (pawn and pawn:IsValid() and pawn:IsPlayerControlled()) then return end
+    if not entered then
+        SZ.left_t = os.clock()   -- для «прыжок из спринта» (SZ.on_moved)
+        SZ.recheck(pawn, "спринт кончился")
+        return
+    end
+    SZ.from_sprint = false       -- снова в 7: окно прыжка закрыто
+    SZ.later(SZ.AFTER_MS, function()
+        if not pawn:IsValid() then return end
+        local c = pawn.BP_PlayerFovController
+        if not (c and c:IsValid()) or c.FieldOfView ~= FOV_AIM or not SZ.sprinting(pawn) then return end
+        c:FieldOfViewChange(SZ.CHANGE_S, SZ.FOV_SPRINT)
+        fov_last = SZ.FOV_SPRINT
+        SZ.took = true
+        SZ.log("зум и спринт: начался спринт — прицельный зум снят")
+    end)
+end
+_G.__krinik_sprint_fn = SZ.on_changed
+-- Смена режима движения (все существа — первым делом отсев игрока): отрыв из спринта взводит from_sprint (второй прыжок из окна после касания его
+-- сохраняет); касание земли — повод перепроверить (самописец 20:58: проверка до возврата 7 давала качание 102° → 83° → 102° при приземлении).
+function SZ.on_moved(pawn)
+    if not CFG.sprint_unzoom or not (pawn and pawn:IsValid() and pawn:IsPlayerControlled()) then return end
+    local ok, air = pcall(function() return pawn.CharacterMovement:IsFalling() end)
+    if not ok then return end
+    if air then
+        -- спринт ещё зажат (судья, раунд 6: Shift отпущен и прыжок в окне 0,25 с снова взводил флаг)
+        if SZ.held(pawn) and (SZ.in_substate(pawn, SZ.SPRINT) or (SZ.left_t ~= nil and os.clock() - SZ.left_t < SZ.TAKEOFF_S)) then SZ.from_sprint = true end
+        return
+    end
+    SZ.recheck(pawn, "приземление")
+end
+_G.__krinik_sprint_moved_fn = SZ.on_moved
+-- Клавиша спринта (нажата или отпущена) — повод: после приземления без возврата в 7 только отпускание Shift снимает «прыжок из спринта» (судья, раунд 4).
+_G.__krinik_sprint_key_fn = function(pawn)
+    if not (pawn and pawn:IsValid() and pawn:IsPlayerControlled()) then return end
+    -- спринт отпущен — «прыжок из спринта» закрыт сразу, даже когда зум возвращать нечего (судья, раунд 5: иначе флаг доживал до нового Shift)
+    SZ.later(0, function() if pawn:IsValid() and not SZ.held(pawn) then SZ.from_sprint = false end end)
+    SZ.recheck(pawn, "клавиша спринта")
+end
+-- Усталость (Z8, «микролаг на отпускании натяжки по усталости»): перехват OnSubstateChanged_Exhausted с догадкой о его параметрах (21:07) снимал
+-- прицел сразу после КАЖДОЙ прикладки стоя (журнал 21:08:41.711 → .719; `[OWNER]` 21:09 «пропало приближение просто когда стою и ПКМ» · «Намудрил ты») —
+-- убран. Z8 открыт: сначала байткод события усталости, потом решение.
+function SZ.hook()
+    if not _G.__krinik_sprint_hooked then
+        for _, path in ipairs(SZ.EVENTS) do
+            local ok, err = pcall(RegisterHook, path, function(ctx, _sub, entered)
+                local fn = _G.__krinik_sprint_fn
+                if fn then pcall(fn, ctx:get(), entered:get()) end
+            end)
+            log(ok and "зум и спринт: перехват %s поставлен" or ("зум и спринт: перехват %s не встал — " .. tostring(err)), path)
+            if ok then _G.__krinik_sprint_hooked = true; break end
+        end
+    end
+    if not _G.__krinik_sprint_landed_hooked then
+        local ok, err = pcall(RegisterHook, SZ.LANDED, function(ctx)
+            local fn = _G.__krinik_sprint_moved_fn
+            if fn then pcall(fn, ctx:get()) end
+        end)
+        log(ok and "зум и спринт: перехват %s поставлен" or ("зум и спринт: перехват %s не встал — " .. tostring(err)), SZ.LANDED)
+        _G.__krinik_sprint_landed_hooked = ok
+    end
+    if not _G.__krinik_sprint_key_hooked then
+        local ok, err = pcall(RegisterHook, SZ.SPRINT_KEY, function(ctx)
+            local fn = _G.__krinik_sprint_key_fn
+            if fn then pcall(fn, ctx:get()) end
+        end)
+        log(ok and "зум и спринт: перехват %s поставлен" or ("зум и спринт: перехват %s не встал — " .. tostring(err)), SZ.SPRINT_KEY)
+        _G.__krinik_sprint_key_hooked = ok
+    end
+end
+function SZ.all_hooked()
+    return _G.__krinik_sprint_hooked and _G.__krinik_sprint_landed_hooked and _G.__krinik_sprint_key_hooked
+end
+
 -- Компонент рождается с героем; класс мода грузится вместе с ним — подписка на рождение, плюс попытка сразу (горячая перезагрузка в мире).
 NotifyOnNewObject(AQS_CLASS, function() ExecuteInGameThread(function() pcall(hook_aqs) end) end)
 if StaticFindObject(AQS_CLASS) then pcall(hook_aqs) end
@@ -1084,7 +1463,10 @@ local function on_charge_begin(mesh, cls, total)
     -- 00:2x — his run had no aim-view entry in the log). A few curve keys, once per draw — no polling. [NOT-TESTED]
     local first = not bars_done
     if pcall(hide_bars) and first then log("полоски прицела скрыты в начале натяжки: %s", tostring(bars_done)) end
-    if cls == CHARGE_HOLD and total and total > FULL_HOLD_MIN_S and not ding_played then
+    -- Начало удержания (16) — повод вернуть прицельный зум, снятый спринтом (Shift отпущен раньше удержания; SZ.zoom_back). [NOT-TESTED]
+    if cls == CHARGE_HOLD then SZ.later(0, function() SZ.zoom_back(pawn, "удержание натяжения") end) end
+    -- С натяжением по Проворству (CFG.draw_by_agility) заряд полон не на 1,85 с монтажа, а в свой срок — «дзинь» ставит перехват SetPowerCharge.
+    if not CFG.draw_by_agility and cls == CHARGE_HOLD and total and total > FULL_HOLD_MIN_S and not ding_played then
         ding_played = true
         play_charge_ding(pawn)
     end
@@ -1093,6 +1475,7 @@ end
 local function on_charge_end(mesh)
     local pawn = player_of(mesh)
     if not pawn then return end
+    SZ.later(0, function() SZ.tired_out(pawn) end)   -- Z8: натяжение сорвала усталость — прицел снять сразу
     charge_active = math.max(0, charge_active - 1)
     if charge_active > 0 then return end
     ExecuteInGameThreadWithDelay(150, function()
@@ -1110,6 +1493,7 @@ local function on_fov_target(ctx, target)
     if v == FOV_AIM and not glint_done then pcall(tune_glint) end
     if v == FOV_AIM and not aqs_hooked then pcall(hook_aqs) end   -- класс мода стрел уже загружен: подписка на рождение блюпринта может не сработать
     if v == FOV_AIM and not settle_hooked then pcall(hook_settle) end   -- класс героя загружен: его событие конца атаки доступно
+    if v == FOV_AIM and not SZ.all_hooked() then pcall(SZ.hook) end   -- и событие спринта (горячая перезагрузка мода в мире — рождения контроллера не будет)
     if v == FOV_AIM then
         local first = not bars_done
         if pcall(hide_bars) and first then log("полоски прицела скрыты на первом прицеливании: %s", tostring(bars_done)) end
@@ -1120,6 +1504,55 @@ local function on_fov_target(ctx, target)
     -- после выстрела держится — testcases/reports/2026-10-28_conan-bow-fp-smooth-zoom.md; оба вида по 75° — кейс Z1, NOT-TESTED]
     -- Натяжка без ПКМ от первого лица — без зума, только сдвиг камеры (владелец 2026-10-28 19:0x: «Но зума не будет - только смещение
     -- камеры»): цель — обычный обзор (родной прицел ×0,5, обратно ×2). [NOT-TESTED]
+    -- Прикладка в спринте — без зума (Z4): цель сразу — обзор спринта (родной ×0,5 → ×0,95: начало перехода, кадра зума нет), а следующим тиком родной
+    -- переход в режим спринта — режим контроллера снова 2, конец спринта войдёт в прицел заново. Прочие режимы в спринте не трогаем: удержание прицела на
+    -- новом натяжении (hold_aim_on_redraw) иначе вернуло бы зум в спринте. [NOT-TESTED]
+    -- Конец прикладки в спринте (Z6 в спринте, баг 93, `[OWNER]` 2026-11-16 20:34 «если бежать в спринте, и делать ПКМ прикладку и отпускание - немного всё
+    -- равно камера дергается»): конец уведомления обзора в монтаже натяжки ставит обычный обзор (режим 0, 107,5°) и в спринте — в ванили натяжки в спринте
+    -- нет. Самописец 20:35 (настоящие клавиши владельца): каждое отпускание ПКМ на бегу — режим 0 и 108°, следующая прикладка — режим 2 и 102° — качание
+    -- 6° за 80 мс. Обычный обзор после спринта игра возвращает по отпусканию КЛАВИШИ спринта, и bTrySprint гаснет раньше выхода из подсостояния 7 (карта
+    -- игры «Режим 2», самописец 35.55) — поэтому на следующем шаге: всё ещё спринт (SZ.sprinting — и полёт с зажатым спринтом), спринт не отпущен (SZ.held),
+    -- режим 0 → родной переход в режим спринта. Цель обзора пишется только на этот один шаг и только углом, где камера уже стоит; на выходе без правки
+    -- возвращается цель игры (иначе режим 0 остался бы нацелен на 102° — судья, раунд 1). Выход без правки — строка в журнал (первые N). [NOT-TESTED]
+    -- Прицел сменился обзором спринта (спринт начался посреди прикладки — режим 2 ставит сама игра) — зум забран, его вернёт SZ.zoom_back (Z2 → Z3).
+    -- Самописец 21:19 (свой прогон, t 31.21 → 31.24): без этой строки took оставался false, и после спринта прикладка шла без зума. [NOT-TESTED]
+    if v == SZ.FOV_SPRINT and was == FOV_AIM then SZ.took = true end
+    if CFG.sprint_unzoom then
+        local pawn = c:GetOwner()
+        if SZ.sprinting(pawn) and pawn:IsPlayerControlled() then
+            if v == FOV_AIM then
+                c.FieldOfViewTarget = c.FieldOfViewTarget * 1.9
+                ExecuteInGameThread(function() pcall(function() if c:IsValid() then c:FieldOfViewChange(SZ.CHANGE_S, SZ.FOV_SPRINT) end end) end)
+                fov_last = SZ.FOV_SPRINT
+                SZ.took = true
+                SZ.log("зум и спринт: прикладка в спринте — без зума")
+            elseif v == FOV_DEFAULT and was ~= FOV_DEFAULT then
+                if not rmb_held(c) then SZ.took = false end   -- ПКМ отпущена в спринте — забранного зума больше нет (судья, раунд 5: иначе он мог вернуться от первого лица)
+                -- Самописец 20:45 (после первой правки): до отложенного шага переход игры успевал сдвинуть камеру на 1° (102 → 103 → 102) —
+                -- «иногда чуть-чуть дергается». Пока спринт не отпущен, цель этого шага — там, где камера уже стоит (никакого числа); на выходе
+                -- без правки цель игры возвращается, переход ещё идёт и доводит камеру до обычного обзора. [NOT-TESTED]
+                local game_tgt, froze = c.FieldOfViewTarget, false
+                if SZ.held(pawn) then
+                    local ok, cur = pcall(function() return pawn:GetController().PlayerCameraManager:GetFOVAngle() end)
+                    if ok and type(cur) == "number" then c.FieldOfViewTarget = cur; froze = true end
+                end
+                SZ.later(0, function()
+                    if not (c:IsValid() and pawn:IsValid()) then return end
+                    local why = (c.FieldOfView ~= FOV_DEFAULT and ("режим уже " .. tostring(c.FieldOfView)))
+                        or (not SZ.sprinting(pawn) and "спринт кончился")
+                        or (not SZ.held(pawn) and "спринт отпущен")
+                    if why then
+                        if froze and c.FieldOfView == FOV_DEFAULT then c.FieldOfViewTarget = game_tgt end
+                        SZ.log("зум и спринт: обычный обзор в спринте оставлен игре — %s", why); return
+                    end
+                    c:FieldOfViewChange(SZ.CHANGE_S, SZ.FOV_SPRINT)   -- повторный вход в перехват сам ставит fov_last = 2
+                    SZ.log("зум и спринт: прикладка в спринте кончилась — обзор спринта держится")
+                end)
+            end
+            return
+        end
+    end
+    if v == FOV_AIM or v == FOV_DEFAULT then SZ.took = false end   -- прицел вне спринта — свой у игры (и наш возврат тоже приходит сюда)
     if v == FOV_AIM and not rmb_held(c) then
         local pawn = c:GetOwner()
         if pawn and pawn:IsValid() and first_person_arm(pawn) then
@@ -1237,6 +1670,7 @@ NotifyOnNewObject(FOV_CONTROLLER, function()
                 log(ok and ("ПКМ: перехват %s поставлен") or ("ПКМ: перехват %s не встал — " .. tostring(err)), ev)
             end
         end
+        pcall(SZ.hook)   -- класс героя загружен вместе с контроллером обзора: его событие спринта доступно
         if _G.__krinik_fov_hooked then return end
         local ok, err = pcall(function()
             RegisterHook(FOV_FUNC, function(ctx, target)
@@ -1254,7 +1688,81 @@ end)
 
 -- Перехваты уведомлений натяжки — когда класс уведомления загружен (вместе с монтажом лука), один раз на запуск; глобальные защёлки —
 -- чтобы повторная загрузка мода не удвоила их (EXP-0348). Begin: (MeshComp, Animation, TotalDuration, …); End: (MeshComp, Animation, …).
+-- ---------------------------------------------------------------- натяжение по Проворству (2026-11-07, CFG.draw_*)
+-- Как игра копит заряд (байткод BaseBPCombat 3.0.1, kismet-trace 2026-11-07): уведомление монтажа BP_PowerCharge в начале зовёт у персонажа
+-- SetPowerCharge(Duration) → PowerChargeTimeScale = Duration (родное 1,28 с), PowerChargeStartTimeStamp = GetTimeSeconds(); выстрел (EndPowerCharge)
+-- ставит PowerChargeStopTimeStamp, и GetPowerChargeModifier = clamp((Stop − Start) / PowerChargeTimeScale, 0, 1). Уведомление начинается на 0,552 с
+-- монтажа натяжки (AM_combat_2h_bow_combo_heavy_c0) — родное полное натяжение ≈ 1,83 с от нажатия. Рычаг — PowerChargeTimeScale героя: пост-перехват
+-- SetPowerCharge пишет его один раз на натяжку (не опрос), только герою игрока — блюпринт общий с NPC-лучниками. Анимация лука идёт родным темпом:
+-- тетива дотягивается к 1,83 с, а заряд копится до своего срока. [NOT-TESTED]
+local DRAW_WINDUP_S = 0.552               -- начало BP_PowerCharge в монтаже натяжки (кит, карта игры)
+local DRAW_MIN_CHARGE_S = 0.05            -- нижний предел самого заряда (Проворство за 219: формула дала бы меньше замаха)
+local ATHLETICISM, STAT_FULL = 19, 0      -- Проворство: ECharIntStatID 19, EStatModifierMode FULL (как в KrinikConanLocomotion)
+local draw_logged = 0
+local draw_montage = nil                  -- { anim, montage }: монтаж натяжки, которому сбавлена скорость на время заряда
+local function on_end_power_charge(ctx)
+    local d = draw_montage
+    if not d then return end
+    local hero = ctx:get()
+    if not (hero and hero:IsValid() and hero:IsPlayerControlled()) then return end
+    draw_montage = nil
+    if d.anim:IsValid() and d.montage:IsValid() then d.anim:Montage_SetPlayRate(d.montage, 1.0) end
+    -- «Дзинь» — здесь: EndPowerCharge ставит отметку конца заряда в конце уведомления, то есть в миг полного заряда; ранний выстрел обрывает
+    -- уведомление раньше — доля меньше 1, звука нет (отложенный звук по сроку молчал: отметка конца уже стояла, прогон 22:12). [NOT-TESTED]
+    local ts = hero.PowerChargeTimeScale
+    local share = (ts and ts > 0) and (hero.PowerChargeStopTimeStamp - hero.PowerChargeStartTimeStamp) / ts or 0
+    if share >= 0.99 and not ding_played then
+        ding_played = true
+        play_charge_ding(hero)
+    end
+end
+local function on_set_power_charge(ctx)
+    if not CFG.draw_by_agility then return end
+    local hero = ctx:get()
+    if not (hero and hero:IsValid() and hero:IsPlayerControlled()) then return end
+    local n = hero:GetIntStat(ATHLETICISM, STAT_FULL)
+    if type(n) ~= "number" then return end
+    if n < 0 then n = 0 end
+    local full = CFG.draw_base_s * CFG.draw_per_point ^ n
+    local scale = math.max(full - DRAW_WINDUP_S, DRAW_MIN_CHARGE_S)
+    local native = hero.PowerChargeTimeScale
+    hero.PowerChargeTimeScale = scale
+    -- Отметку конца заряда игра ставит НЕ на выстреле, а в конце уведомления BP_PowerCharge (EndPowerCharge, 1,83 с монтажа): одна запись
+    -- PowerChargeTimeScale дала выстрел через 4,5 с с зарядом 0,36 = 1,28 / 3,54 (прогон 2026-11-07 22:10). Поэтому на время заряда монтаж
+    -- натяжки идёт в native / scale раз медленнее (быстрее — при большом Проворстве): уведомление кончается ровно к полному заряду, и сама
+    -- анимация натяжки длится столько же. Скорость назад к 1 — пост-перехват EndPowerCharge.
+    local rate = (native and native > 0) and native / scale or 1.0
+    local anim = hero.Mesh:GetAnimInstance()
+    local montage = anim and anim:IsValid() and anim:GetCurrentActiveMontage() or nil
+    if montage and montage:IsValid() then
+        anim:Montage_SetPlayRate(montage, rate)
+        draw_montage = { anim = anim, montage = montage }
+    end
+    if draw_logged < CFG.log_shots then
+        draw_logged = draw_logged + 1
+        log("натяжение: Проворство %d → полное за %.2f с (заряд %.2f с вместо родных %.2f, монтаж ×%.3f %s)", n, full, scale, native or -1, rate,
+            montage and montage:IsValid() and montage:GetFName():ToString() or "НЕТ МОНТАЖА")
+    end
+end
+local function hook_draw_time()
+    if _G.__krinik_draw_time_hooked then return end
+    local ok, err = pcall(function()
+        RegisterHook("/Game/Characters/BaseBPCombat.BaseBPCombat_C:SetPowerCharge", function(ctx)
+            local okd, errd = pcall(on_set_power_charge, ctx)
+            if not okd and errors < 5 then errors = errors + 1; log("ошибка натяжения по Проворству: %s", tostring(errd)) end
+        end)
+        RegisterHook("/Game/Characters/BaseBPCombat.BaseBPCombat_C:EndPowerCharge", function(ctx)
+            local oke, erre = pcall(on_end_power_charge, ctx)
+            if not oke and errors < 5 then errors = errors + 1; log("ошибка конца заряда: %s", tostring(erre)) end
+        end)
+    end)
+    _G.__krinik_draw_time_hooked = ok
+    log("натяжение по Проворству: перехват SetPowerCharge %s", ok and "поставлен" or ("не встал — " .. tostring(err)))
+end
+
 local function hook_charge_notifies(cls)
+    pcall(hook_draw_time)                 -- класс уведомления загружен вместе с монтажом лука — герой и BaseBPCombat уже есть
+    pcall(hook_head_hits)                 -- подписка на появление героя в этой сборке UE4SS не срабатывает (конспект камеры) — ставим здесь
     local key = "__krinik_hooked_" .. cls
     if _G[key] then return end
     _G[key] = true
@@ -1275,86 +1783,163 @@ for _, cls in ipairs({ POWER_CHARGE, CHARGE_HOLD }) do
     NotifyOnNewObject(cls, function() ExecuteInGameThread(function() hook_charge_notifies(cls) end) end)
 end
 
--- ------------------------------------------------------------- стрельба в прыжке (W14, KUMM план 37)
--- `[OWNER]` «стрельба в прыжке - одна из важнейших фисек Обливион» · «хватало бы, чтобы просто тело героя взлетало в воздух» · «Если герой уже
--- летит в воздухе и игрок делает или ПКМ с луком, или ЛКМ - то нужно сразу в воздухе начинать соответствующие действия по луку» · «если …
--- посреди стрельбы приходит дейсввие ПРЫЖОК - то герой должен продолжать стрельбу, но герой взмывает в воздух» · 2026-10-28.
--- Два родных запрета (байткод 3.0.1, 2026-10-30, KUMM games/ConanExiles/GAME_ARCHITECTURE_INTERNAL_MAP.md):
---  1. BaseBPCombat::ActionTry отказывает в атаке при подсостоянии 8 (падение). Перехват UE4SS на чертёжной функции срабатывает ПОСЛЕ её тела —
---     поэтому подсостояние снимаем раньше, в момент отрыва от земли (HandleOnMovementModeChanged → режим 3), только у героя с луком в руках.
---  2. BasePlayerChar::CanJumpInternal = родное И не подсостояние 13 И не IsAttacking() — натяжка лука считается атакой, прыжка нет. Ответ
---     функции перехватом не подменить (её зовёт C++, перехват не срабатывает) — поэтому после отказанного StartJump герой с луком, который
---     атакует, стоит на земле и не устал (подсостояния 13, 14, 18 — запреты игры по делу), получает толчок LaunchCharacter со скоростью
---     своего прыжка JumpZVelocity (420). Опыт пультом 2026-10-30 10:52–10:58: выстрел в воздухе, натяжка в прыжке не рвётся, руки стреляют.
--- Лук в руках = прикреплённый к герою актёр с «bow» в имени класса на гнезде не «sheath» (в руке Socket_Bow, за спиной sheath_bow).
--- Ноль опроса: два события на прыжок.
--- [TESTED: 2026-10-30 · кейсы M1–M5 настоящим вводом: выстрел в воздухе, толчок посреди натяжки, контроль «лук за спиной» · KUMM testcases/reports/2026-10-30_conan-jump-shooting-0.7.0.md]
-CFG.jump_shooting = true
-local COMBAT_CLASS = "/Game/Characters/BaseBPCombat.BaseBPCombat_C"
-local SUB_FALLING, MODE_FALLING = 8, 3
-local JUMP_BLOCKERS = { 13, 14, 18 }   -- подсостояния, при которых прыжок запрещён по делу (в т. ч. 14 — усталость)
+-- ------------------------------------------------------------- стрельба в прыжке — ПЕРЕЕХАЛА
+-- 2026-11-07: в мод KrinikConanLocomotion, секция krinik_air_combat (слово владельца 10:39 «ДОбавляем мод KrinikConanLocomotion. В него входят: -
+-- прыжки при стрельбе …», KUMM HOUSE_RULES 19). Здесь её больше нет: два мода не перехватывают одни и те же события прыжка.
 
-local function bow_in_hand(c)
-    local arr = {}
-    c:GetAttachedActors(arr, true, false)
-    for i = 1, #arr do
-        local a = arr[i]:get()
-        if a:IsValid() and a:GetClass():GetFName():ToString():lower():find("bow", 1, true) then
-            return not a:GetAttachParentSocketName():ToString():lower():find("sheath", 1, true)
+-- ------------------------------------------------------------- вид тела от первого лица (KUMM план 52, шаг 3)
+-- Свой пост-процессный анимблюпринт ABP_KrinikFirstPersonLook (в паке этого мода) ставится ТОЛЬКО на сетку героя (SetOverridePostProcessAnimBP — ни
+-- один родной анимблюпринт не тронут: перекрытие родителя 2026-11-13 поставило героиню в Т-позу). Его флаг Active = первое лицо И лук в руках И нет
+-- натяжения; плавность — своя (Alpha в его EventGraph). Решения — по событиям, без опроса (HOUSE_RULES п. 7):
+--   вид — SwitchToFirstPersonCamera / SwitchToThirdPersonCamera (ими же пользуется KrinikConanCamera; у нас — только своё состояние). Флаг
+--   AdjustableCamera:IsActive() читается лишь для начального состояния: после облёта простоя он лжёт до ввода (карта игры);
+--   лук в руках — OnWeaponEquip(Item): тест предмета GetWeaponArcheType() == 3; OnWeaponUnequip — нет лука сразу (событие идёт в НАЧАЛЕ анимации:
+--   сокет через 100 мс ещё в руке, прогон 23:12); через 1.5 с после любого из них сокет перечитывается — самолечение для порядка событий
+--   (меч ↔ лук) и для путей без события;
+--   натяжение — OnSubstateChanged_Attacking: через 30 мс читается сам isAttacking анимации героя (натяжение лука — атака, баг 95), счётчика нет —
+--   залипнуть нечему (судья 2026-11-14: счётчик заряда залипал при смерти посреди натяжения, а уведомление заряда приходит на 0,51 с позже начала).
+-- Класс ставится при переходе к первому лицу или при рождении героя уже в первом лице (смена вида скрывает перестройку анимации —
+-- SetOverridePostProcessAnimBP пересобирает основной экземпляр, ReinitAnimInstances); при взятии лука или конце натяжения — никогда.
+-- Раздел — внутри do … end: его локальные освобождаются в конце блока (пик главного куска — 188 из 200 внутри блока, 171 вне его; судья, luac -l -l).
+-- [TESTED: 2026-11-14 · KUMM testcases/TC_conan_fp_bow_visible_2026-11-13.md S3e, C3, C4 · judge round 2 fixes (hero key, flag, no class in update) — see the TC]
+do
+    local ASSET = "/Game/Mods/KrinikConanArchery/ABP_KrinikFirstPersonLook.ABP_KrinikFirstPersonLook"
+    local CLASS, CLASS_NAME = ASSET .. "_C", "ABP_KrinikFirstPersonLook_C"
+    local BOW_ARCHETYPE = 3
+    local SOCKET_CONFIRM_MS = 1500   -- после события экипировки: анимация взятия / уборки закончилась, сокет говорит правду
+    local ATTACK_SETTLE_MS = 30      -- смена подсостояния атаки идёт парами «выход — вход»: решаем, когда пара прошла
+    local S = { first = nil, armed = nil, drawing = false, logged = 0, errs = 0, failed = false, hero = nil }
+    -- Состояние — по герою: новый герой (перерождение без нового HUD) начинает с нуля (судья, раунд 2: иначе «первое лицо» прежнего героя).
+    local function for_hero(h)
+        local key = h:GetAddress()
+        if S.hero ~= key then S.hero, S.first, S.armed, S.drawing, S.logged = key, nil, nil, false, 0 end
+    end
+
+    local function report(what, err)
+        if S.errs < 5 then S.errs = S.errs + 1; log("вид тела от первого лица: ошибка (%s) — %s", what, tostring(err)) end
+    end
+    local function hero_now()
+        local pc = FindFirstOf("FunCombat_PlayerController_C")
+        local h = pc and pc:IsValid() and pc:K2_GetPawn() or nil
+        return h and h:IsValid() and h or nil
+    end
+    local function bow_in_hand(h)   -- прицеплен лук и не на сокете ножен (как bow_in_hand у KrinikConanLocomotion)
+        local arr = {}
+        h:GetAttachedActors(arr, true, false)
+        for i = 1, #arr do
+            local a = arr[i]:get()
+            if a:IsValid() and a:GetClass():GetFName():ToString():lower():find("bow", 1, true) then
+                return not a:GetAttachParentSocketName():ToString():lower():find("sheath", 1, true)
+            end
+        end
+        return false
+    end
+    local function ours(pp) return pp and pp:IsValid() and pp:GetClass():GetFName():ToString() == CLASS_NAME end
+    local function set_class(h)
+        if not CFG.fp_body_look or S.failed then return false end   -- выключатель раздела; класс не загрузился — не пробуем на каждом событии
+        local mesh = h.Mesh
+        if ours(mesh:GetPostProcessInstance()) then return true end
+        local cls = StaticFindObject(CLASS)
+        if not (cls and cls:IsValid()) then LoadAsset(ASSET); cls = StaticFindObject(CLASS) end   -- ПОЛНЫЙ путь объекта (2026-11-13 16:0x)
+        if not (cls and cls:IsValid()) then
+            if not S.failed then S.failed = true; log("вид тела от первого лица: класс %s не загрузился — вид родной", CLASS) end
+            return false
+        end
+        mesh:SetOverridePostProcessAnimBP(cls, true)
+        local ok = ours(mesh:GetPostProcessInstance())
+        if ok then mesh:GetPostProcessInstance().Active = false; log("вид тела от первого лица: класс поставлен на героя") end
+        return ok
+    end
+    local function update(why, h)
+        h = h or hero_now()
+        if not h or not CFG.fp_body_look then return end
+        if S.first == nil then local ok, v = pcall(function() return h.AdjustableCamera:IsActive() end); S.first = ok and v == true end
+        if S.armed == nil then S.armed = bow_in_hand(h) end
+        local want = S.first and S.armed and not S.drawing
+        local pp = h.Mesh:GetPostProcessInstance()
+        if not ours(pp) then return end   -- класс ставят только смена вида и рождение героя: здесь — взятие лука или конец натяжения (судья, раунд 2)
+        if want then pp.NeckShare, pp.SpineUndo = CFG.fpl_neck, CFG.fpl_spine end   -- доли — каждый раз: класс мог поставить пульт стенда
+        if pp.Active ~= want then
+            pp.Active = want
+            if S.logged < CFG.log_shots then S.logged = S.logged + 1; log("вид тела от первого лица: %s (%s)", want and "вкл." or "выкл.", why) end
         end
     end
-    return false
-end
-
-local function in_substate(c, s)
-    local out = {}
-    c:InSubstate(s, out)
-    return out.Success == true
-end
-
-local jumps_launched, air_unlocked = 0, 0
-local function on_movement_mode(ctx)
-    local c = ctx:get()
-    if not c:IsPlayerControlled() or c.CharacterMovement.MovementMode ~= MODE_FALLING then return end
-    if not bow_in_hand(c) then return end
-    c:ExitSubstate(SUB_FALLING, {})
-    air_unlocked = air_unlocked + 1
-    if air_unlocked <= CFG.log_shots then log("прыжок с луком: выстрел в воздухе разрешён (%d)", air_unlocked) end
-end
-
-local function on_start_jump(ctx)
-    local c = ctx:get()
-    if not c:IsPlayerControlled() then return end
-    local m = c.CharacterMovement
-    if not m:IsMovingOnGround() or c:CanJump() then return end    -- родной прыжок уже был или герой не на земле
-    local att = {}
-    c:IsAttacking(att)
-    if att.IsAttacking ~= true or not bow_in_hand(c) then return end
-    for _, s in ipairs(JUMP_BLOCKERS) do if in_substate(c, s) then return end end
-    c:LaunchCharacter({ X = 0, Y = 0, Z = m.JumpZVelocity }, false, true)
-    jumps_launched = jumps_launched + 1
-    if jumps_launched <= CFG.log_shots then log("прыжок посреди натяжки: толчок %.0f см/с (%d)", m.JumpZVelocity, jumps_launched) end
-end
-
-_G.__krinik_mm_fn, _G.__krinik_jump_fn = on_movement_mode, on_start_jump
-if CFG.jump_shooting then
-    NotifyOnNewObject(FOV_CONTROLLER, function()
-        ExecuteInGameThread(function()
-            if _G.__krinik_jump_hooked then return end
-            _G.__krinik_jump_hooked = true
-            for fn, key in pairs({ HandleOnMovementModeChanged = "__krinik_mm_fn", StartJump = "__krinik_jump_fn" }) do
-                local ok, err = pcall(function()
-                    RegisterHook(COMBAT_CLASS .. ":" .. fn, function(ctx)
-                        local f = _G[key]
-                        if f then
-                            local ok2, e2 = pcall(f, ctx)
-                            if not ok2 and errors < 5 then errors = errors + 1; log("ошибка прыжка (%s): %s", fn, tostring(e2)) end
-                        end
+    local function confirm_later(h, why)
+        ExecuteInGameThreadWithDelay(SOCKET_CONFIRM_MS, function()
+            local ok, e = pcall(function() if h:IsValid() then S.armed = bow_in_hand(h); update(why .. ", сокет", h) end end)
+            if not ok then report("сокет после экипировки", e) end
+        end)
+    end
+    local HANDLERS = {
+        SwitchToFirstPersonCamera = function(h) S.first = true; S.armed = bow_in_hand(h); set_class(h); update("первое лицо", h) end,
+        SwitchToThirdPersonCamera = function(h) S.first = false; update("третье лицо", h) end,
+        OnWeaponEquip = function(h, it)
+            local ok, a = pcall(function() return it:GetWeaponArcheType() end)
+            if S.logged < CFG.log_shots then S.logged = S.logged + 1; log("вид тела от первого лица: взято оружие, тип %s", ok and tostring(a) or "не прочёлся") end
+            if ok and a ~= nil then S.armed = (a == BOW_ARCHETYPE); update("взял оружие", h) end
+            confirm_later(h, "взял оружие")
+        end,
+        OnWeaponUnequip = function(h) S.armed = false; update("убрал оружие", h); confirm_later(h, "убрал оружие") end,
+        OnSubstateChanged_Attacking = function(h)
+            ExecuteInGameThreadWithDelay(ATTACK_SETTLE_MS, function()
+                local ok, e = pcall(function()
+                    if not h:IsValid() then return end
+                    local anim = h.Mesh:GetAnimInstance()
+                    local was = S.drawing
+                    S.drawing = anim and anim:IsValid() and anim.isAttacking == true or false
+                    if was and not S.drawing then S.armed = bow_in_hand(h) end   -- конец атаки: лук в руках — правда сокета (путь без события взятия)
+                    update(S.drawing and "натяжение" or "конец натяжения", h)
+                end)
+                if not ok then report("подсостояние атаки", e) end
+            end)
+        end,
+    }
+    local function install()
+        if not CFG.fp_body_look then return end   -- выключатель раздела выключает и перехваты (судья, раунд 2)
+        _G.__krinik_fpl_hooks = _G.__krinik_fpl_hooks or {}
+        local hooked = _G.__krinik_fpl_hooks
+        local missing = 0
+        for name, fn in pairs(HANDLERS) do
+            if not hooked[name] then
+                -- Решение — на СЛЕДУЮЩЕМ шаге игрового потока, никогда внутри перехваченной функции: SetOverridePostProcessAnimBP внутри
+                -- SwitchToFirstPersonCamera повесил игру (2026-11-14 23:41, процесс «не отвечает»; первая версия решала через ExecuteInGameThread
+                -- и не вешала). Параметр снимается сразу — после возврата функции он недействителен.
+                local ok, err = pcall(RegisterHook, HERO_CLASS .. ":" .. name, function(ctx, p1)
+                    local h = ctx:get()
+                    if not (h and h:IsValid() and h:IsPlayerControlled()) then return end
+                    local arg = p1 and p1.get and p1:get() or nil
+                    ExecuteInGameThread(function()
+                        local ok2, e2 = pcall(function() for_hero(h); fn(h, arg) end)
+                        if not ok2 then report(name, e2) end
                     end)
                 end)
-                log(ok and "прыжок: перехват %s поставлен" or ("прыжок: перехват %s не встал — " .. tostring(err)), fn)
+                hooked[name] = ok
+                if not ok then missing = missing + 1; log("вид тела от первого лица: перехват %s не встал — %s", name, tostring(err)) end
             end
+        end
+        log("вид тела от первого лица: перехваты %s", missing == 0 and "стоят" or (missing .. " не встали — повтор при следующем появлении героя"))
+    end
+    -- Новый герой (вход в мир, перерождение): своё состояние с нуля и одна оценка — герой мог появиться уже в первом лице с луком в руках.
+    local function on_hero_born()
+        S.hero = nil   -- новое состояние при первом же обращении к герою (for_hero)
+        install()
+        local ok, e = pcall(function()
+            local h = hero_now()
+            if not h then return end
+            for_hero(h)
+            local fp = false
+            pcall(function() fp = h.AdjustableCamera:IsActive() end)
+            if fp then set_class(h) end
+            update("появление героя", h)
         end)
+        if not ok then report("появление героя", e) end
+    end
+    -- Класс героя загружен к его рождению; подписка на появление героя в этой сборке UE4SS срабатывает не всегда (заметка выше) — второй вход —
+    -- рождение HUD героя (Hosav, `W_NewHealthUI_C`), как у KrinikConanCamera; оба безопасно повторяются.
+    NotifyOnNewObject("/Script/ConanSandbox.BasePlayerChar", function() ExecuteInGameThread(function() pcall(install) end) end)
+    NotifyOnNewObject("/Game/Mods/UIMod_Hosav/W_NewHealthUI.W_NewHealthUI_C", function(w)
+        if w:GetFullName():find("Default__", 1, true) then return end
+        ExecuteInGameThreadWithDelay(2000, function() pcall(on_hero_born) end)
     end)
 end
 

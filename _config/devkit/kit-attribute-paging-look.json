@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "steps": [
+  "image_size set: 34.27 × 34.27",
+  "image_size set: 34.27 × 34.27",
+  "image_size set: 34.27 × 34.27",
+  "image_size set: 34.27 × 34.27",
+  "arrow Btn_KrinikPagePrev styled",
+  "image_size set: 34.27 × 34.27",
+  "image_size set: 34.27 × 34.27",
+  "image_size set: 34.27 × 34.27",
+  "image_size set: 34.27 × 34.27",
+  "arrow Btn_KrinikPageNext styled",
+  "children: {'Btn_KrinikPagePrev': 2, 'Btn_KrinikPageNext': 3, 'Txt_KrinikPage': 4, 'Txt_KrinikPageLo': 5}",
+  "compile after the tree: True",
+  "UpdateView: the look part is already there — skipped",
+  "compile: True",
+  "save: True"
+ ],
+ "links": []
+}

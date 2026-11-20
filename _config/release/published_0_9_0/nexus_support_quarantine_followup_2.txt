@@ -1,0 +1,37 @@
+To: support@nexusmods.com  (send as a REPLY to the ticket 276571 thread, so it stays in the same ticket)
+Subject: Re: Quarantine review request - Krinik Mod Pack 0.9.0 (Conan Exiles Enhanced, mod 65) - ticket 276571
+
+Hello,
+
+Ticket 276571 (my messages of 3 and 6 November): the main file "Krinik Mod Pack 0.9.0"
+(Krinik_Mod_Pack_0_9_0.zip, 12.4 GB) on https://www.nexusmods.com/conanexilesenhanced/mods/65
+has been quarantined since it was uploaded on 3 November ("Virus scan - Some suspicious files").
+Please review the file and release it, and please tell me:
+1. Is the file in the review queue, and when can I expect the review?
+2. Which file in the archive did the scan flag, and under which detection name? With the file
+   name and the detection name, I can explain that file or rebuild it.
+3. What else do you need from me to finish the review?
+
+Summary of the archive:
+- KrinikConanLauncher.exe - my own launcher, one C# file. The source is public:
+  https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack
+  (_config/launcher/KrinikConanLauncher.cs). The build steps are in my message of 6 November.
+  SHA-256: 24fb7eaf8d59ad6d63295a36ff8a1db99e54affc7b3286600aabf748551514e5
+- pack/src/UE4SS/dwmapi.dll and pack/src/UE4SS/ue4ss/UE4SS.dll - the UE4SS script loader
+  (https://github.com/UE4SS-RE/RE-UE4SS), unmodified, byte-identical to the official experimental
+  build UE4SS_v3.0.1-1181-g83330635.
+  SHA-256 dwmapi.dll: 93b9431a5a4f32c675d269c5da1c9b3ec6f88552ec20c282ab435f411e9271fb
+  SHA-256 UE4SS.dll:  ce5e3c46a920cc00b2817ac61e438c9162830290379d0b5b9c4dfc2b29459290
+- Plain-text scripts: install, uninstall, log collection and Deploy-ModPack.ps1, the deployer of
+  my open-source mod manager KUMM. None of the scripts downloads or runs anything from the internet.
+- The archive contains no nested archives.
+
+The same release with the same files is public on GitHub:
+https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/releases/tag/v0.9.0
+
+For a quick check I can upload a small separate archive with only the three binaries
+(KrinikConanLauncher.exe, dwmapi.dll, UE4SS.dll), or an archive of the pack without the launcher.
+Please tell me which one would help, and I will upload it.
+
+Thank you,
+Mikalai Kryvusha (kotkrinik)

@@ -85,6 +85,14 @@ Blueprint**, и прежний разборщик их не видел (он ч�
 Проверка перед каждой сборкой `.locres`: `python -I -X utf8 _config/devkit/owner-terms-check.py dm-fish-worklist.tsv dm-fish-ru.tsv asset-strings/*.tsv`
 (из этой папки; код 1 — нарушения с номерами строк). Новый термин владельца — строка в `TERMS` прибора и строка в таблице выше.
 
+Тире не заменяет глагол ни в одной русской строке перевода (слово владельца 2026-11-18 00:44, правило 33 в `HOUSE_RULES.md` KUMM). Проверка из
+корня пака: `python -I -X utf8 _config/release/dash_lint.py`. Прямая речь с тире записывается в `_config/release/dash_lint_allow.txt` вместе с причиной.
+Правило касается только текста, который написал агент, и только тире, которое стояло незаконно с самого начала (слово владельца 2026-11-18 08:11).
+Строки `dm-fish-ru.tsv` с тире исправлены 2026-11-18 в третьем проходе (KUMM plans/56, шаг 4): 108 строк переписаны, у 738 строк законное тире
+осталось и записано в `dash_lint_allow.txt` вместе с классом нормы. Норму числа задаёт портрет владельца: при числе с единицей тире не ставится
+(«Время восстановления 3 мин»). Правки внесены в собранный `Game/ru/Game.locres` прибором `locres-set-tr.py` по файлу `locres-fixes-2026-11-18.tsv`
+(98 пар, 174 записи, пропало 0). Десять строк, которых в собранном файле нет, приедут с полной пересборкой.
+
 ## Как пересобрать при новой версии мода (или добавить мод)
 
 1. Распаковать IoStore мода китовым `UnrealPak <Мод>-Windows.utoc -Extract <папка>` (внутренний `utoc`/`ucas` достать из обёртки
@@ -107,8 +115,10 @@ Blueprint**, и прежний разборщик их не видел (он ч�
    F:/CEUE5Devkit/UE4/Saved/Loc/KrinikRU/ru/KrinikRU.locres` — код 1 значит, что новая таблица перебила или потеряла старый
    перевод (25.10: шапка Hosav «Лёгкая» стала «Легкий»); лечится строкой `key:` в `dm-fish-ru.tsv`, не правкой общей строки.
 6а. **Наложить свой русский поверх строк самой игры** (иначе шаг 6 покажет «пропало» у подсказки о трупе и «Удалить (удерж.)»):
-   `python -I -X utf8 _config/devkit/vanilla-override.py <собранный .locres> D:/Temp/claude/vanilla-ru/Exiles_UI.locres _config/localization/vanilla-overrides-ru.tsv`
-   (второй файл — русская таблица `Exiles_UI` самой игры, из неё берутся хэши; сейчас лежит в `D:\Temp\claude\vanilla-ru\`).
+   `python -I -X utf8 _config/devkit/vanilla-override.py <собранный .locres> D:/work/ai_sandbox/ConanExiles/_scratch/vanilla-ru/<версия>/Exiles_UI.locres _config/localization/vanilla-overrides-ru.tsv`
+   (второй файл — русская таблица `Exiles_UI` самой игры, из неё берутся хэши. Извлекается из обычного пака игры, не из `.ucas`:
+   `D:/work/ai_sandbox/_tools/repak/repak.exe get "<игра>/ConanSandbox/Content/Paks/pakchunk0-Windows.pak" ConanSandbox/Content/Localization/Exiles_UI/ru/Exiles_UI.locres > _scratch/vanilla-ru/<версия>/Exiles_UI.locres`.
+   Копия в `D:\Temp` пропала 2026-11-13: это папка владельца. На 3.1.0 таблица выросла с 1 867 377 до 1 934 227 байт, `--check` нашего наложения — «0 entries would change».)
 7. Скопировать в `Game/ru/Game.locres` (`.locmeta` прежний), раскатать `deploy-localization.py`.
 
 **Когда шаг 6 даёт код 1, а новые ключи нужны сейчас** — перенести в раскатанный файл только их:

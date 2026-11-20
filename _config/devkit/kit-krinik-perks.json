@@ -1,0 +1,59 @@
+{
+ "steps": [
+  "table reused /Game/Mods/KrinikConanUI/DT_KrinikPerks.DT_KrinikPerks",
+  "fill_data_table_from_json_string -> True"
+ ],
+ "rows": [
+  "Krinik_Vitality_25",
+  "Krinik_Vitality_30",
+  "Krinik_Vitality_35",
+  "Krinik_Vitality_40"
+ ],
+ "columns": {
+  "PerkName": [
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_25_PerkName\", \"Перк 25-го уровня (заглушка)\")",
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_30_PerkName\", \"Перк 30-го уровня (заглушка)\")",
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_35_PerkName\", \"Перк 35-го уровня (заглушка)\")",
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_40_PerkName\", \"Перк 40-го уровня (заглушка)\")"
+  ],
+  "PerkDescription": [
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_25_PerkDescription\", \"Место для будущего перка сборки. Пока перк ничего не даёт.\")",
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_30_PerkDescription\", \"Место для будущего перка сборки. Пока перк ничего не даёт.\")",
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_35_PerkDescription\", \"Место для будущего перка сборки. Пока перк ничего не даёт.\")",
+   "NSLOCTEXT(\"DT_KrinikPerks [5094EF349650C7113497ACF44DE83E0D]\", \"Krinik_Vitality_40_PerkDescription\", \"Место для будущего перка сборки. Пока перк ничего не даёт.\")"
+  ],
+  "Icon": [
+   "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'"
+  ],
+  "TargetIntStat": [
+   "AttributeHealth",
+   "AttributeHealth",
+   "AttributeHealth",
+   "AttributeHealth"
+  ],
+  "AttributePointsRequired": [
+   "25",
+   "30",
+   "35",
+   "40"
+  ]
+ },
+ "vanilla_Vitality_15": {
+  "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8522B3064CDBAEE40F2FD3BE11A7A8E4\", \"Robust\")",
+  "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8A312B7B44887B2D57C57CBB96103A5B\", \"Increases maximum health by 100.\")",
+  "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+  "TargetIntStat": "AttributeHealth",
+  "AttributePointsRequired": "15"
+ },
+ "checks": {
+  "rows": true,
+  "stat": true,
+  "icon": true,
+  "req": true
+ },
+ "saved": true,
+ "ok": true
+}

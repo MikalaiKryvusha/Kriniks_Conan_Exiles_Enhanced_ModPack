@@ -10,4 +10,4 @@ BPModLoaderMod : 0
 
 
 ; Built-in keybinds, do not move up!
-Keybinds : 1
+Keybinds : 0

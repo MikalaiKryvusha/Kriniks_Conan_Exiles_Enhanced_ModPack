@@ -28,3 +28,9 @@ tag:77991105/GameplayTags	+	Loot.General
 tag:77991105/GameplayTags	+	Loot.T2
 tag:77991133/GameplayTags	+	Loot.General
 tag:77991133/GameplayTags	+	Loot.T2
+copyprop:51420/ItemClass	SevereWeatherEnhanced:LFS_ItemTable:51420
+copyprop:51420/ArmourValue	SevereWeatherEnhanced:LFS_ItemTable:51420
+copyprop:51420/FirstModifier	SevereWeatherEnhanced:LFS_ItemTable:51420
+copyprop:51420/Icon	SevereWeatherEnhanced:LFS_ItemTable:51420
+copyprop:51420/IconLayers	SevereWeatherEnhanced:LFS_ItemTable:51420
+copyprop:51420/GameplayTags	SevereWeatherEnhanced:LFS_ItemTable:51420

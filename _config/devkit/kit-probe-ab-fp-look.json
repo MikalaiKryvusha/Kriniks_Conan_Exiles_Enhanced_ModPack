@@ -1,0 +1,1780 @@
+{
+ "ok": true,
+ "graphs": [
+  "AnimGraph",
+  "Main",
+  "Default",
+  "Default",
+  "Aggressive",
+  "Aggressive",
+  "Locomotion",
+  "JumpLoop",
+  "JumpCharge",
+  "JumpSettleHard",
+  "AnimationTransitionGraph_0",
+  "AnimationTransitionGraph_1",
+  "Crouch",
+  "Conduit",
+  "Transition",
+  "Transition",
+  "Idle",
+  "Idle",
+  "Idle",
+  "IdleFidgetStart",
+  "Transition",
+  "IdleFidgetLoop",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "JumpSettleSoft",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Passive",
+  "Passive",
+  "Locomotion",
+  "JumpLoop",
+  "JumpCharge",
+  "JumpSettleHard",
+  "AnimationTransitionGraph_792",
+  "AnimationTransitionGraph_793",
+  "Crouch",
+  "Idle",
+  "IdleAndFidget",
+  "Idle",
+  "IdleFidgets",
+  "AnimationTransitionGraph_0",
+  "AnimationTransitionGraph_1",
+  "AnimationTransitionGraph_2",
+  "AnimationTransitionGraph_3",
+  "AnimationTransitionGraph_4",
+  "AnimationTransitionGraph_5",
+  "StartMoving",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Conduit",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "JumpSettleSoft",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "StopMoving",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "DiveStart",
+  "DiveEnd",
+  "DiveLoop",
+  "AnimationTransitionGraph_0",
+  "AnimationTransitionGraph_1",
+  "AnimationTransitionGraph_2",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "StateChangeConduit",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "IsSitting",
+  "Transition",
+  "AnimationTransitionGraph_13",
+  "Transition",
+  "Transition",
+  "KnockAway",
+  "Transition",
+  "Transition",
+  "Transition",
+  "KnockbackConduit",
+  "KnockDownStart",
+  "Ragdolling",
+  "KnockUpStart",
+  "KnockOver",
+  "GetUp",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "ShieldBlock",
+  "Transition",
+  "Transition",
+  "KnockUpLoop",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Unconscious",
+  "Transition",
+  "Climbing",
+  "Climbing",
+  "ClimbVertical",
+  "ClimbVertical",
+  "Idle_A",
+  "Move_A",
+  "StopMoving_A",
+  "Idle_B",
+  "StopMoving_B",
+  "MoveOffset",
+  "AnimationTransitionGraph_76",
+  "StopConduit",
+  "AnimationTransitionGraph_77",
+  "AnimationTransitionGraph_78",
+  "AnimationTransitionGraph_79",
+  "AnimationTransitionGraph_80",
+  "IdleConduit",
+  "AnimationTransitionGraph_83",
+  "Transition",
+  "Transition",
+  "Transition",
+  "MoveConduit",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "ClimbHanging",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "AnimationTransitionGraph_4",
+  "ClimbingSliding",
+  "Transition",
+  "Transition",
+  "Transition",
+  "JumpUp",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Swim",
+  "Transition",
+  "Transition",
+  "UnconsciousToDefault",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Fly",
+  "Transition",
+  "Transition",
+  "Transition",
+  "SpecialExecuteStart",
+  "SpecialExecuteEnd",
+  "IsSpecialLoop",
+  "Death Handle",
+  "HandleItemInitializeEnd",
+  "HasItemSwapAnimMontage",
+  "GetItemSwapAnimMontage",
+  "HandleHitConfirm",
+  "WeaponBlendspaceEquip",
+  "WeaponBlendspaceUnequip",
+  "HandlePickup",
+  "GetAttackMontageActive",
+  "GetAttackMontagePrevious",
+  "SetAttackMontageQueued",
+  "SetAttackMontageActive",
+  "SetAttackMontagePrevious",
+  "ClearEquipAnims",
+  "KnockbackPlay",
+  "UpdateVarsFromCombatBP",
+  "UpdateBlendspaces",
+  "UpdateIkForWeaponAdded",
+  "UpdateIkForWeaponRemoved",
+  "ForceCleanAttackChain",
+  "HandleStun",
+  "SelectGetupAnimation",
+  "HandleMovementModeChange",
+  "HandleMultiJump",
+  "HandleInvetorySwitch",
+  "InventoryEquipMainDualSlot",
+  "InventoryUnequipMainDualSlot",
+  "InventoryEquipOffhandSlot",
+  "InventoryUnequipOffhandSlot",
+  "GetBlockReboundAnim",
+  "GetShieldBreakAnim",
+  "GetBlockerHitConfirmAnim",
+  "OnSubstateChanged_HandleChargeHold",
+  "ComputeDirectionalAttackBlendValue",
+  "IsInDirectionalAttack",
+  "SetupUnconsciousAnimations",
+  "SetupIdleAnims",
+  "OnStateChanged_HandleWeaponsBreak",
+  "UpdateGliderVars",
+  "SetIsWounded",
+  "UpdateArmAim",
+  "HasItemUnequipAnimMontage",
+  "GetItemUnequipAnimMontage",
+  "OwningClientOnly",
+  "ChangePlayRate",
+  "MathExpression",
+  "CheckIfDedicatedServer",
+  "SelectMaleOrFemaleAnimationWithFallback",
+  "SelectMaleOrFemaleBlendspaceWithFallback",
+  "EventGraph",
+  "Handle Weapon Equip",
+  "NewIK",
+  "FootSteps",
+  "Audio",
+  "EventGraph_Item",
+  "CombatGraph",
+  "MountsGraph",
+  "DodgeGraph",
+  "ItemUseGraph",
+  "SignalStringDraw",
+  "SignalPickArrow",
+  "SignalDodgeSettle",
+  "StartDiscard",
+  "StartInitialize",
+  "StartShieldInterrupt",
+  "StartKnockback",
+  "StopEmoteAnimation",
+  "StartEmoteAnimation",
+  "EmoteAnimationJumpToEnd",
+  "HasSpawnAnimationLogic",
+  "PlayKnockbackGetUpAnimation",
+  "OnKnockbackStartRagdolling",
+  "OnKnockbackEnd",
+  "OnKnockbackStart",
+  "StartBlockConfirm",
+  "GetGliderDragPlayerBlendspace"
+ ],
+ "watched": [
+  {
+   "node": "Get AdjustForLookingUpAndDownFirstPersonAgressive",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "AdjustForLookingUpAndDownFirstPersonAgressive",
+     "to": "Transform (Modify) Bone - Bone: b_spine_3",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903AB60) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903AB58) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903ABB4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903AB30) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC3903AC80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC3903AC98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC3903AC68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "От локального объекта к компоненту",
+         "class": "AnimGraphNode_LocalToComponentSpace",
+         "pin": "ComponentPose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get AdjustForLookingUpAndDownFirstPersonAgressive",
+         "class": "K2Node_VariableGet",
+         "pin": "AdjustForLookingUpAndDownFirstPersonAgressive"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Transform (Modify) Bone - Bone: b_L_upperarm",
+       "class": "AnimGraphNode_ModifyBone",
+       "to_pin": "ComponentPose",
+       "props": {
+        "alpha": "1.0",
+        "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903B160) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+        "alpha_bool_enabled": "True",
+        "alpha_curve_name": "None",
+        "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+        "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903B158) {scale: 1.000000, bias: 0.000000}>",
+        "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903B1B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+        "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903B130) {}>",
+        "lod_threshold": "-1",
+        "rotation": "<Struct 'Rotator' (0x000002EC3903B280) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+        "scale": "<Struct 'Vector' (0x000002EC3903B298) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+        "translation": "<Struct 'Vector' (0x000002EC3903B268) {x: -5.265000, y: 0.108000, z: -19.177000}>"
+       },
+       "inputs": [
+        {
+         "pin": "ComponentPose",
+         "linked": [
+          {
+           "from": "Transform (Modify) Bone - Bone: b_spine_3",
+           "class": "AnimGraphNode_ModifyBone",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Translation",
+         "linked": [],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Transform (Modify) Bone - Bone: b_R_upperarm",
+         "class": "AnimGraphNode_ModifyBone",
+         "to_pin": "ComponentPose",
+         "props": {
+          "alpha": "1.0",
+          "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903B760) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+          "alpha_bool_enabled": "True",
+          "alpha_curve_name": "None",
+          "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+          "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903B758) {scale: 1.000000, bias: 0.000000}>",
+          "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903B7B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+          "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903B730) {}>",
+          "lod_threshold": "-1",
+          "rotation": "<Struct 'Rotator' (0x000002EC3903B880) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+          "scale": "<Struct 'Vector' (0x000002EC3903B898) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+          "translation": "<Struct 'Vector' (0x000002EC3903B868) {x: 5.265000, y: -0.108000, z: 19.177000}>"
+         },
+         "inputs": [
+          {
+           "pin": "ComponentPose",
+           "linked": [
+            {
+             "from": "Transform (Modify) Bone - Bone: b_L_upperarm",
+             "class": "AnimGraphNode_ModifyBone",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "Translation",
+           "linked": [],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Get AdjustForLookingUpAndDownFirstPersonPassive",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "AdjustForLookingUpAndDownFirstPersonPassive",
+     "to": "Transform (Modify) Bone - Bone: b_neck_1",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903BD60) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903BD58) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903BDB4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903BD30) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC3903BE80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC3903BE98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC3903BE68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "Transform (Modify) Bone - Bone: b_spine_3",
+         "class": "AnimGraphNode_ModifyBone",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get AdjustForLookingUpAndDownFirstPersonPassive",
+         "class": "K2Node_VariableGet",
+         "pin": "AdjustForLookingUpAndDownFirstPersonPassive"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Transform (Modify) Bone - Bone: b_head",
+       "class": "AnimGraphNode_ModifyBone",
+       "to_pin": "ComponentPose",
+       "props": {
+        "alpha": "1.0",
+        "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903C360) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+        "alpha_bool_enabled": "True",
+        "alpha_curve_name": "None",
+        "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+        "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903C358) {scale: 1.000000, bias: 0.000000}>",
+        "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903C3B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+        "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903C330) {}>",
+        "lod_threshold": "-1",
+        "rotation": "<Struct 'Rotator' (0x000002EC3903C480) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+        "scale": "<Struct 'Vector' (0x000002EC3903C498) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+        "translation": "<Struct 'Vector' (0x000002EC3903C468) {x: 0.000000, y: 10.000000, z: 0.000000}>"
+       },
+       "inputs": [
+        {
+         "pin": "ComponentPose",
+         "linked": [
+          {
+           "from": "Transform (Modify) Bone - Bone: b_neck_1",
+           "class": "AnimGraphNode_ModifyBone",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Translation",
+         "linked": [
+          {
+           "from": "Get HeadFOVAdjustments",
+           "class": "K2Node_VariableGet",
+           "pin": "HeadFOVAdjustments"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "От компонента к локальному объекту",
+         "class": "AnimGraphNode_ComponentToLocalSpace",
+         "to_pin": "ComponentPose",
+         "props": {
+          "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390945B0) {}>"
+         },
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Get AdjustForLookingUpAndDownFirstPersonPassive",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "AdjustForLookingUpAndDownFirstPersonPassive",
+     "to": "Transform (Modify) Bone - Bone: b_spine_3",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903C960) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903C958) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903C9B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903C930) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC3903CA80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC3903CA98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC3903CA68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "От локального объекта к компоненту",
+         "class": "AnimGraphNode_LocalToComponentSpace",
+         "pin": "ComponentPose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get AdjustForLookingUpAndDownFirstPersonPassive",
+         "class": "K2Node_VariableGet",
+         "pin": "AdjustForLookingUpAndDownFirstPersonPassive"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Transform (Modify) Bone - Bone: b_neck_1",
+       "class": "AnimGraphNode_ModifyBone",
+       "to_pin": "ComponentPose",
+       "props": {
+        "alpha": "1.0",
+        "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903BD60) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+        "alpha_bool_enabled": "True",
+        "alpha_curve_name": "None",
+        "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+        "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903BD58) {scale: 1.000000, bias: 0.000000}>",
+        "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903BDB4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+        "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903BD30) {}>",
+        "lod_threshold": "-1",
+        "rotation": "<Struct 'Rotator' (0x000002EC3903BE80) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+        "scale": "<Struct 'Vector' (0x000002EC3903BE98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+        "translation": "<Struct 'Vector' (0x000002EC3903BE68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+       },
+       "inputs": [
+        {
+         "pin": "ComponentPose",
+         "linked": [
+          {
+           "from": "Transform (Modify) Bone - Bone: b_spine_3",
+           "class": "AnimGraphNode_ModifyBone",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Rotation",
+         "linked": [
+          {
+           "from": "Get AdjustForLookingUpAndDownFirstPersonPassive",
+           "class": "K2Node_VariableGet",
+           "pin": "AdjustForLookingUpAndDownFirstPersonPassive"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Transform (Modify) Bone - Bone: b_head",
+         "class": "AnimGraphNode_ModifyBone",
+         "to_pin": "ComponentPose",
+         "props": {
+          "alpha": "1.0",
+          "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC3903C360) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+          "alpha_bool_enabled": "True",
+          "alpha_curve_name": "None",
+          "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+          "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC3903C358) {scale: 1.000000, bias: 0.000000}>",
+          "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC3903C3B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+          "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC3903C330) {}>",
+          "lod_threshold": "-1",
+          "rotation": "<Struct 'Rotator' (0x000002EC3903C480) {pitch: 0.000000, yaw: 0.000000, roll: 0.000000}>",
+          "scale": "<Struct 'Vector' (0x000002EC3903C498) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+          "translation": "<Struct 'Vector' (0x000002EC3903C468) {x: 0.000000, y: 10.000000, z: 0.000000}>"
+         },
+         "inputs": [
+          {
+           "pin": "ComponentPose",
+           "linked": [
+            {
+             "from": "Transform (Modify) Bone - Bone: b_neck_1",
+             "class": "AnimGraphNode_ModifyBone",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "Translation",
+           "linked": [
+            {
+             "from": "Get HeadFOVAdjustments",
+             "class": "K2Node_VariableGet",
+             "pin": "HeadFOVAdjustments"
+            }
+           ],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Save cached pose 'FirstPersonPosePassive'",
+   "class": "AnimGraphNode_SaveCachedPose",
+   "down": []
+  },
+  {
+   "node": "Save cached pose 'FirstPersonPoseNotPassive'",
+   "class": "AnimGraphNode_SaveCachedPose",
+   "down": []
+  },
+  {
+   "node": "Использовать кэшированную позу 'FirstPersonPosePassive'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'FirstPersonPosePassive'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'FirstPersonPoseNotPassive'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get isPassive",
+         "class": "K2Node_VariableGet",
+         "pin": "isPassive"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Смешать позы по логическим операторам",
+       "class": "AnimGraphNode_BlendListByBool",
+       "to_pin": "BlendPose_1",
+       "props": {},
+       "inputs": [
+        {
+         "pin": "BlendPose_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'FullbodyAttackPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPose_1",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "bActiveValue",
+         "linked": [
+          {
+           "from": "Get isSwimming",
+           "class": "K2Node_VariableGet",
+           "pin": "isSwimming"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "to_pin": "BlendPose_1",
+         "props": {},
+         "inputs": [
+          {
+           "pin": "BlendPose_0",
+           "linked": [
+            {
+             "from": "Смешать позы по логическим операторам",
+             "class": "AnimGraphNode_BlendListByBool",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "BlendPose_1",
+           "linked": [
+            {
+             "from": "Смешать позы по логическим операторам",
+             "class": "AnimGraphNode_BlendListByBool",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "bActiveValue",
+           "linked": [
+            {
+             "from": "Get isThirdPerson",
+             "class": "K2Node_VariableGet",
+             "pin": "isThirdPerson"
+            }
+           ],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'FirstPersonPoseNotPassive'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_1",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'FirstPersonPosePassive'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'FirstPersonPoseNotPassive'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get isPassive",
+         "class": "K2Node_VariableGet",
+         "pin": "isPassive"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Смешать позы по логическим операторам",
+       "class": "AnimGraphNode_BlendListByBool",
+       "to_pin": "BlendPose_1",
+       "props": {},
+       "inputs": [
+        {
+         "pin": "BlendPose_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'FullbodyAttackPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPose_1",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "bActiveValue",
+         "linked": [
+          {
+           "from": "Get isSwimming",
+           "class": "K2Node_VariableGet",
+           "pin": "isSwimming"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "to_pin": "BlendPose_1",
+         "props": {},
+         "inputs": [
+          {
+           "pin": "BlendPose_0",
+           "linked": [
+            {
+             "from": "Смешать позы по логическим операторам",
+             "class": "AnimGraphNode_BlendListByBool",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "BlendPose_1",
+           "linked": [
+            {
+             "from": "Смешать позы по логическим операторам",
+             "class": "AnimGraphNode_BlendListByBool",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "bActiveValue",
+           "linked": [
+            {
+             "from": "Get isThirdPerson",
+             "class": "K2Node_VariableGet",
+             "pin": "isThirdPerson"
+            }
+           ],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Get ShouldUseFullAimOffset",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "ShouldUseFullAimOffset",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "bActiveValue",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "AimOffset Player 'AO_combat_2h_bow_aim_fullbody'",
+         "class": "AnimGraphNode_RotationOffsetBlendSpace",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "AimOffset Player 'AO_combat_2h_bow_aim_head'",
+         "class": "AnimGraphNode_RotationOffsetBlendSpace",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get ShouldUseFullAimOffset",
+         "class": "K2Node_VariableGet",
+         "pin": "ShouldUseFullAimOffset"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Смешать позы по логическим операторам",
+       "class": "AnimGraphNode_BlendListByBool",
+       "to_pin": "BlendPose_1",
+       "props": {},
+       "inputs": [
+        {
+         "pin": "BlendPose_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'FullbodyAttackPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPose_1",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "bActiveValue",
+         "linked": [
+          {
+           "from": "Get ShouldUseAimOffset",
+           "class": "K2Node_VariableGet",
+           "pin": "ShouldUseAimOffset"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "to_pin": "BlendPose_1",
+         "props": {},
+         "inputs": [
+          {
+           "pin": "BlendPose_0",
+           "linked": [
+            {
+             "from": "Плеер пространства смешивания 'BS1D_human_batglider_glide'",
+             "class": "AnimGraphNode_BlendSpacePlayer",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "BlendPose_1",
+           "linked": [
+            {
+             "from": "Смешать позы по логическим операторам",
+             "class": "AnimGraphNode_BlendListByBool",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "bActiveValue",
+           "linked": [
+            {
+             "from": "Get IsGliding",
+             "class": "K2Node_VariableGet",
+             "pin": "IsGliding"
+            }
+           ],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Get ArmAimOffset",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "ArmAimOffset",
+     "to": "Transform (Modify) Bone - Bone: b_R_upperarm",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E1560) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E1558) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E15B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E1530) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC390E1680) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC390E1698) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC390E1668) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "Transform (Modify) Bone - Bone: b_R_clavicle",
+         "class": "AnimGraphNode_ModifyBone",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Alpha",
+       "linked": [
+        {
+         "from": "Get ArmAimBlend",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimBlend"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Translation",
+       "linked": [],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get ArmAimOffset",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimOffset"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Scale",
+       "linked": [],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Transform (Modify) Bone - Bone: b_neck_2",
+       "class": "AnimGraphNode_ModifyBone",
+       "to_pin": "ComponentPose",
+       "props": {
+        "alpha": "1.0",
+        "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E2760) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+        "alpha_bool_enabled": "True",
+        "alpha_curve_name": "None",
+        "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+        "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E2758) {scale: 1.000000, bias: 0.000000}>",
+        "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E27B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+        "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E2730) {}>",
+        "lod_threshold": "-1",
+        "rotation": "<Struct 'Rotator' (0x000002EC390E2880) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+        "scale": "<Struct 'Vector' (0x000002EC390E2898) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+        "translation": "<Struct 'Vector' (0x000002EC390E2868) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+       },
+       "inputs": [
+        {
+         "pin": "ComponentPose",
+         "linked": [
+          {
+           "from": "Transform (Modify) Bone - Bone: b_R_upperarm",
+           "class": "AnimGraphNode_ModifyBone",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Alpha",
+         "linked": [
+          {
+           "from": "Get ArmAimBlend",
+           "class": "K2Node_VariableGet",
+           "pin": "ArmAimBlend"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Translation",
+         "linked": [],
+         "default": ""
+        },
+        {
+         "pin": "Rotation",
+         "linked": [
+          {
+           "from": "Get ArmAimOffsetHead",
+           "class": "K2Node_VariableGet",
+           "pin": "ArmAimOffsetHead"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Scale",
+         "linked": [],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Transform (Modify) Bone - Bone: b_head",
+         "class": "AnimGraphNode_ModifyBone",
+         "to_pin": "ComponentPose",
+         "props": {
+          "alpha": "1.0",
+          "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E1B60) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+          "alpha_bool_enabled": "True",
+          "alpha_curve_name": "None",
+          "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+          "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E1B58) {scale: 1.000000, bias: 0.000000}>",
+          "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E1BB4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+          "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E1B30) {}>",
+          "lod_threshold": "-1",
+          "rotation": "<Struct 'Rotator' (0x000002EC390E1C80) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+          "scale": "<Struct 'Vector' (0x000002EC390E1C98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+          "translation": "<Struct 'Vector' (0x000002EC390E1C68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+         },
+         "inputs": [
+          {
+           "pin": "ComponentPose",
+           "linked": [
+            {
+             "from": "Transform (Modify) Bone - Bone: b_neck_2",
+             "class": "AnimGraphNode_ModifyBone",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "Alpha",
+           "linked": [
+            {
+             "from": "Get ArmAimBlend",
+             "class": "K2Node_VariableGet",
+             "pin": "ArmAimBlend"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "Translation",
+           "linked": [],
+           "default": ""
+          },
+          {
+           "pin": "Rotation",
+           "linked": [
+            {
+             "from": "Get ArmAimOffsetHead",
+             "class": "K2Node_VariableGet",
+             "pin": "ArmAimOffsetHead"
+            }
+           ],
+           "default": ""
+          },
+          {
+           "pin": "Scale",
+           "linked": [],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "from_pin": "ArmAimOffset",
+     "to": "Transform (Modify) Bone - Bone: b_R_clavicle",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E2160) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E2158) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E21B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E2130) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC390E2280) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC390E2298) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC390E2268) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "От локального объекта к компоненту",
+         "class": "AnimGraphNode_LocalToComponentSpace",
+         "pin": "ComponentPose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Alpha",
+       "linked": [
+        {
+         "from": "Get ArmAimBlend",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimBlend"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Translation",
+       "linked": [],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get ArmAimOffset",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimOffset"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Scale",
+       "linked": [],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Transform (Modify) Bone - Bone: b_R_upperarm",
+       "class": "AnimGraphNode_ModifyBone",
+       "to_pin": "ComponentPose",
+       "props": {
+        "alpha": "1.0",
+        "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E1560) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+        "alpha_bool_enabled": "True",
+        "alpha_curve_name": "None",
+        "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+        "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E1558) {scale: 1.000000, bias: 0.000000}>",
+        "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E15B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+        "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E1530) {}>",
+        "lod_threshold": "-1",
+        "rotation": "<Struct 'Rotator' (0x000002EC390E1680) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+        "scale": "<Struct 'Vector' (0x000002EC390E1698) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+        "translation": "<Struct 'Vector' (0x000002EC390E1668) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+       },
+       "inputs": [
+        {
+         "pin": "ComponentPose",
+         "linked": [
+          {
+           "from": "Transform (Modify) Bone - Bone: b_R_clavicle",
+           "class": "AnimGraphNode_ModifyBone",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Alpha",
+         "linked": [
+          {
+           "from": "Get ArmAimBlend",
+           "class": "K2Node_VariableGet",
+           "pin": "ArmAimBlend"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Translation",
+         "linked": [],
+         "default": ""
+        },
+        {
+         "pin": "Rotation",
+         "linked": [
+          {
+           "from": "Get ArmAimOffset",
+           "class": "K2Node_VariableGet",
+           "pin": "ArmAimOffset"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Scale",
+         "linked": [],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Get ArmAimOffsetHead",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "ArmAimOffsetHead",
+     "to": "Transform (Modify) Bone - Bone: b_neck_2",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E2760) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E2758) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E27B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E2730) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC390E2880) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC390E2898) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC390E2868) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "Transform (Modify) Bone - Bone: b_R_upperarm",
+         "class": "AnimGraphNode_ModifyBone",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Alpha",
+       "linked": [
+        {
+         "from": "Get ArmAimBlend",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimBlend"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Translation",
+       "linked": [],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get ArmAimOffsetHead",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimOffsetHead"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Scale",
+       "linked": [],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Transform (Modify) Bone - Bone: b_head",
+       "class": "AnimGraphNode_ModifyBone",
+       "to_pin": "ComponentPose",
+       "props": {
+        "alpha": "1.0",
+        "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E1B60) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+        "alpha_bool_enabled": "True",
+        "alpha_curve_name": "None",
+        "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+        "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E1B58) {scale: 1.000000, bias: 0.000000}>",
+        "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E1BB4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+        "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E1B30) {}>",
+        "lod_threshold": "-1",
+        "rotation": "<Struct 'Rotator' (0x000002EC390E1C80) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+        "scale": "<Struct 'Vector' (0x000002EC390E1C98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+        "translation": "<Struct 'Vector' (0x000002EC390E1C68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+       },
+       "inputs": [
+        {
+         "pin": "ComponentPose",
+         "linked": [
+          {
+           "from": "Transform (Modify) Bone - Bone: b_neck_2",
+           "class": "AnimGraphNode_ModifyBone",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Alpha",
+         "linked": [
+          {
+           "from": "Get ArmAimBlend",
+           "class": "K2Node_VariableGet",
+           "pin": "ArmAimBlend"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Translation",
+         "linked": [],
+         "default": ""
+        },
+        {
+         "pin": "Rotation",
+         "linked": [
+          {
+           "from": "Get ArmAimOffsetHead",
+           "class": "K2Node_VariableGet",
+           "pin": "ArmAimOffsetHead"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "Scale",
+         "linked": [],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "b_L_clavicle.перенос по оси Z = b_L_thigh.повернуть по оси Х * 0,025 - Управляемый костью контроллер",
+         "class": "AnimGraphNode_BoneDrivenController",
+         "to_pin": "ComponentPose",
+         "props": {
+          "alpha": "1.0",
+          "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC38F0D560) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+          "alpha_bool_enabled": "True",
+          "alpha_curve_name": "None",
+          "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+          "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC38F0D558) {scale: 1.000000, bias: 0.000000}>",
+          "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC38F0D5B4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+          "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC38F0D530) {}>",
+          "lod_threshold": "-1"
+         },
+         "next": []
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "from_pin": "ArmAimOffsetHead",
+     "to": "Transform (Modify) Bone - Bone: b_head",
+     "class": "AnimGraphNode_ModifyBone",
+     "to_pin": "Rotation",
+     "props": {
+      "alpha": "1.0",
+      "alpha_bool_blend": "<Struct 'InputAlphaBoolBlend' (0x000002EC390E1B60) {blend_in_time: 0.000000, blend_out_time: 0.000000, blend_option: Linear, custom_curve: None}>",
+      "alpha_bool_enabled": "True",
+      "alpha_curve_name": "None",
+      "alpha_input_type": "<AnimAlphaInputType.FLOAT: 0>",
+      "alpha_scale_bias": "<Struct 'InputScaleBias' (0x000002EC390E1B58) {scale: 1.000000, bias: 0.000000}>",
+      "alpha_scale_bias_clamp": "<Struct 'InputScaleBiasClamp' (0x000002EC390E1BB4) {map_range: False, clamp_result: False, interp_result: False, range: {min: 0.000000, max: 1.000000}, out_range: {min: 0.000000, max: 1.000000}, scale",
+      "component_pose": "<Struct 'ComponentSpacePoseLink' (0x000002EC390E1B30) {}>",
+      "lod_threshold": "-1",
+      "rotation": "<Struct 'Rotator' (0x000002EC390E1C80) {pitch: 0.000000, yaw: 0.000000, roll: 45.000000}>",
+      "scale": "<Struct 'Vector' (0x000002EC390E1C98) {x: 1.000000, y: 1.000000, z: 1.000000}>",
+      "translation": "<Struct 'Vector' (0x000002EC390E1C68) {x: 0.000000, y: 0.000000, z: 0.000000}>"
+     },
+     "inputs": [
+      {
+       "pin": "ComponentPose",
+       "linked": [
+        {
+         "from": "Transform (Modify) Bone - Bone: b_neck_2",
+         "class": "AnimGraphNode_ModifyBone",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Alpha",
+       "linked": [
+        {
+         "from": "Get ArmAimBlend",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimBlend"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Translation",
+       "linked": [],
+       "default": ""
+      },
+      {
+       "pin": "Rotation",
+       "linked": [
+        {
+         "from": "Get ArmAimOffsetHead",
+         "class": "K2Node_VariableGet",
+         "pin": "ArmAimOffsetHead"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "Scale",
+       "linked": [],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Get ShouldUseAimOffset",
+   "class": "K2Node_VariableGet",
+   "down": [
+    {
+     "from_pin": "ShouldUseAimOffset",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "bActiveValue",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'FullbodyAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get ShouldUseAimOffset",
+         "class": "K2Node_VariableGet",
+         "pin": "ShouldUseAimOffset"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Смешать позы по логическим операторам",
+       "class": "AnimGraphNode_BlendListByBool",
+       "to_pin": "BlendPose_1",
+       "props": {},
+       "inputs": [
+        {
+         "pin": "BlendPose_0",
+         "linked": [
+          {
+           "from": "Плеер пространства смешивания 'BS1D_human_batglider_glide'",
+           "class": "AnimGraphNode_BlendSpacePlayer",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPose_1",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "bActiveValue",
+         "linked": [
+          {
+           "from": "Get IsGliding",
+           "class": "K2Node_VariableGet",
+           "pin": "IsGliding"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": [
+        {
+         "from_pin": "Pose",
+         "to": "Save cached pose 'FullbodyAttackAdjustedPose'",
+         "class": "AnimGraphNode_SaveCachedPose",
+         "to_pin": "Pose",
+         "props": {
+          "pose": "<Struct 'PoseLink' (0x000002EC390AD730) {}>"
+         },
+         "inputs": [
+          {
+           "pin": "Pose",
+           "linked": [
+            {
+             "from": "Смешать позы по логическим операторам",
+             "class": "AnimGraphNode_BlendListByBool",
+             "pin": "Pose"
+            }
+           ],
+           "default": ""
+          }
+         ],
+         "next": []
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "consumers": [],
+ "anim_graph_nodes": 492
+}

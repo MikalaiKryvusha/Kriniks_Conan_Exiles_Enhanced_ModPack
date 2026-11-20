@@ -10,12 +10,16 @@
 #
 #   .\capture-window.ps1 -Out C:\tmp\menu.jpg
 #   .\capture-window.ps1 -Out C:\tmp\menu.jpg -Width 1920
+#   .\capture-window.ps1 -Out C:\tmp\kumm.jpg -Width 1920 -Title 'KUMM - Visual Studio Code'
+#     -Title: the visible top-level window whose title STARTS with this text (one process may own several windows - VS Code with four
+#     projects: the process's main window is whichever it names, KUMM plan 54 / auto-relay 2026-11-17 15:21).
 # [NOT-TESTED]
 
 param(
   [Parameter(Mandatory = $true)][string]$Out,
   [int]$Width = 1280,
-  [string]$Process = 'ConanSandbox-Win64-Shipping'
+  [string]$Process = 'ConanSandbox-Win64-Shipping',
+  [string]$Title
 )
 
 $ErrorActionPreference = 'Stop'
@@ -28,21 +32,41 @@ public class CapWin {
   [DllImport("user32.dll")] public static extern bool SetProcessDPIAware();
   [DllImport("user32.dll")] public static extern bool GetClientRect(IntPtr h, out RECT r);
   [DllImport("user32.dll")] public static extern bool PrintWindow(IntPtr h, IntPtr hdc, uint flags);
+  public delegate bool EnumProc(IntPtr h, IntPtr l);
+  [DllImport("user32.dll")] static extern bool EnumWindows(EnumProc f, IntPtr l);
+  [DllImport("user32.dll")] static extern bool IsWindowVisible(IntPtr h);
+  [DllImport("user32.dll", CharSet = CharSet.Unicode)] static extern int GetWindowText(IntPtr h, System.Text.StringBuilder s, int n);
+  public static IntPtr ByTitle(string prefix) {
+    IntPtr found = IntPtr.Zero;
+    EnumWindows((h, l) => {
+      if (!IsWindowVisible(h)) return true;
+      var s = new System.Text.StringBuilder(512); GetWindowText(h, s, 512);
+      if (!s.ToString().StartsWith(prefix, StringComparison.Ordinal)) return true;
+      found = h; return false;
+    }, IntPtr.Zero);
+    return found;
+  }
 }
 '@
 $null = [CapWin]::SetProcessDPIAware()
 
-$p = Get-Process -Name $Process -ErrorAction Stop | Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
-if (-not $p) { throw "no window for $Process" }
+if ($Title) {
+  $hwnd = [CapWin]::ByTitle($Title)
+  if ($hwnd -eq [IntPtr]::Zero) { throw "no visible window titled '$Title...'" }
+} else {
+  $p = Get-Process -Name $Process -ErrorAction Stop | Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
+  if (-not $p) { throw "no window for $Process" }
+  $hwnd = $p.MainWindowHandle
+}
 $r = New-Object CapWin+RECT
-$null = [CapWin]::GetClientRect($p.MainWindowHandle, [ref]$r)
+$null = [CapWin]::GetClientRect($hwnd, [ref]$r)
 $w = $r.R - $r.L; $h = $r.B - $r.T
 if ($w -le 0 -or $h -le 0) { throw "window has no client area ($w x $h) - minimized?" }
 
 $full = New-Object Drawing.Bitmap $w, $h
 $g = [Drawing.Graphics]::FromImage($full)
 $hdc = $g.GetHdc()
-$ok = [CapWin]::PrintWindow($p.MainWindowHandle, $hdc, 2)
+$ok = [CapWin]::PrintWindow($hwnd, $hdc, 2)
 $g.ReleaseHdc($hdc)
 
 $outH = [int]($h * $Width / $w)

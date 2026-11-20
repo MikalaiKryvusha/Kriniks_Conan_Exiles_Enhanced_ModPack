@@ -1,0 +1,57 @@
+{
+ "ok": false,
+ "compile_vanilla": true,
+ "marks_vanilla": [
+  {
+   "graph": "KnockDownStart",
+   "node": "Плеер пространства смешивания 'BS1D_combat_knockdown'",
+   "msg": "Transition  из KnockDownStart в Ragdolling  is using an automatic transition rule but the source  Плеер пространства смешивания 'BS1D_combat_knockdown'  is set as looping.  Please clear the 'Loop' flag"
+  },
+  {
+   "graph": "JumpUp",
+   "node": "Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'",
+   "msg": "Transition  из JumpUp в Default  is using an automatic transition rule but the source  Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'  is set as looping.  Please clear the 'Loop Animation' flag"
+  }
+ ],
+ "selector_props": {
+  "blend_time": "[0.100000, 0.100000]",
+  "blend_type": "<AlphaBlendOption.LINEAR: 0>",
+  "transition_type": "<BlendListTransitionType.STANDARD_BLEND: 0>",
+  "child_update_mode": "ERR AnimNode_BlendListByBool: Failed to find property 'child_update_mode' for attribute 'child_update_mode' on 'AnimNode_BlendListByBool'"
+ },
+ "marks_edited": [
+  {
+   "graph": "KnockDownStart",
+   "node": "Плеер пространства смешивания 'BS1D_combat_knockdown'",
+   "msg": "Transition  из KnockDownStart в Ragdolling  is using an automatic transition rule but the source  Плеер пространства смешивания 'BS1D_combat_knockdown'  is set as looping.  Please clear the 'Loop' flag"
+  },
+  {
+   "graph": "JumpUp",
+   "node": "Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'",
+   "msg": "Transition  из JumpUp в Default  is using an automatic transition rule but the source  Плеер последовательностей 'A_normal_climb_3rd_jumpup_M'  is set as looping.  Please clear the 'Loop Animation' flag"
+  }
+ ],
+ "error": "Traceback (most recent call last):\n  File \"D:/work/ai_sandbox/ConanExiles/_config/devkit/kit-ab-fp-upright.py\", line 205, in <module>\n    raise RuntimeError(\"the blueprint does not compile after the edit while the vanilla one did (or new compiler marks) — the asset is NOT saved\")\nRuntimeError: the blueprint does not compile after the edit while the vanilla one did (or new compiler marks) — the asset is NOT saved\n",
+ "steps": [
+  "vanilla compile: True, marked nodes 2",
+  "AnimGraph nodes: 492",
+  "selector bActiveValue fed by ['Get isPassive.isPassive']",
+  "call node GetWeaponItemPrimary via /Script/ConanSandbox.AnimInstanceHumanMalePlayer:GetWeaponItemPrimary, pins ['self', 'Character', 'ReturnValue']",
+  "call node GetWeaponArcheType via /Script/ConanSandbox.GameItem:GetWeaponArcheType, pins ['self', 'ReturnValue']",
+  "call node Equal (Byte) via /Script/Engine.KismetMathLibrary:EqualEqual_ByteByte, pins ['A', 'B', 'ReturnValue']",
+  "call node NOT Boolean via /Script/Engine.KismetMathLibrary:Not_PreBool, pins ['A', 'ReturnValue']",
+  "call node AND Boolean via /Script/Engine.KismetMathLibrary:BooleanAND, pins ['A', 'B', 'ReturnValue']",
+  "call node OR Boolean via /Script/Engine.KismetMathLibrary:BooleanOR, pins ['A', 'B', 'ReturnValue']",
+  "link CombatBP -> GetWeaponItemPrimary.Character: True",
+  "link item -> GetWeaponArcheType.self: True",
+  "link archetype -> ==.A: True",
+  "==.B = 3: True",
+  "link isAttacking -> NOT: True",
+  "link bow -> AND.A: True",
+  "link not attacking -> AND.B: True",
+  "link isPassive -> OR.A: True",
+  "link bow held, not drawn -> OR.B: True",
+  "link OR -> selector.bActiveValue: True",
+  "compile: False, marked nodes 2"
+ ]
+}

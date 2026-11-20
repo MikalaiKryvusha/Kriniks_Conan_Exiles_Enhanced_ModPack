@@ -1,0 +1,82 @@
+DESCRIPTION (Nexus Mods) — English, then Russian
+
+=== ENGLISH ===
+
+Krinik Mod Pack 0.9.0 turns Conan Exiles Enhanced 3.0.1 into an old-school role-playing game in the spirit of The Elder Scrolls IV: Oblivion.
+
+The pack brings together 7 mods by its author and 64 mods by other authors from the Steam Workshop and Nexus Mods, tuned to work together, with the UE4SS loader and a launcher.
+
+The camera stands strictly behind the hero, and every player sets its distance, height and side offset from the numeric keypad and saves the position.
+
+Archery follows the physics of Oblivion: the arrow flies along an arc to the aim point, the draw strength sets its speed, and the bow works in first person and in a jump.
+
+The hero levels up to level 10,000 and with every level runs faster, jumps higher and farther, and shoots better.
+
+The inventory and the hub pause the game, so loot can be sorted at leisure.
+
+The world grows larger and more dangerous: the Caverns of Set, a Shemite city state, the Ymir's Respite dungeon, the reborn Al-Merayah fortress, ambushes, night demons and undead, storms, heat and cold, and over 700 new NPCs.
+
+A settlement with its own daily routine waits at home, a party of up to a hundred followers marches with the hero, thralls ride on horseback and level up to 50, and bosses can be taken as thralls.
+
+Weapons with their own combos, armour of the seven religions, runes, new hairstyles and faces after Robert E. Howard's books change the hero's gear and looks.
+
+The base gets building and crafting from all its chests, a sorting chest, double storage, fishing and thousands of decor items.
+
+The interface gets the Hosav HUD, a minimap, a damage meter and follower health bars, and the «Настройки модов» (Mod settings) button in the inventory opens the settings of the pack's mods.
+
+The pack is made for the Russian version of the game: every mod is translated into Russian, and the pack switches the game to Russian.
+
+Requirements: Conan Exiles Enhanced 3.0.1 (build CL-379176) and 7-Zip or WinRAR to unpack the archive.
+
+To install, download Krinik_Mod_Pack_0_9_0.zip from the Files tab, unpack it into the game folder that holds ConanSandbox.exe, run KrinikConanLauncher.exe and press «Установить сборку» (Install the pack), then «Играть» (Play).
+
+The pack sets the game to fullscreen 3840 × 2160, so on a smaller screen change the resolution in the game settings.
+
+The launcher also removes the pack with «Удалить сборку» (Remove the pack) and returns the game to its state before the install.
+
+The «Отзыв» (Feedback) button in the main menu collects a crash report for the pack author.
+
+Version 0.9.0 ships as the pack worked on 2 November 2026; the known issues and the plans for 1.0.0 are listed in the user guide (in Russian) and on the GitHub release page.
+
+Mods by other authors belong to their authors; their names and links are in the README of the pack repository: https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack
+
+
+=== РУССКИЙ ===
+
+Krinik Mod Pack 0.9.0 превращает Conan Exiles Enhanced 3.0.1 в ролевую игру старой школы в духе The Elder Scrolls IV: Oblivion.
+
+Сборка объединяет 7 модов автора и 64 мода других авторов из Мастерской Steam и с Nexus Mods, загрузчик UE4SS и лаунчер; моды подогнаны друг к другу.
+
+Камера стоит строго за спиной героя: каждый игрок задаёт её удаление, высоту и сдвиг вбок клавишами цифрового блока и сохраняет положение.
+
+Стрельба из лука следует физике Oblivion: стрела летит по дуге в точку прицела, скорость полёта задаёт сила натяжения, а стрелять можно от первого лица и в прыжке.
+
+Герой растёт до 10 000 уровня и с каждым уровнем бегает быстрее, прыгает выше и дальше, лучше стреляет.
+
+В инвентаре и хабе игра встаёт на паузу, и добычу можно разобрать спокойно.
+
+Мир стал больше и опаснее: Пещеры Сета, шемитский город-государство, подземелье Ymir's Respite, возрождённая крепость Al-Merayah, засады, ночные демоны и нежить, бури, жара и холод, более 700 новых неигровых персонажей.
+
+Дома героя ждёт поселение со своим распорядком дня, в походе с ним идёт отряд до сотни спутников, рабы ездят верхом и растут до 50 уровня, а в рабы можно взять боссов.
+
+Оружие с собственными связками ударов, броня семи религий, руны, новые причёски и лица по книгам Роберта Говарда меняют снаряжение и облик героя.
+
+Для базы — строительство и крафт из всех её сундуков, сундук-сортировщик, хранилища двойной вместимости и тысячи предметов декора; есть и рыбалка.
+
+В интерфейсе — HUD Hosav, мини-карта, счётчик урона и полоски здоровья спутников; кнопка «Настройки модов» в инвентаре открывает настройки модов сборки.
+
+Сборка сделана для русской версии игры: все моды в ней переведены на русский язык, а при установке игра переключается на русский.
+
+Что нужно: Conan Exiles Enhanced 3.0.1 (билд CL-379176) и 7-Zip или WinRAR, чтобы распаковать архив.
+
+Для установки скачайте Krinik_Mod_Pack_0_9_0.zip на вкладке Files, распакуйте его в папку игры, где лежит ConanSandbox.exe, запустите KrinikConanLauncher.exe и нажмите «Установить сборку», затем «Играть».
+
+Сборка ставит полноэкранный режим 3840 × 2160, поэтому на экране меньше 4K смените разрешение в настройках игры.
+
+Кнопка «Удалить сборку» в лаунчере убирает сборку и возвращает игру к состоянию до установки.
+
+Кнопка «Отзыв» в главном меню собирает для автора отчёт о вылете.
+
+Версия 0.9.0 выходит в том виде, в каком сборка работала 2 ноября 2026 года; известные проблемы и планы на 1.0.0 перечислены в руководстве пользователя и на странице выпуска на GitHub.
+
+Моды других авторов принадлежат их авторам; имена авторов и ссылки на моды — в README репозитория сборки: https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack

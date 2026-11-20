@@ -67,6 +67,87 @@ local function place_strip(ci, strip, centred)
     if math.abs(bc.A - a) > 0.001 then strip:SetBrushColor({ R = bc.R, G = bc.G, B = bc.B, A = a }) end
 end
 
+-- 1.5.0 — EVERY interaction prompt stands and looks like the corpse strip (KUMM bugs/83; `[OWNER]` 2026-11-03 23:30 «я просил все виджеты интеракици - влево,
+-- меньше, прозрачнее фон» · «как ты сделал для трупов»). The game's prompts for an NPC to talk to, a building, a simple object, a thrall and a downed ally are
+-- five sibling widgets of /Game/UI/HUD/FloatingNames/ with ONE shape (kit probe kit-probe-tree.json, 2026-11-06): root Overlay → SizeBox centred →
+-- Border `Container` (the dark backing) → texts + W_ActionTutorial. The SAME hub rows drive them (one setting for all, the owner's «все виджеты»); the kit
+-- pak ships scale and backing, this applies the shift and the player's choice. Applied at a widget's birth (one tick later — the module fills it after
+-- construction) and on a hub save; instances are remembered at birth, never searched. [NOT-TESTED]
+local INFO_CLASSES = {
+    "/Game/UI/HUD/FloatingNames/W_DialogueNPCInfo.W_DialogueNPCInfo_C",
+    "/Game/UI/HUD/FloatingNames/W_PlaceableInfo.W_PlaceableInfo_C",
+    "/Game/UI/HUD/FloatingNames/W_SimpleInfo.W_SimpleInfo_C",
+    "/Game/UI/HUD/FloatingNames/W_ThrallInfo.W_ThrallInfo_C",
+    "/Game/UI/HUD/FloatingNames/W_DBNORevive.W_DBNORevive_C",
+}
+local INFO_BACKING = "Container"
+local infos = {}   -- full name → widget (UE4SS wrappers are new values per call: key by name, EXP-0453)
+local function place_info(w)
+    if not (w and w:IsValid()) then return false end
+    local b = w:GetWidgetFromName(FName(INFO_BACKING))
+    if not (b and b:IsValid()) then return false end
+    place_strip(w, b, true)
+    return true
+end
+_G.__krinik_uifixes_info_fn = function(w)
+    local name = w:GetFullName()
+    if name:find("Default__", 1, true) then return end   -- the class default
+    infos[name] = w
+    ExecuteInGameThreadWithDelay(RECHECK_MS, function()
+        local ok, done = pcall(place_info, w)
+        stats.infos = (stats.infos or 0) + ((ok and done) and 1 or 0)
+        log("info prompt born: %s — %s", name:match("[^%.]+$") or name, ok and (done and "placed" or "no backing") or ("error " .. tostring(done)))
+    end)
+end
+if not _G.__krinik_uifixes_info_armed then
+    _G.__krinik_uifixes_info_armed = true
+    for _, cls in ipairs(INFO_CLASSES) do
+        NotifyOnNewObject(cls, function(w) local fn = _G.__krinik_uifixes_info_fn; if fn then pcall(fn, w) end end)
+    end
+end
+settings.on_change(function()
+    for k, w in pairs(infos) do
+        if not (w and w:IsValid()) then infos[k] = nil else pcall(place_info, w) end
+    end
+end)
+
+-- 1.4.0 — the journey tracker («Выживший · Потратьте очки характеристик…», `WBP_JourneyTracker_C`, a viewport widget of the game instance) is not drawn
+-- while the quick-loot window shows: the window stands over it and its see-through grid let the tracker's text through (KUMM bugs/81; way A of three, chosen
+-- `[AI]` by mandate — `[OWNER]` 2026-11-03 22:39 «аналогичный вопрос про автономность работы»; way B, a darker tint of the window's tile, did not help — the
+-- see-through is the texture's own alpha). RENDER opacity, not visibility: the game switches the tracker's visibility itself, and never its render opacity.
+-- The tracker is remembered at its birth (no search); hidden from `align` (the same events). The window closes WITHOUT an event when the view leaves the
+-- corpse, so while the tracker is hidden — and only then — a watch every TRACKER_WATCH_MS gives it back once the window is no longer on screen. [NOT-TESTED]
+local TRACKER_CLASS = "/Game/UI/Widgets/HUD/Journey/WBP_JourneyTracker.WBP_JourneyTracker_C"
+local TRACKER_WATCH_MS = 250
+local tracker, tracker_watch = nil, false
+NotifyOnNewObject(TRACKER_CLASS, function(w) tracker = w end)
+local function loot_on_screen(ci)
+    if not (ci and ci:IsValid() and ci:IsInViewport() and ci:IsVisible()) then return false end
+    local panel = ci:GetWidgetFromName(FName(PANEL))
+    return panel and panel:IsValid() and SHOWN[panel:GetVisibility()] or false
+end
+local function tracker_under_loot(ci, loot_shown)
+    if not (tracker and tracker:IsValid()) then
+        tracker = nil
+        for _, w in ipairs(FindAllOf("WBP_JourneyTracker_C") or {}) do   -- once, when the mod loaded after the tracker's birth (a reload)
+            if w:GetFullName():find("Transient", 1, true) then tracker = w end
+        end
+        if not tracker then return end
+    end
+    local want = loot_shown and 0.0 or 1.0
+    if math.abs(tracker:GetRenderOpacity() - want) > 0.001 then tracker:SetRenderOpacity(want) end
+    if loot_shown and not tracker_watch then
+        tracker_watch = true
+        local function watch()
+            local ok, on = pcall(loot_on_screen, ci)
+            if ok and on then ExecuteInGameThreadWithDelay(TRACKER_WATCH_MS, watch); return end
+            tracker_watch = false
+            if tracker and tracker:IsValid() then tracker:SetRenderOpacity(1.0) end
+        end
+        ExecuteInGameThreadWithDelay(TRACKER_WATCH_MS, watch)
+    end
+end
+
 -- Left while the window shows loot, Center otherwise; touches the slot only when the value changes.
 local function align(ci)
     if not (ci and ci:IsValid()) then return end
@@ -81,6 +162,7 @@ local function align(ci)
         stats.changes = stats.changes + 1
     end
     place_strip(ci, strip, want == ALIGN.center)
+    tracker_under_loot(ci, want == ALIGN.left)
 end
 
 -- 1.3.0 — the corpse prompt on two CENTRED lines (KUMM plan 36 W6; `[OWNER]` «центрируй» · «строчки центрируй» · 2026-10-30 19:48–19:50,
@@ -133,9 +215,9 @@ local function on_event(ctx, from_panel)
     stats.n, stats.sum = stats.n + 1, stats.sum + dt
     if dt > stats.worst then stats.worst = dt end
     if os.clock() - stats.last >= SUMMARY_S then
-        log("events %d, alignment changes %d, prompt splits %d, handler sum %.3f ms, worst %.3f ms (last %d s)",
-            stats.n, stats.changes, stats.splits or 0, stats.sum, stats.worst, SUMMARY_S)
-        stats.n, stats.sum, stats.worst, stats.changes, stats.splits, stats.last = 0, 0.0, 0.0, 0, 0, os.clock()
+        log("events %d, alignment changes %d, prompt splits %d, info prompts placed %d, handler sum %.3f ms, worst %.3f ms (last %d s)",
+            stats.n, stats.changes, stats.splits or 0, stats.infos or 0, stats.sum, stats.worst, SUMMARY_S)
+        stats.n, stats.sum, stats.worst, stats.changes, stats.splits, stats.infos, stats.last = 0, 0.0, 0.0, 0, 0, 0, os.clock()
     end
 end
 
@@ -217,4 +299,58 @@ if not _G.__krinik_uifixes_glyph_armed then
         end
     end)
 end
-log("loaded 1.3.0")
+-- ===================== 1.6.0 (2026-11-07): the hub's «Снаряжение» no longer dances when another item is selected =====================
+-- `[OWNER]` 2026-11-07 10:52 «интерфейс Пляшет при выделении разных предметов - это баг, его нужно будет пофиксить. Не должен плясать интерфейс на одном и том
+-- же экране при выборе разных предметов» · 10:53 «ВЕСЬ ЭКРАН СНИМА!». Cause (remote, 10:5x): the three columns of `CraftingGUI_C` sit in a `ScaleBox`
+-- (Stretch ScaleToFit) whose content height is the TALLEST column — the left one, whose height follows the selected item's description (1080.8 for the
+-- stone sword, 1079.0 for the Sword of Crom): the scale changed with the item and the whole middle moved 2–3 px at 4K. Fix at the window's birth: the left
+-- column's `SizeBox_2` gets a fixed height (the bag grid inside absorbs a longer description), the right one may not grow past it; one set per window, no
+-- polling. A copy of the whole `CraftingGUI` in our kit pak was not taken: it is the game's central inventory window, mods inject into it at run time,
+-- and a copy would freeze it at the kit's version for one value. Live A/B 10:5x: the middle's shift 2–3 px → 0 on every measured place. [NOT-TESTED] as code
+local HUB_COLUMN_HEIGHT = 1082.0          -- the column height the ScaleBox fits (seen 1079–1081 for ordinary items)
+local CRAFTING_GUI = "/Game/UI/Inventory/CraftingGUI.CraftingGUI_C"
+local function fix_hub_columns(w)
+    if not (w and w:IsValid()) or w:GetFullName():find("Default__", 1, true) then return end
+    local left, right = w:GetWidgetFromName(FName("SizeBox_2")), w:GetWidgetFromName(FName("SizeBox_0"))
+    if left and left:IsValid() then left:SetHeightOverride(HUB_COLUMN_HEIGHT) end
+    if right and right:IsValid() then right:SetMaxDesiredHeight(HUB_COLUMN_HEIGHT) end
+end
+_G.__krinik_uifixes_columns_fn = fix_hub_columns
+NotifyOnNewObject(CRAFTING_GUI, function(w)
+    -- born inside CreateWidget: the tree is there on the next game-thread pass
+    ExecuteInGameThread(function() local fn = _G.__krinik_uifixes_columns_fn; if fn then pcall(fn, w) end end)
+end)
+
+-- ===================== 1.7.0 (2026-11-07): Inventory Compactor's two buttons get the game's tooltip look =====================
+-- `[OWNER]` 2026-11-07 10:58 (his frame of «Выберите стопку и нажмите, чтобы отделить нужное количество»): «эти поп-апы тоже перевести в вид как у игры».
+-- The mod's `btn_Split` / `btn_Compact` (in `IC_UI_CompactButton2_C`) carry a plain ToolTipText — Slate's default light-grey box. The game's own tooltip is
+-- `W_TooltipWidget_C` (field `Text_Content`; `RootWidget.TooltipWidgetClass` of the game's buttons). At the mod widget's birth + one tick each button gets
+-- SetToolTip(<a W_TooltipWidget with the button's own text>) — once per widget, no polling. A tooltip WIDGET cannot be stored in the mod's asset (only a
+-- binding function or run time sets it), hence Lua (HOUSE_RULES rule 8). Seen live 12:2x by a real hover (KUMM games/ConanExiles/mods/InventoryCompactor.md).
+-- [NOT-TESTED] as code
+local COMPACT_BUTTONS = "/Game/Mods/Inventory_compactor/IC_UI_CompactButton2.IC_UI_CompactButton2_C"
+local GAME_TOOLTIP = "/Game/UI/Framework/W_TooltipWidget.W_TooltipWidget_C"
+local function game_tooltips(m)
+    if not (m and m:IsValid()) or m:GetFullName():find("Default__", 1, true) then return end
+    local cls = StaticFindObject(GAME_TOOLTIP)
+    local pc = FindFirstOf("PlayerController")
+    local lib = StaticFindObject("/Script/UMG.Default__WidgetBlueprintLibrary")
+    if not (cls and cls:IsValid() and pc and pc:IsValid()) then return end
+    local n = 0
+    for _, bn in ipairs({ "btn_Split", "btn_Compact" }) do
+        local b = m:GetWidgetFromName(FName(bn))
+        if b and b:IsValid() then
+            local tw = lib:Create(pc, cls, pc)
+            tw.Text_Content:SetText(b.ToolTipText)
+            b:SetToolTip(tw)
+            n = n + 1
+        end
+    end
+    log("Inventory Compactor: game tooltips on %d buttons", n)
+end
+_G.__krinik_uifixes_compactor_fn = game_tooltips
+NotifyOnNewObject(COMPACT_BUTTONS, function(m)
+    ExecuteInGameThread(function() local fn = _G.__krinik_uifixes_compactor_fn; if fn then pcall(fn, m) end end)
+end)
+
+log("loaded 1.7.0")

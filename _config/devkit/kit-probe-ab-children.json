@@ -1,0 +1,14 @@
+{
+ "ok": true,
+ "children": [
+  {
+   "package": "/Game/Master_AnimBP/AB_human_female",
+   "parent": "/Script/Engine.AnimBlueprintGeneratedClass'/Game/Master_AnimBP/AB_human_male.AB_human_male_C'"
+  },
+  {
+   "package": "/Game/Master_AnimBP/AB_human_werewolf",
+   "parent": "/Script/Engine.AnimBlueprintGeneratedClass'/Game/Master_AnimBP/AB_human_male.AB_human_male_C'"
+  }
+ ],
+ "anim_blueprints": 129
+}

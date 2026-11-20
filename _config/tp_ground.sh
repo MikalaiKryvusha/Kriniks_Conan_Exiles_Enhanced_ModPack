@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # tp_ground.sh — put the hero ON THE GROUND at a world point (X Y), never into the void.
 #   bash tp_ground.sh <X> <Y> [hover_s]
 # Why: `K2_SetActorLocation` onto a point whose terrain is not streamed yet drops the hero through the world (2026-11-01 10:2x: z −20068 at the
@@ -11,7 +12,7 @@
 X="$1"; Y="$2"; HOVER="${3:-12}"
 [ -z "$X" ] || [ -z "$Y" ] && { echo "usage: tp_ground.sh X Y [hover_s]"; exit 2; }
 cd "$(dirname "$0")" || exit 2
-RES="/d/Games/Conan Exiles 3.0.1/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/result.txt"
+RES="$GAME_UNIX/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/result.txt"
 TOP=60000
 bash pult.sh "lua local p=FindFirstOf('PlayerController').Pawn p.CharacterMovement:SetMovementMode(5, 0) p:K2_SetActorLocation({X=$X,Y=$Y,Z=$TOP}, false, {}, true) return 'hover'" > /dev/null 2>&1 || exit 2
 sleep "$HOVER"

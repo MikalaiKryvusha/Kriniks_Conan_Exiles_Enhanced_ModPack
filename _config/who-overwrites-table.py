@@ -30,6 +30,7 @@
     python who-overwrites-table.py                  сводка по всем таблицам
     python who-overwrites-table.py Attribute        только таблицы по подстроке
     python who-overwrites-table.py Perk --rows      ещё и имена строк
+    python who-overwrites-table.py --shared-rows    строки, в которые писали двое и больше (порядок = кто за кем)
 """
 
 import io
@@ -92,6 +93,23 @@ def main():
         if not hits:
             out("по подстроке '%s' слияний нет" % needle)
             return 1
+
+    # 2026-11-06 — СТРОКА, а не таблица (`[OWNER]` «у нас есть инструмент, который подсветил Warning, что 2 или более модов писанули в одну
+    # строку?»): «⚠ СПОРНАЯ» ниже — только про таблицу, куда писали двое; в ОДНУ строку двое — отдельный список «⚠ ОДНА СТРОКА». Граница: игра
+    # печатает строку лишь при ПЕРЕЗАПИСИ существующей; мод, первым ДОБАВИВШИЙ строку, в журнале не виден — пара «добавил A, переписал B» видна
+    # только как одна перезапись B (её прежний владелец — ваниль или A, журнал не говорит).
+    # [TESTED: 2026-11-06 · the build + Northern Timber, 3 896 merges: 143 shared rows listed, NT in none · KUMM researches/conan-mod-candidates/northern_timber_enhanced_web_recon.md]
+    by_row = OrderedDict()
+    for mod, table, row in hits:
+        mods_of_row = by_row.setdefault((table, row), [])
+        if mod not in mods_of_row:
+            mods_of_row.append(mod)
+    shared = [(k, v) for k, v in by_row.items() if len(v) > 1]
+    if "--shared-rows" in sys.argv:
+        out("строк, в которые писали два мода и больше: %d (из %d перезаписанных)" % (len(shared), len(by_row)))
+        for (table, row), mods in shared:
+            out("  ⚠ ОДНА СТРОКА  %s · %s  ←  %s (последний побеждает)" % (table, row, " → ".join(mods)))
+        return 0
 
     # таблица -> мод -> список строк
     by_table = OrderedDict()

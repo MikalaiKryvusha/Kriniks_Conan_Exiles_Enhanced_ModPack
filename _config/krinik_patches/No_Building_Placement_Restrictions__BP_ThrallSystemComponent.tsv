@@ -1,0 +1,4 @@
+# Less Building Placement Restrictions × BP_ThrallSystemComponent: Bosses My New Besties's boss placement ghost (scale 1.2 for Npc.Boss.Miniboss /
+# Npc.Boss.WorldBoss) grafted into LBPR's copy of ShowThrallPlaceable — [OWNER] interview #034 Q2 = A + «если получится, то в LBPR нужно затянуть модельки из
+# Bosses My New Besties» · 2026-11-06 13:34 (KUMM plan 45 step 8a; tool kismet-graft.py via patch-mod-asset.py graft_chunk)
+graft:ShowThrallPlaceable	BossesMyNewBesties

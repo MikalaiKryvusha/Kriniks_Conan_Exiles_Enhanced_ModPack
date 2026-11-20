@@ -83,6 +83,9 @@ CURL_CANDIDATES = (
 )
 CURL = next((p for p in CURL_CANDIDATES if os.path.isfile(p)), "curl")
 
+# Копии авторов, из которых `devkit/patch-mod-asset.py` собирает наши правленые паки.
+ORIGINALS = r"D:\work\ai_sandbox\ConanExiles\_library\_patch-originals"
+
 
 def load_mods(include_disabled):
     with open(MANIFEST, encoding="utf-8") as fh:
@@ -96,9 +99,49 @@ def load_mods(include_disabled):
 
 
 def workshop_id(mod):
+    # Оплачено 2026-11-13 (переезд на 3.1.0): прибор брал id только из папки
+    # `_workshop/<id>` и молча пропускал 21 мод Мастерской, который мы правили
+    # сами (`_krinik-modified/<id>`), -- именно те, где обновление автора
+    # требует переложить нашу правку. Id берётся из поля манифеста `workshopId`,
+    # папка -- запасной путь для старых записей без поля.
+    if mod.get("workshopId"):
+        return str(mod["workshopId"])
     folder = (mod.get("source") or {}).get("folder", "")
-    match = re.match(r"_workshop/(\d+)$", folder)
+    match = re.match(r"_(?:workshop|krinik-modified)/(\d+)$", folder)
     return match.group(1) if match else None
+
+
+def library_root():
+    with open(MANIFEST, encoding="utf-8") as fh:
+        lib = json.load(fh).get("library", "")
+    return lib if os.path.isabs(lib) else os.path.join(os.path.dirname(MANIFEST), lib)
+
+
+def copy_stamp(mod):
+    """Время самого нового файла нашей копии мода в библиотеке, или None.
+
+    Сравнивается с датой автора: автор выложил ПОЗЖЕ нашей копии -- у нас
+    старая версия (для `_krinik-modified` -- поверх неё наша правка, её
+    перекладывать на новую). [NOT-TESTED]"""
+    # Правленый нами мод (`_krinik-modified`) собран `patch-mod-asset.py build` из
+    # копии автора `ORIGINALS/<Контейнер>.pak` (первый аргумент рецепта
+    # `krinikBuild`) -- его дата и есть дата нашей копии; дата собранного пака --
+    # это дата НАШЕЙ сборки, она позже скачивания и прятала бы обновление автора.
+    recipe = (mod.get("krinikBuild") or {}).get("args") or []
+    if recipe:
+        original = os.path.join(ORIGINALS, recipe[0] + ".pak")
+        if os.path.isfile(original):
+            return os.path.getmtime(original)
+    folder = (mod.get("source") or {}).get("folder", "")
+    if not folder:
+        return None
+    path = os.path.join(library_root(), folder)
+    newest = None
+    for root, _dirs, files in os.walk(path):
+        for name in files:
+            stamp = os.path.getmtime(os.path.join(root, name))
+            newest = stamp if newest is None or stamp > newest else newest
+    return newest
 
 
 def ask_steam(ids):
@@ -137,10 +180,11 @@ def ask_nexus(mod_id, attempts=4):
     return None
 
 
-def fmt(stamp):
+def fmt(stamp, minutes=False):
     if not stamp:
-        return "    ?     "
-    return datetime.datetime.fromtimestamp(stamp).strftime("%Y-%m-%d")
+        return "       ?        " if minutes else "    ?     "
+    return datetime.datetime.fromtimestamp(stamp).strftime(
+        "%Y-%m-%d %H:%M" if minutes else "%Y-%m-%d")
 
 
 def main():
@@ -155,13 +199,14 @@ def main():
     cut = datetime.datetime.strptime(args.since, "%Y-%m-%d").timestamp()
     mods = load_mods(args.all)
 
-    ws_ids, ws_name = [], {}
+    ws_ids, ws_name, ws_copy = [], {}, {}
     nexus = []
     for mod in mods:
         wid = workshop_id(mod)
         if wid:
             ws_ids.append(wid)
             ws_name[wid] = mod["name"]
+            ws_copy[wid] = copy_stamp(mod)
         elif mod.get("nexusId"):
             nexus.append((mod["nexusId"], mod["name"]))
 
@@ -182,7 +227,8 @@ def main():
             state = "НЕ ПРОЧЁЛ"
         else:
             state = "OK" if stamp >= cut else "ЖДЁМ"
-        rows.append((stamp or 0, "Мастерская", ws_name.get(pid, "?"), state))
+        rows.append((stamp or 0, "Мастерская", ws_name.get(pid, "?"), state,
+                     ws_copy.get(pid)))
 
     print("Спрашиваю Nexus (по одной странице, это небыстро)...",
           file=sys.stderr)
@@ -192,28 +238,38 @@ def main():
             state = "НЕ ПРОЧЁЛ"
         else:
             state = "OK" if stamp >= cut else "ЖДЁМ"
-        rows.append((stamp or 0, "Nexus", name, state))
+        # Дату копии Nexus знает имя архива в библиотеке (движок KUMM, `kumm check`);
+        # здесь её нет -- столбец пуст, вывод о свежести копии делает `kumm check`.
+        rows.append((stamp or 0, "Nexus", name, state, None))
 
     rows.sort(key=lambda r: (-r[0], r[2]))
     ready = [r for r in rows if r[3] == "OK"]
     stale = [r for r in rows if r[3] in ("ЖДЁМ", "ПРОПАЛ")]
     unread = [r for r in rows if r[3] == "НЕ ПРОЧЁЛ"]
+    newer = [r for r in rows if r[0] and r[4] and r[0] > r[4]]
 
-    for stamp, where, name, state in rows:
-        print("%-10s %s  %-11s %s" % (state, fmt(stamp), where, name))
+    for stamp, where, name, state, copy in rows:
+        mark = "  <- НОВЕЕ НАШЕЙ КОПИИ" if stamp and copy and stamp > copy else ""
+        print("%-10s %s  копия %s  %-11s %s%s"
+              % (state, fmt(stamp, True), fmt(copy, True), where, name, mark))
 
-    print("\nГотовы: %d из %d. Ждём: %d. Не прочитано: %d."
-          % (len(ready), len(rows), len(stale), len(unread)))
+    print("\nГотовы: %d из %d. Ждём: %d. Не прочитано: %d. Новее наших копий: %d."
+          % (len(ready), len(rows), len(stale), len(unread), len(newer)))
+    if newer:
+        print("Новее наших копий (скачать заново; у правленных нами -- переложить правку):")
+        for stamp, where, name, state, copy in newer:
+            print("  * %s (%s, автор %s, наша копия %s)"
+                  % (name, where, fmt(stamp, True), fmt(copy, True)))
     if stale:
         print("Не пересобраны:")
-        for stamp, where, name, state in stale:
+        for stamp, where, name, state, _copy in stale:
             note = (" -- УДАЛЁН ИЗ МАСТЕРСКОЙ, не обновится"
                     if state == "ПРОПАЛ" else "")
             print("  * %s (%s, последний раз %s)%s"
                   % (name, where, fmt(stamp).strip(), note))
     if unread:
         print("НЕ ПРОЧИТАНЫ -- это не вывод, а неудача связи, перезапусти:")
-        for stamp, where, name, state in unread:
+        for stamp, where, name, state, _copy in unread:
             print("  * %s (%s)" % (name, where))
     return 0 if not stale and not unread else 1
 

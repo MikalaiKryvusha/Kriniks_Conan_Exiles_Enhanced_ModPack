@@ -1,0 +1,242 @@
+{
+ "ok": true,
+ "loaded": "/Game/UI/HUD/Carousel/W_Carousel.W_Carousel",
+ "widgets": [
+  {
+   "name": "TabButtonBox",
+   "class": "HorizontalBox",
+   "parent": "SizeBox_0"
+  },
+  {
+   "name": "SizeBox_0",
+   "class": "SizeBox",
+   "parent": "VerticalBox_3"
+  },
+  {
+   "name": "ButtonInventory",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonStore",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonPaperdoll",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonStats",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonJourney",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonClan",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonFollowers",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonMap",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ImageLeft",
+   "class": "W_HotkeyIcon_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ImageRight",
+   "class": "W_HotkeyIcon_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "ButtonFeats",
+   "class": "WBP_ButtonBase_C",
+   "parent": "TabButtonBox"
+  },
+  {
+   "name": "Background",
+   "class": "Image",
+   "parent": "Content"
+  },
+  {
+   "name": "Content",
+   "class": "Overlay",
+   "parent": ""
+  },
+  {
+   "name": "Img_Divider",
+   "class": "Image",
+   "parent": "VerticalBox_3"
+  },
+  {
+   "name": "VerticalBox_3",
+   "class": "VerticalBox",
+   "parent": "Content"
+  }
+ ],
+ "animations": [
+  {
+   "name": "AnimBackgroundFadeOut",
+   "start": 0.0,
+   "end": 0.5000166893005371,
+   "tick_resolution": "<Struct 'FrameRate' (0x000001C0508AF940) {numerator: 60000, denominator: 1}>",
+   "tracks": [
+    {
+     "binding": "Background",
+     "track": "MovieSceneWidgetMaterialTrack",
+     "sections": [
+      {
+       "channels": [
+        {
+         "name": "MaskOffset_0",
+         "keys": [
+          [
+           0,
+           "0.0"
+          ],
+          [
+           10,
+           "1.0"
+          ]
+         ]
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "cdo": {
+  "anim_background_fade_out": "None",
+  "cached_control_mode": "<GUIControlMode.E_MOUSE: 0>",
+  "carousel_button_sound": "<Object '/Game/Sound/SFX/Gui/gui_click_ok_radial_Cue.gui_click_ok_radial_Cue' (0x000001C02F4AEE00) Class 'SoundCue'>",
+  "carousel_hidden_sound": "<Object '/Game/Sound/SFX/Gui/gui_click_back_ingame_Cue.gui_click_back_ingame_Cue' (0x000001C02F4AE000) Class 'SoundCue'>",
+  "carousel_window_names": "[\"CharacterInventory\", \"FeatWindow\", \"Attributes\", \"CharacterStatsWindow\", \"ExilesJourney\", \"Guild\", \"Followers\", \"FullscreenMap\", \"Stores\"]",
+  "clip_to_bounds": "<WidgetClipping.INHERIT: 0>",
+  "clipping": "<WidgetClipping.INHERIT: 0>",
+  "closing_slate_sound": "<Struct 'SlateSound' (0x000001C08A51C440) {resource_object: None}>",
+  "color_and_opacity": "<Struct 'LinearColor' (0x000001C08A51C100) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>",
+  "cursor": "<MouseCursor.DEFAULT: 1>",
+  "disabled_fallback_input_scopes": "[]",
+  "flow_direction_preference": "<FlowDirectionPreference.INHERIT: 0>",
+  "foreground_color": "<Struct 'SlateColor' (0x000001C08A51C130) {specified_color: {r: 1.000000, g: 0.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Foreground}>",
+  "is_enabled": "True",
+  "is_focusable": "False",
+  "is_volatile": "False",
+  "key_nav_above": "None",
+  "key_nav_auto_set_back": "False",
+  "key_nav_below": "None",
+  "key_nav_child_above": "None",
+  "key_nav_child_below": "None",
+  "key_nav_child_left": "None",
+  "key_nav_child_right": "None",
+  "key_nav_child_tab": "None",
+  "key_nav_children": "None",
+  "key_nav_focus_on_click": "True",
+  "key_nav_left": "None",
+  "key_nav_right": "None",
+  "key_nav_tab": "None",
+  "navigation": "None",
+  "negative_feedback_color": "<Struct 'LinearColor' (0x000001C08A51C3B8) {r: 0.694118, g: 0.000000, b: 0.011765, a: 1.000000}>",
+  "neutral_feedback_color": "<Struct 'LinearColor' (0x000001C08A51C3C8) {r: 0.930111, g: 0.386429, b: 0.045186, a: 1.000000}>",
+  "opacity": "1.0",
+  "opening_slate_sound": "<Struct 'SlateSound' (0x000001C08A51C420) {resource_object: None}>",
+  "padding": "<Struct 'Margin' (0x000001C08A51C1C0) {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}>",
+  "pixel_snapping": "<WidgetPixelSnapping.INHERIT: 0>",
+  "positive_feedback_color": "<Struct 'LinearColor' (0x000001C08A51C3A8) {r: 0.212231, g: 0.508881, b: 0.138432, a: 1.000000}>",
+  "priority": "0",
+  "render_opacity": "1.0",
+  "render_transform": "<Struct 'WidgetTransform' (0x000001C08A51BED8) {translation: {x: 0.000000, y: 0.000000}, scale: {x: 1.000000, y: 1.000000}, shear: {x: 0.000000, y: 0.000000}, angle: 0.000000}>",
+  "render_transform_pivot": "<Struct 'Vector2D' (0x000001C08A51BF10) {x: 0.500000, y: 0.500000}>",
+  "show_tooltip_widget_with_controllers": "False",
+  "slot": "None",
+  "stop_action": "False",
+  "tick_frequency": "<WidgetTickFrequency.AUTO: 1>",
+  "tool_tip_text": "",
+  "tool_tip_widget": "None",
+  "tooltip_widget_class": "None",
+  "tooltip_widget_delay_for_controllers": "0.5",
+  "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>",
+  "visiblity": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>"
+ },
+ "background": {
+  "brush": "<Struct 'SlateBrush' (0x000001C089A2F2C0) {tint_color: {specified_color: {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}, color_use_rule: UseColor_Specified}, draw_as: Image, tiling: NoTile, mirroring: NoMirror, image_size: {}, margin: {left: 0.000000, top: 0.000000, right: 0.000000, bottom: 0.000000}, resource_object: \"/Script/Engine.Material'/Game/UI/Materials/Media/M_UI_RadialBackgroundGradient.M_UI_RadialBackgroundGradient'\", outline_settings: {corner_radii: {x: 0.000000, y: 0.000000, z: 0.000000, w: 0.000000}, color: {specified_color: {r: 0.000000, g: 0.000000, b: 0.000000, a: 0.0000",
+  "render_opacity": 1.0,
+  "visibility": "<SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4>",
+  "color": "<Struct 'LinearColor' (0x000001C089A2F3B0) {r: 1.000000, g: 1.000000, b: 1.000000, a: 1.000000}>"
+ },
+ "suspect_referencers": [
+  "/Game/UI/PAL_UI",
+  "/Game/UI/Materials/TitleScreen/MI_UI_DeleteSaveLogBlossom"
+ ],
+ "module_header": "---,WidgetClass,ToggleActionName,BlocksToggleActions,ToggleActionSound,MustBeBasePlayerChar,CloseOnShortcutRelease,CloseOnESC,CloseOnEndPlay,PreloadOnStartup,NonBlockingLoad,IsPersistent,Category,FullscreenGUIAction,ZOrder,bHiddenDuringVanityMode,bHiddenDuringEmotes,bForceHideShortcutBar,HiddenByPopups,ForceHideModules,AutoshownInStates,ShowInStartupState,ShowInMainMenuState,ShowInLoadingScreenState,ShowInPlayingState,ShowInCharacterCreationState,ShowWhenDead,ShowSelect,ShowBack,ShowQuickMove,OtherHotkeys,DisableShortcutWhenPlayerInputBlocked,TieToBasePlayerCharInput",
+ "modules": {
+  "FullscreenMap": {
+   "row": "FullscreenMap,\"/Game/UI/Widgets/Map/W_FullscreenMap.W_FullscreenMap_C\",\"FullscreenMap\",\"False\",\"(ResourceObject=\"\"/Script/Engine.SoundCue'/Game/Sound/SFX/Gui/gui_map_Cue.gui_map_Cue'\"\")\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"True\",\"True\",\"False\",\"((Id=\"\"MapZoomOut\"\",Label=NSLOCTEXT(\"\"[3A692CF4413B34D8359100A00FBE9795]\"\", \"\"D9C36B524FD10C721AF417AD5D11CEB7\"\", \"\"Zoom Out\"\"),ActionMappings=(\"\"MapZoomOut\"\"),PositionOnLeftSide=True,IsGamepadOnly=True,m_Widget=None),(Id=\"\"MapZoomIn\"\",Label=NSLOCTEXT(\"\"[3A692CF4413B34D8359100A00FBE9795]\"\", \"\"827A9931496F475CA9F4FFA19875F288\"\", \"\"Zoom In\"\"),ActionMappings=(\"\"MapZoomIn\"\"),PositionOnLeftSide=True,IsGamepadOnly=True,m_Widget=None))\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Widgets/Map/W_FullscreenMap": []
+   }
+  },
+  "Guild": {
+   "row": "Guild,\"/Game/UI/Widgets/Guild/W_GuildView.W_GuildView_C\",\"None\",\"False\",\"(ResourceObject=None)\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Widgets/Guild/W_GuildView": []
+   }
+  },
+  "FeatWindow": {
+   "row": "FeatWindow,\"/Game/UI/Inventory/W_FeatWindow.W_FeatWindow_C\",\"ToggleRecipeInventory\",\"False\",\"(ResourceObject=\"\"/Script/Engine.SoundCue'/Game/Sound/SFX/Gui/gui_feats_open_Cue.gui_feats_open_Cue'\"\")\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Inventory/W_FeatWindow": []
+   }
+  },
+  "ExilesJourney": {
+   "row": "ExilesJourney,\"/Game/UI/Widgets/Journey/W_NewJourneyWindow.W_NewJourneyWindow_C\",\"OpenJourney\",\"False\",\"(ResourceObject=\"\"/Script/Engine.SoundCue'/Game/Sound/SFX/Gui/gui_journal_Cue.gui_journal_Cue'\"\")\",\"True\",\"False\",\"True\",\"True\",\"False\",\"False\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Widgets/Journey/W_NewJourneyWindow": []
+   }
+  },
+  "CharacterInventory": {
+   "row": "CharacterInventory,\"/Game/UI/Inventory/CraftingGUI.CraftingGUI_C\",\"ToggleInventory\",\"False\",\"(ResourceObject=None)\",\"True\",\"False\",\"True\",\"True\",\"True\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"False\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"False\",\"False\",\"False\",\"False\",\"((Id=\"\"\"\",Label=NSLOCTEXT(\"\"[3A692CF4413B34D8359100A00FBE9795]\"\", \"\"242F7A804DFF0F1E096D6BAB565EE348\"\", \"\"Radial menu\"\"),ActionMappings=(\"\"PopulateRadialShortcutBar\"\"),PositionOnLeftSide=True,IsGamepadOnly=True,m_Widget=None))\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Inventory/CraftingGUI": []
+   }
+  },
+  "Attributes": {
+   "row": "Attributes,\"/Game/UI/Inventory/Attributes/W_Attributes.W_Attributes_C\",\"TogglePaperdollGUI\",\"False\",\"(ResourceObject=\"\"/Script/Engine.SoundCue'/Game/Sound/SFX/Gui/gui_attributes_open_Cue.gui_attributes_open_Cue'\"\")\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Inventory/Attributes/W_Attributes": []
+   }
+  },
+  "CharacterStatsWindow": {
+   "row": "CharacterStatsWindow,\"/Game/UI/Widgets/CharacterStats/W_CharacterStatsWindow.W_CharacterStatsWindow_C\",\"None\",\"False\",\"(ResourceObject=None)\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"False\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Widgets/CharacterStats/W_CharacterStatsWindow": []
+   }
+  },
+  "Followers": {
+   "row": "Followers,\"/Game/UI/Widgets/Guild/Followers/W_FollowersView.W_FollowersView_C\",\"None\",\"False\",\"(ResourceObject=None)\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {
+    "/Game/UI/Widgets/Guild/Followers/W_FollowersView": []
+   }
+  },
+  "Stores": {
+   "row": "Stores,\"/Game/DLC/Special/Store/UI/Windows/W_StoreWindow.W_StoreWindow_C\",\"OpenStore\",\"False\",\"(ResourceObject=None)\",\"True\",\"False\",\"True\",\"True\",\"False\",\"True\",\"False\",\"Fullscreen\",\"None\",\"40\",\"False\",\"False\",\"True\",\"False\",\"()\",\"\",\"False\",\"False\",\"False\",\"True\",\"False\",\"True\",\"False\",\"False\",\"False\",\"\",\"False\",\"False\"",
+   "anims": {}
+  }
+ }
+}

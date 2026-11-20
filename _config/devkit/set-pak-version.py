@@ -4,25 +4,22 @@
 #
 # WHY. The owner's word 2026-10-28 (KUMM PROJECT_HISTORY.md, the evening's queue, item 4): «все моды Krinik... получают версию 3.0.1» — the
 # manifest, the kit paks' modinfo.json, the Lua mods' headers. A kit pak's outer wrapper (kit-buildmod.py step 4) holds modinfo.json +
-# manifest.json (MD5 of every file) + the platform pak/utoc/ucas; the version is three integers of modinfo.json. A kit rebuild costs ~5 min per
-# mod and re-cooks assets that did not change; this edits only modinfo.json, recomputes its MD5 in manifest.json and repacks the wrapper the way
-# kit-buildmod.py does (repak V11, mount point ../../../ConanSandbox/Mods/).
+# manifest.json (MD5 of every file and, in the «<xxh128>» block, their XXH128) + the platform pak/utoc/ucas; the version is three integers of
+# modinfo.json. A kit rebuild costs ~5 min per mod and re-cooks assets that did not change; this edits only modinfo.json, recomputes BOTH its manifest
+# hashes (kit_manifest.py, since 2026-11-14 — the MD5 alone left the loader on the old extracted file) and repacks the wrapper the way kit-buildmod.py
+# does (repak V11, mount point ../../../ConanSandbox/Mods/). At the target version with stale modinfo hashes it rewrites the manifest only.
 # Checks: every other file of the wrapper byte-equal before/after (MD5), the repacked list equal to the original list, the read-back version.
 # Exit: 0 written (or already at that version) · 2 bad arguments · 3 the wrapper is not a kit wrapper · 4 the result failed a check.
-# [TESTED: 2026-10-30 · three real wrappers set to 3.0.1, deployed, the game list shows v3.0.1 · KUMM testcases/reports/2026-10-30_conan-krinik-versions-3.0.1.md]
-import hashlib, json, os, shutil, subprocess, sys
+# [TESTED: 2026-11-14 · copies of an <xxh128> wrapper: a new version 10/10; the stale-hash repair at the same version (made stale by the old script) 10/10 · KUMM testcases/reports/2026-11-14_conan-kit-310-our-mods.md]
+import json, os, shutil, subprocess, sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import kit_manifest  # noqa: E402 — both manifest hashes of modinfo.json (MD5 + «<xxh128>»), 2026-11-14: only the MD5 was updated before
 
 REPAK = r"D:\work\ai_sandbox\_tools\repak\repak.exe"
 MOUNT = "../../../ConanSandbox/Mods/"
 INNER = "ConanSandbox/Mods"
-
-
-def md5(p):
-    h = hashlib.md5()
-    with open(p, "rb") as f:
-        for b in iter(lambda: f.read(1 << 20), b""):
-            h.update(b)
-    return h.hexdigest()
+md5 = kit_manifest.md5
 
 
 def run(args):
@@ -67,10 +64,14 @@ def main():
     mi = json.loads(text)
     old = [mi.get("versionMajor"), mi.get("versionMinor"), mi.get("versionBuild")]
     print("%s: version %s -> %s" % (mi.get("name"), ".".join(map(str, old)), ".".join(map(str, ver))))
-    if old == ver:
+    man_now = json.loads(open(os.path.join(d, "manifest.json"), encoding="utf-8-sig").read())
+    # a manifest with no modinfo.json entry at the target version keeps the old answer «nothing written» (round 3, 5): only a STALE entry is repaired
+    if old == ver and ("modinfo.json" not in man_now or kit_manifest.entry_ok(man_now, "modinfo.json", mi_path)):
         shutil.rmtree(work, ignore_errors=True)
         print("already at that version — nothing written")
         return 0
+    if old == ver:   # judge 2026-11-14, finding 3: a pre-2026-11-14 edit left the <xxh128> of modinfo.json stale — rewrite the manifest only
+        print("already at that version, but the manifest's modinfo.json hashes are stale — rewriting them")
     # Keep the file's own layout (tabs, key order, line ends): replace only the three numbers.
     for key, val in zip(("versionMajor", "versionMinor", "versionBuild"), ver):
         needle = '"%s": %d' % (key, mi[key])
@@ -88,8 +89,9 @@ def main():
     if "modinfo.json" not in man:
         print("manifest.json has no modinfo.json entry")
         return 4
-    man["modinfo.json"] = md5(mi_path)
-    json.dump(man, open(man_path, "w", encoding="utf-8"), indent=2)
+    kit_manifest.set_entry(man, "modinfo.json", mi_path)
+    with open(man_path, "w", encoding="utf-8") as fh:        # closed before repak reads it (judge round 2, Q4)
+        json.dump(man, fh, indent=2)
     out = work + ".new.pak"
     if os.path.exists(out):
         os.remove(out)
@@ -104,9 +106,10 @@ def main():
     mi2 = json.loads(open(os.path.join(c, "modinfo.json"), encoding="utf-8-sig").read())
     man2 = json.loads(open(os.path.join(c, "manifest.json"), encoding="utf-8-sig").read())
     got = [mi2["versionMajor"], mi2["versionMinor"], mi2["versionBuild"]]
-    ok = after == before and not bad and got == ver and man2.get("modinfo.json") == md5(os.path.join(c, "modinfo.json"))
-    print("list equal: %s · other files byte-equal: %s · version read back: %s · manifest md5 of modinfo: %s" % (
-        after == before, not bad, ".".join(map(str, got)), man2.get("modinfo.json") == md5(os.path.join(c, "modinfo.json"))))
+    man_ok = kit_manifest.entry_ok(man2, "modinfo.json", os.path.join(c, "modinfo.json"))
+    ok = after == before and not bad and got == ver and man_ok
+    print("list equal: %s · other files byte-equal: %s · version read back: %s · manifest hashes of modinfo (md5%s): %s" % (
+        after == before, not bad, ".".join(map(str, got)), " + xxh128" if kit_manifest.XXH in man2 else "", man_ok))
     shutil.rmtree(work, ignore_errors=True)
     shutil.rmtree(chk, ignore_errors=True)
     if not ok:

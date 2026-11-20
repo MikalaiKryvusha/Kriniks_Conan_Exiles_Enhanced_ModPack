@@ -5,7 +5,10 @@
 # («Замеры ручек подгрузки … Ветка появления NPC») — ещё три таких запуска. Прибор держит копию до правки (<ini>.bak-<метка>),
 # помечает свои строки комментарием «; KUMM-TEMP <метка>» и на revert возвращает файл из копии побайтно, сверяя, что кроме своих строк
 # в файле ничего не менялось (иначе отказ — игра могла переписать ini, и слепой откат потерял бы её правку).
-# Переводы строк файла сохраняются (CRLF у игры). [NOT-TESTED]
+# Переводы строк файла сохраняются (CRLF у игры).
+# [TESTED: 2026-11-09 · копия Engine.ini игры в черновике: откат по метке — sha256 тот же; метка выкинута (как делает игра на выходе) —
+#  откат по своим строкам, sha256 тот же; метка выкинута + чужая строка — отказ, код 1. На игре 2026-11-09 19:29: после запуска L4 игра
+#  выкинула метку — «откат … по своим строкам», sha256 E337D3FD… = до добавления.]
 import os, sys
 
 def nl_of(raw):
@@ -26,6 +29,9 @@ def add(path, tag, pairs):
     block = "; KUMM-TEMP %s %d" % (tag, len(pairs)) + nl + "".join(p + nl for p in pairs)
     s = s.replace(head, head + block, 1)
     open(path, "wb").write(s.encode("utf-8"))
+    # Свои строки — ещё и в файле рядом с копией: игра на выходе ВЫКИДЫВАЕТ комментарий-метку, а строку «имя=значение» оставляет
+    # (KUMM, серия quick wins 2026-11-09 19:17 — revert отказал, diff показал ровно одну нашу строку без метки)
+    open(bak + ".pairs", "w", encoding="utf-8").write("\n".join(pairs))
     print("добавлено %d строк, копия %s" % (len(pairs), bak))
 
 def revert(path, tag):
@@ -43,11 +49,23 @@ def revert(path, tag):
         if ln.startswith("; KUMM-TEMP " + tag + " "):
             skip = int(ln.rsplit(" ", 1)[1]); continue
         out.append(ln)
-    if nl.join(out).encode("utf-8") != orig.decode("utf-8-sig").encode("utf-8"):
+    want = orig.decode("utf-8-sig").encode("utf-8")
+    how = "по метке"
+    if nl.join(out).encode("utf-8") != want and os.path.exists(bak + ".pairs"):
+        # метку игра выкинула — убираем по одному вхождению каждой своей строки из файла-спутника
+        pairs = [p for p in open(bak + ".pairs", encoding="utf-8").read().split("\n") if p]
+        out = list(out)
+        for p in pairs:
+            if p in out:
+                out.remove(p)
+        how = "по своим строкам (метку игра выкинула)"
+    if nl.join(out).encode("utf-8") != want:
         sys.exit("кроме своих строк файл изменился (игра переписала ini?) — откат вслепую не делаю; сравни %s и %s" % (path, bak))
     open(path, "wb").write(orig)
     os.remove(bak)
-    print("откат из копии, копия удалена")
+    if os.path.exists(bak + ".pairs"):
+        os.remove(bak + ".pairs")
+    print("откат из копии %s, копия удалена" % how)
 
 def list_(path):
     for i, ln in enumerate(open(path, encoding="utf-8-sig").read().splitlines(), 1):

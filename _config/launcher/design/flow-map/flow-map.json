@@ -1,0 +1,340 @@
+{
+ "kuips": "1.0",
+ "project": "Krinik Conan Launcher",
+ "description": "Лаунчер сборки модов Krinik Mod Pack для Conan Exiles Enhanced: сам находит игру, сам качает сборку с GitHub и ставит её",
+ "title": "Самостоятельный лаунчер: экраны и переходы",
+ "subtitle": "Лаунчер без скачанной сборки: поиск игры на дисках, файлы последнего выпуска на GitHub, скачивание под найденную версию игры, полоса прогресса с процентами. Макеты по окну лаунчера 1.0.0; числа на макетах — пример.",
+ "lang": "ru",
+ "screen": {
+  "width": 960,
+  "height": 540
+ },
+ "shoot": {
+  "base": "design/mockups.html",
+  "format": "webp",
+  "scale": 4,
+  "out": "design/flow-map/screens"
+ },
+ "screens": [
+  {
+   "id": "search",
+   "name": "Поиск игры",
+   "address": "первый запуск",
+   "selector": "[data-screen=\"search\"]",
+   "note": "Лаунчер сам ищет Conan Exiles: библиотеки Steam, Program Files, папки Games на всех дисках. Полоса показывает, сколько дисков проверено.",
+   "file": "design/flow-map/screens/search.webp",
+   "x": 380,
+   "y": 1288
+  },
+  {
+   "id": "choose",
+   "name": "Несколько копий игры",
+   "address": "поиск: найдено 2 и больше",
+   "selector": "[data-screen=\"choose\"]",
+   "note": "Модальное окно поверх лаунчера: копий может найтись сколько угодно, список прокручивается. У каждой копии видны версия, состояние (без модов, со сборкой, с другими модами) и путь; для другой версии игры — сборка под неё.",
+   "file": "design/flow-map/screens/choose.webp",
+   "x": 1570,
+   "y": 260
+  },
+  {
+   "id": "notfound",
+   "name": "Игра не найдена",
+   "address": "поиск: ничего",
+   "selector": "[data-screen=\"notfound\"]",
+   "note": "Ни на одном диске игры нет: «Указать папку игры» открывает выбор папки Windows.",
+   "file": "design/flow-map/screens/notfound.webp",
+   "x": 1570,
+   "y": 3344
+  },
+  {
+   "id": "found-nofiles",
+   "name": "Игра найдена, сборки нет",
+   "address": "игра 3.1.1, файлов нет",
+   "selector": "[data-screen=\"found-nofiles\"]",
+   "note": "Файлов последнего выпуска рядом нет: «Установить сборку» сначала скачает их с GitHub под версию найденной игры.",
+   "file": "design/flow-map/screens/found-nofiles.webp",
+   "x": 1570,
+   "y": 1288
+  },
+  {
+   "id": "found-files",
+   "name": "Игра найдена, файлы скачаны",
+   "address": "игра 3.1.1, файлы рядом",
+   "selector": "[data-screen=\"found-files\"]",
+   "note": "Файлы последнего выпуска уже лежат рядом с лаунчером: «Установить сборку» сразу ставит сборку, ничего не качая.",
+   "file": "design/flow-map/screens/found-files.webp",
+   "x": 1570,
+   "y": 2316
+  },
+  {
+   "id": "noversion",
+   "name": "Для этой версии игры сборки нет",
+   "address": "игра 3.2.0",
+   "selector": "[data-screen=\"noversion\"]",
+   "note": "Найденная игра новее или старше последнего выпуска: лаунчер говорит, для какой версии сделана сборка, и не ставит её.",
+   "file": "design/flow-map/screens/noversion.webp",
+   "x": 1570,
+   "y": 4372
+  },
+  {
+   "id": "download",
+   "name": "Скачивание",
+   "address": "GitHub, последний выпуск",
+   "selector": "[data-screen=\"download\"]",
+   "note": "Полоса с процентами, скачанный объём, скорость, оставшееся и прошедшее время. «Отменить» оставляет скачанное на диске.",
+   "file": "design/flow-map/screens/download.webp",
+   "x": 2760,
+   "y": 1288
+  },
+  {
+   "id": "neterror",
+   "name": "Связь оборвалась",
+   "address": "скачивание: ошибка сети",
+   "selector": "[data-screen=\"neterror\"]",
+   "note": "Скачанные части сохранены; «Продолжить скачивание» докачивает с того же места.",
+   "file": "design/flow-map/screens/neterror.webp",
+   "x": 2760,
+   "y": 2316
+  },
+  {
+   "id": "install",
+   "name": "Установка",
+   "address": "распаковка и раскатка",
+   "selector": "[data-screen=\"install\"]",
+   "note": "Полоса с процентами и число скопированных модов. Отмены нет: прерванная установка оставила бы игру наполовину со сборкой.",
+   "file": "design/flow-map/screens/install.webp",
+   "x": 3950,
+   "y": 1288
+  },
+  {
+   "id": "installed",
+   "name": "Сборка установлена",
+   "address": "готово",
+   "selector": "[data-screen=\"installed\"]",
+   "note": "«Играть» запускает игру и закрывает лаунчер; «Удалить сборку» возвращает игру в вид до установки.",
+   "file": "design/flow-map/screens/installed.webp",
+   "x": 5140,
+   "y": 1288
+  },
+  {
+   "id": "update",
+   "name": "Вышла новая сборка",
+   "address": "лента GitHub",
+   "selector": "[data-screen=\"update\"]",
+   "note": "Плашка слева под шапкой: новая сборка для той же версии игры.",
+   "file": "design/flow-map/screens/update.webp",
+   "x": 6330,
+   "y": 1288
+  },
+  {
+   "id": "updating",
+   "name": "Обновление",
+   "address": "скачивание разницы",
+   "selector": "[data-screen=\"updating\"]",
+   "note": "Та же полоса, что у скачивания: проценты, объём, скорость, оставшееся и прошедшее время.",
+   "file": "design/flow-map/screens/updating.webp",
+   "x": 7520,
+   "y": 1288
+  },
+  {
+   "id": "language",
+   "name": "Выбор языка",
+   "address": "поле языка слева от кнопок окна",
+   "selector": "[data-screen=\"language\"]",
+   "note": "Список языков раскрывается вниз от своего поля, поверх окна. Каждый язык назван на нём самом. Первый запуск открывается на языке Windows, а выбор игрока лаунчер запоминает.",
+   "file": "design/flow-map/screens/language.webp",
+   "x": 5140,
+   "y": 260
+  },
+  {
+   "id": "about",
+   "name": "О проекте",
+   "address": "кнопка «О проекте» внизу слева",
+   "selector": "[data-screen=\"about\"]",
+   "note": "Кнопка «О проекте» стоит внизу слева на всех экранах вместо списка ссылок. Она открывает плашку поверх лаунчера: авторство сборки, раздел «Ссылки» и лицензия; «Закрыть» возвращает к лаунчеру. Механики пока нет, её сделают после вашего слова о макете.",
+   "file": "design/flow-map/screens/about.webp",
+   "x": 5140,
+   "y": 2316
+  }
+ ],
+ "links": [
+  {
+   "from": "search",
+   "to": "found-nofiles",
+   "label": "игра найдена"
+  },
+  {
+   "from": "search",
+   "to": "found-files",
+   "label": "игра и файлы найдены"
+  },
+  {
+   "from": "search",
+   "to": "choose",
+   "label": "копий две и больше"
+  },
+  {
+   "from": "search",
+   "to": "notfound",
+   "label": "игры нет"
+  },
+  {
+   "from": "search",
+   "to": "noversion",
+   "label": "нет сборки для версии"
+  },
+  {
+   "from": "choose",
+   "to": "download",
+   "label": "Установить сборку"
+  },
+  {
+   "from": "notfound",
+   "to": "found-nofiles",
+   "label": "Указать папку игры"
+  },
+  {
+   "from": "found-nofiles",
+   "to": "download",
+   "label": "Установить"
+  },
+  {
+   "from": "found-files",
+   "to": "install",
+   "label": "Установить сборку"
+  },
+  {
+   "from": "download",
+   "to": "install",
+   "label": "скачано"
+  },
+  {
+   "from": "download",
+   "to": "neterror",
+   "label": "обрыв связи"
+  },
+  {
+   "from": "neterror",
+   "to": "download",
+   "label": "Продолжить скачивание"
+  },
+  {
+   "from": "install",
+   "to": "installed",
+   "label": "готово"
+  },
+  {
+   "from": "installed",
+   "to": "update",
+   "label": "вышла новая сборка"
+  },
+  {
+   "from": "update",
+   "to": "updating",
+   "label": "Обновить сборку"
+  },
+  {
+   "from": "updating",
+   "to": "installed",
+   "label": "готово"
+  },
+  {
+   "from": "installed",
+   "to": "language",
+   "label": "выбор языка"
+  },
+  {
+   "from": "installed",
+   "to": "about",
+   "label": "О проекте"
+  }
+ ],
+ "layout": [
+  {
+   "name": "Путь игрока",
+   "places": [
+    [
+     "search",
+     0,
+     0
+    ],
+    [
+     "choose",
+     1,
+     -1
+    ],
+    [
+     "found-nofiles",
+     1,
+     0
+    ],
+    [
+     "found-files",
+     1,
+     1
+    ],
+    [
+     "notfound",
+     1,
+     2
+    ],
+    [
+     "noversion",
+     1,
+     3
+    ],
+    [
+     "download",
+     2,
+     0
+    ],
+    [
+     "neterror",
+     2,
+     1
+    ],
+    [
+     "install",
+     3,
+     0
+    ],
+    [
+     "installed",
+     4,
+     0
+    ],
+    [
+     "update",
+     5,
+     0
+    ],
+    [
+     "updating",
+     6,
+     0
+    ],
+    [
+     "language",
+     4,
+     -1
+    ],
+    [
+     "about",
+     4,
+     1
+    ]
+   ]
+  }
+ ],
+ "rows": [
+  {
+   "name": "Путь игрока",
+   "y": 260,
+   "height": 5140
+  }
+ ],
+ "sheet": {
+  "width": 8830,
+  "height": 5900
+ }
+}

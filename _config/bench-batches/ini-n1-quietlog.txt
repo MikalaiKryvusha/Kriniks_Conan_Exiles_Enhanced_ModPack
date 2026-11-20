@@ -1,0 +1,7 @@
+[/Script/NavigationSystem.RecastNavMesh]
+bDoFullyAsyncNavDataGathering=True
+
+[Core.Log]
+LogScript=Error
+LogModController=Error
+LogHttp=Error

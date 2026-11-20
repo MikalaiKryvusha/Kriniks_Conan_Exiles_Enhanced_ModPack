@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # corpse-prompt-test.sh <A|B> <метка> — опыт «подсказка трупа от третьего лица» (KUMM баг 64 п. 11, трупы), без рук владельца.
 # A: сдвиг камеры назад в SocketOffset.X (как в сборке): штанга 125 + offset_x −125. B: тот же сдвиг в штанге: штанга 250 + offset_x 0.
 # Камера в обоих — в 250 см от точки штанги. Герой ставится в 150 см от ближайшего трупа, прицел (поворот управления) наводится на тело
@@ -7,8 +8,8 @@
 # [NOT-TESTED]
 L="${1:-A}"; TAG="${2:-t}"
 cd "$(dirname "$0")"
-G="${GAME:-D:/Games/Conan Exiles 3.0.1}/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanCamera"
-OUT='D:/Temp/claude/d--work-ai-sandbox-KUMM/56181c6a-37ed-4e8b-a357-72e655c0662c/scratchpad/corpse'
+G="${GAME:-$GAME_FWD}/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanCamera"
+OUT='D:/work/ai_sandbox/ConanExiles/_scratch/corpse'
 mkdir -p "$OUT"
 case "$L" in
   A) printf 'offset_x = -125\nzoom_min = 125\nzoom_max = 125\n' > "$G/agent-cmd.txt" ;;

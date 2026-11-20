@@ -40,7 +40,7 @@ QL_TAKEALL_TEXT = "Забрать все (удерж.)"   # «длинное (у
 QL_HOLD_HIDDEN = 1   # HotkeyHoldPromptVisibility value that hid the prompt live (pult, 2026-10-28 23:55)
 TT_WIDGET = "/Game/UI/Inventory/W_ItemIconTooltipView"   # the item hover tooltip (item 17, class A — see below)
 PERK_WIDGET = "/Game/UI/Inventory/Attributes/W_AttributeInfoEntry_PerkView"   # one perk row of the «Хар-ки» info column (item 46)
-PERK_TEXT_PAD = 10.0   # PerkDescription slot padding top and bottom, native Top 2 / Bottom 5 (see below)
+PERK_TEXT_PAD = 14.0   # PerkDescription slot padding top and bottom, native Top 2 / Bottom 5 (see below); 10 → 22 by `[OWNER]` 2026-11-03 23:50 «давай 22 поставим» (review folder 62) → 14 by `[OWNER]` 2026-11-06 09:14 «12–14. Чуть больше воздуха, последний перк ещё помещается.»: the column does not scroll, 22 cut the last perk of «Сила»; 14 is the largest of 12–14 that keeps «Сокрушительные удары» whole (live, six attributes, review folder 64)
 LINE1_NAME = "T_CorpseText1"   # our line above the action row in the corpse strip (W6 centred, see below); krinik_ui_fixes.lua fills it
 LINE1_ENABLED = True   # ON again 21:1x (the strip opened by code works on the vanilla-reset build; bug 70). Before: 20:4x OFF on a FALSE inference: after 19:58 the stand stopped showing the strip on EVERY build, the vanilla-reset one included (the «class not loaded» probe reads false on a good build too); the line build of 20:19 cooked clean and is not proven bad. The kit asset was reset from vanilla (the old one kept in the session scratchpad broken-wbp/). To turn on again: True + the override row ON — a fresh widget gets a GUID; never remove a widget that has one (cook: «was deleted but still has a GUID referenced»).
 LINE1_OLD_NAMES = ("T_PromptLine1", "T_CorpseLine1")   # tries 1 and 2 of 2026-10-30 (see below) — taken out of the strip
@@ -52,6 +52,11 @@ UNDERLAY_SIDE_MARGIN = 0.40   # [AI] Box margin left/right of the backing brush 
 LINE1_GAP = 2.0                # [AI] units between the two prompt lines; the row's own line spacing is the font's
 STRIP_SCALE = 0.70             # the corpse strip drawn 30 % smaller: `[OWNER]` 08:54 «сделать меньше на 25%» → after review folder 59, 10:54 «фон 60, меньше на» · «30»
 STRIP_BACKING_ALPHA = 0.6      # the backing's brush colour alpha (vanilla 0.8): `[OWNER]` 2026-11-02 10:54 «фон 60» (review folder 59: variants 0.8 / 0.55 / 0.35)
+EH_WIDGET = "/Game/UI/HUD/FloatingNames/W_EnemyHealthbar"   # the game's enemy health bar over an actor (bugs/64 item 12a, see below)
+ENEMY_SKULL_GAP = 4.0   # [AI] units of air between the bar and the skull icon under it (vanilla 0; 4 units ≈ 8 px at 4K)
+INFO_WIDGETS = tuple("/Game/UI/HUD/FloatingNames/" + n for n in (   # the interaction prompts besides the strip (bugs/83, see below)
+    "W_DialogueNPCInfo", "W_PlaceableInfo", "W_SimpleInfo", "W_ThrallInfo", "W_DBNORevive"))
+INFO_BACKING = "Container"   # their backing Border
 AT_WIDGET = "/Game/UI/HUD/Notifications/W_ActionTutorial"   # the shared action-prompt row «PreText · Icon · PostText» (plan 36 W6, see below)
 AT_ICON_PAD_BOTTOM = 1.0   # icon centre on its text line as VAlign Center had it: plate-edge measure, text-ink centre minus plate centre = 4.5 px vanilla (B1), 6.75 px with pad 2, 19 px with pad 8 -> 2.04 px per unit at 4K -> pad ≈ 0.9 (frames 2026-10-30 18:35 / 18:51 / 19:19). The first «12.5 px low» was a detector catching the background
 MENUS = (   # W26: (widget path, name, the overlay holding the game's Image_Logo, where ours goes, our max width in units or 0,
@@ -82,8 +87,22 @@ GAME_VIS = (21 / 1024.0, 18 / 512.0, 999 / 1024.0, 462 / 512.0)   # the visible 
 OUR_VIS = (39 / 1024.0, 35 / 388.0, 971 / 1024.0, 324 / 388.0)    # the SOLID box (alpha >= 64) of T_KrinikModpackLogo: a soft shadow lies outside it (2026-10-30 23:2x)
 VERSION_GAP = 2.0         # [AI] units between a logo and its version line
 VERSION_FONT_SIZE = 18    # [AI] small: «но в игре текст меньше» (the owner 22:51); 14 read tinier than the game's own «Версия» line (frame 23:07)
-GAME_VERSION = "3.0.1"
-PACK_VERSION = "0.9.0"
+# The two version lines under the logos come from the pack's manifest (`launcher.gameVersion`, `packVersion`) — one fact in one place: the constants of
+# 3.1.0 / 0.9.0 outlived the move to 3.1.1 and the build 0.9.1 (found 2026-11-18 18:3x, KUMM plans/55 R1).
+with open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "modpack.json"), encoding="utf-8") as _manifest:
+    _pack = json.load(_manifest)
+GAME_VERSION = _pack["launcher"]["gameVersion"]   # the game under the build
+PACK_VERSION = _pack["packVersion"]
+CAROUSEL_WIDGET = "/Game/UI/HUD/Carousel/W_Carousel"   # the hub's tab carousel (bugs/64 items 15/17, the CAROUSEL block below)
+CAROUSEL_ANIM = "AnimBackgroundFadeOut"                 # vanilla: MaskOffset 0 -> 1 over 0.5 s — the «dark wave»
+CAROUSEL_END_TICKS = 1                                  # the second key, in ticks of the 60000/s resolution: one tick — instant
+CAROUSEL_NOOP = True                                    # bug 101: the end key takes the start value — the game never moves the backing, the hub controller does
+# The playback range END IS EXCLUSIVE: vanilla ends one tick after its last key (0.5 s + 1 tick = 0.5000167). Build 1 of 2026-11-06 21:20 ended
+# ON the key — the end state «backing gone» never applied and «Снаряжение» lost its see-through hub (`[OWNER]` 21:30 «ты выключил прозрачность хаба???
+# мне не нравится»; frame 21:31). The range ends at key + 1 tick, as in vanilla.
+CAROUSEL_RANGE_TICKS = CAROUSEL_END_TICKS + 1
+GRIDSLOT_WIDGET = "/Game/UI/Framework/InventoryGridSlotView"   # every inventory cell, the quick-loot window's among them (the GRIDSLOT block below)
+GRIDSLOT_ANIM = "AnimSelect"                              # vanilla: SelectIndicator RenderOpacity 0 -> 1 over 0.3 s (kit-probe-gridslot.json, 2026-11-07)
 REPORT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "kit-conanui-edit.json")
 
 res = {"ok": False, "steps": []}
@@ -202,6 +221,39 @@ try:
     res["steps"].append("W_AttributeInfoEntry_PerkView PerkDescription padding top/bottom %s -> %s" % (before, slot.get_editor_property("padding")))
     unreal.BlueprintEditorLibrary.compile_blueprint(perk)
     res["saved_perk"] = unreal.EditorAssetLibrary.save_loaded_asset(perk, False)
+    # Item 12a (KUMM bugs/64): the enemy's health bar sits right on its skull icon — `[OWNER]` 2026-11-03 23:29 «иконка черепа слишком близко к полоске» ·
+    # «можно было бы над черепом полоску чуть-чуть поднять». The bar is the GAME's own W_EnemyHealthbar (WidgetComponent HealthbarComp over the actor, read
+    # live 2026-11-03 23:2x): VerticalBox_1 → Container_Bars (the bar) · Container_Skull (HorizontalBox, slot padding 0) · Container_Buffs (kit probe of
+    # 2026-11-03 23:3x, kept in git: ConanExiles 7a69acf kit-probe-tree.json). A top padding on Container_Skull's slot opens the gap. [NOT-TESTED]
+    eh = unreal.load_asset(EH_WIDGET)
+    skull = unreal.find_object(None, "%s.W_EnemyHealthbar:WidgetTree.Container_Skull" % EH_WIDGET)
+    if skull is None:
+        raise RuntimeError("W_EnemyHealthbar Container_Skull not found")
+    slot = skull.get_editor_property("slot")
+    p = slot.get_editor_property("padding")
+    before = p.top
+    p.top = ENEMY_SKULL_GAP
+    slot.set_editor_property("padding", p)
+    res["steps"].append("W_EnemyHealthbar Container_Skull padding top %s -> %s" % (before, slot.get_editor_property("padding")))
+    unreal.BlueprintEditorLibrary.compile_blueprint(eh)
+    res["saved_eh"] = unreal.EditorAssetLibrary.save_loaded_asset(eh, False)
+    # KUMM bugs/83: every interaction prompt like the corpse strip — `[OWNER]` 2026-11-03 23:30 «я просил все виджеты интеракици - влево, меньше, прозрачнее
+    # фон» · «как ты сделал для трупов». The five prompts of /Game/UI/HUD/FloatingNames/ share one shape (kit-probe-tree.py, 2026-11-06): root Overlay →
+    # SizeBox centred → Border `Container` (the backing). The same render scale and backing alpha as Border_Underlay of the strip; the shift left is the
+    # Lua half's (krinik_ui_fixes 1.5.0, the hub rows «Плашки»). [NOT-TESTED]
+    for path in INFO_WIDGETS:
+        name = path.rsplit("/", 1)[1]
+        w = unreal.load_asset(path)
+        box = unreal.find_object(None, "%s.%s:WidgetTree.%s" % (path, name, INFO_BACKING))
+        if box is None:
+            raise RuntimeError("%s %s not found" % (name, INFO_BACKING))
+        box.set_editor_property("render_transform", unreal.WidgetTransform(translation=unreal.Vector2D(0, 0), scale=unreal.Vector2D(STRIP_SCALE, STRIP_SCALE),
+                                                                          shear=unreal.Vector2D(0, 0), angle=0.0))
+        bc = box.get_editor_property("brush_color")
+        box.set_editor_property("brush_color", unreal.LinearColor(bc.r, bc.g, bc.b, STRIP_BACKING_ALPHA))
+        res["steps"].append("%s %s render scale %s, brush colour alpha %s -> %s" % (name, INFO_BACKING, STRIP_SCALE, bc.a, STRIP_BACKING_ALPHA))
+        unreal.BlueprintEditorLibrary.compile_blueprint(w)
+        res["saved_" + name] = unreal.EditorAssetLibrary.save_loaded_asset(w, False)
     # Plan 36 W6 (bugs/64 item 36): the corpse prompt on two lines. The row W_ActionTutorial lays out PreText (justify RIGHT) · Icon · PostText,
     # all slots VAlign CENTER (kit probe kit-probe-action-tutorial.json, 2026-10-30 18:3x); the game cuts the localized string at {0}. A line
     # break inside PreText (the vanilla-override row «…ресурсы\nили нажмите {0}…») made PreText two lines tall and the centred icon and PostText
@@ -497,7 +549,87 @@ try:
         res["saved_" + wname] = unreal.EditorAssetLibrary.save_loaded_asset(mbp, False)
         res["steps"].append("%s: game logo %s pad %s; ours %.0fx%.0f at %s (%s); versions under both" % (
             wname, (isx, isy), (gpad.left, gpad.top, gpad.right), our_w, our_h, (our_pad.left, our_pad.top, our_pad.right), side))
-    res["ok"] = bool(res["saved"]) and bool(res["saved_ql"]) and bool(res["saved_tt"]) and bool(res["saved_perk"]) and bool(res["saved_at"])
+    # ---- CAROUSEL: the hub's dark backing switches in one frame, no wipe (KUMM bugs/64 items 15/17) ----
+    # The owner 2026-11-06 21:00: «эффект темной волны на неёокторых страниах хаба - он нахуй не нужен. Страницы должны переключаться четко и
+    # мгновенно». The wave is VANILLA (no mod ships W_Carousel or its material — mod-overrides.py 2026-11-06 21:1x): W_Carousel's
+    # AnimBackgroundFadeOut drives the material parameter MaskOffset of Background (M_UI_RadialBackgroundGradient) 0 -> 1 over 10 frames at 20 fps
+    # = 0.5 s; on a switch between «Снаряжение» (no backing, the world shows) and any other tab the mask slides over the screen — the dark band
+    # crawling down / up in clips c01 / c10 of review folder 69 (280 / 430 ms). Edit: the same two keys, the second one tick (1/60000 s) after the
+    # first, the playback range one tick: played forward or reverse the animation lands on its end state at its first tick. Since 2026-11-14 (bug 101,
+    # CAROUSEL_NOOP) the end key also takes the start value: the game no longer decides WHERE the backing shows — krinik_hub_controller.lua does.
+    # Probe of the asset: kit-probe-carousel.py / .json. [TESTED: 2026-11-14 · fix3.mp4, every switch to / from «Снаряжение» one frame ·
+    # KUMM testcases/reports/2026-11-14_conan-hub-backing-owned.md]
+    car = unreal.load_asset(CAROUSEL_WIDGET)
+    car_anim = None
+    for a in unreal.ObjectIterator(unreal.WidgetAnimation):
+        if a.get_path_name() == "%s.W_Carousel:%s" % (CAROUSEL_WIDGET, CAROUSEL_ANIM):
+            car_anim = a
+    if car_anim is None:
+        raise RuntimeError("W_Carousel: no %s" % CAROUSEL_ANIM)
+    moved = []
+    for b in unreal.MovieSceneSequenceExtensions.get_bindings(car_anim):
+        for t in b.get_tracks():
+            for sec in t.get_sections():
+                for ch in sec.get_all_channels():
+                    keys = ch.get_keys()
+                    if len(keys) != 2:
+                        raise RuntimeError("W_Carousel %s: %d keys on %s, expected 2" % (CAROUSEL_ANIM, len(keys), ch.get_name()))
+                    keys[0].set_time(unreal.FrameNumber(0), 0.0, unreal.MovieSceneTimeUnit.TICK_RESOLUTION)
+                    keys[1].set_time(unreal.FrameNumber(CAROUSEL_END_TICKS), 0.0, unreal.MovieSceneTimeUnit.TICK_RESOLUTION)
+                    # KUMM bug 101 (2026-11-14): the fade is played LATER than the hub switch, so the hub controller could not keep the backing in step
+                    # with the page it hides or shows (a page stood over the bare world 34–166 ms). Now the fade is a NO-OP — the end key takes the start
+                    # value, MaskOffset stays 0 — and krinik_hub_controller.lua alone writes MaskOffset in the tick its page is shown. [NOT-TESTED]
+                    if CAROUSEL_NOOP:
+                        keys[1].set_value(keys[0].get_value())
+                    moved.append("%s %s=%s..%s" % (b.get_display_name(), ch.get_name(), keys[0].get_value(), keys[1].get_value()))
+                try:
+                    sec.set_range_seconds(0.0, CAROUSEL_RANGE_TICKS / 60000.0)
+                except Exception:
+                    pass
+    unreal.MovieSceneSequenceExtensions.set_playback_end_seconds(car_anim, CAROUSEL_RANGE_TICKS / 60000.0)
+    unreal.BlueprintEditorLibrary.compile_blueprint(car)
+    res["carousel"] = {"keys": moved, "end_time": car_anim.get_end_time()}
+    res["saved_carousel"] = unreal.EditorAssetLibrary.save_loaded_asset(car, False)
+    res["steps"].append("W_Carousel: %s %s, end %.6f s, keys %s" % (CAROUSEL_ANIM, "no-op" if CAROUSEL_NOOP else "instant", car_anim.get_end_time(), moved))
+    # ---- GRIDSLOT: the selection rim of an inventory cell switches in one frame (the owner 2026-11-07 10:57) ----
+    # «в окне квиклута … рамка выбора … плавные анимации появления, исчезания, переката на следующий предмет - убираем анимации, делаем её переключения с
+    # предмета на предмет мгновенными, тем самым попробуем починить и баг, что она прыгала в последнюю ячейку … не нужно её прятать даже на короткий момент».
+    # The rim is each cell's own SelectIndicator; AnimSelect fades it in on select and out (played in reverse) on deselect over 0.3 s — the «roll» from cell
+    # to cell. A take's native rebuild walks the selection over the cells in one frame: the walk's last cell kept a rim ≈ 250 ms while its reverse
+    # animation played (KUMM bug 75; KrinikConanUI krinik_loot_rim hid the other rims meanwhile). Edit: the same two keys one tick apart, the range one
+    # tick — the animation lands on its end state at its first tick both ways. AnimMouseOver (a 6 % scale-up on mouse hover, 0.1 s) is kept: the
+    # quick-loot window is driven by the keyboard. No build mod overrides this widget (mod-overrides.py over every pak, 2026-11-07 11:1x). [NOT-TESTED]
+    gs = unreal.load_asset(GRIDSLOT_WIDGET)
+    gs_anim = None
+    for a in unreal.ObjectIterator(unreal.WidgetAnimation):
+        if a.get_path_name() == "%s.InventoryGridSlotView:%s" % (GRIDSLOT_WIDGET, GRIDSLOT_ANIM):
+            gs_anim = a
+    if gs_anim is None:
+        raise RuntimeError("InventoryGridSlotView: no %s" % GRIDSLOT_ANIM)
+    gmoved = []
+    for b in unreal.MovieSceneSequenceExtensions.get_bindings(gs_anim):
+        for t in b.get_tracks():
+            for sec in t.get_sections():
+                for ch in sec.get_all_channels():
+                    keys = ch.get_keys()
+                    if not keys:
+                        continue
+                    if len(keys) != 2:
+                        raise RuntimeError("InventoryGridSlotView %s: %d keys on %s, expected 2" % (GRIDSLOT_ANIM, len(keys), ch.get_name()))
+                    keys[0].set_time(unreal.FrameNumber(0), 0.0, unreal.MovieSceneTimeUnit.TICK_RESOLUTION)
+                    keys[1].set_time(unreal.FrameNumber(CAROUSEL_END_TICKS), 0.0, unreal.MovieSceneTimeUnit.TICK_RESOLUTION)
+                    gmoved.append("%s %s=%s..%s" % (b.get_display_name(), ch.get_name(), keys[0].get_value(), keys[1].get_value()))
+                try:
+                    sec.set_range_seconds(0.0, CAROUSEL_RANGE_TICKS / 60000.0)
+                except Exception:
+                    pass
+    unreal.MovieSceneSequenceExtensions.set_playback_end_seconds(gs_anim, CAROUSEL_RANGE_TICKS / 60000.0)
+    unreal.BlueprintEditorLibrary.compile_blueprint(gs)
+    res["gridslot"] = {"keys": gmoved, "end_time": gs_anim.get_end_time()}
+    res["saved_gridslot"] = unreal.EditorAssetLibrary.save_loaded_asset(gs, False)
+    res["steps"].append("InventoryGridSlotView: %s instant, end %.6f s, keys %s" % (GRIDSLOT_ANIM, gs_anim.get_end_time(), gmoved))
+    res["ok"] = (bool(res["saved"]) and bool(res["saved_ql"]) and bool(res["saved_tt"]) and bool(res["saved_perk"]) and bool(res["saved_at"])
+                 and bool(res["saved_carousel"]) and bool(res["saved_gridslot"]))
 except Exception:
     res["error"] = traceback.format_exc()
 json.dump(res, open(REPORT, "w", encoding="utf-8"), ensure_ascii=False, indent=1)

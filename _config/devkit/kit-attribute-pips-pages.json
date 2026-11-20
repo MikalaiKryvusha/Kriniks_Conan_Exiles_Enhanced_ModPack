@@ -1,0 +1,14 @@
+{
+ "steps": [
+  "canvas vanilla visibility: <SlateVisibility.SELF_HIT_TEST_INVISIBLE: 4> -> literal SelfHitTestInvisible",
+  "canvas SetVisibility nodes: 2",
+  "else-node literal -> SelfHitTestInvisible",
+  "compile: True"
+ ],
+ "nodes": [
+  "SetVisibility",
+  "SetVisibility"
+ ],
+ "saved": true,
+ "ok": true
+}

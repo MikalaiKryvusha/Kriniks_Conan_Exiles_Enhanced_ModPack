@@ -1,0 +1,7 @@
+# Запуск 6 — Quick Win из OblivionRemasteredPerformanceFix (KUMM researches/conan-oblivion-perffix-recon): очередь перестройки дерева физики, меняется на лету; A = умолчание 1000, B = 100000
+#read p.Chaos.AccelerationStructureTimeSlicingMaxQueueSizeBeforeForce p.MaxPayloadSize r.GPUScene.ParallelUpdate r.Nanite.Streaming.NumInitialRootPages r.RHICmd.ParallelTranslate.Enable
+q6-warmup
+q6-A1	exec p.Chaos.AccelerationStructureTimeSlicingMaxQueueSizeBeforeForce 1000
+q6-B1	exec p.Chaos.AccelerationStructureTimeSlicingMaxQueueSizeBeforeForce 100000
+q6-A2	exec p.Chaos.AccelerationStructureTimeSlicingMaxQueueSizeBeforeForce 1000
+q6-B2	exec p.Chaos.AccelerationStructureTimeSlicingMaxQueueSizeBeforeForce 100000

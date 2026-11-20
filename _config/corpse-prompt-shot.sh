@@ -6,7 +6,7 @@
 # just made — and the strip stopped appearing after 19:58. Steps: world entry → god mode → wildlife within 80 m removed → kill by code → move →
 # 3 aim passes at the recorded point → corpse-loot-geom.sh noaim (4K frame, background). The game must already run (launch-bg.ps1).
 # Exit: 0 strip in viewport · 1 no strip · 2 no NPC to kill. [NOT-TESTED]
-TAG="${1:-shot}"; OUT="${2:-D:/Temp/claude/corpse-prompt}"; R="${RADIUS_M:-200}"
+TAG="${1:-shot}"; OUT="${2:-D:/work/ai_sandbox/ConanExiles/_scratch/corpse-prompt}"; R="${RADIUS_M:-200}"
 cd "$(dirname "$0")"
 mkdir -p "$OUT"
 bash enter-world-remote.sh 2>&1 | tail -1

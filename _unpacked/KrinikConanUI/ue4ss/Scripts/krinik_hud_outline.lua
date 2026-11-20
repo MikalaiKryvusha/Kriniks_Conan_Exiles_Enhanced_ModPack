@@ -73,8 +73,14 @@ local DPS_FILL = { R = 0.0, G = 0.0, B = 0.0, A = 0.20 }   -- фон кнопк�
 local DPS_RIM = { R = 1.0, G = 1.0, B = 1.0, A = 0.25 }    -- белый контур, виден на 25 %
 local DPS_RIM_WIDTH = 1.0
 local DPS_CORNER = 3.0
-local function f1_label()
-    local m = FindFirstOf("DN_UI_DmgWidget_C")
+local function live_meter()
+    for _, w in ipairs(FindAllOf("DN_UI_DmgWidget_C") or {}) do
+        if w and w:IsValid() and not w:GetFName():ToString():find("Default__", 1, true) and w:IsInViewport() then return w end
+    end
+    return nil
+end
+local function f1_label(m)
+    m = m or live_meter()
     if not m or not m:IsValid() then return end
     local border, btn = m.RestoreWindow, m.RestoreBtn
     local cur = border:GetContent()
@@ -142,6 +148,19 @@ NotifyOnNewObject(HUD_CLASS_PATH, function(hud)
             apply(name)
             pcall(f1_label)
             ExecuteInGameThreadWithDelay(SECOND_PASS_MS, function() pcall(function() apply(name); pcall(f1_label) end) end)
+        end) end)
+    end)
+end)
+-- Окно счётчика урона рождается заново после экрана загрузки в мире (телепорт, путевой камень, возрождение), а HUD Hosav — нет: подпись F1
+-- и прозрачный вид оставались на старом окне, новое показывало голую тёмную кнопку (KUMM plan 44 шаг 1, 2026-11-03: после TeleportPlayer —
+-- два окна, у нового в RestoreWindow кнопка вместо KrinikF1Box). Поэтому вид ставится и на рождение самого окна. Шаблон класса пропускается;
+-- дерево окна достраивается не в тот же кадр — через FIRST_PASS_MS. [NOT-TESTED]
+local METER_CLASS_PATH = "/Game/Mods/DamageNumber/UI/DN_UI_DmgWidget.DN_UI_DmgWidget_C"
+NotifyOnNewObject(METER_CLASS_PATH, function(m)
+    ExecuteInGameThread(function()
+        ExecuteInGameThreadWithDelay(FIRST_PASS_MS, function() pcall(function()
+            if not m:IsValid() or m:GetFName():ToString():find("Default__", 1, true) then return end
+            f1_label(m)
         end) end)
     end)
 end)

@@ -25,7 +25,12 @@ ServerSettings несут одну метку 0:01:58, момент закрыт
     python _config/deploy-config.py --dry-run  - только показать план
     python _config/deploy-config.py Game.ini GameUserSettings.ini  - только названные файлы
         (2026-10-25, 3.0.1: старый Input.ini с привязками UE 5.6 в игру на UE 5.8 с новой системой
-        ввода не везём, а Game.ini и GameUserSettings.ini - везём)
+        ввода не везли — УСТАРЕЛО с 2026-11-14, см. ниже)
+    С 2026-11-14 _config/Input.ini пака - живой файл владельца из 3.0.1 (его шесть правок: приседание,
+    уворот, тяжёлый удар, три чата сняты с нумпада и Enter). Заводские файлы ввода 3.0.1 и 3.1.0 совпадают
+    байт в байт, поэтому файл годится целиком (KUMM plans/53, шаг 14; сверка строк привязок -
+    _config/input-edits.py; ConsoleKeys Insert/Tilde/F10 и bEnable* едут с его файлом как были в 3.0.1, не сверялись).
+    Владелец сменил клавишу в меню игры - скопировать живой файл игры сюда, иначе раскатка вернёт старое.
 """
 import hashlib
 import json
@@ -44,7 +49,26 @@ BACKUP_ROOT = CFG / "backup"
 FILES = ["Engine.ini", "Game.ini", "GameUserSettings.ini", "Input.ini"]
 # Engine.ini живёт в моде графики (слово владельца 2026-10-30: «всё по графике Krinik сведём в один мод KrinikConanGraphics»
 # · «у нас и Engine.ini поставляется»); остальные файлы — в _config/.
-SOURCES = {"Engine.ini": PACK / "_unpacked" / "KrinikConanGraphics" / "Engine.ini"}
+# С 2026-11-10 Engine.ini СОБИРАЕТ движок KUMM: файл графики + куски модов (KrinikConanEngineTweaks, поле engineIni записи мода),
+# по секциям — `Deploy-ModPack.ps1 -EngineIniOut <файл>`. Второй сборки текста здесь нет: раскатка игрока и этот скрипт пишут одно.
+SOURCES = {"Engine.ini": None}
+KUMM_DEPLOY = PACK.parent / "KUMM" / "Deploy-ModPack.ps1"
+
+
+def built_engine_ini():
+    """Engine.ini сборки, собранный движком KUMM, во временный файл в папке копий (она в .gitignore)."""
+    out = BACKUP_ROOT / "_built_Engine.ini"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    r = subprocess.run(["powershell", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File", str(KUMM_DEPLOY),
+                        "-PackDir", str(PACK), "-EngineIniOut", str(out)], capture_output=True, text=True,
+                       encoding="utf-8", errors="replace")
+    if r.returncode != 0 or not out.exists():
+        raise SystemExit("Engine.ini не собран движком KUMM:\n" + r.stdout + r.stderr)
+    # предупреждения движка (кусок мода перебил ключ сборки) видны и на этом пути
+    for line in r.stdout.splitlines():
+        if "[warn]" in line:
+            print("движок KUMM:" + line)
+    return out
 
 # Имена процессов, при которых раскатка запрещена.
 BLOCKING = ["ConanSandbox-Win64-Shipping", "ConanSandbox", "FuncomLauncher"]
@@ -106,6 +130,8 @@ def main():
     changed = 0
     for name in (only or FILES):
         src = SOURCES.get(name, CFG / name)
+        if src is None:
+            src = built_engine_ini()
         dst = dst_dir / name
         if not src.exists():
             print(f"{name:24} {'-':>18} {'-':>18}   ПРОПУСК: нет файла сборки {src}")

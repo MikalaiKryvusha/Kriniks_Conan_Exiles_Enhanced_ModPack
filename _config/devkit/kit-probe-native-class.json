@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "assets": {
+  "/Game/UI/HUD/W_SubtitleEntryView": {
+   "generated": "/Game/UI/HUD/W_SubtitleEntryView.W_SubtitleEntryView_C",
+   "chain": [
+    "/Game/UI/HUD/W_SubtitleEntryView.W_SubtitleEntryView_C",
+    "ERR WidgetBlueprint: Failed to find property 'parent_class' for attribute 'parent_class' on 'WidgetBlueprint'"
+   ],
+   "python_members": {}
+  },
+  "/Game/UI/HUD/W_SubtitleRenderer": {
+   "generated": "/Game/UI/HUD/W_SubtitleRenderer.W_SubtitleRenderer_C",
+   "chain": [
+    "/Game/UI/HUD/W_SubtitleRenderer.W_SubtitleRenderer_C",
+    "ERR WidgetBlueprint: Failed to find property 'parent_class' for attribute 'parent_class' on 'WidgetBlueprint'"
+   ],
+   "python_members": {}
+  }
+ }
+}

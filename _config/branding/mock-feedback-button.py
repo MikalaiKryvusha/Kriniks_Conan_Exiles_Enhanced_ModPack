@@ -10,8 +10,8 @@ from PIL import Image, ImageChops, ImageDraw, ImageFilter, ImageFont
 
 BR = "D:/work/ai_sandbox/ConanExiles/_config/branding"
 DL = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
-LOGO = os.path.join(BR, "krinik-modpack-logo.webp")
-GAME_LOGO = os.path.join(BR, "conan-exiles-enhanced-logo.webp")
+LOGO = "D:/work/ai_sandbox/ConanExiles/art/logos/krinik-modpack-logo.webp"   # art moved 2026-11-18
+GAME_LOGO = "D:/work/ai_sandbox/ConanExiles/art/logos/conan-exiles-enhanced-logo.webp"
 K = 2.0   # 1080p units → 4K pixels
 
 logo = Image.open(LOGO).convert("RGBA")

@@ -2,7 +2,9 @@
 import collections, glob, os, re, sys
 
 names = dict(l.rstrip("\n").split("\t") for l in open(sys.argv[1], encoding="utf-8"))
-logs = glob.glob(r"D:\Games\Conan Exiles 3.0.1\ConanSandbox\Saved\Logs\*.log")
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from game_target import sandbox  # noqa: E402  the game folder from targets.json (2026-11-13, KUMM plan 53)
+logs = glob.glob(os.path.join(sandbox("Saved", "Logs"), "*.log"))
 rx = re.compile(r"While trying to load package (/Game/Mods/([^/]+)/\S+), a dependent package None \(([0-9A-F]{16})\)")
 mod_missing = collections.defaultdict(set)
 mod_pk = collections.defaultdict(set)

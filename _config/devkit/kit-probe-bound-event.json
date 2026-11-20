@@ -1,0 +1,9 @@
+{
+ "ok": true,
+ "tries": [
+  {
+   "widget object": "ERR BlueprintGraphEditor: Failed to convert parameter 'component' when calling function 'BlueprintGraphEditor.AddComponentBoundEventNode' on 'BlueprintGraphEditor_0'\n  TypeError: NativizeProperty: Cannot nativize 'Button' as 'Component' (ObjectProperty)\n    TypeError: NativizeObject: Cannot nativize 'Button' as 'Object' (allowed Class type: 'ActorComponent')"
+  }
+ ],
+ "button": "Button"
+}

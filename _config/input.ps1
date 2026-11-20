@@ -74,6 +74,7 @@ public class Inp {
   [DllImport("user32.dll")] public static extern bool GetCursorPos(out POINT p);
   [DllImport("user32.dll")] public static extern void mouse_event(uint f, int dx, int dy, int d, UIntPtr e);
   [DllImport("user32.dll")] public static extern void keybd_event(byte vk, byte scan, uint f, UIntPtr e);
+  [DllImport("user32.dll")] public static extern uint MapVirtualKey(uint code, uint mapType);
   [DllImport("user32.dll")] public static extern IntPtr GetForegroundWindow();
   [DllImport("user32.dll")] public static extern bool SetForegroundWindow(IntPtr h);
   [DllImport("user32.dll")] public static extern bool ShowWindow(IntPtr h, int n);
@@ -132,6 +133,13 @@ function Assert-Foreground([string]$ProcName) {
 }
 
 if ($Probe) { Show-Pos; exit 0 }
+
+# HOUSE_RULES rule 30 (2026-11-07 19:3x): this tool sent a real Space into the game while the owner was typing - mouse-seq refused the same second, input.ps1
+# had no guard and the hook checks only once before a whole command. Same probe as mouse-seq: a person touched keyboard/mouse < 10 s ago -> exit 5, nothing sent.
+if ($Move -or $Click -or $RightClick -or $Look -or $Wheel -ne 0 -or $Key -or $Type) {
+  $probe = & powershell -NoProfile -File 'D:\work\ai_sandbox\_tools\owner-idle.ps1'
+  if ($LASTEXITCODE -eq 5) { Write-Output ("OWNER AT THE KEYBOARD: {0} - nothing sent" -f $probe); exit 5 }
+}
 
 if (-not $NoFocusCheck -and ($Move -or $Click -or $RightClick -or $Look -or $Wheel -ne 0 -or $Key -or $Type)) {
   Assert-Foreground $RequireWindow
@@ -238,10 +246,13 @@ if ($Key) {
     Start-Sleep -Milliseconds 30
   }
   try {
+    # The key's SCAN code goes with it: with scan 0 Conan 3.0.1 ignored Q/E in the hub (2026-11-06 18:12, a 60 fps video: the tab never changed).
+    # [NOT-TESTED] - the scan-code send is checked by the next hub run.
+    $sc = [byte]([Inp]::MapVirtualKey([uint32]$vk, 0))
     for ($r = 0; $r -lt [Math]::Max(1, $Repeat); $r++) {
-      [Inp]::keybd_event($vk, 0, 0, [UIntPtr]::Zero)
+      [Inp]::keybd_event($vk, $sc, 0, [UIntPtr]::Zero)
       Start-Sleep -Milliseconds $HoldMs
-      [Inp]::keybd_event($vk, 0, [Inp]::KEYUP, [UIntPtr]::Zero)
+      [Inp]::keybd_event($vk, $sc, [Inp]::KEYUP, [UIntPtr]::Zero)
       if ($Repeat -gt 1) { Start-Sleep -Milliseconds 40 }
     }
   } finally {

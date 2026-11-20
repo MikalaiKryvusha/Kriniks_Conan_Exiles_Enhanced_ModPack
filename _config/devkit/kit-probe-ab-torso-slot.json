@@ -1,0 +1,3538 @@
+{
+ "ok": true,
+ "graphs": [
+  "AnimGraph",
+  "Main",
+  "Default",
+  "Default",
+  "Aggressive",
+  "Aggressive",
+  "Locomotion",
+  "JumpLoop",
+  "JumpCharge",
+  "JumpSettleHard",
+  "AnimationTransitionGraph_0",
+  "AnimationTransitionGraph_1",
+  "Crouch",
+  "Conduit",
+  "Transition",
+  "Transition",
+  "Idle",
+  "Idle",
+  "Idle",
+  "IdleFidgetStart",
+  "Transition",
+  "IdleFidgetLoop",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "JumpSettleSoft",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Passive",
+  "Passive",
+  "Locomotion",
+  "JumpLoop",
+  "JumpCharge",
+  "JumpSettleHard",
+  "AnimationTransitionGraph_792",
+  "AnimationTransitionGraph_793",
+  "Crouch",
+  "Idle",
+  "IdleAndFidget",
+  "Idle",
+  "IdleFidgets",
+  "AnimationTransitionGraph_0",
+  "AnimationTransitionGraph_1",
+  "AnimationTransitionGraph_2",
+  "AnimationTransitionGraph_3",
+  "AnimationTransitionGraph_4",
+  "AnimationTransitionGraph_5",
+  "StartMoving",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Conduit",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "JumpSettleSoft",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "StopMoving",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "DiveStart",
+  "DiveEnd",
+  "DiveLoop",
+  "AnimationTransitionGraph_0",
+  "AnimationTransitionGraph_1",
+  "AnimationTransitionGraph_2",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "StateChangeConduit",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "IsSitting",
+  "Transition",
+  "AnimationTransitionGraph_13",
+  "Transition",
+  "Transition",
+  "KnockAway",
+  "Transition",
+  "Transition",
+  "Transition",
+  "KnockbackConduit",
+  "KnockDownStart",
+  "Ragdolling",
+  "KnockUpStart",
+  "KnockOver",
+  "GetUp",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "ShieldBlock",
+  "Transition",
+  "Transition",
+  "KnockUpLoop",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Unconscious",
+  "Transition",
+  "Climbing",
+  "Climbing",
+  "ClimbVertical",
+  "ClimbVertical",
+  "Idle_A",
+  "Move_A",
+  "StopMoving_A",
+  "Idle_B",
+  "StopMoving_B",
+  "MoveOffset",
+  "AnimationTransitionGraph_76",
+  "StopConduit",
+  "AnimationTransitionGraph_77",
+  "AnimationTransitionGraph_78",
+  "AnimationTransitionGraph_79",
+  "AnimationTransitionGraph_80",
+  "IdleConduit",
+  "AnimationTransitionGraph_83",
+  "Transition",
+  "Transition",
+  "Transition",
+  "MoveConduit",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "ClimbHanging",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "AnimationTransitionGraph_4",
+  "ClimbingSliding",
+  "Transition",
+  "Transition",
+  "Transition",
+  "JumpUp",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Swim",
+  "Transition",
+  "Transition",
+  "UnconsciousToDefault",
+  "Transition",
+  "Transition",
+  "Transition",
+  "Fly",
+  "Transition",
+  "Transition",
+  "Transition",
+  "SpecialExecuteStart",
+  "SpecialExecuteEnd",
+  "IsSpecialLoop",
+  "Death Handle",
+  "HandleItemInitializeEnd",
+  "HasItemSwapAnimMontage",
+  "GetItemSwapAnimMontage",
+  "HandleHitConfirm",
+  "WeaponBlendspaceEquip",
+  "WeaponBlendspaceUnequip",
+  "HandlePickup",
+  "GetAttackMontageActive",
+  "GetAttackMontagePrevious",
+  "SetAttackMontageQueued",
+  "SetAttackMontageActive",
+  "SetAttackMontagePrevious",
+  "ClearEquipAnims",
+  "KnockbackPlay",
+  "UpdateVarsFromCombatBP",
+  "UpdateBlendspaces",
+  "UpdateIkForWeaponAdded",
+  "UpdateIkForWeaponRemoved",
+  "ForceCleanAttackChain",
+  "HandleStun",
+  "SelectGetupAnimation",
+  "HandleMovementModeChange",
+  "HandleMultiJump",
+  "HandleInvetorySwitch",
+  "InventoryEquipMainDualSlot",
+  "InventoryUnequipMainDualSlot",
+  "InventoryEquipOffhandSlot",
+  "InventoryUnequipOffhandSlot",
+  "GetBlockReboundAnim",
+  "GetShieldBreakAnim",
+  "GetBlockerHitConfirmAnim",
+  "OnSubstateChanged_HandleChargeHold",
+  "ComputeDirectionalAttackBlendValue",
+  "IsInDirectionalAttack",
+  "SetupUnconsciousAnimations",
+  "SetupIdleAnims",
+  "OnStateChanged_HandleWeaponsBreak",
+  "UpdateGliderVars",
+  "SetIsWounded",
+  "UpdateArmAim",
+  "HasItemUnequipAnimMontage",
+  "GetItemUnequipAnimMontage",
+  "OwningClientOnly",
+  "ChangePlayRate",
+  "MathExpression",
+  "CheckIfDedicatedServer",
+  "SelectMaleOrFemaleAnimationWithFallback",
+  "SelectMaleOrFemaleBlendspaceWithFallback",
+  "EventGraph",
+  "Handle Weapon Equip",
+  "NewIK",
+  "FootSteps",
+  "Audio",
+  "EventGraph_Item",
+  "CombatGraph",
+  "MountsGraph",
+  "DodgeGraph",
+  "ItemUseGraph",
+  "SignalStringDraw",
+  "SignalPickArrow",
+  "SignalDodgeSettle",
+  "StartDiscard",
+  "StartInitialize",
+  "StartShieldInterrupt",
+  "StartKnockback",
+  "StopEmoteAnimation",
+  "StartEmoteAnimation",
+  "EmoteAnimationJumpToEnd",
+  "HasSpawnAnimationLogic",
+  "PlayKnockbackGetUpAnimation",
+  "OnKnockbackStartRagdolling",
+  "OnKnockbackEnd",
+  "OnKnockbackStart",
+  "StartBlockConfirm",
+  "GetGliderDragPlayerBlendspace"
+ ],
+ "watched": [
+  {
+   "node": "Save cached pose 'TorsoAttackPose'",
+   "class": "AnimGraphNode_SaveCachedPose",
+   "props": {
+    "pose": "<Struct 'PoseLink' (0x000002366F9CFB30) {}>"
+   },
+   "inputs": [
+    {
+     "pin": "Pose",
+     "linked": [
+      {
+       "from": "Slot 'Emote'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": []
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A9438) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[0.440000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "to_pin": "BasePose",
+       "props": {
+        "base_pose": "<Struct 'PoseLink' (0x00000236710A9938) {}>",
+        "blend_poses": "[{}]",
+        "blend_weights": "[1.000000]",
+        "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+        "lod_threshold": "-1",
+        "mesh_space_rotation_blend": "True",
+        "mesh_space_scale_blend": "False",
+        "root_space_rotation_blend": "False",
+        "update_base_pose_first": "False"
+       },
+       "inputs": [
+        {
+         "pin": "BasePose",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPoses_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_1",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get CrouchingOrMoving",
+         "class": "K2Node_VariableGet",
+         "pin": "CrouchingOrMoving"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Save cached pose 'MovementAttackPose'",
+       "class": "AnimGraphNode_SaveCachedPose",
+       "to_pin": "Pose",
+       "props": {
+        "pose": "<Struct 'PoseLink' (0x00000236710C2F30) {}>"
+       },
+       "inputs": [
+        {
+         "pin": "Pose",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A1738) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'PostEquipPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Смешать позы по логическим операторам",
+       "class": "AnimGraphNode_BlendListByBool",
+       "to_pin": "BlendPose_0",
+       "props": {},
+       "inputs": [
+        {
+         "pin": "BlendPose_0",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPose_1",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "bActiveValue",
+         "linked": [
+          {
+           "from": "Get isCrouching",
+           "class": "K2Node_VariableGet",
+           "pin": "isCrouching"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Slot 'AttackMontageTorso3rd'",
+   "class": "AnimGraphNode_Slot",
+   "props": {
+    "always_update_source_pose": "False",
+    "slot_name": "AttackMontageTorso3rd",
+    "source": "<Struct 'PoseLink' (0x00000236710C4B30) {}>"
+   },
+   "inputs": [
+    {
+     "pin": "Source",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'CommandPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso3rd'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso1st'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get isThirdPerson",
+         "class": "K2Node_VariableGet",
+         "pin": "isThirdPerson"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Slot 'Emote'",
+       "class": "AnimGraphNode_Slot",
+       "to_pin": "Source",
+       "props": {
+        "always_update_source_pose": "False",
+        "slot_name": "Emote",
+        "source": "<Struct 'PoseLink' (0x00000236710C0730) {}>"
+       },
+       "inputs": [
+        {
+         "pin": "Source",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Slot 'AttackMontageTorso1stLeft'",
+   "class": "AnimGraphNode_Slot",
+   "props": {
+    "always_update_source_pose": "False",
+    "slot_name": "AttackMontageTorso1stLeft",
+    "source": "<Struct 'PoseLink' (0x00000236710C4F30) {}>"
+   },
+   "inputs": [
+    {
+     "pin": "Source",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'CommandPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A2138) {}>",
+      "blend_poses": "[{}, {}]",
+      "blend_weights": "[1.000000, 1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "False",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'CommandPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso1stLeft'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_1",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso1stRight'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Slot 'AttackMontageTorso1st'",
+       "class": "AnimGraphNode_Slot",
+       "to_pin": "Source",
+       "props": {
+        "always_update_source_pose": "False",
+        "slot_name": "AttackMontageTorso1st",
+        "source": "<Struct 'PoseLink' (0x00000236710C7B30) {}>"
+       },
+       "inputs": [
+        {
+         "pin": "Source",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Slot 'AttackMontageTorso1stRight'",
+   "class": "AnimGraphNode_Slot",
+   "props": {
+    "always_update_source_pose": "False",
+    "slot_name": "AttackMontageTorso1stRight",
+    "source": "<Struct 'PoseLink' (0x00000236710C6F30) {}>"
+   },
+   "inputs": [
+    {
+     "pin": "Source",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'CommandPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_1",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A2138) {}>",
+      "blend_poses": "[{}, {}]",
+      "blend_weights": "[1.000000, 1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "False",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'CommandPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso1stLeft'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_1",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso1stRight'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Slot 'AttackMontageTorso1st'",
+       "class": "AnimGraphNode_Slot",
+       "to_pin": "Source",
+       "props": {
+        "always_update_source_pose": "False",
+        "slot_name": "AttackMontageTorso1st",
+        "source": "<Struct 'PoseLink' (0x00000236710C7B30) {}>"
+       },
+       "inputs": [
+        {
+         "pin": "Source",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Slot 'AttackMontageTorso1st'",
+   "class": "AnimGraphNode_Slot",
+   "props": {
+    "always_update_source_pose": "False",
+    "slot_name": "AttackMontageTorso1st",
+    "source": "<Struct 'PoseLink' (0x00000236710C7B30) {}>"
+   },
+   "inputs": [
+    {
+     "pin": "Source",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_1",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso3rd'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Slot 'AttackMontageTorso1st'",
+         "class": "AnimGraphNode_Slot",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get isThirdPerson",
+         "class": "K2Node_VariableGet",
+         "pin": "isThirdPerson"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Slot 'Emote'",
+       "class": "AnimGraphNode_Slot",
+       "to_pin": "Source",
+       "props": {
+        "always_update_source_pose": "False",
+        "slot_name": "Emote",
+        "source": "<Struct 'PoseLink' (0x00000236710C0730) {}>"
+       },
+       "inputs": [
+        {
+         "pin": "Source",
+         "linked": [
+          {
+           "from": "Смешать позы по логическим операторам",
+           "class": "AnimGraphNode_BlendListByBool",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A8F38) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[0.330000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'PostEquipPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "to_pin": "BasePose",
+       "props": {
+        "base_pose": "<Struct 'PoseLink' (0x00000236710A9438) {}>",
+        "blend_poses": "[{}]",
+        "blend_weights": "[0.440000]",
+        "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+        "lod_threshold": "-1",
+        "mesh_space_rotation_blend": "True",
+        "mesh_space_scale_blend": "False",
+        "root_space_rotation_blend": "False",
+        "update_base_pose_first": "False"
+       },
+       "inputs": [
+        {
+         "pin": "BasePose",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPoses_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A9938) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "to_pin": "BasePose",
+       "props": {
+        "base_pose": "<Struct 'PoseLink' (0x00000236710A0838) {}>",
+        "blend_poses": "[{}]",
+        "blend_weights": "[1.000000]",
+        "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+        "lod_threshold": "-1",
+        "mesh_space_rotation_blend": "True",
+        "mesh_space_scale_blend": "False",
+        "root_space_rotation_blend": "False",
+        "update_base_pose_first": "False"
+       },
+       "inputs": [
+        {
+         "pin": "BasePose",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPoses_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'PostEquipPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710AA338) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[0.700000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'PostEquipPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "to_pin": "BasePose",
+       "props": {
+        "base_pose": "<Struct 'PoseLink' (0x00000236710AA838) {}>",
+        "blend_poses": "[{}]",
+        "blend_weights": "[1.000000]",
+        "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+        "lod_threshold": "-1",
+        "mesh_space_rotation_blend": "True",
+        "mesh_space_scale_blend": "False",
+        "root_space_rotation_blend": "False",
+        "update_base_pose_first": "False"
+       },
+       "inputs": [
+        {
+         "pin": "BasePose",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPoses_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "node": "Использовать кэшированную позу 'TorsoAttackPose'",
+   "class": "AnimGraphNode_UseCachedPose",
+   "props": {
+    "no node": "AnimGraphNode_UseCachedPose: Property 'Node' for attribute 'node' on 'AnimGraphNode_UseCachedPose' is protected and cannot be read"
+   },
+   "inputs": [],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BlendPoses_0",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710AA838) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": [
+      {
+       "from_pin": "Pose",
+       "to": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "to_pin": "BasePose",
+       "props": {
+        "base_pose": "<Struct 'PoseLink' (0x00000236710A9E38) {}>",
+        "blend_poses": "[{}]",
+        "blend_weights": "[1.000000]",
+        "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+        "lod_threshold": "-1",
+        "mesh_space_rotation_blend": "True",
+        "mesh_space_scale_blend": "False",
+        "root_space_rotation_blend": "False",
+        "update_base_pose_first": "False"
+       },
+       "inputs": [
+        {
+         "pin": "BasePose",
+         "linked": [
+          {
+           "from": "Послойное смешивание на каждую кость",
+           "class": "AnimGraphNode_LayeredBoneBlend",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        },
+        {
+         "pin": "BlendPoses_0",
+         "linked": [
+          {
+           "from": "Использовать кэшированную позу 'PostEquipPose'",
+           "class": "AnimGraphNode_UseCachedPose",
+           "pin": "Pose"
+          }
+         ],
+         "default": ""
+        }
+       ],
+       "next": []
+      }
+     ]
+    }
+   ]
+  }
+ ],
+ "layered": [
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A0338) {}>",
+    "blend_poses": "[{}, {}]",
+    "blend_weights": "[1.000000, 1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'LocomotionPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipRightPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_1",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipLeftPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_1",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get shouldPlayFullBodyEquipAnim",
+         "class": "K2Node_VariableGet",
+         "pin": "shouldPlayFullBodyEquipAnim"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A0838) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PostEquipPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_1",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Узел переадресации",
+         "class": "K2Node_Knot",
+         "pin": "OutputPin"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get isEmotingOrLeavingEmote",
+         "class": "K2Node_VariableGet",
+         "pin": "isEmotingOrLeavingEmote"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A1738) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PostEquipPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Смешать позы по логическим операторам",
+         "class": "AnimGraphNode_BlendListByBool",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get isCrouching",
+         "class": "K2Node_VariableGet",
+         "pin": "isCrouching"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A1C38) {}>",
+    "blend_poses": "[{}, {}]",
+    "blend_weights": "[1.000000, 1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'MovementAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Slot 'AttackMontage1stLeft'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_1",
+     "linked": [
+      {
+       "from": "Slot 'AttackMontage1stRight'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Slot 'AttackMontage1st'",
+     "class": "AnimGraphNode_Slot",
+     "to_pin": "Source",
+     "props": {
+      "always_update_source_pose": "False",
+      "slot_name": "AttackMontage1st",
+      "source": "<Struct 'PoseLink' (0x00000236710C2730) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Source",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A2138) {}>",
+    "blend_poses": "[{}, {}]",
+    "blend_weights": "[1.000000, 1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'CommandPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Slot 'AttackMontageTorso1stLeft'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_1",
+     "linked": [
+      {
+       "from": "Slot 'AttackMontageTorso1stRight'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Slot 'AttackMontageTorso1st'",
+     "class": "AnimGraphNode_Slot",
+     "to_pin": "Source",
+     "props": {
+      "always_update_source_pose": "False",
+      "slot_name": "AttackMontageTorso1st",
+      "source": "<Struct 'PoseLink' (0x00000236710C7B30) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Source",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A4938) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Плеер последовательностей",
+       "class": "AnimGraphNode_SequencePlayer",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipLeft'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendWeights_0",
+     "linked": [
+      {
+       "from": "Get OffhandBlendAmount",
+       "class": "K2Node_VariableGet",
+       "pin": "OffhandBlendAmount"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Slot 'Ride'",
+     "class": "AnimGraphNode_Slot",
+     "to_pin": "Source",
+     "props": {
+      "always_update_source_pose": "False",
+      "slot_name": "Ride",
+      "source": "<Struct 'PoseLink' (0x00000236710D2B30) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Source",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A4E38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Blend Poses (E_MountedAttackDirection)",
+       "class": "AnimGraphNode_BlendListByEnum",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipLeft'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendWeights_0",
+     "linked": [
+      {
+       "from": "Get OffhandBlendAmount",
+       "class": "K2Node_VariableGet",
+       "pin": "OffhandBlendAmount"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Save cached pose 'PreOffhandBlend'",
+     "class": "AnimGraphNode_SaveCachedPose",
+     "to_pin": "Pose",
+     "props": {
+      "pose": "<Struct 'PoseLink' (0x00000236710D6330) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Pose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A5338) {}>",
+    "blend_poses": "[{}, {}]",
+    "blend_weights": "[1.000000, 1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PreOffhandBlend'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Slot 'RightMounted'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_1",
+     "linked": [
+      {
+       "from": "Slot 'LeftMounted'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Save cached pose 'PreSaddleTranslate'",
+     "class": "AnimGraphNode_SaveCachedPose",
+     "to_pin": "Pose",
+     "props": {
+      "pose": "<Struct 'PoseLink' (0x00000236710D4F30) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Pose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A6238) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'CommandPosePreBlend'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendWeights_0",
+     "linked": [],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'CommandPosePreBlend'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendTime_0",
+       "linked": [],
+       "default": ""
+      },
+      {
+       "pin": "BlendTime_1",
+       "linked": [],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get IsMoving",
+         "class": "K2Node_VariableGet",
+         "pin": "IsMoving"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A6738) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'ShieldBlockPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'CommandPosePreBlend'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendWeights_0",
+     "linked": [],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A6238) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'CommandPosePreBlend'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendWeights_0",
+       "linked": [],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A6C38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[0.500000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'SorceryPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'DrinkPotionPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A7138) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "False",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'DrinkPotionPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A7138) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'DrinkPotionPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'DrinkPotionPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get IsMoving",
+         "class": "K2Node_VariableGet",
+         "pin": "IsMoving"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A7638) {}>",
+    "blend_poses": "[{}, {}]",
+    "blend_weights": "[1.000000, 1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'LocomotionPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipRightPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_1",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipLeftPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_1",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get UseNewIK",
+         "class": "K2Node_VariableGet",
+         "pin": "UseNewIK"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A7B38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'Attack3rdPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'Attack3rdPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get IsMoving",
+         "class": "K2Node_VariableGet",
+         "pin": "IsMoving"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A8038) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[0.600000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'MovementAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'Attack3rdPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A7B38) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'Attack3rdPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A8538) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PostEquipPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'ShieldBlockPosePreBlend'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendWeights_0",
+     "linked": [],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A8A38) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'ShieldBlockPosePreBlend'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendWeights_0",
+       "linked": [],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A8A38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'ShieldBlockPosePreBlend'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendWeights_0",
+     "linked": [],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Save cached pose 'ShieldBlockPose'",
+     "class": "AnimGraphNode_SaveCachedPose",
+     "to_pin": "Pose",
+     "props": {
+      "pose": "<Struct 'PoseLink' (0x0000023671101B30) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Pose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A8F38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[0.330000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PostEquipPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A9438) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[0.440000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A9438) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[0.440000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A9938) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A9938) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A0838) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'PostEquipPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710A9E38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PostEquipPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Узел переадресации",
+     "class": "K2Node_Knot",
+     "to_pin": "InputPin",
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710AA338) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[0.700000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'PostEquipPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710AA838) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710AA838) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Послойное смешивание на каждую кость",
+       "class": "AnimGraphNode_LayeredBoneBlend",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'TorsoAttackPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Послойное смешивание на каждую кость",
+     "class": "AnimGraphNode_LayeredBoneBlend",
+     "to_pin": "BasePose",
+     "props": {
+      "base_pose": "<Struct 'PoseLink' (0x00000236710A9E38) {}>",
+      "blend_poses": "[{}]",
+      "blend_weights": "[1.000000]",
+      "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+      "lod_threshold": "-1",
+      "mesh_space_rotation_blend": "True",
+      "mesh_space_scale_blend": "False",
+      "root_space_rotation_blend": "False",
+      "update_base_pose_first": "False"
+     },
+     "inputs": [
+      {
+       "pin": "BasePose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPoses_0",
+       "linked": [
+        {
+         "from": "Использовать кэшированную позу 'PostEquipPose'",
+         "class": "AnimGraphNode_UseCachedPose",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710AAD38) {}>",
+    "blend_poses": "[{}, {}]",
+    "blend_weights": "[1.000000, 1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "False",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'LocomotionPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipRightPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_1",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'EquipLeftPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Смешать позы по логическим операторам",
+     "class": "AnimGraphNode_BlendListByBool",
+     "to_pin": "BlendPose_0",
+     "props": {},
+     "inputs": [
+      {
+       "pin": "BlendPose_0",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "BlendPose_1",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      },
+      {
+       "pin": "bActiveValue",
+       "linked": [
+        {
+         "from": "Get UseNewIK",
+         "class": "K2Node_VariableGet",
+         "pin": "UseNewIK"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710AB238) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'MainPoseWithSpeech'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Slot 'MODLeftArm'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Save cached pose 'MODLeftArmPose'",
+     "class": "AnimGraphNode_SaveCachedPose",
+     "to_pin": "Pose",
+     "props": {
+      "pose": "<Struct 'PoseLink' (0x0000023671103730) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Pose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710AB738) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'MODLeftArmPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Slot 'MODRightArm'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Save cached pose 'MODRightArmPose'",
+     "class": "AnimGraphNode_SaveCachedPose",
+     "to_pin": "Pose",
+     "props": {
+      "pose": "<Struct 'PoseLink' (0x0000023671103B30) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Pose",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  },
+  {
+   "node": "Послойное смешивание на каждую кость",
+   "class": "AnimGraphNode_LayeredBoneBlend",
+   "props": {
+    "base_pose": "<Struct 'PoseLink' (0x00000236710ABC38) {}>",
+    "blend_poses": "[{}]",
+    "blend_weights": "[1.000000]",
+    "curve_blend_option": "<CurveBlendOption.OVERRIDE: 0>",
+    "lod_threshold": "-1",
+    "mesh_space_rotation_blend": "True",
+    "mesh_space_scale_blend": "False",
+    "root_space_rotation_blend": "False",
+    "update_base_pose_first": "False"
+   },
+   "inputs": [
+    {
+     "pin": "BasePose",
+     "linked": [
+      {
+       "from": "Использовать кэшированную позу 'MODRightArmPose'",
+       "class": "AnimGraphNode_UseCachedPose",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    },
+    {
+     "pin": "BlendPoses_0",
+     "linked": [
+      {
+       "from": "Slot 'MODUpperTor'",
+       "class": "AnimGraphNode_Slot",
+       "pin": "Pose"
+      }
+     ],
+     "default": ""
+    }
+   ],
+   "down": [
+    {
+     "from_pin": "Pose",
+     "to": "Slot 'MODFullBody'",
+     "class": "AnimGraphNode_Slot",
+     "to_pin": "Source",
+     "props": {
+      "always_update_source_pose": "False",
+      "slot_name": "MODFullBody",
+      "source": "<Struct 'PoseLink' (0x0000023671103330) {}>"
+     },
+     "inputs": [
+      {
+       "pin": "Source",
+       "linked": [
+        {
+         "from": "Послойное смешивание на каждую кость",
+         "class": "AnimGraphNode_LayeredBoneBlend",
+         "pin": "Pose"
+        }
+       ],
+       "default": ""
+      }
+     ],
+     "next": []
+    }
+   ]
+  }
+ ],
+ "anim_graph_nodes": 492
+}

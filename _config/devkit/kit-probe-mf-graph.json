@@ -1,0 +1,2201 @@
+{
+ "ok": true,
+ "functions": {
+  "/FLX_Materials/Materials/Environment/Function/MF_FLX_UVPivot_WPO": {
+   "count": 410,
+   "expressions": [
+    {
+     "class": "MaterialExpressionFunctionOutput",
+     "output_name": "WPO_Out",
+     "description": ""
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "UVPivotWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionFunctionInput",
+     "input_name": "MA_In",
+     "description": "",
+     "input_type": "<FunctionInputType.FUNCTION_INPUT_MATERIAL_ATTRIBUTES: 9>",
+     "preview_value": "<Struct 'Vector4f' (0x000001E370C83EB0) {}>"
+    },
+    {
+     "class": "MaterialExpressionWorldPosition"
+    },
+    {
+     "class": "MaterialExpressionTransformPosition"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionCollectionParameter",
+     "parameter_name": "WindVector"
+    },
+    {
+     "class": "MaterialExpressionCollectionParameter",
+     "parameter_name": "PrevFrame_WindVector"
+    },
+    {
+     "class": "MaterialExpressionPreviousFrameSwitch"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionVectorParameter",
+     "parameter_name": "UVPivot_WindDirection",
+     "default_value": "<Struct 'LinearColor' (0x000001E370C86B78) {r: 1.000000, g: 0.000000, b: 0.000000, a: 0.000000}>"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "DEBUG_UVPivot_Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionCrossProduct"
+    },
+    {
+     "class": "MaterialExpressionGetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionSetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionTransformPosition"
+    },
+    {
+     "class": "MaterialExpressionObjectLocalBounds"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionSubtract",
+     "const_a": "1.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "100.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "-100.0"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "MaxWorldPositionDisplacement_Value",
+     "default_value": "100.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "-1.0"
+    },
+    {
+     "class": "MaterialExpressionTransformPosition"
+    },
+    {
+     "class": "MaterialExpressionObjectLocalBounds"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionSubtract",
+     "const_a": "1.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "100.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "-100.0"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "MaxWorldPositionDisplacement_Value",
+     "default_value": "100.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "-1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionTime"
+    },
+    {
+     "class": "MaterialExpressionVectorParameter",
+     "parameter_name": "UVPivot_Wind_Calm",
+     "default_value": "<Struct 'LinearColor' (0x000001E370C86CF8) {r: 0.050000, g: 0.010000, b: 0.000000, a: 0.100000}>"
+    },
+    {
+     "class": "MaterialExpressionVectorParameter",
+     "parameter_name": "UVPivot_Wind_Storm",
+     "default_value": "<Struct 'LinearColor' (0x000001E370C86E78) {r: 0.400000, g: 0.040000, b: 0.075000, a: 1.000000}>"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "False",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.44999998807907104"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.800000011920929",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.5"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.33000001311302185"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionOneMinus"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "-0.00392200006172061"
+    },
+    {
+     "class": "MaterialExpressionFloor"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionFloor"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "-0.00392200006172061"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Child2Pivot_WindAmount",
+     "default_value": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Child1Pivot_WindAmount",
+     "default_value": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Child2_RandomAmount",
+     "default_value": "1.0"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Child1_RandomAmount",
+     "default_value": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "ParentPivot_WindAmount",
+     "default_value": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "ParentWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child1Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child2Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "-0.00392200006172061"
+    },
+    {
+     "class": "MaterialExpressionFloor"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionWorldPosition"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "3.141592025756836"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child1Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child2Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "ParentWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child1Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "ParentWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "ParentWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child1Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.05000000074505806"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.5"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "1.100000023841858"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.14000000059604645"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.6600000262260437"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionTime"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.25"
+    },
+    {
+     "class": "MaterialExpressionConstantBiasScale"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "-0.02500000037252903",
+     "const_b": "0.10000000149011612"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.25",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.5"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "ParentWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionGetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child1Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "Child2Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionRotateAboutAxis"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionQualitySwitch"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionTransform"
+    },
+    {
+     "class": "MaterialExpressionTransform"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNormalize"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "DEBUG_UVPivot_Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "DEBUG_Parent_PivotTest",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.05000000074505806"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "DEBUG_Child1_PivotTest",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.05000000074505806"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "DEBUG_UVPivot_Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "DEBUG_Child2_PivotTest",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "0.05000000074505806"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "DEBUG_UVPivot_Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionAbs"
+    },
+    {
+     "class": "MaterialExpressionStep"
+    },
+    {
+     "class": "MaterialExpressionOneMinus"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionStep"
+    },
+    {
+     "class": "MaterialExpressionOneMinus"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "MASK_DEBUG_UVPivotWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionSetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/Engine/Functions/Engine_MaterialFunctions02/Utility/AppendMany.AppendMany"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionOneMinus"
+    },
+    {
+     "class": "MaterialExpressionOneMinus"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Child1_Flexability",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Child2_Flexability",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "-0.00392200006172061"
+    },
+    {
+     "class": "MaterialExpressionFloor"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "-0.00392200006172061"
+    },
+    {
+     "class": "MaterialExpressionFloor"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionFloor"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "-0.00392200006172061"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "Parent_Flexability",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "0.10000000149011612"
+    },
+    {
+     "class": "MaterialExpressionSubtract",
+     "const_a": "1.0",
+     "const_b": "0.5"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "False",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "DEBUG_UVPivot_Wind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "UVPivot_WindIntensity_Scale",
+     "default_value": "0.0"
+    },
+    {
+     "class": "MaterialExpressionCollectionParameter",
+     "parameter_name": "WindIntensity"
+    },
+    {
+     "class": "MaterialExpressionPreviousFrameSwitch"
+    },
+    {
+     "class": "MaterialExpressionCollectionParameter",
+     "parameter_name": "PrevFrame_WindIntensity"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteDeclaration"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionNamedRerouteUsage"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    }
+   ]
+  },
+  "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/FLX_TreeMotion/MF_FLX-TreeMotion": {
+   "count": 43,
+   "expressions": [
+    {
+     "class": "MaterialExpressionFunctionOutput",
+     "output_name": "MA_Out",
+     "description": ""
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/FLX_TreeMotion/MF_WindWaveFront.MF_WindWaveFront"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/FLX_TreeMotion/MF_TreeBend.MF_TreeBend"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/FLX_TreeMotion/MF_BranchBend.MF_BranchBend"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/FLX_TreeMotion/MF_LeafShimmer.MF_LeafShimmer"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "2"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "1"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionVertexColor"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "3"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionFunctionInput",
+     "input_name": "MA_In",
+     "description": "",
+     "input_type": "<FunctionInputType.FUNCTION_INPUT_MATERIAL_ATTRIBUTES: 9>",
+     "preview_value": "<Struct 'Vector4f' (0x000001E370C8F5B0) {}>"
+    },
+    {
+     "class": "MaterialExpressionGetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionSetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "31.41592025756836"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    }
+   ]
+  },
+  "/FLX_Materials/Materials/Environment/Function/MF_Leaves": {
+   "count": 77,
+   "expressions": [
+    {
+     "class": "MaterialExpressionFunctionOutput",
+     "output_name": "MA_Out",
+     "description": ""
+    },
+    {
+     "class": "MaterialExpressionSetMaterialAttributes"
+    },
+    {
+     "class": "MaterialExpressionTextureSampleParameter2D",
+     "parameter_name": "Leaf_NCD_Mask",
+     "texture": "/FLX_Materials/Materials/Textures/Null/TNL_NCD_Mask.TNL_NCD_Mask",
+     "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_LINEAR_COLOR: 6>"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/MF_RandColor.MF_RandColor"
+    },
+    {
+     "class": "MaterialExpressionVertexColor"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "LeafWind_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/MF_FoliageMasking.MF_FoliageMasking"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "0.0"
+    },
+    {
+     "class": "MaterialExpressionTransform"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionSine"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "3.141590118408203"
+    },
+    {
+     "class": "MaterialExpressionTime"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "-3.0"
+    },
+    {
+     "class": "MaterialExpressionSaturate"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "50.0"
+    },
+    {
+     "class": "MaterialExpressionVertexNormalWS"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "-35.0"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/MF_GrassWind.MF_GrassWind"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionConstant3Vector"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionAdd",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionFrac"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "0.25"
+    },
+    {
+     "class": "MaterialExpressionTextureSampleParameter2D",
+     "parameter_name": "Leaf_BCR",
+     "texture": "/FLX_Materials/Materials/Textures/Null/TNL_BCR.TNL_BCR",
+     "sampler_type": "<MaterialSamplerType.SAMPLERTYPE_COLOR: 0>"
+    },
+    {
+     "class": "MaterialExpressionVectorParameter",
+     "parameter_name": "Leaf_Roughness",
+     "default_value": "<Struct 'LinearColor' (0x000001E370D47A78) {r: 0.000000, g: 1.000000, b: 0.000000, a: 1.000000}>"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "False",
+     "b": "False",
+     "a": "True"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "False",
+     "b": "False",
+     "a": "True"
+    },
+    {
+     "class": "MaterialExpressionStaticSwitchParameter",
+     "parameter_name": "FuncomAlgae_Enable",
+     "default_value": "False"
+    },
+    {
+     "class": "MaterialExpressionMaterialFunctionCall",
+     "material_function": "/FLX_Materials/Materials/Environment/Function/Foliage_Functions/MF_FuncomAlgaeWPO.MF_FuncomAlgaeWPO"
+    },
+    {
+     "class": "MaterialExpressionShadingModel"
+    },
+    {
+     "class": "MaterialExpressionVectorParameter",
+     "parameter_name": "FoliageSSS_Color",
+     "default_value": "<Struct 'LinearColor' (0x000001E370D47BF8) {r: 0.501961, g: 0.501961, b: 0.501961, a: 0.749020}>"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionIf",
+     "const_b": "0.5"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "False",
+     "b": "False",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "1.0"
+    },
+    {
+     "class": "MaterialExpressionConstant",
+     "r": "0.0"
+    },
+    {
+     "class": "MaterialExpressionTextureCoordinate",
+     "coordinate_index": "0"
+    },
+    {
+     "class": "MaterialExpressionVectorParameter",
+     "parameter_name": "FruitSSS_Color",
+     "default_value": "<Struct 'LinearColor' (0x000001E370D478F8) {r: 0.501961, g: 0.501961, b: 0.501961, a: 0.749020}>"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionAppendVector"
+    },
+    {
+     "class": "MaterialExpressionLinearInterpolate",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "False",
+     "b": "False",
+     "a": "True"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "True",
+     "g": "True",
+     "b": "True",
+     "a": "False"
+    },
+    {
+     "class": "MaterialExpressionComponentMask",
+     "r": "False",
+     "g": "False",
+     "b": "False",
+     "a": "True"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionReroute"
+    },
+    {
+     "class": "MaterialExpressionScalarParameter",
+     "parameter_name": "MotionThrottle",
+     "default_value": "1.0"
+    },
+    {
+     "class": "MaterialExpressionMultiply",
+     "const_a": "0.0",
+     "const_b": "1.0"
+    }
+   ]
+  }
+ },
+ "errors": []
+}

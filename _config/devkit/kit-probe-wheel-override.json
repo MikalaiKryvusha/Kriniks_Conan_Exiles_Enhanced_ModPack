@@ -1,0 +1,21 @@
+{
+ "ok": true,
+ "graph": "OnMouseWheel",
+ "nodes": [
+  {
+   "title": "OnMouseWheel",
+   "pins": [
+    "then:Исполнение",
+    "MyGeometry:Geometry Структура",
+    "MouseEvent:Pointer Event Структура (по ссылке)"
+   ]
+  },
+  {
+   "title": "Узел возврата",
+   "pins": [
+    "execute:Исполнение",
+    "ReturnValue:Event Reply Структура"
+   ]
+  }
+ ]
+}

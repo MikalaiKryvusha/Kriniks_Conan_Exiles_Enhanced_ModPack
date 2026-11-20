@@ -4,7 +4,7 @@
 #
 # Зачем (EXP-0332): маршрут строится циклом «разведка → лист кадров по секундам → правка точек», высоты — по `gnd` из журнала,
 # а не на глаз. Окно игры вперёд не выводится (capture-window.ps1 снимает его в фоне): владелец работает в браузере.
-# Пример: bash _config/bench-scout.sh "fly krinik-show hold=5" "D:/Temp/.../scout-show2"
+# Пример: bash _config/bench-scout.sh "fly krinik-show hold=5" "D:/work/ai_sandbox/ConanExiles/_scratch/scout-show2"
 # Ожидание ограничено: метка начала — 60 с, сам облёт — MAX_S (пустые ждущие циклы над журналом запрещены, память владельца).
 # [NOT-TESTED]
 set -u

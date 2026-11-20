@@ -1,0 +1,17 @@
+{
+ "steps": [
+  "PerkInfoBox already inside SB_KrinikPerkScroll — settings only",
+  "orientation = <Orientation.ORIENT_VERTICAL: 1>",
+  "always_show_scrollbar = False",
+  "scrollbar_thickness = <Struct 'Vector2D' (0x000001C822EEC660) {x: 6.000000, y: 6.000000}>",
+  "consume_mouse_wheel = <ConsumeMouseWheel.WHEN_SCROLLING_POSSIBLE: 0>",
+  "thumb tints: normal (0.8148, 0.5395, 0.1946) hovered (0.8388, 0.6922, 0.201) dragged (0.1128, 0.0687, 0.0135)",
+  "compile: True"
+ ],
+ "tree": [
+  "SizeBox_0",
+  "SB_KrinikPerkScroll"
+ ],
+ "saved": true,
+ "ok": true
+}

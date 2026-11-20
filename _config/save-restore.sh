@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # save-restore.sh -- put a saved copy of the Conan single-player save back, SAFELY.
 #
 #   bash save-restore.sh "<backup dir with Game_0.db | path to a .db>"
@@ -14,7 +15,7 @@
 # itself damaged · 4 restored file fails the check.
 # [TESTED: 2026-10-30 · R1-R5 and world entry on both launch paths after a restore · KUMM testcases/reports/2026-10-30_conan-save-restore-wal.md]
 set -u
-SAVED="/d/Games/Conan Exiles 3.0.1/ConanSandbox/Saved"
+SAVED="$GAME_UNIX/ConanSandbox/Saved"
 LIVE="$SAVED/Game_0.db"
 PY="python -I -X utf8"
 

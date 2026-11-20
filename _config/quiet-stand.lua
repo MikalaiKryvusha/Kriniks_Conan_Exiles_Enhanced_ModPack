@@ -7,7 +7,9 @@
 local RADIUS_M = _G.__qs_radius or 60
 -- 2026-11-02 14:13: a Night Terror and a wolf stood over the hero after a quiet stand (KUMM bug 75, third stand try) - the list of four classes missed them;
 -- now ONE pass over the live Characters, matched by class-name prefix (templates skipped).
-local PREFIXES = { "HumanoidNPCCharacter_C", "BP_NPC_Wildlife_", "BP_NightTerrors_" }
+-- 2026-11-07 13:5x: the oasis camp boss (`HumanoidNPCCharacter_20percentbigger_boss_C`) fought the god hero through two palm-shadow series (KUMM bug 67) —
+-- the prefix "HumanoidNPCCharacter_C" missed its class; the prefix is now the family name, covering every humanoid NPC variant.
+local PREFIXES = { "HumanoidNPCCharacter", "BP_NPC_Wildlife_", "BP_NightTerrors_" }
 local hero = FindFirstOf("BasePlayerChar_C")
 local h = hero:K2_GetActorLocation()
 local killed, left = {}, 0

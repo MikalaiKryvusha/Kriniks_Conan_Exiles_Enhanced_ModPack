@@ -1,0 +1,7 @@
+# Emberlight · W_AnimalPen — the pen window's culture-invariant words (KUMM bug 64 item 13, 2026-11-07; Emberlight notes «Open»): the .locres never reaches them,
+# uaj replaces `CultureInvariantString` by the exact old text. BUILT 2026-11-07 12:2x (krinikBuild args in modpack.json), seen on a frame of the
+# pen (`walk-mod-windows.sh <dir> W_AnimalPen`); the author's capitals kept.
+FOOD	ЕДА
+WATER	ВОДА
+ADD	ДОБАВИТЬ
+REMOVE	ЗАБРАТЬ

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+. "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # god-on.sh [on|off] — бессмертие героя пультом ПО СОСТОЯНИЮ, а не вслепую.
 # Зачем (KUMM EXP-0381, 2026-10-30 11:26): прогоны «с бессмертием» шли через консольную `exec God`, а она в 3.0.1 НИЧЕГО не включает —
 # герой был уязвим; босс оазиса убил героя, вещи остались на трупе; сейв владельца восстановлен из Game_0_backup_1.db (копия улики —
@@ -11,7 +12,7 @@
 # [NOT-TESTED]
 cd "$(dirname "$0")" || exit 2
 WANT="${1:-on}"
-RES="/d/Games/Conan Exiles 3.0.1/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/result.txt"
+RES="$GAME_UNIX/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikAgentRemote/result.txt"
 state() {
   bash pult.sh 'lua return tostring(FindFirstOf("PlayerController").Pawn.bCanBeDamaged)' > /dev/null 2>&1 || return 2
   tr -d '\r\n' < "$RES"

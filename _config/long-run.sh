@@ -1,11 +1,12 @@
 #!/usr/bin/env bash
+. "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # long-run.sh <минут> <метка> — долгий прогон сборки (KUMM план 35, критерий 1 «прогон ≥ 1 ч без падений»): облёты krinik-show по кругу
 # (bench-flight.sh, PresentMon в фоне, без видео), между облётами — хаб открыть/закрыть (пауза KrinikPauseGameInMenu), пока не выйдет срок.
 # Игра уже в мире, замок машины взят. В конце — сводка: новые папки Saved/Crashes, жив ли процесс, ошибки Lua в UE4SS.log с начала прогона.
 # Журнал не «ждётся» циклом: прогон — это действия, журнал читается один раз в конце (память no-blocking-log-wait-loops).
 # [NOT-TESTED]
 MIN="$1"; TAG="$2"
-export GAME="${GAME:-D:/Games/Conan Exiles 3.0.1}"
+export GAME="${GAME:-$GAME_FWD}"
 cd "$(dirname "$0")"
 CR="$GAME/ConanSandbox/Saved/Crashes"
 U="$GAME/ConanSandbox/Binaries/Win64/ue4ss/UE4SS.log"

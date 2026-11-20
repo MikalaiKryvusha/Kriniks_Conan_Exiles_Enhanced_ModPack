@@ -21,7 +21,7 @@
 
 param(
   [Parameter(Mandatory = $true)][string]$Label,
-  [string]$OutRoot = "$env:TEMP\conan-cam",
+  [string]$OutRoot = "$PSScriptRoot\..\_scratch\conan-cam",   # the pack's ignored _scratch, not %TEMP% (D:\Temp is the owner's, 2026-11-13)
   [int]$Frames = 30,
   [double]$Fps = 8,
   [int]$Width = 640,

@@ -1,6 +1,6 @@
 # import-logo-texture.py — our logo «KRINIK MOD PACK» as a UI texture of the kit mod KrinikConanUI (KUMM plan 36 W26: the build's logo in the
 # game menus — `[OWNER]` «нужно в главном меню наш логотип поставить» · «в меню по ESC наше лого будет слева от оригинального, в главном меню -
-# справа» · 2026-10-30 22:39–22:40). Source: the TGA in env KIT_LOGO_TGA (made from _config/branding/krinik-modpack-logo.webp: trimmed to its
+# справа» · 2026-10-30 22:39–22:40). Source: the TGA in env KIT_LOGO_TGA (made from art/logos/krinik-modpack-logo.webp: trimmed to its
 # alpha box, 1024 wide). UI settings: UserInterface2D compression, the UI texture group, no mips, never streamed.
 #   UnrealEditor-Cmd.exe F:\CEUE5Devkit\UE4\ConanSandbox.uproject -run=PythonScript -Script=<this file> -EnablePlugins=PythonScriptPlugin -ModDevKit
 # Writes import-logo-texture.json next to this file.
@@ -16,26 +16,40 @@ DEST_DIR = os.environ.get("KIT_TEX_DIR", "/Game/Mods/KrinikConanUI")   # /Game/U
 DEST_NAME = os.environ.get("KIT_TEX_NAME", "T_KrinikModpackLogo")   # also the «Оставить отзыв» textures (plan 36 W37, 2026-10-31)
 REPORT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "import-logo-texture.json")
 res = {"ok": False}
-try:
+# batch mode (2026-11-10, KUMM plan 49 page arrows): KIT_TGA_DIR=<folder> imports every *.tga there under its own base name — one editor start, not six
+TGA_DIR = os.environ.get("KIT_TGA_DIR", "")
+
+
+def import_one(src, name):
     task = unreal.AssetImportTask()
-    task.set_editor_property("filename", SRC)
+    task.set_editor_property("filename", src)
     task.set_editor_property("destination_path", DEST_DIR)
-    task.set_editor_property("destination_name", DEST_NAME)
+    task.set_editor_property("destination_name", name)
     task.set_editor_property("automated", True)
     task.set_editor_property("replace_existing", True)
     task.set_editor_property("save", False)
     unreal.AssetToolsHelpers.get_asset_tools().import_asset_tasks([task])
-    res["imported"] = [str(p) for p in task.get_editor_property("imported_object_paths")]
-    tex = unreal.load_asset(DEST_DIR + "/" + DEST_NAME)
+    tex = unreal.load_asset(DEST_DIR + "/" + name)
     tex.set_editor_property("compression_settings", unreal.TextureCompressionSettings.TC_EDITOR_ICON)
     tex.set_editor_property("lod_group", unreal.TextureGroup.TEXTUREGROUP_UI)
     tex.set_editor_property("mip_gen_settings", unreal.TextureMipGenSettings.TMGS_NO_MIPMAPS)
     tex.set_editor_property("never_stream", True)
-    res["saved"] = unreal.EditorAssetLibrary.save_loaded_asset(tex, False)
-    res["asset"] = tex.get_path_name()
     # /Game/Mods/<active mod>/ lands in UE4/Content/Mods/<mod>/Local/ (run 2026-10-30 22:57) → CookInfo «Mods/KrinikConanUI/Local/T_KrinikModpackLogo.uasset»
-    res["size"] = [tex.blueprint_get_size_x(), tex.blueprint_get_size_y()]
-    res["ok"] = bool(res["saved"])
+    return {"imported": [str(p) for p in task.get_editor_property("imported_object_paths")],
+            "saved": unreal.EditorAssetLibrary.save_loaded_asset(tex, False), "asset": tex.get_path_name(),
+            "size": [tex.blueprint_get_size_x(), tex.blueprint_get_size_y()]}
+
+
+try:
+    # inside try: a bad KIT_TGA_DIR must rewrite the report as failed, not leave an old «ok» behind (judge 2026-11-10)
+    jobs = ([(os.path.join(TGA_DIR, n), os.path.splitext(n)[0]) for n in sorted(os.listdir(TGA_DIR)) if n.lower().endswith(".tga")]
+            if TGA_DIR else [(SRC, DEST_NAME)])
+    res["textures"] = []
+    for s, n in jobs:                       # appended one by one — a failure on texture k still reports the 1…k−1 already saved
+        res["textures"].append(import_one(s, n))
+    if len(res["textures"]) == 1:
+        res.update(res["textures"][0])      # the single-file report keeps its old keys
+    res["ok"] = bool(res["textures"]) and all(t["saved"] for t in res["textures"])
 except Exception:
     res["error"] = traceback.format_exc()
 with open(REPORT, "w", encoding="utf-8") as f:

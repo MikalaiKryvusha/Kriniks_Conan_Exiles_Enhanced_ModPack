@@ -1,0 +1,401 @@
+{
+ "table": "/Game/Systems/Perks/PerksTable",
+ "class": "DataTable",
+ "row_struct": "/Script/ConanSandbox.PerksTableRow",
+ "row_count": 48,
+ "rows": [
+  {
+   "Name": "Strength_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8D50496D4D426B27E1DCBA8DA32F32F3\", \"Heavy Blows\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"F5A792A647EFED7E08D19EB3C6D6EBFA\", \"Heavy and special attacks deal 10% more damage.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "TargetIntStat": "AttributeMight",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Strength_10a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"88A4F56145A2B3D158F13197DAC72218\", \"Second Skin\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"75D3E3F4464885681E60C2B39FF823FD\", \"Equipped armor weighs 25% less.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "TargetIntStat": "AttributeMight",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Strength_10b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"770F449D4CF327F5BA2010998132B351\", \"Combo Master\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"FED695AF4449B0959EEA5DB8529B6857\", \"Combo finishers deal 20% more damage.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'",
+   "TargetIntStat": "AttributeMight",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Strength_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"99B304B743856C8457AE54BECEE79693\", \"Berserker\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"120F017842444EA79DC477A1D594891A\", \"While below 50% health, you deal 25% more damage and gain 100 armor.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "TargetIntStat": "AttributeMight",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Strength_20a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"C65E251F438534C2962BFFBFBDFA411E\", \"Crushing Swings\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"29065D9945E663B8C6ABD5A93DB1C3A7\", \"Your heavy attacks stagger for 25% longer and no longer rebound off shields.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'",
+   "TargetIntStat": "AttributeMight",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Strength_20b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"FA5A88F74323573298C0CAABD8C7CAD3\", \"Blood-mad Berserker\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"11226AF341109014C73346AA972AFB13\", \"While below 25% health, you cannot be staggered or knocked down, your damage is increased by an additional 10%, and your armor is increased by an additional 50.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'",
+   "TargetIntStat": "AttributeMight",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Agility_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"28068633459DE53915C52A9448F6F387\", \"Backstab\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"B82500344AF2C871A76074AE1D97F106\", \"Deal 15% increased damage when attacking from behind.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "TargetIntStat": "AttributeAthleticism",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Agility_10a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"0FBBB75448E99964C7CD18BB12CA01F9\", \"Precision Strike\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"BDA74192420C6FF7F3CD13AC51E49FEA\", \"10% additional armor penetration while carrying a medium or lighter load.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "TargetIntStat": "AttributeAthleticism",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Agility_10b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"1789E9CE4F717D1453EDB4989B504C75\", \"Dead Shot\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"6AACBD69401B828B331DB891FB6388CC\", \"Arrows and thrown weapons travel twice as quickly and deal 15% more damage to distant targets.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'",
+   "TargetIntStat": "AttributeAthleticism",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Grit_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"29737FC142894C0370DE79898349AE45\", \"Quickfooted\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"D6A5819A40FA6C38ED68898CD2C7096A\", \"Jogging, sprinting, jumping, swimming, and climbing cost less stamina and are faster.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "TargetIntStat": "AttributeStamina",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Agility_20a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"6DC16E8647611B727C7AD79E132F4F34\", \"Rolling Thrust\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"A53005F14035CDED103ADC8476AC9C9D\", \"After dodging, your next damaging attack has 25% increased penetration.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'",
+   "TargetIntStat": "AttributeAthleticism",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Agility_20b",
+   "PerkName": "NSLOCTEXT(\"\", \"PerksTable_Agility_20b_PerkName\", \"Extended Leap\")",
+   "PerkDescription": "NSLOCTEXT(\"\", \"PerksTable_Agility_20b_PerkDescription\", \"Jump while in the air to do a second jump.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'",
+   "TargetIntStat": "AttributeAthleticism",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Vitality_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"92B05A0547C6EA962E0A14B79C700C25\", \"Fierce Vitality\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"5F6702F84E7A90604FC89AA6741B2A2D\", \"You gain passive health regeneration.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "TargetIntStat": "AttributeHealth",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Vitality_10a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"0713C86B4BF2AF9646EC6A88FD008F7A\", \"Fast Healer\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"C4DF05674373D64C7896D68B4B1C29D4\", \"You receive 50% increased healing from healing effects.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "TargetIntStat": "AttributeHealth",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Vitality_10b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"CA96BE6045AC7876CB9BAA9FFF02B46D\", \"Resurgence\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"CAED1AC849AD89A7074E628E46EAB6B0\", \"Receive a one time healing effect when your health drops below 50%. Can be received again after being fully healed.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'",
+   "TargetIntStat": "AttributeHealth",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Vitality_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8522B3064CDBAEE40F2FD3BE11A7A8E4\", \"Robust\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8A312B7B44887B2D57C57CBB96103A5B\", \"Increases maximum health by 100.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "TargetIntStat": "AttributeHealth",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Vitality_20a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"96E7F7444F85A11EFE8762A573CEFFFA\", \"Glutton for Punishment\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"B5C4CD1B44EB2E6A67FA57A021120C9E\", \"When you take damage, you regenerate the last instance of damage taken over 15 seconds.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'",
+   "TargetIntStat": "AttributeHealth",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Vitality_20b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"48B9C0C149844737C55E53986B8DB28A\", \"Last Stand\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"CC82EEDE4E4C6EDF39539BACA7BCEE60\", \"When your health drops below 50%, you remove all negative effects and gain 95% damage mitigation for a short time.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'",
+   "TargetIntStat": "AttributeHealth",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Leadership_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"29011E1F456D9E126D80CB814B1C71E9\", \"Irritate\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"04A512D7483C69D2FDAC05A20BD5E8EA\", \"Active followers will goad enemies, attempting to force them to attack your follower.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "TargetIntStat": "AttributeLeadership",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Leadership_10a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"C919A8B74A8B9A826A8F0CA8566E968F\", \"Healthy Diet\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"780C83EE45CC84A8E68B79AC1DAFA0DE\", \"Your active followers gain passive health regeneration when not engaged in combat.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "TargetIntStat": "AttributeLeadership",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Leadership_10b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"EA4F4C2D4A6003627CD2F39DB0693EAA\", \"Commanding Presence\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"346CBE32417773AA78867BAEF5FD23D5\", \"Your active followers are inspired by your battle prowess and have their health restored when you deal damage in combat.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'",
+   "TargetIntStat": "AttributeLeadership",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Leadership_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"E2B6C5E24C553498BF4DDC8E6690D451\", \"Attentive Care\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"88BE6348477EAEBB67F17E8977502F78\", \"Your active followers receive 50% increased healing.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "TargetIntStat": "AttributeLeadership",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Leadership_20a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"DEF462C94521F30492988C9414FAA668\", \"War Party\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"F1F3A3B241E351F3AD8773A3146B2116\", \"Maximum followers increased by 1, however your statistics no longer influence your follower\\'s damage output.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'",
+   "TargetIntStat": "AttributeLeadership",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Leadership_20b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"C2D099B844D6ED2892C1B1A9E66264FD\", \"Well-Trained\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"E2D022EB4E1644D7CDB45D904574684D\", \"Your active followers have increased attributes.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'",
+   "TargetIntStat": "AttributeLeadership",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Grit_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8A50A10A4AFFAF3DE0ED308FBF3625FB\", \"Tenacity\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"33F2137A4E15646480BA4F9F35CAB368\", \"Increases your armor by 40 and stamina by 20.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "TargetIntStat": "AttributeStamina",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Grit_10a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"1C55C7A948CD6119308F4D8FEDD076AA\", \"Stout\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"3D816578430730B1A9A348A5AC139CE0\", \"Increases your Armor by 1/5 of your current stamina.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "TargetIntStat": "AttributeStamina",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Grit_10b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"6F9494184B3F74788390CE8D601002EE\", \"Endurance\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"9B9BD40F44E3AB6CBBCA9486E0E709E2\", \"Your stamina regenerates 25% faster.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'",
+   "TargetIntStat": "AttributeStamina",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Agility_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"752B6DA6420418112F9DEA9F1BFA702D\", \"Defensive Posture\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"1F12C2CC44DA1F7FF596C49882178EA2\", \"Incoming damage is reduced by 15% while you are attacking or blocking.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "TargetIntStat": "AttributeAthleticism",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Grit_20a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"2B7CE93340DC688540C83A820D10BBE9\", \"Steel Thewed\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"CFF937FB4681862ED7D47DB0D54D766F\", \"You cannot take more than 33% of your maximum health in damage per hit.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'",
+   "TargetIntStat": "AttributeStamina",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Grit_20b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"EC5EF0934EDC45F8AC1F6197C590E8C8\", \"Shield Master\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"FF2917FB4A12BAE4FFD0D7BBF3CE5797\", \"You can block unblockable attacks at a higher stamina cost and you react twice as quickly after successfully blocking.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'",
+   "TargetIntStat": "AttributeStamina",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Resourcefulness_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"62DE376F4921F7DC7E6663B65F17472D\", \"Survivalist\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8C4B39B2465ACE8D5D8357ABA8AB02A6\", \"Tools lose durability half as quickly and hunger and thirst deplete 33% slower.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'",
+   "TargetIntStat": "AttributeEncumbrance",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Resourcefulness_10a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"B20B11054A3E42099851F9B670A6ACB3\", \"Careful Harvest\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"720D781841DD8DD4CDA91CA420C49F51\", \"You are twice as likely to gather rare resources when harvesting.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'",
+   "TargetIntStat": "AttributeEncumbrance",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Resourcefulness_10b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"CEC6DE0942C34212BCACDBAB8DE8C112\", \"Efficient Harvest\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"B4C2759D41448CC4A1625999403098B6\", \"Final hit when harvesting grants twice as many resources.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'",
+   "TargetIntStat": "AttributeEncumbrance",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Resourcefulness_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"B91591604C1DF0CB49E91CA29BC3788B\", \"Hard Worker\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"A0F92A9947106E1E4D6F70A9E0F5FDE2\", \"You harvest resource nodes twice as fast.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'",
+   "TargetIntStat": "AttributeEncumbrance",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Resourcefulness_20a",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"19D0C8864E7616AD3097AC99B7B385C8\", \"Structural Integrity\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"644877554F5A5BB6F7443DB9C2EE83D1\", \"Structures you build are 25% more stable.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'",
+   "TargetIntStat": "AttributeEncumbrance",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Resourcefulness_20b",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"5B4E8FEE46B088C9F19255B940C60254\", \"Beast of Burden\")",
+   "PerkDescription": "NSLOCTEXT(\"\", \"PerksTable_Resourcefulness_20b_PerkDescription\", \"When over-encumbered, you can dodge and move at full speed.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'",
+   "TargetIntStat": "AttributeEncumbrance",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Corrupted_Leadership_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"416D25B54319ED5A00BF32AB27A48CC3\", \"Frenzy\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"A60452E14C64549B4CDD3B8FA64CA091\", \"When you deal damage in combat your followers enter a Frenzied state. Frenzied followers deal 3% increased damage for each corrupted Authority attribute.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_01.T_PerkIcon_corrupt_01'",
+   "TargetIntStat": "AttributeSummoning",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Corrupted_Leadership_10",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"FF268F4F4C6E1EEB73081391BC36112A\", \"Flesh Bond\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"64FF09C64E5E75E1B9EBD0949568CD6A\", \"Damage taken by you is split between you and your followers.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_02.T_PerkIcon_corrupt_02'",
+   "TargetIntStat": "AttributeSummoning",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Corrupted_Leadership_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"3D3D6C514D8A9CD0073C30B7B1C227F7\", \"Devour\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"8DCA085A4288B2F63BC153ACFF60E76B\", \"Damage dealt by your followers heals you.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_03.T_PerkIcon_corrupt_03'",
+   "TargetIntStat": "AttributeSummoning",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Corrupted_Leadership_20",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"CDCB758740EEB89013E74ABC0F235FBC\", \"Demon Lord\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"D38C0F014EA9789BADB340A9EFFBA34B\", \"When dealing damage, there is a chance for an uncontrolled demonic entity to appear to attack your foes temporarily.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_04.T_PerkIcon_corrupt_04'",
+   "TargetIntStat": "AttributeSummoning",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Corrupted_Strength_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"17AC6E64433DB3051560278A4F282CE2\", \"Scourge\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"503CD5344919DDDBFE665789120946EF\", \"Deal additional damage that scales with your corrupted Strength.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_01.T_PerkIcon_corrupt_01'",
+   "TargetIntStat": "AttributeScourge",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Corrupted_Strength_10",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"F2E747FA487982B957733F956A6869F9\", \"Mule Kick\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"FFA3188547531D36C9DE29B58CE7EED5\", \"Your kick knocks back enemies farther and knocks them down.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_02.T_PerkIcon_corrupt_02'",
+   "TargetIntStat": "AttributeScourge",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Corrupted_Strength_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"2B164F664E6F01E98B336999532BCDF9\", \"Wrack\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"FE3676334BABAA1C98236FBAB4D4C1A7\", \"The blows from your strikes numb your opponents, reducing their damage potential.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_03.T_PerkIcon_corrupt_03'",
+   "TargetIntStat": "AttributeScourge",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Corrupted_Strength_20",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"818B2A5C48AD23924C55A9815CE64038\", \"Desecrate\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"87DC646F4F21AEC6DFA0ECB534E6376B\", \"Chance when dealing damage to cause a blast of corruption to vent from the earth, knocking down and damaging enemies.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_04.T_PerkIcon_corrupt_04'",
+   "TargetIntStat": "AttributeScourge",
+   "AttributePointsRequired": "20"
+  },
+  {
+   "Name": "Corrupted_Vitality_5",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"160264914E2C43571DBE9D97F03F059D\", \"Grotesque Excrescence\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"7B664D214C5CCEBE6BC2B3A0BCFF8B48\", \"You gain passive health regeneration that scales with your corrupted Vitality.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_01.T_PerkIcon_corrupt_01'",
+   "TargetIntStat": "AttributeAbberation",
+   "AttributePointsRequired": "5"
+  },
+  {
+   "Name": "Corrupted_Vitality_10",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"76D4569148E07DE155E4D9B8F11216E2\", \"Twisted Flesh\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"1B5F16EB41BDF6D595B1679C3BC81051\", \"You have a chance to deflect damage. The chance scales with your corrupted Vitality.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_02.T_PerkIcon_corrupt_02'",
+   "TargetIntStat": "AttributeAbberation",
+   "AttributePointsRequired": "10"
+  },
+  {
+   "Name": "Corrupted_Vitality_15",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"C1ECCF4C416A7D443A1B55B91E002599\", \"Petrified\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"9A64B8904AAAC56F142DC9943E2E4130\", \"You are immune to bleed, poison, disease, and sunder effects.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_03.T_PerkIcon_corrupt_03'",
+   "TargetIntStat": "AttributeAbberation",
+   "AttributePointsRequired": "15"
+  },
+  {
+   "Name": "Corrupted_Vitality_20",
+   "PerkName": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"C42C84754B64622E1FD8218CB4F16BE1\", \"Tainted Vessel\")",
+   "PerkDescription": "NSLOCTEXT(\"[60EED6D9445FE25E06E22A96FD19CD56]\", \"28A552894234D37FC22F9C969CDE6B79\", \"When you take damage you expel corruption, dealing damage in an area around you or corrupting enemies around you if they can receive corruption.\")",
+   "Icon": "/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_corrupt_04.T_PerkIcon_corrupt_04'",
+   "TargetIntStat": "AttributeAbberation",
+   "AttributePointsRequired": "20"
+  }
+ ],
+ "export_text_head": null,
+ "json_head": "[\r\n\t{\r\n\t\t\"Name\": \"Strength_5\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"8D50496D4D426B27E1DCBA8DA32F32F3\\\", \\\"Heavy Blows\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"F5A792A647EFED7E08D19EB3C6D6EBFA\\\", \\\"Heavy and special attacks deal 10% more damage.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'\",\r\n\t\t\"TargetIntStat\": \"AttributeMight\",\r\n\t\t\"AttributePointsRequired\": 5\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Strength_10a\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"88A4F56145A2B3D158F13197DAC72218\\\", \\\"Second Skin\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"75D3E3F4464885681E60C2B39FF823FD\\\", \\\"Equipped armor weighs 25% less.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'\",\r\n\t\t\"TargetIntStat\": \"AttributeMight\",\r\n\t\t\"AttributePointsRequired\": 10\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Strength_10b\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"770F449D4CF327F5BA2010998132B351\\\", \\\"Combo Master\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"FED695AF4449B0959EEA5DB8529B6857\\\", \\\"Combo finishers deal 20% more damage.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'\",\r\n\t\t\"TargetIntStat\": \"AttributeMight\",\r\n\t\t\"AttributePointsRequired\": 10\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Strength_15\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"99B304B743856C8457AE54BECEE79693\\\", \\\"Berserker\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"120F017842444EA79DC477A1D594891A\\\", \\\"While below 50% health, you deal 25% more damage and gain 100 armor.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'\",\r\n\t\t\"TargetIntStat\": \"AttributeMight\",\r\n\t\t\"AttributePointsRequired\": 15\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Strength_20a\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"C65E251F438534C2962BFFBFBDFA411E\\\", \\\"Crushing Swings\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"29065D9945E663B8C6ABD5A93DB1C3A7\\\", \\\"Your heavy attacks stagger for 25% longer and no longer rebound off shields.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'\",\r\n\t\t\"TargetIntStat\": \"AttributeMight\",\r\n\t\t\"AttributePointsRequired\": 20\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Strength_20b\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"FA5A88F74323573298C0CAABD8C7CAD3\\\", \\\"Blood-mad Berserker\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"11226AF341109014C73346AA972AFB13\\\", \\\"While below 25% health, you cannot be staggered or knocked down, your damage is increased by an additional 10%, and your armor is increased by an additional 50.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_b.T_PerkIcon_03_b'\",\r\n\t\t\"TargetIntStat\": \"AttributeMight\",\r\n\t\t\"AttributePointsRequired\": 20\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Agility_5\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"28068633459DE53915C52A9448F6F387\\\", \\\"Backstab\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"B82500344AF2C871A76074AE1D97F106\\\", \\\"Deal 15% increased damage when attacking from behind.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_01.T_PerkIcon_01'\",\r\n\t\t\"TargetIntStat\": \"AttributeAthleticism\",\r\n\t\t\"AttributePointsRequired\": 5\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Agility_10a\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"0FBBB75448E99964C7CD18BB12CA01F9\\\", \\\"Precision Strike\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"BDA74192420C6FF7F3CD13AC51E49FEA\\\", \\\"10% additional armor penetration while carrying a medium or lighter load.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_a.T_PerkIcon_02_a'\",\r\n\t\t\"TargetIntStat\": \"AttributeAthleticism\",\r\n\t\t\"AttributePointsRequired\": 10\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Agility_10b\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"1789E9CE4F717D1453EDB4989B504C75\\\", \\\"Dead Shot\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"6AACBD69401B828B331DB891FB6388CC\\\", \\\"Arrows and thrown weapons travel twice as quickly and deal 15% more damage to distant targets.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_02_b.T_PerkIcon_02_b'\",\r\n\t\t\"TargetIntStat\": \"AttributeAthleticism\",\r\n\t\t\"AttributePointsRequired\": 10\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Grit_15\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"29737FC142894C0370DE79898349AE45\\\", \\\"Quickfooted\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"D6A5819A40FA6C38ED68898CD2C7096A\\\", \\\"Jogging, sprinting, jumping, swimming, and climbing cost less stamina and are faster.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03.T_PerkIcon_03'\",\r\n\t\t\"TargetIntStat\": \"AttributeStamina\",\r\n\t\t\"AttributePointsRequired\": 15\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Agility_20a\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"6DC16E8647611B727C7AD79E132F4F34\\\", \\\"Rolling Thrust\\\")\",\r\n\t\t\"PerkDescription\": \"NSLOCTEXT(\\\"[60EED6D9445FE25E06E22A96FD19CD56]\\\", \\\"A53005F14035CDED103ADC8476AC9C9D\\\", \\\"After dodging, your next damaging attack has 25% increased penetration.\\\")\",\r\n\t\t\"Icon\": \"/Script/Engine.Texture2D'/Game/UI/Textures/GUIs/Inventory/PerkIcons/T_PerkIcon_03_a.T_PerkIcon_03_a'\",\r\n\t\t\"TargetIntStat\": \"AttributeAthleticism\",\r\n\t\t\"AttributePointsRequired\": 20\r\n\t},\r\n\t{\r\n\t\t\"Name\": \"Agility_20b\",\r\n\t\t\"PerkName\": \"NSLOCTEXT(\\\"\\\", \\\"PerksTable_Agility_20b_Perk",
+ "referencers": [
+  "/Game/Characters/BasePlayerChar",
+  "/Game/UI/Inventory/Attributes/W_Attributes",
+  "/Game/Systems/PAL_Systems",
+  "/Game/Systems/Perks/BP_PerkSystemComponent",
+  "/Game/UI/Inventory/Attributes/W_Attribute"
+ ]
+}

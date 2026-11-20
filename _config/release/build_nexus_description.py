@@ -126,14 +126,11 @@ ru_req = f'''[list]
 en_issues = [
     'Palm leaf shadows flicker.', 'Enemy health bars cover the enemies themselves.', 'At dusk the light and the sky sometimes change in a jump.',
     'The hub shakes when tabs are switched with Q and E, and some mod elements appear in it late.', 'The text on the menu tabs trembles slightly when switching.',
-    'When the hero takes an item with F, the selection frame in the quick loot window jumps to the bottom right cell for a moment.',
-    'The quick loot window jerks when the mouse wheel is turned over it.', 'Over a corpse in bushes both the corpse prompt and «E Взять» (E Take) show at once.',
-    'Over eggs in a nest the «E Взять» (E Take) prompt does not show, although the hero takes them with E.',
+    'The quick loot window jerks when the mouse wheel is turned over it.',
     'In the settings windows of some mods the Russian text does not fit into buttons and fields: the magic school menu, the «Система аксессуаров» (Accessory system) window and others.',
     'Perk descriptions under an attribute on the «Хар-ки» (Attributes) tab overlap in places.',
     'Class names and descriptions on the Enhanced Armory and Arsenal cards stay in English: the text is painted into the images.',
     'In the Simple Minimap marker tutorial the lines appear with a long delay, and the slide area stays black.',
-    'The ModControlPanel window reads «Нет доступных виджетов» (No widgets available): the settings of Less Building Placement Restrictions are not in it.',
 ]
 en_plans = [
     'Fix every issue in the list above.', 'Teach the hero to jump off a wall the hero is climbing.',
@@ -144,14 +141,11 @@ en_plans = [
 ru_issues = [
     'Тени от листьев пальм мерцают.', 'Полоски здоровья врагов закрывают самих врагов.', 'В сумерках свет и небо иногда меняются скачком.',
     'Хаб вздрагивает при переключении вкладок клавишами Q и E, и часть элементов модов появляется в нём с задержкой.', 'Текст на вкладках меню слегка дрожит при переключении.',
-    'Когда герой забирает предмет клавишей F, рамка выбора в окне быстрой добычи на мгновение прыгает в нижнюю правую клетку.',
-    'Окно быстрой добычи дёргается, если над ним крутить колесо мыши.', 'Над трупом в кустах одновременно видны и подсказка у трупа, и «E Взять».',
-    'Над яйцами в гнезде подсказка «E Взять» не появляется, хотя герой берёт их клавишей E.',
+    'Окно быстрой добычи дёргается, если над ним крутить колесо мыши.',
     'В окнах настроек некоторых модов русский текст не помещается в кнопки и поля: в меню школы магии, в окне «Система аксессуаров» и других.',
     'Описания перков под атрибутом на вкладке «Хар-ки» местами наползают друг на друга.',
     'Названия и описания классов на карточках Enhanced Armory and Arsenal остались английскими: текст нарисован прямо на картинках.',
     'В обучении маркерам Simple Minimap строки появляются с большой задержкой, а место под слайды остаётся чёрным.',
-    'В окне ModControlPanel стоит надпись «Нет доступных виджетов»: настроек Less Building Placement Restrictions в нём нет.',
 ]
 ru_plans = [
     'Исправить каждую проблему из списка выше.', 'Научить героя прыгать со стены, по которой он лезет.',
@@ -179,22 +173,25 @@ def links(lang):
     if lang == 'en':
         rows_ = [('Public repository of the pack on GitHub', REPO, 'github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack'),
                  ('Release 0.9.0 on GitHub', f'{REPO}/releases/tag/v0.9.0', 'releases/tag/v0.9.0'),
-                 ('User guide (PDF, in Russian)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.0.1-guide.pdf', 'Krinik-Conan-3.0.1-guide.pdf'),
+                 ('User guide (PDF, in Russian)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.1.1-guide.pdf', 'Krinik-Conan-3.0.1-guide.pdf'),
                  ('Email', 'mailto:kotkrinik@yandex.ru', 'kotkrinik@yandex.ru'),
                  ('Pack page on Nexus Mods', 'https://www.nexusmods.com/conanexilesenhanced/mods/65', 'nexusmods.com/conanexilesenhanced/mods/65')]
     else:
         rows_ = [('Публичный репозиторий сборки на GitHub', REPO, 'github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack'),
                  ('Выпуск 0.9.0 на GitHub', f'{REPO}/releases/tag/v0.9.0', 'releases/tag/v0.9.0'),
-                 ('Руководство пользователя (PDF)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.0.1-guide.pdf', 'Krinik-Conan-3.0.1-guide.pdf'),
+                 ('Руководство пользователя (PDF)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.1.1-guide.pdf', 'Krinik-Conan-3.0.1-guide.pdf'),
                  ('Почта', 'mailto:kotkrinik@yandex.ru', 'kotkrinik@yandex.ru'),
                  ('Страница сборки на Nexus Mods', 'https://www.nexusmods.com/conanexilesenhanced/mods/65', 'nexusmods.com/conanexilesenhanced/mods/65')]
-    return '[list]\n' + '\n'.join(f'[*][color={C}]{a}:[/color] [url={u}]{t}[/url]' for a, u, t in rows_) + '\n[/list]'
+    # Почта — простым текстом: тега [email] Nexus не знает и печатает его как есть, а свой [url=mailto:] его визуальный редактор переписывает в [email]
+    # (кадр владельца 2026-11-20 14:44: «Email: [email=…]…[/email]» на живой странице 0.9.0). [NOT-TESTED]
+    cell = lambda u, t: t if u.startswith('mailto:') else f'[url={u}]{t}[/url]'
+    return '[list]\n' + '\n'.join(f'[*][color={C}]{a}:[/color] {cell(u, t)}' for a, u, t in rows_) + '\n[/list]'
 
 en_rights = para('Mods by other authors belong to their authors on the Steam Workshop and Nexus Mods; a mod marked KRINIK MODIFIED stays its author\'s property. Conan Exiles belongs to Funcom. The work of the pack author — the choice and order of mods, the settings, the translation, the Krinik mods and the launcher — is under the MIT license.')
 ru_rights = para('Моды других авторов принадлежат их авторам в Мастерской Steam и на Nexus Mods; мод с пометкой KRINIK MODIFIED остаётся собственностью своего автора. Conan Exiles принадлежит Funcom. Работа автора сборки — подбор и порядок модов, настройки, перевод, моды Krinik и лаунчер — выпущена под лицензией MIT.')
 
 parts = [
-    f'[center][img]{RAW}/_config/branding/krinik-modpack-logo.webp[/img][/center]',
+    f'[center][img]{RAW}/art/logos/krinik-modpack-logo.webp[/img][/center]',
     f'[center][size=4][b][i]Krinik Mod Pack 0.9.0 · Conan Exiles Enhanced 3.0.1[/i][/b][/size][/center]',
     f'[center][color={C}]English below · Русский текст — после английского[/color][/center]',
     '[line]',

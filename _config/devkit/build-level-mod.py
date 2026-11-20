@@ -41,6 +41,7 @@ import importlib.util
 import json
 import os
 import shutil
+import re
 import struct
 import subprocess
 import sys
@@ -55,13 +56,15 @@ KIT_UNREALPAK = r"F:\CEUE5Devkit\Engine\Binaries\Win64\UnrealPak.exe"   # тол
 # строк из git (коммит до переезда): там игра D:\Games\Conan Exiles, донор 1.0.4, retoc UE5_6.
 import sys as _sys, os as _os
 _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
-from game_target import GAME_DIR, sandbox   # путь игры — из targets.json (2026-10-25: 2.2.3 удалена)
+from game_target import GAME_DIR, PAKS_VIEW, sandbox   # путь игры и его представление — из targets.json (2026-10-25: 2.2.3 удалена)
 GAME_PAKS = os.path.join(GAME_DIR, r"ConanSandbox\Content\Paks")
-VIEW = r"D:\work\ai_sandbox\_paksview-2.2.3"    # жёсткие ссылки на контейнеры игры, вне папки игры
-VIEW_301 = r"D:\work\ai_sandbox\_paksview-3.0.1"                                   # все контейнеры 3.0.1 (игра + моды), KUMM STATUS «work trees kept»
+# Представление — своё у каждой цели (`_paksview-<имя цели>`, game_target.py, 2026-11-13): зашитое `_paksview-2.2.3` держало контейнеры двух версий
+# (ensure_view только ДОБАВЛЯЕТ недостающие), и ванильную таблицу приходилось брать из второго, `_paksview-3.0.1`. Теперь обе нужды — одно представление.
+VIEW = PAKS_VIEW
+VIEW_301 = PAKS_VIEW
 RETOC_58 = os.path.join(TOOLS, "retoc-5.8", "retoc-2026-10-26-nocompress.exe")    # retoc с UE 5.8: разрешает ссылки 3.0.1
 CAV_OBJECT_VERSION = "OS_SUB_OBJECT_SHADOW_SERIALIZATION"   # ObjectVersionUE5 таблиц, прочитанных путём uasset_json (VER_UE5_6)
-MRS_ZIP = r"D:\Games\Conan Exiles Mods\mods\MrSerji's Level 1000 15 1.0.5 2026-09-17T08-48Z iP5rAx98z.zip"
+MRS_ZIP = r"D:\work\ai_sandbox\ConanExiles\_library\mods\MrSerji's Level 1000 15 1.0.5 2026-09-17T08-48Z iP5rAx98z.zip"
 MRS = "MrS_Level1000"
 # retoc 0.1.5 знает версии только до UE5_7, а игра 2.2.x — UE 5.8. Проверено 2026-10-02 кругом без правок
 # на доноре 1.0.5 (сварен под 5.8): to-legacy UE5_7 → to-zen UE5_7, распаковка UnrealPak кита — у всех трёх
@@ -82,7 +85,10 @@ PLATFORM_MOUNT = "../../../ConanSandbox/Content/"          # как у плат�
 
 LEVELS = 10_000
 XP_P = 0.5
-XP_ANCHOR = 500      # 16.09.2026, слово владельца: «кривую опыта нужно поднимать - на множителе 1,
+XP_ANCHOR = 1000     # 2026-11-07 21:06, слово владельца в чате: база 1000 вместо 500 («наша кривая, 500 опыта
+                     # за уровень» → «база 1000»); 2026-11-08 12:21 «уровень 1000 делаеми». Каждый уровень
+                     # вдвое дороже прежнего, форма закона та же: весь опыт до 10 000 уровня ≈ 667 млн, в int32 влезает.
+                     # Прежде — 500: 16.09.2026, слово владельца: «кривую опыта нужно поднимать - на множителе 1,
                      # я прокачал более 30 уровней за час игры... Нужно замедлять в раза 2» →
                      # затем прямо: «давай базу 500 опыта сделаем». Было 175 (родная цена 1-го
                      # уровня); промежуточный 350 был раскатан в 21:30 и через минуту заменён
@@ -106,6 +112,8 @@ def load_module(name, filename):
 xpt = load_module("xpt", "xp-table.py")
 fts = load_module("fts", "feats-table.py")
 cav = load_module("cav", "caverns_loot.py")   # таблица сундуков Caverns of Set (шаг 3б; владелец 2026-11-01 08:58 «делаем сейчас 2»)
+vp = load_module("vp", os.path.join("devkit", "vanilla_patches.py"))  # правленые ванильные блюпринты (шаг 4б; владелец 2026-11-08 23:05 «(А) — правку пака скриптом»)
+kmi = load_module("kmi", os.path.join("devkit", "krinik_modinfo.py"))  # автор, URL автора, список изменений из одного источника (KUMM HOUSE_RULES 40)
 
 
 def say(msg):
@@ -130,7 +138,11 @@ def md5(path):
 def pack_version_fields():
     """versionMajor/Minor/Build из packVersion манифеста сборки («1.0.0») — версия модов Krinik = версия сборки."""
     manifest = json.load(open(os.path.join(os.path.dirname(CONFIG), "modpack.json"), encoding="utf-8"))
-    major, minor, build = (int(x) for x in manifest["packVersion"].split("."))
+    # «0.9.1-RC1» (KUMM plans/55 phase E): the mod's three numbers are the release's; the candidate tail is not a mod version field
+    m = re.match(r"(\d+)\.(\d+)\.(\d+)", manifest["packVersion"])
+    if not m:
+        raise SystemExit("packVersion «%s» не начинается с трёх чисел X.Y.Z" % manifest["packVersion"])
+    major, minor, build = (int(x) for x in m.groups())
     return {"versionMajor": major, "versionMinor": minor, "versionBuild": build}
 
 
@@ -309,6 +321,8 @@ def build(name, display, work, out):
     if os.path.exists(work) and os.listdir(work):
         raise SystemExit(f"--work должна быть пустой или новой: {work}")
     os.makedirs(work, exist_ok=True)
+    # Строка изменений мода для текущего выпуска — до сборки: выпуск без своей строки останавливает сборку пака (KUMM HOUSE_RULES 40.2).
+    kmi.change_note(name)
     rows = table_rows()
 
     say("1. архив MrS → платформенные файлы")
@@ -367,6 +381,12 @@ def build(name, display, work, out):
     for plat in PLATFORMS:
         run([RETOC, "to-zen", "--version", RETOC_ENGINE, legacy_out, os.path.join(stage, f"{name}-{plat}.utoc")])
 
+    say("4б. правленые ванильные блюпринты в контейнеры: предел атрибутов 10 000, «Верная рука» ×1.2 (KUMM plans/49, vanilla_patches.py)")
+    vchunks = vp.build_chunks(os.path.join(work, "vanilla"), say)
+    pak_name = name   # `name` затирается циклом по рядам сундуков в шаге 6 (прогон 2026-11-08 23:37: «12-Windows.utoc»)
+    for plat in PLATFORMS:
+        vp.inject(os.path.join(stage, f"{name}-{plat}.utoc"), vchunks, os.path.join(work, "vanilla"))
+
     say("5. платформенные паки, manifest.json, modinfo.json, внешняя обёртка")
     content = os.path.join(work, "platpak", "Content")
     reg_dst = os.path.join(content, "Mods", name, "AssetRegistry.bin")
@@ -379,7 +399,7 @@ def build(name, display, work, out):
         run([REPAK, "pack", "-q", "--version", PAK_VERSION, "--mount-point", PLATFORM_MOUNT, content, target])
     info = json.load(open(os.path.join(mrs_files, "modinfo.json"), encoding="utf-8-sig"))
     info.update({
-        "name": display, "folderName": name, "author": "", "authorUrl": "",
+        "name": display, "folderName": name,
         "description": (f"{LEVELS} levels. XP per level = {XP_ANCHOR} * level^{XP_P}. "
                         f"One attribute point every level. Feat points: vanilla formula, base capped at "
                         f"{fts.BASE_CAP} (x3 every 10th level). Replaces DT_ExperienceSystemLevel, "
@@ -387,9 +407,12 @@ def build(name, display, work, out):
                         f"Ships the missing loot table of the Caverns of Set chests."),
         # Версия мода = версия сборки packVersion из modpack.json: «в сборке моды Krinik ставим по версии сборки 1.0.0» (владелец 2026-10-31 15:39;
         # отменило «все моды Krinik... получают версию 3.0.1» от 2026-10-28).
-        "changeNote": "", **pack_version_fields(),
+        **pack_version_fields(),
         "steamPublishedFileId": "", "steamTestLivePublishedFileId": "", "steamWorkshopFileIds": {},
     })
+    # Автор, URL автора и список изменений этого выпуска — из одного источника, krinik_modinfo.py (пустые поля пака 0.9.0 показывались в списке модов
+    # игры как «Автор --»; KUMM HOUSE_RULES 40). [NOT-TESTED]
+    kmi.fill(info, name)
     json.dump(info, open(os.path.join(stage, "modinfo.json"), "w", encoding="utf-8"), ensure_ascii=False, indent="\t")
     manifest = {}
     for plat in PLATFORMS:
@@ -464,6 +487,11 @@ def build(name, display, work, out):
     for g in got:
         say(f"      {g}")
     ok = ok and good
+    # ванильные блюпринты: в каждом контейнере готового мода куски = собранным байт в байт
+    for plat in PLATFORMS:
+        bad = vp.verify(os.path.join(check, "outer", f"{pak_name}-{plat}.utoc"), vchunks, os.path.join(work, "vanilla"))
+        say(f"   {'✅' if not bad else '❌'} ванильные блюпринты в {pak_name}-{plat}: {len(vchunks) - len(bad)} из {len(vchunks)} = собранным")
+        ok = ok and not bad
     return 0 if ok else 1
 
 

@@ -12,7 +12,9 @@ src, out, logo_h, digit_h, dy = sys.argv[1], sys.argv[2], float(sys.argv[3]), fl
 dx = float(sys.argv[6]) if len(sys.argv) > 6 else 0.0   # share of the width, + right
 frame = Image.open(src).convert("RGBA")
 layer = Image.new("RGBA", frame.size, (0, 0, 0, 0))
-mw.compose(layer, "top-centre", "3.0.1", "0.9.0", logo_h, digit_h)
+import json  # the versions under the logos — the pack's manifest (KUMM plans/55 R1; were the constants 3.0.1 / 0.9.0)
+manifest = json.load(open(r"D:/work/ai_sandbox/ConanExiles/modpack.json", encoding="utf-8"))
+mw.compose(layer, "top-centre", manifest["launcher"]["gameVersion"], manifest["packVersion"], logo_h, digit_h)
 shifted = Image.new("RGBA", frame.size, (0, 0, 0, 0))
 shifted.paste(layer, (int(dx * frame.width), int(dy * frame.height)))
 res = Image.alpha_composite(frame, shifted).convert("RGB")

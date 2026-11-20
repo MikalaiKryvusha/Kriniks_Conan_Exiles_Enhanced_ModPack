@@ -48,6 +48,8 @@ _unpacked/HosavRU/build/
 _unpacked/KrinikConanGameplay/*.pak
 # Наш мод лука: пак — продукт кита, пересобирается _config/devkit/kit-archery-edit.py + kit-buildmod.py KrinikConanArchery
 _unpacked/KrinikConanArchery/*.pak
+# Наш мод графики: пак — продукт кита (M_Foliage с границей ветра), пересобирается _config/devkit/kit-foliage-wpo.py + kit-buildmod.py KrinikConanGraphics
+_unpacked/KrinikConanGraphics/*.pak
 
 # апскейл обложки 6688x3764, 38 МБ - исходник лежит у владельца, в git только веб-версия
 docs/guide/*-cover-4x.png
@@ -78,3 +80,19 @@ _config/launcher/BuildInfo.g.cs
 
 # fetch-authors.mjs output (regenerated on demand)
 _config/public_release/authors.json
+
+# KrinikConanMusic: build intermediates and the runtime state (plan 46, 2026-11-06)
+_unpacked/KrinikConanMusic/player/obj/
+_unpacked/KrinikConanMusic/State/
+
+# KUIPS sheet of the launcher: the frames and the built sheet are rebuilt by kuips shoot / layout / build (KUMM HOUSE_RULES 34, plans/57)
+_config/launcher/design/flow-map/screens/
+_config/launcher/design/flow-map.html
+
+# Tool outputs that a run writes again every time (KUMM, the pack tidy of 2026-11-18): RenderDoc pass dumps and the retoc package-store log at the root
+_config/rdoc/*.out
+/pakstore.json
+
+# The mod library (Workshop / Nexus mods, our KRINIK MODIFIED paks, the originals we patch) - 19 GB of binaries, never in git; moved here from
+# D:\Games\Conan Exiles Mods by the owner's choice 2026-11-20 16:08 (KUMM STATUS).
+/_library/

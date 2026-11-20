@@ -7,7 +7,7 @@
 # [NOT-TESTED]
 TAG="${1:-g}"; MODE="${2:-aim}"
 cd "$(dirname "$0")"
-OUT="${OUT:-D:/Temp/claude/corpse-loot}"
+OUT="${OUT:-D:/work/ai_sandbox/ConanExiles/_scratch/corpse-loot}"
 mkdir -p "$OUT"
 FIND="local p=FindFirstOf('BasePlayerChar_C'); local pc=FindFirstOf('FunCombat_PlayerController_C'); local hl=p:K2_GetActorLocation(); local C,cd; for _,x in ipairs(FindAllOf('DismemberedBodySkeletalMesh_C') or {}) do if x:IsValid() then local c=x:K2_GetComponentLocation(); local d=math.sqrt((c.X-hl.X)^2+(c.Y-hl.Y)^2); if not cd or d<cd then C,cd=c,d end end end"
 if [ "$MODE" != noaim ]; then

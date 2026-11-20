@@ -1,0 +1,20 @@
+{
+	"name": "KrinikConanGraphics",
+	"description": "KRINIK: graphics of the build - palm and foliage shadows without flicker (the wind bound of the shared foliage material)",
+	"changeNote": "",
+	"author": "",
+	"authorUrl": "",
+	"versionMajor": 0,
+	"versionMinor": 9,
+	"versionBuild": 1,
+	"bRequiresLoadOnStartup": false,
+	"steamPublishedFileId": "",
+	"steamTestLivePublishedFileId": "",
+	"steamWorkshopFileIds": {},
+	"steamVisibility": 2,
+	"folderName": "KrinikConanGraphics",
+	"devkitRevisionNumber": 1002,
+	"devkitSnapshotId": 0,
+	"minimumVersion": "Enhanced",
+	"requestedHttpOrigins": []
+}

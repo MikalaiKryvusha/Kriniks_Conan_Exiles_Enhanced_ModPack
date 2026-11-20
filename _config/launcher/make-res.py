@@ -1,11 +1,11 @@
 """
 Resources of KrinikConanLauncher, built once and checked in (build-docs.py embeds res/* into the exe with csc -resource:,
 the launcher reads them with GetManifestResourceStream):
-  res/wallpaper.jpg  — the CLEAN pack wallpaper, without the baked logos: the original from _extras/Wallpapers-source
+  res/wallpaper.jpg  — the CLEAN pack wallpaper, without the baked logos: V2 «Реализм» 4K from art/wallpapers (since 2026-11-18)
                        (make-wallpapers.py puts the logos onto these originals). The owner 2026-10-31 17:42: «в лаунчере на фоне
                        наш волпейпер» · 17:51 «В ЛАУНЧЕРЕ чистый волпейпер!» · «БЕЗ ЗАПЕЧЁННЫХ ЛОГОТИПОВ! ЛОГОТИПЫ САМИ СТАВИМ!».
-  res/logo-game.png  — the Conan Exiles Enhanced logo (_config/branding/conan-exiles-enhanced-logo-3x.webp), alpha kept.
-  res/logo-pack.png  — the Krinik Mod Pack logo (_config/branding/krinik-modpack-logo.webp), alpha kept.
+  res/logo-game.png  — the Conan Exiles Enhanced logo (art/logos/conan-exiles-enhanced-logo-3x.webp), alpha kept.
+  res/logo-pack.png  — the Krinik Mod Pack logo (art/logos/krinik-modpack-logo.webp), alpha kept.
   res/frame_h.png,   — the APPROVED frame (the owner 2026-10-31 18:53 «7. утвержденооооооо»): play variant 7 of mockups/frame_play.py,
   res/frame_v.png      the mix «logo metal + scratches and caverns», 3 logical px; top strip 3840×12 and left strip 12×2160 with alpha
                        (ragged edges, chipped corners). The window draws the bottom and right strips from these, turned 180° and darker.
@@ -27,10 +27,12 @@ from fontTools.varLib import instancer
 from PIL import Image
 
 HERE = Path(__file__).resolve().parent
-BRANDING = HERE.parent / "branding"
+ART = HERE.parent.parent / "art"   # every art source of the build (the owner 2026-11-18 15:38, interview #040 Q2 A; KUMM HOUSE_RULES 37)
 MOCKUPS = HERE / "mockups"
-WALLPAPER = Path("D:/Games/Conan Exiles Mods/mods/_extras/Wallpapers-source/Krinik_Conan_Exiles_3.0.1_Wallpaper_4K_3840x2160.png")
-LOGOS = {"logo-game.png": BRANDING / "conan-exiles-enhanced-logo-3x.webp", "logo-pack.png": BRANDING / "krinik-modpack-logo.webp"}
+# The launcher's background since 2026-11-18 15:42 is the V2 «Реализм» wallpaper (the owner: «Реализм идет в лаунчер 1.0.0»), its 4K cut —
+# the owner's own upscale, cropped to 16:9 and resized by KUMM .work/wallpaper_v2/cut_v2.py. The v1 original stays in art/wallpapers_source.
+WALLPAPER = ART / "wallpapers" / "Krinik_Conan_Exiles_Wallpaper_V2_Realism_4K_3840x2160.png"
+LOGOS = {"logo-game.png": ART / "logos" / "conan-exiles-enhanced-logo-3x.webp", "logo-pack.png": ART / "logos" / "krinik-modpack-logo.webp"}
 FRAME_VARIANT = 7  # approved 18:53
 FRAMES = {"frame_h.png": MOCKUPS / "play" / f"frame_h_{FRAME_VARIANT}.webp", "frame_v.png": MOCKUPS / "play" / f"frame_v_{FRAME_VARIANT}.webp"}
 # file: (variable source, axis position, family name the launcher looks for) — weights as in mockup 11 CSS
@@ -43,7 +45,7 @@ FONTS = {
 # Latin, Latin-1, Cyrillic, general punctuation (« » — … №): every letter the launcher can show, nothing more.
 UNICODES = [*range(0x20, 0x7F), *range(0xA0, 0x100), *range(0x400, 0x460), *range(0x2010, 0x2028), 0x2116, 0x20AC]
 OUT = HERE / "res"
-QUALITY = 90
+QUALITY = 95  # JPEG 95 where WebP cannot be read (.NET Framework) — the owner 2026-11-18 15:38, interview #040 Q3, KUMM HOUSE_RULES 37
 LOGO_H = 480  # px: the launcher draws a logo up to ~130 logical px tall, 390 px at 300 % — the source stays larger
 
 

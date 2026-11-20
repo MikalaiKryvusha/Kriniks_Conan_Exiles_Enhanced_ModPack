@@ -1,0 +1,8 @@
+# Ironlight-Core · IL_WBP_AdminUI — the admin panel's section headers and buttons (KUMM bug 64 item 13, 2026-11-07): culture-invariant FText, the .locres never
+# reaches them; uaj replaces `CultureInvariantString` by the exact old text. The headers are the author's capitals — kept as capitals.
+SETTLEMENT	ПОСЕЛЕНИЕ
+TRAINING & WORK	ТРЕНИРОВКИ И РАБОТА
+NEEDS	ПОТРЕБНОСТИ
+SKILLS	НАВЫКИ
+SAVE	СОХРАНИТЬ
+CLOSE	ЗАКРЫТЬ

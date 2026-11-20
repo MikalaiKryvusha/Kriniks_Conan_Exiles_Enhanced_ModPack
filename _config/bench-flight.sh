@@ -11,7 +11,7 @@ set -u
 ROUTE="$1"; LABEL="$2"; VIDEO="${3:-}"
 GAME="$(python -I -X utf8 -c "import sys;sys.path.insert(0,r'D:\work\ai_sandbox\ConanExiles\_config');import game_target as g;print(g.GAME_DIR)")"
 MOD="$GAME/ConanSandbox/Binaries/Win64/ue4ss/Mods/KrinikConanBench"
-OUT="D:/Games/Conan Exiles Mods/_bench"
+OUT="D:/work/ai_sandbox/ConanExiles/_library/_bench"
 PM="/d/work/ai_sandbox/_tools/PresentMon-2.5.1-x64.exe"
 mkdir -p "$OUT"
 STAMP="$(date +%Y-%m-%d_%H%M%S)"

@@ -1,0 +1,7 @@
+# Запуск 9 — Quick Win из Ultra+ / LTSharpe (KUMM researches/ue5-guru-tweaks-2026-11 A3): сколько страниц памяти загрузки в видеокарту держать, а не освобождать; A = умолчание 5, B = 32 (+≈128 МБ ОЗУ). Если exec не берёт значение на лету (строка #read покажет) — пара запусков с ini.
+#read d3d12.FastAllocator.MinPagesToRetain
+q9-warmup
+q9-A1	exec d3d12.FastAllocator.MinPagesToRetain 5
+q9-B1	exec d3d12.FastAllocator.MinPagesToRetain 32
+q9-A2	exec d3d12.FastAllocator.MinPagesToRetain 5
+q9-B2	exec d3d12.FastAllocator.MinPagesToRetain 32

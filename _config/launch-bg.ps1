@@ -15,11 +15,11 @@
 # owner's current word; both must carry the agent's work, tests included.
 #
 #   .\launch-bg.ps1
-#   .\launch-bg.ps1 -GameDir 'D:\Games\Conan Exiles 3.0.1' -HoldSec 40
+#   .\launch-bg.ps1 -GameDir '<game folder>' -HoldSec 40   (default: the first enabled target of targets.json)
 # [NOT-TESTED]
 
 param(
-  [string]$GameDir = 'D:\Games\Conan Exiles 3.0.1',
+  [string]$GameDir = '',
   [int]$HoldSec = 40,
   # e.g. '-continuesession' - the launcher's own "Continue": straight into the last session, no menu clicks
   [string]$GameArgs = ''
@@ -36,13 +36,16 @@ public class FgBG {
 }
 '@
 
+if (-not $GameDir) { . (Join-Path $PSScriptRoot 'game-target.ps1') }   # the first enabled target of targets.json (2026-11-13, KUMM plan 53)
 $exe = Join-Path $GameDir 'ConanSandbox\Binaries\Win64\ConanSandbox-Win64-Shipping.exe'
 # ONE GAME AT A TIME - the twin of the guard in launch-fg.ps1 (paid 2026-10-30 15:29).
 $running = @(Get-Process -Name 'ConanSandbox-Win64-Shipping' -ErrorAction SilentlyContinue)
 if ($running.Count) { Write-Output ("game already running, PID {0} - close it first (by PID)" -f (($running | ForEach-Object { $_.Id }) -join ', ')); exit 2 }
 $prev = [FgBG]::GetForegroundWindow()
 # The moment of the agent's launch: close-crash-reporter.ps1 closes only reporters started after it (HOUSE_RULES par. 1, 2026-10-26).
-Set-Content -Path (Join-Path $env:TEMP 'kumm-conan-agent-launch.txt') -Value (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') -Encoding ASCII
+$scratch = Join-Path (Split-Path $PSScriptRoot -Parent) '_scratch'; if (-not (Test-Path $scratch)) { $null = New-Item -ItemType Directory $scratch }
+# the stamp lives in the pack's ignored _scratch, not %TEMP% (D:\Temp is the owner's folder, KUMM HOUSE_RULES rule 15, 2026-11-13)
+Set-Content -Path (Join-Path $scratch 'kumm-conan-agent-launch.txt') -Value (Get-Date -Format 'yyyy-MM-dd HH:mm:ss') -Encoding ASCII
 if ($GameArgs) { $proc = Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) -ArgumentList $GameArgs -PassThru }
 else { $proc = Start-Process -FilePath $exe -WorkingDirectory (Split-Path $exe) -PassThru }
 Write-Output ("[{0}] launched (background path), PID {1}, owner window 0x{2:X}" -f (Get-Date -Format HH:mm:ss), $proc.Id, $prev.ToInt64())
