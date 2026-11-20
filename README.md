@@ -35,12 +35,13 @@
   <img src="_config/release/draft_0_9_1/nexus_media/cover_0_9_1.webp" alt="Krinik Mod Pack 0.9.1 для Conan Exiles Enhanced 3.1.1" width="900">
 </p>
 
-<p align="center">
-  <img src="art/screenshots/hero_oasis_1.webp" alt="Герой сборки у оазиса" width="49%">
-  <img src="art/screenshots/hero_oasis_2.webp" alt="Герой сборки у оазиса" width="49%">
-  <img src="art/screenshots/hero_oasis_3.webp" alt="Герой сборки у оазиса" width="49%">
-  <img src="art/screenshots/hero_oasis_4.webp" alt="Герой сборки у оазиса" width="49%">
-</p>
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="art/screenshots/hero_oasis_1.webp" alt="Оазис в пустыне, HUD Hosav на русском языке и мини-карта" width="100%"><br>Оазис в пустыне, HUD Hosav на русском языке и мини-карта</td>
+    <td align="center" width="33%"><img src="art/screenshots/bow_first_person.webp" alt="Вид от первого лица: лук в руках героя" width="100%"><br>Вид от первого лица: лук в руках героя</td>
+    <td align="center" width="33%"><img src="art/screenshots/mods_settings.webp" alt="Окно настроек модов Xevyr'а" width="100%"><br>Окно настроек модов Xevyr'а</td>
+  </tr>
+</table>
 
 ## 1. Общие сведения
 
@@ -73,7 +74,7 @@
 | № | Мод | Автор | Что делает |
 |---|---|---|---|
 | 1 | [KrinikConanCamera](_unpacked/KrinikConanCamera) | Кот Криник | Камера от третьего лица стоит строго за спиной героя. Клавишами цифрового блока игрок меняет расстояние до камеры, её высоту, боковое смещение и наклон взгляда, сохраняет положение камеры, возвращает его и сбрасывает камеру в положение по умолчанию. |
-| 2 | [KrinikConanArchery](_unpacked/KrinikConanArchery) | Кот Криник | Стрела летит по дуге в точку прицела, и её скорость задаёт сила натяжения лука, как в The Elder Scrolls IV: Oblivion. В виде от первого лица видно лук в руках героя. |
+| 2 | [KrinikConanArchery](_unpacked/KrinikConanArchery) | Кот Криник | Стрела летит по дуге в точку прицела, и её скорость задаёт сила натяжения лука, как в The Elder Scrolls IV: Oblivion. От первого лица видно лук в руках героя. |
 | 3 | [KrinikConanGameplay](_unpacked/KrinikConanGameplay) | Кот Криник | Прокачка героя до 10 000 уровня, атрибуты без предела. |
 | 4 | [KrinikConanLocomotion](_unpacked/KrinikConanLocomotion) | Кот Криник | В прыжке герой стреляет из лука и бьёт оружием ближнего боя, а с натянутым луком бежит спринтом. Герой отталкивается прыжком от стены, по которой лезет, и стреляет из лука в полёте после такого прыжка. Пока герой висит на стене, он понемногу тратит запас сил. За каждое очко Проворства герой быстрее бегает и выше прыгает. |
 | 5 | [KrinikConanUI](_unpacked/KrinikConanUI) | Кот Криник | Пока открыт инвентарь или хаб, игра стоит на паузе. HUD Hosav переработан, чтобы его было легче читать. В правом верхнем углу экрана стоит счётчик кадров, а в главном меню и в меню Esc появилась кнопка «Отзыв». |
@@ -251,12 +252,13 @@ From a single launcher window you can install, update and remove the pack and st
   <img src="_config/release/draft_0_9_1/nexus_media/cover_0_9_1.webp" alt="Krinik Mod Pack 0.9.1 for Conan Exiles Enhanced 3.1.1" width="900">
 </p>
 
-<p align="center">
-  <img src="art/screenshots/hero_oasis_1.webp" alt="The pack's hero at the oasis" width="49%">
-  <img src="art/screenshots/hero_oasis_2.webp" alt="The pack's hero at the oasis" width="49%">
-  <img src="art/screenshots/hero_oasis_3.webp" alt="The pack's hero at the oasis" width="49%">
-  <img src="art/screenshots/hero_oasis_4.webp" alt="The pack's hero at the oasis" width="49%">
-</p>
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="art/screenshots/hero_oasis_1.webp" alt="An oasis in the desert, the Hosav HUD in Russian and the minimap" width="100%"><br>An oasis in the desert, the Hosav HUD in Russian and the minimap</td>
+    <td align="center" width="33%"><img src="art/screenshots/bow_first_person.webp" alt="First-person view: the bow in the hero's hands" width="100%"><br>First-person view: the bow in the hero's hands</td>
+    <td align="center" width="33%"><img src="art/screenshots/mods_settings.webp" alt="Settings window for Xevyr's mods" width="100%"><br>Settings window for Xevyr's mods</td>
+  </tr>
+</table>
 
 ## 1. General
 
