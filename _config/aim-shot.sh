@@ -13,7 +13,7 @@ GAME="${GAME:-$(python -I -c "import sys; sys.path.insert(0, '.'); import game_t
 L="$GAME/ConanSandbox/Binaries/Win64/ue4ss/UE4SS.log"
 [ -f "$L" ] || { echo "нет журнала $L"; exit 2; }
 n0=$(wc -l < "$L")
-powershell -File wait-input-idle.ps1 -Min 3 -MaxWait 60 >/dev/null
+sleep 3   # the bow settles after its equip input (it was a 3-s input-idle wait before the owner cancelled the busy-keyboard rules)
 powershell -File mouse-seq.ps1 -Seq "rdown,wait:$HOLD,lclick,wait:400,rup,wait:500" >/dev/null
 sleep 1
 NEW=$(tail -n +"$((n0 + 1))" "$L" | grep "KrinikConanArchery\]")

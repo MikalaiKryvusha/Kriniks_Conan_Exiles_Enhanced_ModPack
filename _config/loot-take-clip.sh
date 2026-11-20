@@ -12,12 +12,9 @@ SEQ="${SEQ:-kdown:0x10,wait:80,kup:0x10,wait:1500,wheel:-1,wait:900,kdown:F,wait
 # SEC — the clip length in seconds (default 7, the quick-loot take); 2026-11-14 the six key-binding cases of KUMM plan 53 step 14 need a longer one
 SEC="${SEC:-7}"
 cd "$C"
-# 2026-11-14 (judge round 2): the wait matches mouse-seq's own owner-idle threshold (10 s — it refuses below, exit 5), and mouse-seq's exit is the script's:
+# 2026-11-14 (judge round 2): mouse-seq's exit is the script's:
 # a refused or failed input used to leave a clip of SEC seconds with NO input that looked like a normal take («the chat did not open» — passed falsely).
-if ! powershell -NoProfile -File wait-input-idle.ps1 -Min 10 -MaxWait 180 > /dev/null 2>&1; then
-    echo "the owner is at the keyboard (no 10 s of idle in 180 s) — no recording, HDR untouched" >&2   # judge round 3
-    exit 5
-fi
+# (the wait for 10 s of input idle before the recording is gone: the owner cancelled the busy-keyboard rules 2026-11-20 19:37 (KUMM HOUSE_RULES 30))
 powershell -NoProfile -File D:/work/ai_sandbox/SvarogsDream/tools/hdr.ps1 off > /dev/null 2>&1
 trap 'powershell -NoProfile -File D:/work/ai_sandbox/SvarogsDream/tools/hdr.ps1 on > /dev/null 2>&1' EXIT   # HDR back on any exit, TERM / HUP and set -u aborts included — not kill -9 or a tree kill (judge rounds 4–5)
 ffmpeg -hide_banner -loglevel error -y -f lavfi -i "ddagrab=framerate=120:draw_mouse=0" -t "$SEC" -c:v hevc_nvenc -qp 16 "$OUT" &

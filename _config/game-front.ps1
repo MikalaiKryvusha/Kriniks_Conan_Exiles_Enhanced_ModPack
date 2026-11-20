@@ -1,14 +1,14 @@
 # game-front.ps1 -- bring the Conan game window to the foreground and PROVE it is there (ASCII-only: PowerShell 5.1 reads a BOM-less .ps1 as ANSI).
 #
 # WHY (KUMM 2026-11-07 19:4x, KrinikConanLocomotion case M6): input.ps1 only ASSERTS focus and mouse-seq.ps1 sends to whatever window is in front -
-# real Space presses meant for the game went to the owner's VS Code. Real input to the game goes: owner-idle probe -> this script (exit 0 = the game
-# IS the foreground window) -> mouse-seq.ps1 -> game-front.ps1 -Restore <hwnd printed here> to give the owner his window back.
+# real Space presses meant for the game went to the owner's VS Code. Real input to the game goes: this script (exit 0 = the game IS the foreground
+# window) -> mouse-seq.ps1 -> game-front.ps1 -Restore <hwnd printed here> to give the owner his window back.
+# The owner-idle refusal (exit 5 while the owner typed) is REMOVED: the owner cancelled every busy-keyboard rule 2026-11-20 19:37 (KUMM HOUSE_RULES 30);
+# dc79053 removed it from input.ps1 and mouse-seq.ps1 and missed this file (judge 2026-11-20 22:3x). -OwnerAsked stays accepted and does nothing now.
 #
-#   powershell -File game-front.ps1            # prints "front <prevHwnd>"; exit 0 game in front, 3 could not, 4 no game, 5 owner at the keyboard
-#   powershell -File game-front.ps1 -OwnerAsked   # the owner asked for the game himself: no presence check (the KUMM hook owner-presence checked his words)
+#   powershell -File game-front.ps1            # prints "front <prevHwnd>"; exit 0 game in front, 3 could not, 4 no game
 #   powershell -File game-front.ps1 -Restore <hwnd>
-# [TESTED: 2026-11-07 19:3x - three runs: the game came forward ("front <hwnd>", verified by GetForegroundWindow), -Restore gave the focus back; the owner-idle refusal seen once (BUSY)]
-# -OwnerAsked [NOT-TESTED] (2026-11-13 16:05: seen once bringing the game forward for the owner; no case run since the judges' round)
+# [TESTED: 2026-11-07 19:3x - three runs: the game came forward ("front <hwnd>", verified by GetForegroundWindow), -Restore gave the focus back]
 param([string]$Restore = '', [switch]$OwnerAsked)
 Add-Type -Namespace KG -Name W -MemberDefinition @'
 [DllImport("user32.dll")] public static extern System.IntPtr GetForegroundWindow();
@@ -22,10 +22,6 @@ Add-Type -Namespace KG -Name W -MemberDefinition @'
 # after the feedback collector minimized the game). A minimized game is RESTORED (SW_RESTORE 9) and "front" needs a game that is not minimized.
 $SW_SHOW = 5; $SW_RESTORE = 9
 if ($Restore) { [void][KG.W]::SetForegroundWindow([IntPtr][long]$Restore); Write-Output "restored $Restore"; exit 0 }
-if (-not $OwnerAsked) {   # the probe costs a PowerShell start (0.5-1 s); with the owner's ask its answer was thrown away (judge A, 2026-11-13, S3)
-  $probe = & powershell -NoProfile -File 'D:\work\ai_sandbox\_tools\owner-idle.ps1'
-  if ($LASTEXITCODE -eq 5) { Write-Output ("OWNER AT THE KEYBOARD: {0} - game not brought forward" -f $probe); exit 5 }
-}
 $g = Get-Process ConanSandbox-Win64-Shipping -ErrorAction SilentlyContinue | Where-Object { $_.MainWindowHandle -ne 0 } | Select-Object -First 1
 if (-not $g) { Write-Output 'no game window'; exit 4 }
 $prev = [KG.W]::GetForegroundWindow()

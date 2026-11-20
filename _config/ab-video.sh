@@ -4,9 +4,9 @@
 # then each segment labelled with its option (the label text comes from a UTF-8 FILE — text travels through files, AGENT_GUIDE hygiene).
 # Why (KUMM 2026-11-09, `[OWNER]` 17:11-17:13 «нужна не анимация, а видео» · «2 секунды одна опция. потом 2 - другая.» · «И так переключать раз 5. АБ сравнение» ·
 # «только так идеально можно графику тестить»; HOUSE_RULES 11.6d).
-# Needs: the game running, the stand set (camera, HUD as wanted), the owner away from the keyboard (game-front.ps1 refuses with exit 5 otherwise).
+# Needs: the game running, the stand set (camera, HUD as wanted).
 # Out: <out>/<name>.mp4 (labelled) and <out>/<name>_switches.txt (the moment of each switch, s from the recording start).
-# Exit: 0 done · 4 the remote failed / the game is dead · 5 the owner at the keyboard · 6 the recording failed.
+# Exit: 0 done · 4 the remote failed / the game is dead · 6 the recording failed.
 # [NOT-TESTED]
 set -u
 cd "$(dirname "$0")" || exit 4
@@ -20,7 +20,6 @@ P() { bash pult.sh "$1" > /dev/null 2>&1; }
 now() { date +%s.%N; }
 
 FRONT=$(powershell -File game-front.ps1); RC=$?
-[ "$RC" -eq 5 ] && { echo "владелец за клавиатурой — игру вперёд не вывожу"; exit 5; }
 [ "$RC" -ne 0 ] && { echo "игра не вышла вперёд: $FRONT"; exit 4; }
 PREV=$(echo "$FRONT" | awk '{print $2}')
 powershell -File "$HDR" off > /dev/null 2>&1

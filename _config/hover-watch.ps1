@@ -6,7 +6,7 @@
 # ("Otkryvayutsya v odnu stroku, a zatem stanovyatsya v dve"). The remote cannot hover (Slate reads the real cursor), and
 # PrintWindow of a background game never shows a hover tooltip. In full screen the tooltip is NOT a window of its own
 # (2026-10-29 21:14: no second window of the process appeared during a hover) - it is drawn inside the game window.
-# So: wait for the owner's input idle (wait-input-idle.ps1) BEFORE calling this; this script brings the game to the front,
+# So: this script brings the game to the front (no wait for the owner's input idle since the owner cancelled the busy-keyboard rules 2026-11-20 19:37),
 # moves the cursor by SendInput (absolute, DPI-free), grabs a screen region right-down of the cursor as fast as GDI allows
 # (frames kept in memory, saved after), then hands the foreground back. tooltip-bbox.py turns the frames into the
 # tooltip's rectangle per frame - the width over time IS the measurement.

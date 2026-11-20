@@ -6,7 +6,7 @@
 
 # Krinik's Conan Exiles Enhanced ModPack
 
-<h3 align="center"><em>Сборка модов Krinik Mod Pack 0.9.1-RC1 для Conan Exiles Enhanced 3.1.1</em></h3>
+<h3 align="center"><em>Сборка модов Krinik Mod Pack 0.9.1-RC2 для Conan Exiles Enhanced 3.1.1</em></h3>
 
 <p align="center">
   <a href="#russian"><img src="https://img.shields.io/badge/Русский-C0392B?style=for-the-badge" alt="Русский"></a>
@@ -15,7 +15,7 @@
 </p>
 
 [![Лицензия: MIT](https://img.shields.io/badge/Лицензия-MIT-FF1A8C.svg?style=flat-square)](LICENSE)
-[![Версия сборки](https://img.shields.io/badge/Версия_сборки-0.9.1--RC1-FF1A8C.svg?style=flat-square)](#1-общие-сведения)
+[![Версия сборки](https://img.shields.io/badge/Версия_сборки-0.9.1--RC2-FF1A8C.svg?style=flat-square)](#1-общие-сведения)
 [![Игра](https://img.shields.io/badge/Conan_Exiles_Enhanced-3.1.1-brightgreen.svg?style=flat-square)](#3-установка)
 [![Моды](https://img.shields.io/badge/Модов-9_+_63-8E44AD.svg?style=flat-square)](#2-состав-сборки)
 
@@ -47,7 +47,7 @@
 
 ### 1.1. О сборке
 
-1. Версия сборки 0.9.1-RC1 собрана для Conan Exiles Enhanced 3.1.1 (билд CL-383549). Номер с окончанием RC и цифрой носит тестовая сборка: например, сборка 0.9.1-RC1 выходит перед версией 0.9.1, чтобы автор мог проверить весь путь установки. Версия 0.9.0 от 2 ноября 2026 года стала первым выпуском сборки для Conan Exiles Enhanced 3.0.1 (билд CL-379176). Затем сборка перешла на версию игры 3.1.0, а 17 ноября 2026 года на 3.1.1. Раньше автор готовил сборку под версии игры 2.1.1 и 2.2.3. Номер 1.0.0 у сборки встречается дважды: так называлась ранняя бета-версия для игры 2.2.3, и так будет называться первый полноценный выпуск сборки. Что в сборке ещё не доделано и что автор собирается сделать к этому выпуску, перечислено в главе «Известные проблемы и планы на 1.0.0» руководства пользователя.
+1. Версия сборки 0.9.1-RC2 собрана для Conan Exiles Enhanced 3.1.1 (билд CL-383549). Номер с окончанием RC и цифрой носит тестовая сборка: например, сборка 0.9.1-RC1 выходит перед версией 0.9.1, чтобы автор мог проверить весь путь установки. Версия 0.9.0 от 2 ноября 2026 года стала первым выпуском сборки для Conan Exiles Enhanced 3.0.1 (билд CL-379176). Затем сборка перешла на версию игры 3.1.0, а 17 ноября 2026 года на 3.1.1. Раньше автор готовил сборку под версии игры 2.1.1 и 2.2.3. Номер 1.0.0 у сборки встречается дважды: так называлась ранняя бета-версия для игры 2.2.3, и так будет называться первый полноценный выпуск сборки. Что в сборке ещё не доделано и что автор собирается сделать к этому выпуску, перечислено в главе «Известные проблемы и планы на 1.0.0» руководства пользователя.
 2. Состав сборки и порядок загрузки модов задаёт манифест `modpack.json`. Файлы сборки по папке игры раскладывает движок [KUMM](https://github.com/MikalaiKryvusha/kumm).
 3. Все моды сборки переведены на русский язык, и термины для перевода взяты из русской версии игры.
 4. Руководство пользователя лежит в файле [docs/guide/Krinik-Conan-3.1.1-guide.pdf](docs/guide/Krinik-Conan-3.1.1-guide.pdf). В нём описаны возможности сборки, клавиши, состав и история версий.
@@ -78,7 +78,7 @@
 | 3 | [KrinikConanGameplay](_unpacked/KrinikConanGameplay) | Кот Криник | Прокачка героя до 10 000 уровня, атрибуты без предела. |
 | 4 | [KrinikConanLocomotion](_unpacked/KrinikConanLocomotion) | Кот Криник | В прыжке герой стреляет из лука и бьёт оружием ближнего боя, а с натянутым луком бежит спринтом. Герой отталкивается прыжком от стены, по которой лезет, и стреляет из лука в полёте после такого прыжка. Пока герой висит на стене, он понемногу тратит запас сил. За каждое очко Проворства герой быстрее бегает и выше прыгает. |
 | 5 | [KrinikConanUI](_unpacked/KrinikConanUI) | Кот Криник | Пока открыт инвентарь или хаб, игра стоит на паузе. HUD Hosav переработан, чтобы его было легче читать. В правом верхнем углу экрана стоит счётчик кадров, а в главном меню и в меню Esc появилась кнопка «Отзыв». |
-| 6 | [KrinikConanGraphics](_unpacked/KrinikConanGraphics) | Кот Криник | Солнце и тени движутся плавно, без скачков. Тени от листьев пальм и другой листвы не мерцают: мод исправляет материал листвы самой игры. Вода отражает дальний берег, скалы и арки. Пятна крови лежат на земле до пяти минут и плавно гаснут. В мод входят настройки графики, подобранные для сборки: дальность прорисовки, тени, туман и DLSS. |
+| 6 | [KrinikConanGraphics](_unpacked/KrinikConanGraphics) | Кот Криник | Солнце движется по небу плавно, и тени идут за ним без скачков. Тени пальм и другой листвы мерцали из-за материала листвы самой игры: в нём не задано, насколько далеко ветер отклоняет листья. Автор сборки нашёл эту причину, и мод исправляет материал. Под пальмой на ветру мерцало от 12 % до 16 % точек тени на земле. После правки мерцает меньше 0,5 % точек тени. Вода отражает дальний берег, скалы и арки. Пятна крови лежат на земле до пяти минут и плавно гаснут. В мод входят настройки графики, подобранные для сборки: дальность прорисовки, тени, туман и DLSS. |
 | 7 | [KrinikConanEngineTweaks](_unpacked/KrinikConanEngineTweaks) | Кот Криник | Три правки движка убирают причины, по которым игра замирает на миг в путешествии по миру. Данные о местности для поиска пути NPC движок собирает в фоновых потоках, шейдеры визуальных эффектов Niagara готовит заранее при загрузке эффекта, а структуру поиска столкновений после подгрузки новых мест перестраивает по частям за несколько кадров. В полёте над миром каждая правка сократила число замираний дольше 50 мс: на 48 %, на 31 % и на 28 %. |
 | 8 | [KrinikConanRussianTranslation](_config/localization) | Кот Криник | Русский перевод текстов всех модов сборки. |
 | 9 | [KrinikConanModPackManager](_unpacked/KrinikConanModPackManager) | Кот Криник | Заставка на всё время загрузки игры и строка состояния сборки в главном меню: сколько модов сборки загрузила игра. |
@@ -223,7 +223,7 @@
 
 # Krinik's Conan Exiles Enhanced ModPack
 
-<h3 align="center"><em>Krinik Mod Pack 0.9.1-RC1 for Conan Exiles Enhanced 3.1.1</em></h3>
+<h3 align="center"><em>Krinik Mod Pack 0.9.1-RC2 for Conan Exiles Enhanced 3.1.1</em></h3>
 
 <p align="center">
   <a href="#russian"><img src="https://img.shields.io/badge/Русский-C0392B?style=for-the-badge" alt="Русский"></a>
@@ -232,7 +232,7 @@
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-FF1A8C.svg?style=flat-square)](LICENSE)
-[![Pack version](https://img.shields.io/badge/Pack_version-0.9.1--RC1-FF1A8C.svg?style=flat-square)](#1-general)
+[![Pack version](https://img.shields.io/badge/Pack_version-0.9.1--RC2-FF1A8C.svg?style=flat-square)](#1-general)
 [![Game](https://img.shields.io/badge/Conan_Exiles_Enhanced-3.1.1-brightgreen.svg?style=flat-square)](#3-installation)
 [![Mods](https://img.shields.io/badge/Mods-9_+_63-8E44AD.svg?style=flat-square)](#2-contents-of-the-pack)
 
@@ -264,7 +264,7 @@ From a single launcher window you can install, update and remove the pack and st
 
 ### 1.1. About the pack
 
-1. Pack version 0.9.1-RC1 is built for Conan Exiles Enhanced 3.1.1 (build CL-383549). A version number that ends in RC and a digit marks a test build: 0.9.1-RC1, for example, comes out before version 0.9.1 so that the author can test the whole installation path. Version 0.9.0, released on 2 November 2026, was the first release of the pack for Conan Exiles Enhanced 3.0.1 (build CL-379176); the pack then moved to game version 3.1.0 and, on 17 November 2026, to 3.1.1. Before that, the author built the pack for game versions 2.1.1 and 2.2.3. The number 1.0.0 appears twice in the pack's history: the early beta for game version 2.2.3 was released as 1.0.0, and the first full release of the pack will carry that number too. The user guide's chapter “Известные проблемы и планы на 1.0.0” (Known issues and plans for 1.0.0) lists what is not finished yet and what the author plans for that release.
+1. Pack version 0.9.1-RC2 is built for Conan Exiles Enhanced 3.1.1 (build CL-383549). A version number that ends in RC and a digit marks a test build: 0.9.1-RC1, for example, comes out before version 0.9.1 so that the author can test the whole installation path. Version 0.9.0, released on 2 November 2026, was the first release of the pack for Conan Exiles Enhanced 3.0.1 (build CL-379176); the pack then moved to game version 3.1.0 and, on 17 November 2026, to 3.1.1. Before that, the author built the pack for game versions 2.1.1 and 2.2.3. The number 1.0.0 appears twice in the pack's history: the early beta for game version 2.2.3 was released as 1.0.0, and the first full release of the pack will carry that number too. The user guide's chapter “Известные проблемы и планы на 1.0.0” (Known issues and plans for 1.0.0) lists what is not finished yet and what the author plans for that release.
 2. The manifest `modpack.json` defines what the pack contains and the order in which the mods load. The [KUMM](https://github.com/MikalaiKryvusha/kumm) engine deploys the pack into the game folder.
 3. Every mod in the pack is translated into Russian using the terminology of the game's Russian version.
 4. The user guide, [docs/guide/Krinik-Conan-3.1.1-guide.pdf](docs/guide/Krinik-Conan-3.1.1-guide.pdf) (in Russian), covers the pack's features, keys, contents and version history.
@@ -295,7 +295,7 @@ Table 1 — Mods of the pack
 | 3 | [KrinikConanGameplay](_unpacked/KrinikConanGameplay) | KOT KRINIK | The hero can reach level 10,000, and attributes have no cap. |
 | 4 | [KrinikConanLocomotion](_unpacked/KrinikConanLocomotion) | KOT KRINIK | The hero can shoot the bow and strike with a melee weapon mid-jump, and can sprint with a drawn bow. The hero pushes off a wall while climbing it and can shoot the bow in mid-air after that jump. Hanging on a wall slowly drains the hero's stamina. Every point of Agility makes the hero run faster and jump higher. |
 | 5 | [KrinikConanUI](_unpacked/KrinikConanUI) | KOT KRINIK | The game pauses while the inventory or the hub is open. The Hosav HUD is reworked to be easier to read. A frame counter sits in the top right corner of the screen, and the main menu and the Esc menu have a “Отзыв” (Feedback) button. |
-| 6 | [KrinikConanGraphics](_unpacked/KrinikConanGraphics) | KOT KRINIK | The sun and the shadows move smoothly, without jumps. The shadows of palm leaves and other foliage do not flicker: the mod fixes the game's own foliage material. The water reflects the far shore, the cliffs and the arches. Blood stains stay on the ground for up to five minutes and fade out smoothly. The mod also carries graphics settings tuned for the pack: draw distance, shadows, fog and DLSS. |
+| 6 | [KrinikConanGraphics](_unpacked/KrinikConanGraphics) | KOT KRINIK | The sun moves across the sky smoothly, and the shadows follow it without jumps. The shadows of palms and other foliage used to flicker because of the game's own foliage material, which never says how far the wind may bend the leaves. The pack's author found that cause, and the mod fixes the material. Under a palm in the wind, 12 % to 16 % of the shadow's points on the ground flickered; after the fix, fewer than 0.5 % do. The water reflects the far shore, the cliffs and the arches. Blood stains stay on the ground for up to five minutes and fade out smoothly. The mod also carries graphics settings tuned for the pack: draw distance, shadows, fog and DLSS. |
 | 7 | [KrinikConanEngineTweaks](_unpacked/KrinikConanEngineTweaks) | KOT KRINIK | Three engine fixes remove the causes of the brief freezes while traveling the world. The engine gathers the terrain data that NPCs use to find their path on background threads, prepares the shaders of Niagara visual effects in advance when it loads an effect, and rebuilds its collision search structure in parts over several frames after new areas stream in. In a flight over the world each fix cut the number of freezes longer than 50 ms: by 48, 31 and 28 percent. |
 | 8 | [KrinikConanRussianTranslation](_config/localization) | KOT KRINIK | Russian translation of the texts of every mod in the pack. |
 | 9 | [KrinikConanModPackManager](_unpacked/KrinikConanModPackManager) | KOT KRINIK | A splash screen for the whole game load and a pack status line in the main menu: how many mods of the pack the game has loaded. |

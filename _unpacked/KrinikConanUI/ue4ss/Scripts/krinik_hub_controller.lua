@@ -6,17 +6,22 @@
   текущей вправо и влево»; «свой контроллер хаба АДЕКВАТНЫЙ» · «встройки модов привязываю к нему напрямую. через интерфейсы».
 
   How it works (prototypes v5–v10 in the pack's `_config/hubswitch/`, run report KUMM testcases/reports/2026-11-07_conan-hub-controller-shadow-pages.md):
-  * OUR pages for Таланты, Хар-ки, Путешествие, Клан, Спутники, Карта, Базар — one instance each, built lazily (one per tick, nearest tab first, right and
-    left), kept in the viewport, shown the tick after the game's native switch; the game's own newborn page of that tab is hidden and rebuilds unseen.
-  * The GAME's pages for Снаряжение and Параметры — the game tolerates no second inventory or stats window (a second one closes the hub or is killed): the
+  * OUR pages for Таланты, Хар-ки, Клан, Спутники, Базар (Путешествие and Карта until 2026-11-20) — one instance each, built lazily (one per tick, nearest
+    tab first, right and left), kept in the viewport, shown the tick after the game's native switch; the game's own newborn page of that tab is hidden.
+  * The GAME's pages (GAME_PAGE) for Снаряжение and Параметры — the game tolerates no second inventory or stats window (a second one closes the hub or is
+    killed) — and since 2026-11-20 for Путешествие and Карта (our copies were never the game's modules: dead journey start, misplaced map markers): the
     newborn is held at opacity 0 until no widget is born for QUIET_SAMPLES ticks, then shown; the previous page stays on screen meanwhile.
+  * INACTIVE since 2026-11-20 (judge round 1): REFRESH (tab 5) and the Simple Minimap adapter (tab 8) serve only OUR copies of those tabs, which are game
+    pages now. Kept until case N3 (every button of the five other copies) decides whether the copy design stays for any tab; removed with that decision.
   * A widget is kept by its NAME and found alive through FindAllOf before every touch — a Lua ref is a raw pointer and the game destroys extra pages
     (the 2026-11-07 06:29 crash). Inside the native switch only the newborn's opacity is touched (SetVisibility there crashes — KUMM EXP-0474).
   * Closed hub = the game's page of the current tab left the viewport; checked after every ActivateModule (Esc and Tab closes pass through it — bug 85
     recon R2, 2026-11-18) — no timer, no key bind (HOUSE_RULES rule 7).
     On close our pages are Collapsed; the next switch (the reopening) brings them back.
-  * Mods' embeds on OUR pages (adapters): Simple Minimap's helper row on «Карта» (`SM_UI_MapHelper`, added to our bottom bar at the page's build).
-  Known gap: a direct switch between Снаряжение and Параметры shows ≈ 120–150 ms of the dark backing with no page (both are the game's pages: the old one
+  * Mods' embeds on OUR pages (adapters): Simple Minimap's helper row on «Карта» (`SM_UI_MapHelper`) — inactive since 2026-11-20, the game's own map page
+    carries the mod's row itself (case N2 of KUMM testcases/TC_conan_hub_game_pages_map_journey_2026-11-20.md).
+  Known gap (since 2026-11-20 likely on every switch between two GAME pages — Параметры ↔ Путешествие is an ordinary Q / E step now; case N1 owed, judge
+  rounds 1–2): a direct switch between Снаряжение and Параметры shows ≈ 120–150 ms of the dark backing with no page (both are the game's pages: the old one
   leaves inside the native switch, the newborn is held until built); since 2026-11-14 (bug 101 item 5) Параметры → Снаряжение no longer shows the bare world
   (fix5.mp4 at 42 fps; a one-tick bare frame in the native switch tick at 144 fps is not checked).
   [TESTED: 2026-11-07 07:35–07:48 · as a section in the build, background game, the remote's switches: one page per tick on every probed transition, 2 open/close cycles, 0 errors · KUMM testcases/reports/2026-11-07_conan-hub-controller-shadow-pages.md — the player's mouse / Esc / Tab path NOT run]
@@ -29,7 +34,12 @@ local CL = { '/Game/UI/Inventory/CraftingGUI.CraftingGUI_C', '/Game/UI/Inventory
   '/Game/UI/Widgets/CharacterStats/W_CharacterStatsWindow.W_CharacterStatsWindow_C', '/Game/UI/Widgets/Journey/W_NewJourneyWindow.W_NewJourneyWindow_C',
   '/Game/UI/Widgets/Guild/W_GuildView.W_GuildView_C', '/Game/UI/Widgets/Guild/Followers/W_FollowersView.W_FollowersView_C',
   '/Game/UI/Widgets/Map/W_FullscreenMap.W_FullscreenMap_C', '/Game/DLC/Special/Store/UI/Windows/W_StoreWindow.W_StoreWindow_C' }
-local GAME_PAGE = { [1] = true, [4] = true }       -- Снаряжение, Параметры: the game's own (one inventory / one stats window only)
+-- Снаряжение, Параметры: the game's own (one inventory / one stats window only).
+-- Путешествие (5) and Карта (8) — the game's own since 2026-11-20 (KUMM bugs 112, 113; issues #11, #12, #33): our copies are standalone widgets the game never
+-- activated as its modules — on our «Карта» the first marker landed away from the click, no second marker, the reset dead (the owner's play of 0.9.1-RC1).
+-- [TESTED: 2026-11-20 · J1 «Начать путешествие» starts the journey, M1 two markers at the clicks and the reset, N2 Simple Minimap's row — real input on the owner's
+--  game · KUMM testcases/reports/2026-11-20_conan-hub-game-pages-map-journey.md — N1, N3, M2 not run]
+local GAME_PAGE = { [1] = true, [4] = true, [5] = true, [8] = true }
 local MAP_PAGE = 8
 -- A kept page shows the data of ITS birth: the game's own page is born at every switch and reads the data then, ours was built once (KUMM bug 97 — the
 -- owner 2026-11-13 16:01: right after the tutorial every journey but fishing «под замком»). Proven 2026-11-14 10:3x (case J1b of
@@ -357,4 +367,4 @@ end
 local ok_am, e_am = pcall(RegisterHook, '/Script/ConanSandbox.GUIModuleController:ActivateModule', function() ExecuteInGameThread(check_soon) end)
 if not ok_am then log("перехват ActivateModule не встал: %s", tostring(e_am)) end
 
-log("взведён: свои страницы — 7 вкладок (лениво), страницы игры — Снаряжение и Параметры (удержание до готовности)")
+log("взведён: свои страницы — 5 вкладок (лениво), страницы игры — Снаряжение, Параметры, Путешествие и Карта (удержание до готовности)")

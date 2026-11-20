@@ -2,7 +2,7 @@
 . "$(dirname "${BASH_SOURCE[0]}")/game-target.sh"   # GAME_FWD / GAME_UNIX from targets.json (2026-11-13, KUMM plan 53)
 # n1-launch.sh <A|B> <label> — one fresh FRONT launch of the N1 series (KUMM researches/conan-hitch-profiler): B adds
 # `[/Script/NavigationSystem.RecastNavMesh] bDoFullyAsyncNavDataGathering=True` to the game's Engine.ini before the launch and restores the ini after.
-# Steps, each printed: owner-idle FREE (HOUSE_RULES rule 30 — the front launch waits for a free keyboard, as the owner-presence hook does) → launch-fg →
+# Steps, each printed: launch-fg →
 # world → read the flag back → weather off → one cold krinik-show flight → first-60 s hitches → close → ini restored (sha256 printed).
 # [NOT-TESTED]
 set -u
@@ -11,7 +11,6 @@ C=/d/work/ai_sandbox/ConanExiles/_config
 INI="$GAME_UNIX/ConanSandbox/Saved/Config/Windows/Engine.ini"
 cp "$INI" "$INI.bak-n1s"
 if [ "$SIDE" = "B" ]; then printf '\r\n[/Script/NavigationSystem.RecastNavMesh]\r\nbDoFullyAsyncNavDataGathering=True\r\n' >> "$INI"; fi
-for i in $(seq 1 100); do powershell -NoProfile -File D:/work/ai_sandbox/_tools/owner-idle.ps1 >/dev/null 2>&1 && break; sleep 3; done
 echo "[$(date +%T)] side $SIDE: launch"
 powershell -NoProfile -ExecutionPolicy Bypass -File "$C/launch-fg.ps1" -HoldSec 60 | tail -1
 bash "$C/enter-world-remote.sh" | tail -1 || exit 4

@@ -47,10 +47,10 @@ for spec in "$@"; do
   for pair in "${kv[@]}"; do [ -n "$pair" ] && { P "exec $pair" || exit 2; }; done
   P "lua FindFirstOf('BP_TimeOfDayManager_C'):SetTimeOfDay($TOD); return 'tod'" || exit 2
   # WAKE=1: a real Shift tap first — after ≈30 s with no real input the game's idle camera takes over, hides the HUD, orbits the hero and ignores
-  # SetControlRotation (game map, «The game's idle camera»); 2026-11-07 the pose was lost mid-series. Needs the game in front and the PC free (rule 30).
+  # SetControlRotation (game map, «The game's idle camera»); 2026-11-07 the pose was lost mid-series. Needs the game in front.
   # QUIET=<m>: clear humanoids and beasts within <m> metres before each clip — 2026-11-07 a camp fighter walked in and the camera went into the fight
   [ -n "${QUIET:-}" ] && P "lua _G.__qs_radius=$QUIET; return dofile('D:/work/ai_sandbox/ConanExiles/_config/quiet-stand.lua')"
-  [ "${WAKE:-0}" = 1 ] && powershell -NoProfile -File mouse-seq.ps1 -Seq "kdown:0xA0,wait:60,kup:0xA0" -KeepFront -MinIdle 2 > /dev/null
+  [ "${WAKE:-0}" = 1 ] && powershell -NoProfile -File mouse-seq.ps1 -Seq "kdown:0xA0,wait:60,kup:0xA0" -KeepFront > /dev/null
   [ -n "$POSE" ] && { P "lua FindFirstOf('FunCombat_PlayerController_C'):SetControlRotation({Pitch=${POSE% *},Yaw=${POSE#* },Roll=0.0}); return 'pose'" || exit 2; }
   sleep "$SETTLE"
   ffmpeg -hide_banner -loglevel error -y -f lavfi -i "gfxcapture=window_exe=(?i)ConanSandbox-Win64-Shipping:capture_cursor=0:max_framerate=60" -t "$SEC" \

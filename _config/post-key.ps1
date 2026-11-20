@@ -1,6 +1,6 @@
 # post-key.ps1 - the BACKGROUND twin of input.ps1 for single keys (KUMM bug 85, HOUSE_RULES rule 16.2): posts WM_KEYDOWN + WM_KEYUP straight into the
 # game's window message queue (PostMessage), so the game gets the key while the owner keeps his own window and keyboard - no SendInput, no focus change.
-#   powershell -File post-key.ps1 -Key Escape|Tab|Enter|I [-GamePid <game pid>] [-HoldMs 60]
+#   powershell -File post-key.ps1 -Key Escape|Tab|Enter|I|E [-GamePid <game pid>] [-HoldMs 60]
 # Exit 0 - posted; 2 - no game window; 3 - unknown key.
 # Whether the game ACTS on a posted key in the background is the caller's observation (a remote read after it), never this script's claim.
 # [NOT-TESTED]
@@ -15,6 +15,7 @@ $KEYS = @{
     'Tab'    = @(0x09, 0x0F)
     'Enter'  = @(0x0D, 0x1C)
     'I'      = @(0x49, 0x17)
+    'E'      = @(0x45, 0x12)   # 2026-11-20: talk to an NPC in the background (KUMM issue #3, cases D1, D3)
 }
 if ($KEYS.ContainsKey($Key)) {
     $vk = $KEYS[$Key][0]; $scan = $KEYS[$Key][1]

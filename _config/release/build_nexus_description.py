@@ -173,13 +173,13 @@ def links(lang):
     if lang == 'en':
         rows_ = [('Public repository of the pack on GitHub', REPO, 'github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack'),
                  ('Release 0.9.0 on GitHub', f'{REPO}/releases/tag/v0.9.0', 'releases/tag/v0.9.0'),
-                 ('User guide (PDF, in Russian)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.1.1-guide.pdf', 'Krinik-Conan-3.0.1-guide.pdf'),
+                 ('User guide (PDF, in Russian)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.1.1-guide.pdf', 'Krinik-Conan-3.1.1-guide.pdf'),
                  ('Email', 'mailto:kotkrinik@yandex.ru', 'kotkrinik@yandex.ru'),
                  ('Pack page on Nexus Mods', 'https://www.nexusmods.com/conanexilesenhanced/mods/65', 'nexusmods.com/conanexilesenhanced/mods/65')]
     else:
         rows_ = [('Публичный репозиторий сборки на GitHub', REPO, 'github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack'),
                  ('Выпуск 0.9.0 на GitHub', f'{REPO}/releases/tag/v0.9.0', 'releases/tag/v0.9.0'),
-                 ('Руководство пользователя (PDF)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.1.1-guide.pdf', 'Krinik-Conan-3.0.1-guide.pdf'),
+                 ('Руководство пользователя (PDF)', f'{REPO}/blob/main/docs/guide/Krinik-Conan-3.1.1-guide.pdf', 'Krinik-Conan-3.1.1-guide.pdf'),
                  ('Почта', 'mailto:kotkrinik@yandex.ru', 'kotkrinik@yandex.ru'),
                  ('Страница сборки на Nexus Mods', 'https://www.nexusmods.com/conanexilesenhanced/mods/65', 'nexusmods.com/conanexilesenhanced/mods/65')]
     # Почта — простым текстом: тега [email] Nexus не знает и печатает его как есть, а свой [url=mailto:] его визуальный редактор переписывает в [email]

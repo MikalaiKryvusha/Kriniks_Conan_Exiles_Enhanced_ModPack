@@ -195,7 +195,18 @@ def write_one(pak, rows, work_root, dry):
     if not ok:
         os.remove(out)
         return "fail", "%s — check failed (list %s, other files %s) — the pak is untouched" % (rname, after == before, not bad)
-    os.replace(out, pak)
+    # 2026-11-20 20:1x: the user TEMP lives on F: since 2026-11-13 and the game on D: — os.replace refused the cross-drive move (WinError 17) for the three
+    # Krinik paks. The new pak is copied NEXT TO the target first, then swapped in by os.replace on that one drive — atomic: a copy that fails halfway (disk
+    # full, an antivirus lock) leaves the old pak whole (judge round 1, 2026-11-20: shutil.move falls back to copy-over-target, not atomic). Judge round 2: a
+    # refused swap (the game running holds the pak) must not leave a full-size «.tmp» in the game's Mods or the work copy in TEMP — both go in every case.
+    tmp = pak + ".tmp"
+    try:
+        shutil.copy2(out, tmp)
+        os.replace(tmp, pak)
+    finally:
+        for left in (tmp, out):
+            if os.path.exists(left):
+                os.remove(left)
     return "ok", "%s — written (author «%s», desc %d chars)" % (rname, f["author"], len(f["description"]))
 
 

@@ -50,8 +50,26 @@ for try in 1 2 3; do
   echo "нажато «Продолжить» ($try): $MENU $TREE"
   for i in $(seq 1 10); do [ "$(grep -a -c "PreLoadMap_Callback begin" "$LOG")" -gt "$N0" ] && break 2; sleep 2; done
 done
+# 2026-11-20 (KUMM issue #6, report testcases/reports/2026-11-20_conan-immortal-heroine-save.md): the SAVE keeps the hero's god mode across sessions — a run
+# that switched it on (god-on.sh, stand-keeper.sh) and ended without `god-on.sh off` + a save left the owner's heroine immortal. Every agent entry reads the
+# flag BEFORE any command of the run and says it aloud; the run ends with `god-on.sh off` and a save (the Esc menu's CloseAndReturnToMainMenu).
+# [TESTED: 2026-11-20 20:27–20:29 · G4: «ВЫКЛ» → god on + save through the menu → the «ВНИМАНИЕ» line (red) → god off + save → «ВЫКЛ» · KUMM testcases/reports/2026-11-20_conan-immortal-heroine-save.md]
+god_state() {
+  local RES="$R/result.txt" s=""
+  for _ in 1 2 3 4 5; do
+    bash "$(dirname "$0")/pult.sh" 'lua local p=FindFirstOf("BasePlayerChar_C"); return p and p:IsValid() and tostring(p.bCanBeDamaged) or "no hero"' > /dev/null 2>&1
+    s=$(tr -d '\r\n' < "$RES" 2>/dev/null)
+    [ "$s" = "true" ] || [ "$s" = "false" ] && break
+    sleep 2
+  done
+  case "$s" in
+    true)  echo "режим бога в сохранении: ВЫКЛ (bCanBeDamaged=true)" ;;
+    false) echo "ВНИМАНИЕ: в сохранении включён режим бога (bCanBeDamaged=false). Перед игрой владельца выключите его командой god-on.sh off и сохраните игру через меню." ;;
+    *)     echo "режим бога: не прочитан ($s)" ;;
+  esac
+}
 for i in $(seq 1 90); do
-  grep -a -q "LoadMap(/Game/Maps/ConanSandbox" "$LOG" && { echo "мир загружен ($((i * 2)) с)"; exit 0; }
+  grep -a -q "LoadMap(/Game/Maps/ConanSandbox" "$LOG" && { echo "мир загружен ($((i * 2)) с)"; god_state; exit 0; }
   sleep 2
 done
 echo "мир не загрузился за 180 с"; exit 4

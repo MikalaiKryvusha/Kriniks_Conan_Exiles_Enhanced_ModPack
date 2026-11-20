@@ -36,6 +36,23 @@ NOTES="${2:-$PACK/_config/release/draft_${XYZ}/github_release_notes_${XYZ}.md}"
 MARK="<!-- krinik-game: $GV CL-$CL -->"
 echo "release $V for game $GV (CL-$CL) · $NAME · notes $NOTES"
 
+# KUMM plan 59 remedy 1 (2026-11-20): no release without an hour of play on THIS build by the player's path — the play report
+# KUMM testcases/reports/<date>_conan-play-<packVersion>.md (template KUMM testcases/_play-report-template.md) walks every row of the play matrix.
+# The owner found twelve bugs in 30 min of his play of RC1; two earlier remedies (plans 32, 47) were documents no step read (KUMM EXP-0582).
+# [TESTED: 2026-11-20 · this script on RC1 refused at step 0 (no report); _config/release/t_play_report.py — 29 cases (rounds 1-3 of the judge), each refusal by its own rule; it needs a clean tree of the shipped paths · KUMM plan 59 step 4]
+echo "0. the play report of $V"
+# KRINIK_PLAY_GATE_WAIVER=<the owner's words> skips the gate for THIS build only, and the words are printed into the release log. First use: 0.9.1-RC2,
+# the owner 2026-11-20 21:12 «собирай без часа … Какой нахуй час, если мы отгрузили игрокам сломанное гавно!!!» — RC1 ships broken, the fix goes out at once.
+if [ -n "${KRINIK_PLAY_GATE_WAIVER:-}" ]; then
+  echo "   WAIVED by the owner's word: ${KRINIK_PLAY_GATE_WAIVER}"
+else
+  "$PY" -I -X utf8 "$PACK/_config/release/check_play_report.py" "$V" || { echo "release refused: the play report of $V does not hold"; exit 1; }
+fi
+
+# The release ritual (the owner 2026-11-20 21:22–21:25 «ЭТО ЦЕЛЫЙ РИТУАЛ МНОГО ЧЕГО!!!»): versions, the menu line, notes, change notes, guide, README —
+# every item code can check; MANUAL items print with their command. A TODO stops the build here.
+echo "0b. the release ritual of $V"
+"$PY" -I -X utf8 "$PACK/_config/release/release_checklist.py" || { echo "release refused: the ritual has TODO items above"; exit 1; }
 echo "1. the notes carry the game marker"
 [ -f "$NOTES" ] || { echo "no notes file $NOTES"; exit 1; }
 grep -qF "$MARK" "$NOTES" || { echo "the notes lack «$MARK»"; exit 1; }

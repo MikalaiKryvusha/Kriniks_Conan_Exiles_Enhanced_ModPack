@@ -14,20 +14,14 @@
 #   (mdown/mup - middle button: the owner's heavy attack, which draws the bow without RMB - 2026-10-28)
 # [NOT-TESTED]
 #
-# OWNER-AT-THE-KEYBOARD GUARD (2026-11-07, the owner's rule, verbatim in KUMM HOUSE_RULES rule 30): real input is sent only when nobody has touched the
-# physical keyboard / mouse for -MinIdle seconds (GetLastInputInfo); otherwise exit 5 "OWNER AT THE KEYBOARD", nothing is sent, the game is not brought forward.
+# The owner-at-the-keyboard guard (2026-11-07) was REMOVED 2026-11-20 19:37 by the owner's word: every busy-keyboard / busy-mouse rule is cancelled
+# (KUMM PROJECT_HISTORY entry 2026-11-20 19:37). The input is sent at once.
 param(
   [Parameter(Mandatory = $true)][string]$Seq,
   [string]$Process = 'ConanSandbox-Win64-Shipping',
-  [switch]$KeepFront,
-  [int]$MinIdle = 10
+  [switch]$KeepFront
 )
 $ErrorActionPreference = 'Stop'
-$probe = & powershell -NoProfile -File 'D:\work\ai_sandbox\_tools\owner-idle.ps1' -MinIdle $MinIdle
-if ($LASTEXITCODE -eq 5) {
-  Write-Output ("OWNER AT THE KEYBOARD: {0} - nothing sent" -f $probe)
-  exit 5
-}
 Add-Type @"
 using System;
 using System.Runtime.InteropServices;
@@ -90,7 +84,6 @@ if ([SI]::GetForegroundWindow() -ne $game.MainWindowHandle -or [SI]::IsIconic($g
   [void][SI]::SetForegroundWindow($game.MainWindowHandle)
   Start-Sleep -Milliseconds 300
   if ([SI]::GetForegroundWindow() -ne $game.MainWindowHandle -or [SI]::IsIconic($game.MainWindowHandle)) {
-    & powershell -NoProfile -File 'D:\work\ai_sandbox\_tools\owner-idle.ps1' -MarkOwn   # the ALT taps above are ours
     Write-Output "GAME NOT IN FRONT: the foreground window is not the game - nothing sent"
     exit 6
   }
@@ -113,11 +106,9 @@ foreach ($step in ($Seq -split ',')) {
   elseif ($s -match '^x([12])(down|up)$') { [SI]::Mouse($(if ($Matches[2] -eq 'down') { [uint32]0x0080 } else { [uint32]0x0100 }), [int]$Matches[1]) }
   elseif ($s -like 'move:*') { $p = $s.Substring(5) -split '/'; [SI]::MoveTo([double]::Parse($p[0], [Globalization.CultureInfo]::InvariantCulture), [double]::Parse($p[1], [Globalization.CultureInfo]::InvariantCulture)) }
   else { throw "unknown step: $s" }
-  if ($s -notlike 'wait:*') { $ownTick = [BitConverter]::ToUInt32([BitConverter]::GetBytes([Environment]::TickCount), 0) }   # the tick of our last input event
   $log += ('{0,6} ms  {1}' -f $ms, $s)
 }
 if (-not $KeepFront) { [void][SI]::SetForegroundWindow($prev) }
-# «the last input is mine» for owner-idle.ps1: our own SendInput reset the idle clock, and the next sequence within 10 s was refused as the owner's
-# (2026-11-14 23:2x, the owner had not touched the PC for an hour). Marked after the focus is handed back: the ALT tap above is ours too.
-if ($ownTick) { & powershell -NoProfile -File 'D:\work\ai_sandbox\_tools\owner-idle.ps1' -MarkOwn -Tick $ownTick }   # exact: not «whatever input is last» 0.3 s later
+# The 'last input is mine' mark for owner-idle.ps1 (-MarkOwn after every sequence) is gone: its readers were the busy-keyboard guards the owner cancelled
+# 2026-11-20 19:37 (KUMM HOUSE_RULES 30), and the last of them left the pack the same evening - one PowerShell start (0.5-1 s) less per sequence.
 $log -join "`n"

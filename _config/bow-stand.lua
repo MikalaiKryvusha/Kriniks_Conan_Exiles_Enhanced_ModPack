@@ -1,7 +1,7 @@
 -- bow-stand.lua — KUMM stand helper (TC_conan_fp_bow_visible, plan 52): the honest bow stand of the game map «Stand gear» in one remote call.
 -- Read-only by default: how many crafted bows 51401 and arrows 53612 the hero carries (quick bar · backpack). `_G.__bs = {craft = true}` — the ingredients
 -- (10012 × 7, 12001 × 7, 14174 × 7) into the backpack by AddItemTemplate and the hero CRAFTS the bow (an AddItemTemplate bow cannot be wielded — game map),
--- plus 20 arrows when none. The bow lands on the quick bar; a real hot-bar key wields it (a FREE PC only, HOUSE_RULES rule 30). [NOT-TESTED]
+-- plus 20 arrows when none. The bow lands on the quick bar; a real hot-bar key wields it. [NOT-TESTED]
 -- !! 2026-11-16 19:18 on 3.1.0: `{craft = true}` CRASHED the game (EXCEPTION_ACCESS_VIOLATION reading 0x70, 2 s into the call) — most likely the remote CraftItems on the
 -- queue the 3.1.0 patch rewrote (KUMM bugs/93). Do not run the craft branch until the call is re-read against 3.1.0; the read-only count is safe.
 local cfg = _G.__bs or {}

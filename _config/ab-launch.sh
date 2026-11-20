@@ -11,7 +11,6 @@ INI="$GAME_UNIX/ConanSandbox/Saved/Config/Windows/Engine.ini"
 cp "$INI" "$INI.bak-ab"
 BLK="$FA"; [ "$SIDE" = "B" ] && BLK="$FB"
 [ "$BLK" != "-" ] && { printf '\r\n' >> "$INI"; sed 's/$/\r/' "$BLK" >> "$INI"; }
-for i in $(seq 1 100); do powershell -NoProfile -File D:/work/ai_sandbox/_tools/owner-idle.ps1 >/dev/null 2>&1 && break; sleep 3; done
 echo "[$(date +%T)] side $SIDE ($BLK): launch"
 powershell -NoProfile -ExecutionPolicy Bypass -File "$C/launch-fg.ps1" -HoldSec 60 | tail -1
 bash "$C/enter-world-remote.sh" | tail -1 || exit 4

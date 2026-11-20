@@ -134,12 +134,7 @@ function Assert-Foreground([string]$ProcName) {
 
 if ($Probe) { Show-Pos; exit 0 }
 
-# HOUSE_RULES rule 30 (2026-11-07 19:3x): this tool sent a real Space into the game while the owner was typing - mouse-seq refused the same second, input.ps1
-# had no guard and the hook checks only once before a whole command. Same probe as mouse-seq: a person touched keyboard/mouse < 10 s ago -> exit 5, nothing sent.
-if ($Move -or $Click -or $RightClick -or $Look -or $Wheel -ne 0 -or $Key -or $Type) {
-  $probe = & powershell -NoProfile -File 'D:\work\ai_sandbox\_tools\owner-idle.ps1'
-  if ($LASTEXITCODE -eq 5) { Write-Output ("OWNER AT THE KEYBOARD: {0} - nothing sent" -f $probe); exit 5 }
-}
+# The owner-at-the-keyboard guard of HOUSE_RULES rule 30 was REMOVED 2026-11-20 19:37 by the owner's word (every busy-keyboard / busy-mouse rule cancelled).
 
 if (-not $NoFocusCheck -and ($Move -or $Click -or $RightClick -or $Look -or $Wheel -ne 0 -or $Key -or $Type)) {
   Assert-Foreground $RequireWindow

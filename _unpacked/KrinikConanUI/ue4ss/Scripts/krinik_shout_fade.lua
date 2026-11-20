@@ -173,11 +173,29 @@ local function hook_once()
     log("перехват SetTextActive: %s", ok and "стоит" or ("ОШИБКА " .. tostring(err)))
 end
 
+-- 🩹 2026-11-20 (KUMM issue #3, case D2): the talk windows (`W_NPCDialogue_C`, `W_NPCDialogue2_C`) have their OWN subtitle renderer, and the game never calls
+-- SetTextActive for its lines (a probe hook on SetTextActive: 0 calls for the merchant's «Говорить» line). The birth-hide below left the NPC's answer invisible
+-- for good — the owner 2026-11-20 20:02: «a chosen reply did nothing, the NPC's voice played». Control (this section off): the line «Можешь выйти отсюда с
+-- покупкой…» shows ≈ 1 s after the press and stays. So a line born while a talk window is open is the talk's — the game shows it itself; only lines born
+-- outside a talk are hidden for the mirror. Trigger: a line's birth; input: whether a talk module is active; N: two native calls (FName made at load) per
+-- subtitle line, never per frame. [NOT-TESTED] — case D2 of KUMM testcases/TC_conan_hub_game_pages_map_journey_2026-11-20.md
+local TALK_MODULES = { FName("NPCDialogueWindow"), FName("NPCDialogueWindow2") }
+local gmc
+local function talk_open()
+    if not valid(gmc) then gmc = FindFirstOf("GUIModuleController") end
+    if not valid(gmc) then return false end
+    for _, m in ipairs(TALK_MODULES) do
+        local ok, active = pcall(function() return gmc:IsModuleActive(m) end)
+        if ok and active then return true end
+    end
+    return false
+end
+
 NotifyOnNewObject(ENTRY_NATIVE, function(entry)
     local t0 = os.clock()
     pcall(function()
-        if not entry:GetFullName():find("Default__", 1, true) then
-            entry.RenderOpacity = 0.0       -- строку игры не видно никогда: текст показывает зеркало
+        if not entry:GetFullName():find("Default__", 1, true) and not talk_open() then
+            entry.RenderOpacity = 0.0       -- строку игры не видно: текст показывает зеркало (строки разговора — нет, их показывает игра)
         end
     end)
     hook_once()

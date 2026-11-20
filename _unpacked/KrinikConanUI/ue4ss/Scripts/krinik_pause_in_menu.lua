@@ -58,6 +58,25 @@ local HOOK_MODULES = true    -- перехват ActivateModule: журнал м
 -- окон. Механизм ниже рабочий и проверенный — если найдётся окно, которое не переживает даже 0.01,
 -- впиши сюда его имя, и пауза будет сниматься на время его жизни.
 local NO_PAUSE_MODULES = {}
+-- 🩹 2026-11-20 (KUMM issue #3, the owner's play of 0.9.1-RC1): «во время диалогов мир становится на паузу - потенциально может ломать диалоги». The log of that
+-- session: `NPCDialogueWindow` opened 18:39:48 → «меню открыто: замедление 0.03» until 18:40:02 — a dialogue is a full-screen GUI, and the poll slowed it like the
+-- tabbed menu. The order (13.09) is the menu with tabs the player entered himself; a dialogue is not in it. Windows of this list keep the world at 1.0 for the
+-- WHOLE time they are open (NO_PAUSE_MODULES above only gives a grace at a modal's birth).
+-- 🩹 2026-11-20 20:0x, the second pass: the first list knew only `NPCDialogueWindow`; the talk at the oasis campfire («Поборник Внешней тьмы») opened
+-- `NPCDialogueWindow2` and the world went to 0.03 (case D1, 20:01:13). The live DT_UIModuleTable (254 rows) has exactly these two NPC talk windows. The owner
+-- 20:02: a reply option chosen in a talk did nothing visible while the NPC's voice played — the cause of THAT symptom proved to be krinik_shout_fade hiding the talk lines (case D2b, control 21:00), not the slowdown; 20:03 «лучше убрать паузу
+-- во время диалогов». The state is ASKED of the game (`IsModuleActive`) in the poll, only while a full-screen UI is open — no open/close bookkeeping that a lost
+-- «closed» event could leave stuck (the class of bug 100).
+-- [TESTED: 2026-11-20 · D1: the oasis campfire talk by a real E — dilation 1.0, no slowdown line, the hub after it 0.03 · KUMM testcases/reports/2026-11-20_conan-dialogue-world-pace.md]
+-- (the Esc-over-a-talk guard of judge round 1 is [NOT-TESTED] — case D3 of the same case file)
+local DIALOGUE_MODULES = { FName("NPCDialogueWindow"), FName("NPCDialogueWindow2") }
+local function dialogue_open(gmc)
+    for _, m in ipairs(DIALOGUE_MODULES) do
+        local ok, active = pcall(function() return gmc:IsModuleActive(m) end)
+        if ok and active then return true end
+    end
+    return false
+end
 
 -- Имена ESC-меню взяты НАБЛЮДЕНИЕМ, а не догадкой, и их ДВА — вот почему:
 --   · `IngameMenu` — родное имя модуля, перехват печатал его 16.09, когда владелец открыл ESC;
@@ -551,7 +570,10 @@ end
 -- UE4SS.dll. Урок: pcall НЕ защищает от нарушения доступа в нативном коде; неверный тип аргумента
 -- у нативной функции — это не ошибка Lua, это падение процесса. Признак модалки берётся из УЖЕ
 -- РАБОТАЮЩЕГО перехвата ActivateModule (он приносил «модуль PerkSelection: открыт» 16.09 в 21:03),
--- то есть из чистой таблицы Lua — новых нативных вызовов в цикле НЕТ.
+-- то есть из чистой таблицы Lua. Причина падения 16.09 — СТРОКА вместо FName (KUMM EXP-0113). С 2026-11-20 опрос снова зовёт
+-- IsModuleActive — для двух окон разговора (`dialogue_open`, issue #3): аргумент — FName, созданный при загрузке (как CONTAINER_MODULE в
+-- krinik_pickup_prompt.lua), и вызов идёт только при открытом полноэкранном окне в мире, после проверок загрузки и взвода. Наблюдался
+-- работающим 2026-11-20 20:06–20:07 (разговор и хаб, без падения).
 local polls = 0
 local function poll()
     polls = polls + 1
@@ -601,6 +623,9 @@ local function poll()
         on = false
         if modal_grace == 0 then log("фора кончилась — пауза возвращается, модалка остаётся открытой") end
     end
+    -- issue #3: a talk with an NPC keeps the world at its normal pace the whole time it is open (two native calls, only while a full-screen UI is open).
+    -- The Esc menu opened over a talk keeps its own slowdown (judge round 1, 2026-11-20: the exemption ran before the Esc decision and would have held 1.0).
+    if on and next(esc_open) == nil and dialogue_open(gmc) then on = false end
     -- 0.6.0: ЧЕГО ХОТИМ прямо сейчас — одно число, а не «пауза вкл/выкл». Так два разных
     -- замедления (ESC и меню с вкладками) живут без второго флага, и переход между ними
     -- происходит сам собой, если игрок открыл ESC поверх меню.
