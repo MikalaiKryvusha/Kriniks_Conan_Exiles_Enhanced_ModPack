@@ -27,6 +27,21 @@
 
 Установить сборку, обновить её, запустить с ней игру и удалить сборку можно в одном окне лаунчера. Лаунчер находит игру на компьютере и может скачать сборку с GitHub. О новой версии сборки лаунчер сообщает сам, а себя обновляет отдельно от сборки. Отчёт для автора сборки игрок собирает прямо из меню игры.
 
+<p align="center">
+  <a href="https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/releases/latest/download/KrinikConanLauncher.exe"><img src="art/buttons/download_ru.webp" alt="Скачать лаунчер KrinikConanLauncher.exe" width="420"></a>
+</p>
+
+<p align="center">
+  <img src="_config/release/draft_0_9_1/nexus_media/cover_0_9_1.webp" alt="Krinik Mod Pack 0.9.1 для Conan Exiles Enhanced 3.1.1" width="900">
+</p>
+
+<p align="center">
+  <img src="art/screenshots/hero_oasis_1.webp" alt="Герой сборки у оазиса" width="49%">
+  <img src="art/screenshots/hero_oasis_2.webp" alt="Герой сборки у оазиса" width="49%">
+  <img src="art/screenshots/hero_oasis_3.webp" alt="Герой сборки у оазиса" width="49%">
+  <img src="art/screenshots/hero_oasis_4.webp" alt="Герой сборки у оазиса" width="49%">
+</p>
+
 ## 1. Общие сведения
 
 ### 1.1. О сборке
@@ -227,6 +242,21 @@
 **Krinik Mod Pack is a mod pack for Conan Exiles Enhanced 3.1.1: 9 mods by the pack author, 63 mods by other authors from the Steam Workshop and Nexus Mods, the UE4SS loader and a launcher. Every mod of the pack is translated into Russian.**
 
 From a single launcher window you can install, update and remove the pack and start the game with it. The launcher finds the game on your computer and can download the pack from GitHub. It tells you when a new version of the pack is out, and it updates itself separately from the pack. You can collect a report for the pack author right from the game menu.
+
+<p align="center">
+  <a href="https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/releases/latest/download/KrinikConanLauncher.exe"><img src="art/buttons/download_en.webp" alt="Download the launcher KrinikConanLauncher.exe" width="420"></a>
+</p>
+
+<p align="center">
+  <img src="_config/release/draft_0_9_1/nexus_media/cover_0_9_1.webp" alt="Krinik Mod Pack 0.9.1 for Conan Exiles Enhanced 3.1.1" width="900">
+</p>
+
+<p align="center">
+  <img src="art/screenshots/hero_oasis_1.webp" alt="The pack's hero at the oasis" width="49%">
+  <img src="art/screenshots/hero_oasis_2.webp" alt="The pack's hero at the oasis" width="49%">
+  <img src="art/screenshots/hero_oasis_3.webp" alt="The pack's hero at the oasis" width="49%">
+  <img src="art/screenshots/hero_oasis_4.webp" alt="The pack's hero at the oasis" width="49%">
+</p>
 
 ## 1. General
 
