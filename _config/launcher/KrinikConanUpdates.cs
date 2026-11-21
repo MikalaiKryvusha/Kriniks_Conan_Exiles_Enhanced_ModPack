@@ -24,7 +24,8 @@ using System.Windows.Forms;
 // скорость и оставшееся время (Meter). Скачанное прежними запусками в скорость не входит: SessionStart — байты на начало этого запуска. [NOT-TESTED]
 sealed class Job
 {
-    public enum Stage { Search, Download, Verify, Unpack, Remove, Install, Launcher }
+    // Copy — лаунчер копирует файлы прежней сборки в новую там, где жёсткая ссылка невозможна (FAT32, exFAT, другой том; KrinikConanDelta.cs).
+    public enum Stage { Search, Download, Verify, Unpack, Remove, Install, Launcher, Copy }
     public volatile Stage Now;
     public volatile bool Update;            // обновление поставленной сборки (полоса «Обновление сборки до …»), а не первая установка
     public string Version = "";             // версия сборки или лаунчера, о которой идёт речь
@@ -275,7 +276,9 @@ static class Feed
 
     public static string Sha256(string file, Action<long> progress, Func<bool> cancelled)
     {
-        using (var sha = SHA256.Create())
+        // SHA256Cng (System.Core): на этом ПК в разы быстрее SHA256.Create() .NET Framework (управляемая реализация), а сверка прежних сборок читает
+        // до 13,7 ГБ (разведка KUMM researches/conan-launcher-delta-update §5, шаг 2). [NOT-TESTED]
+        using (var sha = new SHA256Cng())
         using (var fs = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, BUFFER))
         {
             var buf = new byte[BUFFER];
@@ -665,7 +668,9 @@ sealed class BuildUpdate
     public readonly List<Feed.Asset> Parts = new List<Feed.Asset>();
     public long Total, Have, Free, LocalSize;
     public string Version => Release != null ? Release.Number.ToString() : Bundle.PackVersionIn(Local) ?? "";
-    public bool Installed => File.Exists(Uninstaller);
+    // Тот же признак, что у Games.Describe: деинсталлятор И журнал раскатки (KUMM bugs/115). Один деинсталлятор — остаток законченного удаления, и
+    // обновление по нему считало сборку стоящей: путь по списку без старой сборки, место без модов (судья 2026-11-21, круг 4, находка 1). [NOT-TESTED]
+    public bool Installed => File.Exists(Uninstaller) && File.Exists(Games.JournalOf(GameDir));
     // Чем кончилась остановка: «net» — оборвалась связь (окно предлагает «Продолжить скачивание»), «user» — игрок нажал «Отменить».
     public string Stop;
     // Дело прошло отказы до начала (игра запущена, окно установки открыто, запретная папка): только тогда ошибка пишет метку «error» в папку частей.
@@ -676,9 +681,23 @@ sealed class BuildUpdate
     // Архив этого выпуска уже распакован целиком (прошлая попытка встала после распаковки): скачивание и распаковка пропускаются (судья 2026-11-17,
     // epic 55 B7 п. 2). «Целиком» держит метка pack\.krinik_unpacked, её пишет только Unpack и только последней.
     public bool Ready;
+    // Выпуск со списком файлов (manifest.json, KUMM plans/57 фаза 6): обновление скачивает только то, чего нет в прежних сборках рядом с игрой
+    // (KrinikConanDelta.cs). Части рядом с лаунчером (Beside) и уже распакованный архив (Ready) идут прежним путём. [NOT-TESTED]
+    public Feed.Asset ManifestAsset;
+    // Обновление поставленной сборки И первая установка (KUMM plan 57 фаза 6 шаг 6: ответ владельца C 2026-11-21 16:58, «один формат — файлы»; первая
+    // установка — тот же путь без прежних сборок, или с прежней сборкой, оставшейся в папке игры после удаления). Начатое скачивание частей (Have > 0)
+    // докачивается частями: у него есть экран остановки и «Продолжить скачивание» (судья 2026-11-21, дефект 1). [NOT-TESTED]
+    public bool ByManifest => ManifestAsset != null && !Beside && Local == null && Have == 0;
+    public string Here;                        // папка запущенного лаунчера: её сборку сверка читает первой
+    // Игрок ответил «Нет» на вопрос с настоящим размером скачивания: не ошибка и не остановка — окно просто возвращается к прежнему экрану.
+    public const string DECLINED = "\u0001declined";
+    // Список файлов выпуска негоден (не читается, другой корень, другая версия), а части архива в выпуске есть: обновление идёт частями (судья, R9).
+    const string FALLBACK = "\u0001fallback";
     // Сколько места ещё нужно: недокачанное + распаковка + копия модов в игру, когда прежней сборки нет (её снятие иначе освобождает примерно столько же)
-    // + запас. Папка, оставшаяся от остановленной распаковки, перепишется целиком (судья B7, круг 2, R4). [NOT-TESTED]
+    // + запас. Папка, оставшаяся от остановленной распаковки, перепишется целиком (судья B7, круг 2, R4). По списку файлов размер известен только после
+    // сверки с прежними сборками: здесь запас, настоящая проверка места — в RunByManifest. [NOT-TESTED]
     public long Need => Local != null ? (Installed ? 0 : LocalSize) + RESERVE
+                      : ByManifest && !Ready ? RESERVE
                                       : (Ready ? 0 : (Beside ? 0 : Total - Have) + Total) + (Installed ? 0 : Total) + RESERVE;
     public bool FreeKnown => Free != FREE_UNKNOWN;
     string Manifest => Path.Combine(BundleDir, "pack", "modpack.json");
@@ -730,12 +749,17 @@ sealed class BuildUpdate
         for (int i = 0; i < u.Parts.Count; i++)
             if (u.Parts[i].Name != $"{u.Stem}.zip.{i + 1:000}" || u.Parts[i].Sha256.Length == 0 || !u.Parts[i].Url.StartsWith("http", StringComparison.OrdinalIgnoreCase))
             { u.Stem = null; break; }
-        if (u.Stem == null || u.Parts.Count == 0) { why = Ui.F("u.no.archive", release.Number); return null; }
+        // Список файлов выпуска — с дайджестом GitHub, иначе ему нельзя верить. Выпуск без частей архива (или с частями не по порядку) со списком
+        // файлов годится: корень сборки — по номеру выпуска, как его режет make_release.sh. [NOT-TESTED]
+        u.ManifestAsset = release.Assets.Find(a => a.Name == Delta.MANIFEST && a.Sha256.Length == 64 && a.Url.StartsWith("http", StringComparison.OrdinalIgnoreCase));
+        if (u.Stem == null && u.ManifestAsset != null) { u.Stem = Delta.Stem(release.Number); u.Parts.Clear(); }
+        if (u.Stem == null || (u.Parts.Count == 0 && u.ManifestAsset == null)) { why = Ui.F("u.no.archive", release.Number); return null; }
         u.BundleDir = Path.Combine(u.GameDir, u.Stem);
         if (string.Equals(Path.GetFullPath(u.BundleDir).TrimEnd('\\'), Path.GetFullPath(here).TrimEnd('\\'), StringComparison.OrdinalIgnoreCase))
         { why = Ui.F("u.over.self", release.Number); return null; }
         // Все части выпуска рядом с лаунчером, каждая своего размера, — их скачал игрок: качать нечего (критерий 4).
-        u.Beside = u.Parts.TrueForAll(p => { var f = Path.Combine(here, p.Name); return File.Exists(f) && new FileInfo(f).Length == p.Size; });
+        // Пустой список частей (выпуск только со списком файлов) — не «все части рядом»: TrueForAll пустого списка дал бы true.
+        u.Beside = u.Parts.Count > 0 && u.Parts.TrueForAll(p => { var f = Path.Combine(here, p.Name); return File.Exists(f) && new FileInfo(f).Length == p.Size; });
         u.PartsDir = u.Beside ? Path.GetFullPath(here).TrimEnd('\\') : Path.Combine(u.GameDir, u.Stem + "_parts");
         foreach (var p in u.Parts)
         {
@@ -745,6 +769,9 @@ sealed class BuildUpdate
         }
         Bundle.Forget(u.BundleDir);
         u.Ready = u.Unpacked;
+        u.Here = Path.GetFullPath(here).TrimEnd('\\');
+        // Выпуск без частей архива здесь всегда идёт по списку: список у него есть (выше), Beside требует частей, Have считает части (судья, круг 5, NIT 3:
+        // прежняя проверка «список годится лишь для обновления» стала недостижимой).
         u.ReadFree();
         return u;
     }
@@ -785,8 +812,11 @@ sealed class BuildUpdate
     // Работает в фоне. null — сборка стоит (путь нового лаунчера — NewLauncher); иначе — текст для игрока. stoppable(false) — дальше остановить
     // нельзя: снятие и установка сборки идут до конца (судья: «Остановить» после распаковки ничего не останавливал). press — подпись кнопки, которую
     // игрок нажмёт ещё раз.
-    public string Run(Job job, Func<bool> cancelled, Action<bool> stoppable, string press)
+    // confirm — вопрос игроку с настоящим размером скачивания (байты, файлы) после сверки файлов; null — не спрашивать (первая установка).
+    // confirm(bytes, files, whole): whole — вопрос о скачивании архива целиком (переход на части), иначе — о скачивании по списку файлов.
+    public string Run(Job job, Func<bool> cancelled, Action<bool> stoppable, string press, Func<long, int, bool, bool> confirm = null)
     {
+        string viaList = null;
         job.Version = Version;
         try
         {
@@ -804,8 +834,28 @@ sealed class BuildUpdate
             if (Local != null) MetalWindow.Log($"ставлю сборку {Version}, распакованную рядом с лаунчером: {Local}");
             else if (Ready)
                 MetalWindow.Log($"архив {Release.Number} уже распакован в {BundleDir} — скачивание и распаковка пропущены");
+            else if (ByManifest && (viaList = RunByManifest(job, cancelled, press, confirm)) != FALLBACK)
+            {
+                if (viaList != null) return viaList;
+            }
             else
             {
+                // Список файлов негоден, идём частями: вопрос с размером архива и место на диске — до первой части, как на прежнем пути (судья 2026-11-21,
+                // круг 2, дефект 1: UpdateBuild пропустил вопрос, а Need для пути по списку — только запас). [NOT-TESTED]
+                if (viaList == FALLBACK)
+                {
+                    // Папки .staging (этой и других версий) части архива не используют, а на томе без ссылок (exFAT, флешка) в них лежат копии прежней
+                    // сборки — до 13,7 ГБ: проверка места отказывала на каждом нажатии (судья 2026-11-21, круг 3, RISK 3). Их собственные байты (файлы с одним
+                    // именем) считаются свободным местом; сами папки уходят только после «Да»: при «Нет» скачанное по списку остаётся для следующей
+                    // попытки (круг 4, находка 3). Удаляются имена, байты прежней сборки остаются у её имён.
+                    long reclaim = 0;
+                    foreach (var dir in Directory.GetDirectories(GameDir, "Krinik_*" + Delta.STAGING)) reclaim += Delta.OwnBytes(dir);
+                    ReadFree();
+                    long need = (Beside ? 0 : Total - Have) + Total + (Installed ? 0 : Total) + RESERVE;
+                    if (FreeKnown && Free + reclaim < need) return Ui.F("box.space", Path.GetPathRoot(GameDir).TrimEnd('\\'), Ui.Size(need), Ui.Size(Free + reclaim));
+                    if (confirm != null && !confirm(Total - Have, Parts.Count, true)) { MetalWindow.Log("игрок отказался от обновления частями архива"); return DECLINED; }
+                    Delta.ForgetOtherStaging(GameDir, null);
+                }
                 if (!Beside)
                 {
                     var last = Parts[Parts.Count - 1];
@@ -844,6 +894,8 @@ sealed class BuildUpdate
                     files.Add(file);
                 }
                 Unpack(files, job, cancelled);
+                // Сборка встала частями после негодного списка: папки .staging этой версии и прежних попыток больше не нужны (судья 2026-11-21, круг 2). [NOT-TESTED]
+                if (viaList == FALLBACK) Delta.ForgetOtherStaging(GameDir, null);
             }
             string install = Path.Combine(BundleDir, "install.ps1");
             if (!File.Exists(install)) return Ui.F("u.no.installer", BundleDir);
@@ -876,7 +928,7 @@ sealed class BuildUpdate
             MetalWindow.Log($"сборка {Version} поставлена из {BundleDir}");
             return null;
         }
-        catch (OperationCanceledException) { Stop = "user"; MetalWindow.Log("обновление остановлено игроком"); return Ui.T("u.stopped"); }
+        catch (OperationCanceledException) { Stop = "user"; MetalWindow.Log("обновление остановлено игроком"); return Ui.T(Installed ? "u.stopped" : "u.stopped.install"); }
         catch (Exception ex) when (NetFailure(ex)) { Feed.CloseResponse(ex); Stop = "net"; MetalWindow.Log("связь оборвалась, скачанное сохранено: " + ex.Message); return Ui.T("v.net.stop"); }
         catch (Exception ex)
         {
@@ -884,6 +936,107 @@ sealed class BuildUpdate
             MetalWindow.Log("обновление сборки: " + ex);
             return Ui.F("u.failed", ex.Message);
         }
+    }
+
+    // Обновление по списку файлов: список (сверка с дайджестом) → сверка прежних сборок → место на диске → вопрос с настоящим размером → сборка в
+    // <корень>.staging → метка «распаковано целиком» → переименование. Дальше Run ставит сборку тем же установщиком, что и после архива. [NOT-TESTED]
+    string RunByManifest(Job job, Func<bool> cancelled, string press, Func<long, int, bool, bool> confirm)
+    {
+        string staging = BundleDir + Delta.STAGING, dl = Path.Combine(staging, Delta.DL), file = Path.Combine(dl, Delta.MANIFEST);
+        Directory.CreateDirectory(dl);
+        // Две попытки, как у каждого ассета: дайджест считает GitHub, и несовпадение означает порчу при передаче (судья 2026-11-21, круг 2: слово «дважды»
+        // стояло после одной попытки). Список всегда скачивается заново: оставшийся от прошлой попытки докачивался бы по Range поверх нового (судья, Д2). [NOT-TESTED]
+        try
+        {
+            for (int attempt = 1; ; attempt++)
+            {
+                if (File.Exists(file)) File.Delete(file);
+                job.Enter(Job.Stage.Download, 0, ManifestAsset.Size);
+                Feed.Download(ManifestAsset.Url, file, ManifestAsset.Size, d => job.Set(d, ManifestAsset.Size), cancelled);
+                if (Feed.Sha256(file, null, cancelled) == ManifestAsset.Sha256) break;
+                MetalWindow.Log($"{Delta.MANIFEST}: контрольная сумма не совпала, попытка {attempt}");
+                // Список, дважды не сошедшийся с дайджестом, — тот же случай, что ассет: при частях архива — части (судья, круг 3, RISK 2).
+                if (attempt == 2) return Unusable(staging, dl, file, Ui.F("u.delta.twice", Delta.MANIFEST, press));
+            }
+        }
+        catch (WebException ex) when (!NetFailure(ex)) { Feed.CloseResponse(ex); return Unusable(staging, dl, file, Ui.F("u.failed", ex.Message)); }
+        Delta.Manifest m = null;
+        string bad = null;
+        try { m = Delta.Parse(File.ReadAllText(file, Encoding.UTF8)); }
+        catch (Exception ex) when (ex is InvalidDataException || ex is ArgumentException || ex is InvalidOperationException || ex is FormatException
+                                   || ex is OverflowException || ex is InvalidCastException)
+        { MetalWindow.Log("список файлов выпуска не прочитан: " + ex.Message); bad = Ui.F("u.delta.bad.list", Release.Number); }
+        if (bad == null && !string.Equals(m.Root, Stem, StringComparison.OrdinalIgnoreCase)) bad = Ui.F("u.delta.root", Release.Number, m.Root);
+        if (bad == null && Feed.ParseVersion(m.Version) != Release.Number) bad = Ui.F("u.wrong.version", Release.Number, m.Version);
+        if (bad != null) return Unusable(staging, dl, file, bad);
+        // Папка этой версии без метки «распаковано целиком» (попытка по архиву) — тоже прежняя сборка: её годные файлы сверка возьмёт ссылками, а сама
+        // папка уходит только после сборки .staging, не до вопроса игроку (судья, R6). [NOT-TESTED]
+        var plan = Delta.MakePlan(m, GameDir, staging, Here, job, cancelled);
+        // Каждый ассет плана — до вопроса и до первого скачивания: есть в выпуске, того же размера, его дайджест GitHub равен хешу списка. Иначе ни одно
+        // скачивание не сойдётся, а сверка внутри цикла скачивания тратила всё, что скачано до этого ассета, и второй вопрос игроку (судья, круг 4, находка 2).
+        string unfit = Delta.UnfitAsset(plan, Release);
+        if (unfit != null) return Unusable(staging, dl, file, unfit);
+        // Скачанное прошлой остановленной попыткой лежит в .dl и докачивается: вопрос игроку называет остаток.
+        long have = 0;
+        foreach (var u in plan.Units.Values) { var f = new FileInfo(Path.Combine(dl, u.Asset)); if (f.Exists) have += Math.Min(f.Length, u.Size); }
+        // Место: недокачанное ложится в .dl, раскладка частей и файлов общего zip пишет их второй раз, файлы прежней сборки без ссылки копируются (R3);
+        // при первой установке установщик ещё копирует моды в игру — весь размер сборки, как на пути частями архива (Need: «Installed ? 0 : Total»).
+        long whole = 0;
+        foreach (var e in m.Files) whole += e.Size;
+        ReadFree();
+        // Второй раз пишутся только склеенные части и файлы общего zip; ассеты — ссылками из .dl, на томе без ссылок — копиями (plan 57 фаза 6 шаг 8).
+        long rewrite = plan.RewriteBytes(Delta.LinksOn(staging));
+        long need = (plan.Bytes - have) + rewrite + plan.CopyBytes + (Installed ? 0 : whole) + RESERVE;
+        // Какой это путь и из чего место — в журнал: стенд U-X2 видит путь, D1 и D7 — что переписывается (судья, круг 5, NIT 4; шаг 8).
+        MetalWindow.Log($"по списку файлов: {(Installed ? "обновление поставленной сборки" : "первая установка")}, места нужно {Ui.Size(need)} " +
+                        $"(скачать {plan.Bytes - have} Б, переписать {rewrite} Б, копии {plan.CopyBytes} Б, установка {(Installed ? 0 : whole)} Б, запас {RESERVE} Б)");
+        if (FreeKnown && Free < need) { Tidy(staging, dl, file); return Ui.F("box.space", Path.GetPathRoot(GameDir).TrimEnd('\\'), Ui.Size(need), Ui.Size(Free)); }
+        // Первая установка, которой нечего скачивать (все файлы — из сборки, оставшейся в папке игры), вопроса не задаёт: игрок уже нажал «Установить
+        // сборку», а «Нужно скачать 0,1 МБ (файлов: 0)» было бы неправдой (Ui.Size не пишет меньше 0,1 МБ).
+        bool ask = Installed || plan.Fetch.Count > 0;
+        if (confirm != null && ask && !confirm(plan.Bytes - have, plan.Fetch.Count, false))
+        {
+            Tidy(staging, dl, file);
+            MetalWindow.Log("игрок отказался от обновления после сверки файлов");
+            return DECLINED;
+        }
+        // Выпуск не сошёлся со своим списком (R2) или ассет ответил 4xx (удалён или заменён, пока лаунчер был открыт; судья, круг 3, RISK 2): если в
+        // выпуске есть части архива, сборка ставится ими. Обрыв связи (NetFailure) сюда не попадает: он остаётся остановкой с докачкой.
+        try { Delta.Assemble(plan, Release, staging, job, cancelled, press); }
+        catch (Delta.Mismatch ex) { return Unusable(staging, dl, file, ex.Message); }
+        catch (WebException ex) when (!NetFailure(ex)) { Feed.CloseResponse(ex); return Unusable(staging, dl, file, Ui.F("u.failed", ex.Message)); }
+        string marker = Path.Combine(staging, "pack", ".krinik_unpacked");
+        Directory.CreateDirectory(Path.GetDirectoryName(marker));
+        File.WriteAllText(marker, MarkerText);
+        if (Directory.Exists(BundleDir)) { MetalWindow.Log($"убираю папку {BundleDir} без метки «распаковано целиком»"); Delta.DeleteDir(BundleDir); }
+        Delta.MoveDir(staging, BundleDir);
+        Delta.ForgetOtherStaging(GameDir, staging);
+        Bundle.Forget(BundleDir);
+        MetalWindow.Log($"сборка {Release.Number} собрана по списку файлов в {BundleDir}: скачано {Ui.Size(plan.Bytes)}");
+        return null;
+    }
+
+    // Конец без сборки (отказ игрока, нет места, негодный список): скачанный список файлов больше не нужен, пустые .dl и .staging уходят. Собранное прошлой
+    // попыткой остаётся: следующее обновление возьмёт его без скачивания (судья 2026-11-21, круг 2: после «Нет» оставался .dl\manifest.json). [NOT-TESTED]
+    // Путь по списку файлов негоден: при частях архива — FALLBACK (Run спросит игрока и уберёт .staging этой версии), без них — причина игроку. Список
+    // файлов убирается в обоих случаях (судья, круг 3, NIT 1: после отказа без частей .dl\manifest.json оставался). [NOT-TESTED]
+    string Unusable(string staging, string dl, string file, string why)
+    {
+        Tidy(staging, dl, file);
+        if (Parts.Count == 0) return why;
+        MetalWindow.Log("путь по списку файлов негоден, обновление идёт частями архива: " + why);
+        return FALLBACK;
+    }
+
+    static void Tidy(string staging, string dl, string file)
+    {
+        try
+        {
+            if (File.Exists(file)) File.Delete(file);
+            if (Directory.Exists(dl) && Directory.GetFileSystemEntries(dl).Length == 0) Directory.Delete(dl);
+            if (Directory.Exists(staging) && Directory.GetFileSystemEntries(staging).Length == 0) Directory.Delete(staging);
+        }
+        catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException) { MetalWindow.Log("папка обновления не убрана: " + ex.Message); }
     }
 
     public string NewLauncher => Path.Combine(BundleDir, "KrinikConanLauncher.exe");
@@ -920,6 +1073,9 @@ sealed class BuildUpdate
             Action<ZipArchiveEntry, string> write = (e, target) =>
             {
                 Directory.CreateDirectory(Path.GetDirectoryName(target));
+                // Удалить, потом создать: файл сборки, собранной по списку файлов, может быть жёсткой ссылкой на файл прежней сборки, и запись поверх
+                // (FileMode.Create усекает тот же файл) изменила бы и прежнюю сборку (судья 2026-11-21, R3). [NOT-TESTED]
+                if (File.Exists(target)) File.Delete(target);
                 using (var src = e.Open())
                 using (var dst = new FileStream(target, FileMode.Create, FileAccess.Write, FileShare.None, buf.Length))
                 {

@@ -107,6 +107,18 @@ left=$(grep -oE '\{\{[A-Z_]+\}\}' "$OUT_NOTES" | sort -u || true)
 echo "archive $bytes bytes · RU «$RU_SIZE» · EN «$EN_SIZE» · notes for the release page: $OUT_NOTES"
 echo "README: KRINIK_ARCHIVE_SIZE='$RU_SIZE' KRINIK_ARCHIVE_SIZE_EN='$EN_SIZE' node _config/public_release/mods-table.mjs . _config/public_release/README.template.md _config/public_release/README.draft.md"
 
+echo "4c. the per-file manifest and its assets (KUMM plan 57 phase 6: an update downloads only the changed files)"
+# make_manifest.py writes manifest.json, one asset per file of 1 MiB and more (HARDLINKS of the export's files — no second 13.7 GB), the parts of a file of
+# RELEASE_PART bytes and more and the stored zip of the small files into release/. The previous manifest is the kept release just below this version in
+# release order (published_<v>/manifest.json, written at the publication; --previous-from). A third-party pak changed vs that release stops the build unless
+# draft_<X_Y_Z>/changed_paks_<the version with «.» and «-» as «_»>.txt names it with its reason (a mod updated since; 0.9.1-RC3 →
+# draft_0_9_1/changed_paks_0_9_1_RC3.txt); RC1 -> RC2 changed 62 such paks / 13.56 GB with equal content. The parts are cut at RELEASE_PART, the number the
+# volumes use. `-u`: the log gets each line as it is printed. The volumes stay beside the files until the transition fork of plan 57 criterion 6. [NOT-TESTED]
+ALLOW="$PACK/_config/release/draft_${XYZ}/changed_paks_$(printf '%s' "$V" | tr '.-' '__').txt"
+echo "   third-party paks allowed to change: $ALLOW$([ -f "$ALLOW" ] || echo ' (no file: none)')"
+"$PY" -u -I -X utf8 "$PACK/_config/release/make_manifest.py" "$WORK/$NAME" --tag "v$V" --version "$V" --out "$REL" --part-size "$RELEASE_PART" \
+  --previous-from "$PACK/_config/release" --allow-changed "$ALLOW" 2>&1 | tee "$WORK/manifest.log" || exit 1
+
 echo "5. guide and launcher beside the parts"
 cp "$GUIDE" "$LAUNCHER" "$REL/" || exit 1
 

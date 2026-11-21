@@ -13,6 +13,8 @@
 //               saved first, so the window has something kept to resume: 429 «too many requests» and 408 «request timeout» pass by themselves, and the
 //               launcher must treat them as a broken connection (the judge 2026-11-18, round 2, finding 8)
 //     --range416  the first Range request for the file --cut broke answers 416: the launcher must drop the part and fetch it whole (same finding)
+//     --corrupt <text>  every whole answer for a file whose name holds the text has one flipped byte; its digest stays real (case D5)
+//     --slow <ms>  each whole-file answer sends half the file, pauses, then the rest (a stop or a kill in the pause leaves a half file)
 // Every request is one line in --log (or stdout): the case reads what the launcher asked for. Zero dependencies (node: only).
 // [NOT-TESTED]
 import { createServer } from 'node:http'
@@ -35,11 +37,15 @@ const sha = file => new Promise((ok, no) => {
   const h = createHash('sha256')
   createReadStream(file).on('data', d => h.update(d)).on('end', () => ok(h.digest('hex'))).on('error', no)
 })
-const asset = async (file, forge = false) => {
+// key — the request path of the file (/file/<key>): the assets of an older release (--older) are keyed «v<version>/<name>», so a request names its release
+// even when both releases carry an asset of the same name. --digest-off <text>: the listed digest of every file whose name holds the text is another hash
+// (the asset was re-uploaded after the manifest was made — judge 2026-11-21 round 3, RISK 1, case D5c); the bytes served stay real.
+const asset = async (file, forge = false, key = path.basename(file)) => {
   const name = path.basename(file)
-  files.set(name, file)
-  const digest = forge ? '0'.repeat(64) : await sha(file)
-  return { name, size: statSync(file).size, digest: 'sha256:' + digest, browser_download_url: `${base}/download/${encodeURIComponent(name)}` }
+  files.set(key, file)
+  const off = opt('digest-off') && name.includes(opt('digest-off'))
+  const digest = forge ? '0'.repeat(64) : off ? '1'.repeat(64) : await sha(file)
+  return { name, size: statSync(file).size, digest: 'sha256:' + digest, browser_download_url: `${base}/download/${encodeURIComponent(key)}` }
 }
 
 // --rate: a pipe that lets through at most <rate> bytes per second, in 50 ms slices.
@@ -67,12 +73,22 @@ if (opt('build')) {
   const v = opt('build'), dir = opt('parts') ? path.resolve(opt('parts')) : null
   const parts = []
   if (dir) for (const n of readdirSync(dir).filter(n => /\.zip\.\d{3}$/.test(n)).sort()) parts.push(await asset(path.join(dir, n)))
+  // --assets <dir> (KUMM plan 57 phase 6): every file of the folder make_manifest.py wrote — manifest.json, the per-file assets, the parts, the group zip.
+  if (opt('assets')) for (const n of readdirSync(path.resolve(opt('assets'))).sort()) parts.push(await asset(path.join(path.resolve(opt('assets')), n)))
   const game = opt('game') || '3.1.1 CL-383549'
   releases.push({ tag_name: `v${v}`, name: `Krinik Mod Pack ${v}`, draft: false, prerelease: false, html_url: `${base}/page/v${v}`, assets: parts,
     body: game === 'none' ? 'Krinik Mod Pack' : `Krinik Mod Pack ${v}
 
 <!-- krinik-game: ${game} -->
 ` })
+}
+// --older <version>:<assets dir> (case D9, KUMM plan 57 criterion 7): an older build release the player skipped, listed with its own per-file assets.
+if (opt('older')) {
+  const [v, dir] = [opt('older').slice(0, opt('older').indexOf(':')), path.resolve(opt('older').slice(opt('older').indexOf(':') + 1))]
+  const list = []
+  for (const n of readdirSync(dir).sort()) list.push(await asset(path.join(dir, n), false, `v${v}/${n}`))
+  releases.push({ tag_name: `v${v}`, name: `Krinik Mod Pack ${v}`, draft: false, prerelease: false, html_url: `${base}/page/v${v}`, assets: list,
+    body: `Krinik Mod Pack ${v}\n\n<!-- krinik-game: ${opt('game') || '3.1.1 CL-383549'} -->\n` })
 }
 // A draft and a prerelease with higher numbers: the launcher must ignore both.
 releases.push({ tag_name: 'v99.0.0', draft: true, prerelease: false, html_url: `${base}/page/draft`, assets: [] })
@@ -116,6 +132,18 @@ createServer((req, res) => {
       return send(createReadStream(file, { start: from }), res)
     }
     res.writeHead(200, { 'content-length': size })
+    // --corrupt <text> (KUMM plan 57 phase 6, case D5): every whole answer for a file whose name holds the text carries its first byte flipped, while the
+    // listed digest stays the real one — the launcher must see the checksum fail on both tries.
+    const corrupt = opt('corrupt')
+    if (corrupt && name.includes(corrupt)) {
+      log(`corrupted ${name}`)
+      let first = true
+      const flip = new Transform({ transform(chunk, enc, done) {
+        if (first && chunk.length) { chunk = Buffer.from(chunk); chunk[0] ^= 0xff; first = false }
+        done(null, chunk)
+      } })
+      return send(createReadStream(file).pipe(flip), res)
+    }
     // --cut <bytes>: the first whole-file answer stops after so many bytes and the socket is destroyed — the launcher sees a broken connection.
     const cut = Number(opt('cut') || 0)
     if (cut > 0 && !cutDone && size > cut) {
@@ -124,11 +152,13 @@ createServer((req, res) => {
       createReadStream(file, { end: cut - 1 }).on('end', () => setTimeout(() => res.destroy(), 100)).pipe(res, { end: false })
       return
     }
-    // --slow <ms>: the first half of the file, a pause, the rest — a stop pressed in the pause leaves a half file, and the next run must ask for the
-    // rest by Range (case B2).
+    // --slow <ms>: the first part of the file, a pause, the rest — a stop pressed in the pause leaves a part file, and the next run must ask for the
+    // rest by Range (case B2). The pause comes before the last 64 KiB (at least half the file): the launcher writes through a 1 MiB FileStream buffer,
+    // and half of a 2 MiB asset sat whole in that buffer at a kill — 0 bytes on disk, case D3 red on the stand 2026-11-21 17:12 (run 11) once the asset
+    // order put a 2 MiB asset first. A kill loses at most the buffer; the resume starts from the bytes on disk.
     const slow = Number(opt('slow') || 0)
     if (slow > 0 && size > 1) {
-      const half = Math.floor(size / 2)
+      const half = Math.max(Math.floor(size / 2), size - 65536)
       createReadStream(file, { end: half - 1 }).on('end', () => setTimeout(() => createReadStream(file, { start: half }).pipe(res), slow)).pipe(res, { end: false })
       return
     }

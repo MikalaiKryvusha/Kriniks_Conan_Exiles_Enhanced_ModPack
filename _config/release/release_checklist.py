@@ -11,7 +11,7 @@ run report, never green by itself). make_release.sh runs it as step 0b and stops
 `gh release create` while it has a TODO. Exit 0 — no TODO; 1 — a TODO; 2 — the manifest is unreadable or its packVersion does not start with X.Y.Z.
 [NOT-TESTED]
 """
-import json, os, re, subprocess, sys
+import hashlib, json, os, re, subprocess, sys
 
 PACK = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 KRINIK_PAKS = ["KrinikConanArchery", "KrinikConanGameplay", "KrinikConanGraphics", "KrinikConanUI"]
@@ -201,16 +201,42 @@ def main(argv):
     if "--published" in argv:
         r1, rel = run(["gh", "release", "view", "v" + v, "--repo", REPO, "--json", "assets", "--jq", "[.assets[].name]|join(\" \")"])
         names = rel.split() if r1 == 0 else []
-        latest = prev_tag == "v" + v
+        # «Latest» asked of GitHub itself: prev_tag is the previous BUILD release and never this one (the round-4 window fix), so comparing it
+        # with this tag kept the line TODO after every publish (found 2026-11-20 23:58 on the first --published run of RC2).
+        r3, lat = run(["gh", "release", "view", "--repo", REPO, "--json", "tagName", "--jq", ".tagName"])
+        latest = r3 == 0 and lat.strip() == "v" + v
         ok = r1 == 0 and latest and any(n.endswith(".exe") for n in names) and any(n.endswith(".pdf") for n in names) and any("SHA256" in n for n in names) \
             and any(".zip.001" in n for n in names)
         add("E", "OK" if ok else "TODO", "the GitHub release v%s is Latest with parts, launcher, guide PDF, checksums" % v, REPO,
-            "gh release create v%s --latest --title … --notes-file <notes> <assets> (HOUSE_RULES 25.2, 42.1)" % v)
+            "gh release create v%s --latest --title … --notes-file <notes> <assets>; an existing release made Latest by `gh release edit v%s --latest` "
+            "(HOUSE_RULES 25.2, 42.1)" % (v, v))
         r2, tags = run(["gh", "api", "repos/%s/tags" % REPO, "--jq", ".[].name"])
         add("E", "OK" if ("v" + v) in tags.split() else "TODO", "the tag v%s in the public repository (and launcher-vX.Y.Z when the launcher changed)" % v, REPO,
             "gh release create makes the tag on the public tree's commit; a launcher release has its own tag")
         pub = os.path.join(PACK, "_config", "release", "published_%s" % v.replace(".", "_"))
         add("E", "OK" if os.path.isdir(pub) else "TODO", "the published texts kept in the pack", os.path.relpath(pub, PACK), "copy the notes and texts (HOUSE_RULES 25.2)")
+        # Both sets on the release page until the files-only switch (the owner 2026-11-21 16:58, KUMM interview #042, answer C): the volumes for the RC1 / RC2 launchers, the first
+        # install, the manual install and Nexus; the per-file assets with manifest.json for the new launcher's update. The kept manifest names every asset;
+        # it is also the previous manifest of the next release (make_manifest.py --previous-from). [NOT-TESTED]
+        kept = os.path.join(pub, "manifest.json")
+        missing = ["manifest.json"] if "manifest.json" not in names else []
+        # The kept copy must BE the uploaded list: a stale copy passed, and the next release's --previous-from reads it (judge 2026-11-21, round 4, finding 6).
+        if "manifest.json" in names and os.path.isfile(kept):
+            rd, dig = run(["gh", "api", "repos/%s/releases/tags/v%s" % (REPO, v), "--jq", '.assets[] | select(.name=="manifest.json") | .digest'])
+            with open(kept, "rb") as fh:
+                local = "sha256:" + hashlib.sha256(fh.read()).hexdigest()
+            if rd != 0 or dig.strip() != local:
+                missing.append("manifest.json = the kept copy (GitHub %s, kept %s)" % (dig.strip()[:20] or "?", local[:20]))
+        if os.path.isfile(kept):
+            with open(kept, encoding="utf-8") as fh:
+                man = json.load(fh)
+            want = [f["asset"] for f in man.get("files", []) if f.get("asset")] + [p["asset"] for f in man.get("files", []) for p in f.get("parts", [])] \
+                + [g["asset"] for g in man.get("groups", [])]
+            missing += [n for n in want if n not in names]
+        add("E", "OK" if (r1 == 0 and os.path.isfile(kept) and not missing) else "TODO",
+            "the per-file set beside the volumes: manifest.json and every asset it names are on the release page, the manifest kept in the pack", REPO,
+            ("missing: %s · " % ", ".join(missing[:5]) if missing else "") + "upload every file of <work>/release (KUMM plan 57 phase 6 criterion 6, answer C); "
+            "copy release/manifest.json into %s" % os.path.relpath(pub, PACK))
         add("E", "MANUAL", "the release page, the README and the guide PDF read back in their medium; the fixed issues commented «fixed in v%s»" % v,
             "github.com/" + REPO, "open each; gh issue comment <n>")
         add("E", "MANUAL", "the shipment and work dirs removed once shipped", "KUMM/.work/<release dirs>", "node _config/rm-tree.mjs <dir> (HOUSE_RULES 25.2)")

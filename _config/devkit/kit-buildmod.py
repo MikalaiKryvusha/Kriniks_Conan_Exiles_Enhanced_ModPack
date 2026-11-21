@@ -27,6 +27,7 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kit_manifest  # noqa: E402 — MD5 + XXH128 манифеста в одном месте (xxhash подхватывается из пользовательских пакетов и под -I)
 import krinik_modinfo  # noqa: E402 — автор, URL автора и список изменений модов Krinik из одного источника (KUMM HOUSE_RULES 40)
+import repak_tool  # noqa: E402 — repak on one thread: the same folder packs into the same bytes (2026-11-21, the launcher's delta update, step 0)
 
 KIT = r"F:\CEUE5Devkit"
 BASE = os.path.join(KIT, "UE4")
@@ -42,7 +43,7 @@ COMPRESS = ["-compressionformats=Oodle", "-compresslevel=7", "-compressmethod=Kr
 
 def run(args, log=None):
     print(">", " ".join(args)[:300], flush=True)
-    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace", env=repak_tool.env_for(args))
     if log:
         open(log, "w", encoding="utf-8").write(r.stdout + "\n" + r.stderr)
     if r.returncode != 0:

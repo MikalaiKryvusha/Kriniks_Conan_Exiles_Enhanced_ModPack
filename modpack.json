@@ -2,9 +2,9 @@
   "$comment": "Манифест сборки Conan Exiles Enhanced. Исполняется движком KUMM: Deploy-ModPack.ps1 -PackDir <эта папка> для раскатки, kumm.mjs --root <эта папка> для сверки версий и загрузки с Nexus.",
   "packName": "Krinik Conan Exiles Enhanced pack",
   "builtFor": "Conan Exiles Enhanced 3.1.1 (UE 5.8, билд ++exiles+release-CL-383549). Прежние версии игры, под которые собиралась сборка: 3.1.0 (CL-383024), 3.0.1 (CL-379176), 2.2.3 (CL-378132), 2.1.1 (UE 5.6.1, CL-373655)",
-  "packVersion": "0.9.1-RC2",
+  "packVersion": "0.9.1-RC3",
   "$comment_packVersion": "Номер сборки (KUMM plans/55 R1, 2026-11-20): тестовые сборки выпуска X.Y.Z идут как X.Y.Z-RCn, лаунчер упорядочивает 0.9.1-RC1 < 0.9.1-RC2 < 0.9.1 (ReleaseNumber, SemVer 2.0.0 §11). Строка version каждого мода Krinik в этом манифесте равна номеру сборки целиком (слово владельца 2026-11-18 20:57: номер появится в манифесте и модах). В modinfo.json пака мода номер записан тремя числами X.Y.Z, потому что формат игры держит только три поля (build-level-mod.py, krinik_modinfo.py).",
-  "launcher": { "version": "1.0.0", "gameVersion": "3.1.1", "gameNotes": "https://store.steampowered.com/news/app/440900/view/1849458702686207", "feedRepo": "MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack" },
+  "launcher": { "version": "1.1.0", "gameVersion": "3.1.1", "gameNotes": "https://store.steampowered.com/news/app/440900/view/1849458702686207", "feedRepo": "MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack" },
   "$comment_launcher": "Лаунчер сборки (KUMM plan 54, 2026-11-17): version — своя версия лаунчера, он выходит отдельно от сборки (выпуски launcher-vX.Y.Z на GitHub, с --latest=false); gameVersion — версия игры, под которую сборка (строка под логотипом игры); gameNotes — заметки Steam к этой версии (кнопка «Что нового» под ней; для 3.1.1 это «(Re-release) November Hotfix 3.1.1» от 2026-11-15, для 3.0.1 было «October Hotfix 3.0.1»; gid из ISteamNews/GetNewsForApp app 440900, таблица в KUMM researches/conan-launcher-updates/README.md §2); feedRepo — публичный репозиторий, чьи выпуски читает лаунчер. Меняются вместе с builtFor при переезде на новую игру.",
   "uninstall": { "cmd": "uninstall_krinik_build.cmd", "template": "_config/uninstall/uninstall.cmd" },
   "$comment_uninstall": "Деинсталлятор с откатом на то, что было в игре до сборки (KUMM bugs/72, 2026-10-31: «инсталятор должен устанавливать унисталер сборки с возможностью отката на ваниль» · «или чтобы прямо из лаунчера можно было это сделать по кнопке удаления сборки» — владелец). Раскатка ведёт журнал <игра>/_kumm_backup/journal.txt и кладёт туда копии заменённых файлов; uninstall_krinik_build.cmd в корне игры зовёт копию движка с -Restore — архив сборки для удаления не нужен. Кнопка «Удалить сборку» лаунчера зовёт этот же файл.",
@@ -113,8 +113,8 @@
     {
       "name": "KrinikConanCamera",
       "kind": "lua",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 0.1.0, наш, написан 08.09.2026)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 0.1.0, наш, написан 08.09.2026)",
       "source": {
         "folder": "_unpacked/KrinikConanCamera"
       },
@@ -158,8 +158,8 @@
     {
       "name": "KrinikConanModPackManager",
       "kind": "lua",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the build version; before: 1.0.0)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the build version; before: 1.0.0)",
       "source": {
         "folder": "_unpacked/KrinikConanModPackManager"
       },
@@ -183,8 +183,8 @@
     {
       "name": "KrinikConanGraphics",
       "kind": "pak",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 + unreleased fix (2026-11-07: + kit pak — M_Foliage MaxWorldPositionOffsetDisplacement 100 cm, palm and foliage shadows no longer flicker under the moving sun, KUMM bug 67; 0.9.0 2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, наш, 30.10.2026: графика сборки одним модом — кровь на земле 5 минут (Lua) и оптимизированный Engine.ini: дальности, тени, туман, DLSS, шаг солнца; до того — мод KrinikLingeringBlood и _config/Engine.ini)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 + unreleased fix (2026-11-07: + kit pak — M_Foliage MaxWorldPositionOffsetDisplacement 100 cm, palm and foliage shadows no longer flicker under the moving sun, KUMM bug 67; 0.9.0 2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, наш, 30.10.2026: графика сборки одним модом — кровь на земле 5 минут (Lua) и оптимизированный Engine.ini: дальности, тени, туман, DLSS, шаг солнца; до того — мод KrinikLingeringBlood и _config/Engine.ini)",
       "source": {
         "folder": "_unpacked/KrinikConanGraphics"
       },
@@ -203,8 +203,8 @@
     {
       "name": "KrinikConanEngineTweaks",
       "kind": "config",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 + unreleased (2026-11-09: new — our engine fixes and engine tuning: async navmesh gathering, Niagara shaders on load, the physics queue moved from KrinikConanGraphics)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 + unreleased (2026-11-09: new — our engine fixes and engine tuning: async navmesh gathering, Niagara shaders on load, the physics queue moved from KrinikConanGraphics)",
       "source": {
         "folder": "_unpacked/KrinikConanEngineTweaks"
       },
@@ -214,8 +214,8 @@
     {
       "name": "KrinikConanLocomotion",
       "kind": "lua",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-07: new — the hero's movement: combat in a jump (the bow from KrinikConanArchery 0.7.0; melee new — one swing in the air), the run and jump growing with Agility (from KrinikConanGameplay); PLAN — a jump off a climbed wall)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-07: new — the hero's movement: combat in a jump (the bow from KrinikConanArchery 0.7.0; melee new — one swing in the air), the run and jump growing with Agility (from KrinikConanGameplay); PLAN — a jump off a climbed wall)",
       "source": {
         "folder": "_unpacked/KrinikConanLocomotion"
       },
@@ -353,8 +353,8 @@
     {
       "name": "KrinikConanRussianTranslation",
       "kind": "files",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02, the build version; before 1.0.0) · Game.locres 54 457 записей; правки записей без пересборки — _config/localization/locres-fixes-*.tsv (последняя 2026-11-01c: «Клавиша вызова курсора», «Частота обновления полос»; регресс каждой: 0 пропало)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02, the build version; before 1.0.0) · Game.locres 54 457 записей; правки записей без пересборки — _config/localization/locres-fixes-*.tsv (последняя 2026-11-01c: «Клавиша вызова курсора», «Частота обновления полос»; регресс каждой: 0 пропало)",
       "source": {
         "folder": "_config/localization/Game"
       },
@@ -1081,8 +1081,8 @@
     {
       "name": "KrinikConanArchery",
       "kind": "pak",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, наш, 30.10.2026: стрельба в прыжке — в воздухе лук стреляет, прыжок посреди натяжки взлетает; 0.6.0: тиковый пересчёт гравитации снят — у стрелы убирается кривая FC_BowProjectileGravCurve_*; 0.5.0: баллистика Oblivion Remastered — гравитация 0,55, скорость по натяжке, минимум 0,5; 28.10.2026: лук героя одним модом — пак кита + Lua UE4SS; прежде KrinikArrowAim и KrinikBowFixes)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, наш, 30.10.2026: стрельба в прыжке — в воздухе лук стреляет, прыжок посреди натяжки взлетает; 0.6.0: тиковый пересчёт гравитации снят — у стрелы убирается кривая FC_BowProjectileGravCurve_*; 0.5.0: баллистика Oblivion Remastered — гравитация 0,55, скорость по натяжке, минимум 0,5; 28.10.2026: лук героя одним модом — пак кита + Lua UE4SS; прежде KrinikArrowAim и KrinikBowFixes)",
       "source": { "folder": "_unpacked/KrinikConanArchery" },
       "$comment": "НАШ мод лука, две половины одного мода (`[OWNER]` «почему у нас какой-то BowFixes? Нельзя всё, что по стрельбе из лука - в один мод собрать?» · 2026-10-28; имя — «мод KrinikConanAim переименовываем в KrinikConanArchery»). Пак кита (Mods/KrinikConanArchery.pak): родной монтаж натяжки AM_combat_2h_bow_combo_heavy_c0 — уведомление обзора до конца монтажа (иначе камера отъезжала при выстреле с зажатой ПКМ), немое уведомление звука держит S_ChargeFull загруженным. Lua UE4SS (ue4ss/Mods/KrinikConanArchery): стрела героя в точку прицела камеры, вид стрелы, выход из прицела по отпусканию ПКМ, камера над стрелой от первого лица, удержание обзора на новом натяжении, звук полного заряда только герою игрока. Пересечений нет: монтаж 2h_bow в 101 контейнере сборки — только в паке игры (retoc list --path, 2026-10-28). Кейсы — KUMM testcases/TC_conan_bow_*_2026-10-2*.md.",
       "$comment_build": "Пак НЕ в git (.gitignore) — пересобирается: кит в режиме модов (UE4/Content/Mods/KrinikConanArchery, active.txt — один активный мод на кит) → UnrealEditor-Cmd -run=PythonScript -Script=_config/devkit/kit-archery-edit.py -ModDevKit -NullRHI → python _config/devkit/kit-buildmod.py KrinikConanArchery <вывод> → копия в _unpacked/KrinikConanArchery. modinfo devkitRevisionNumber 1002, иначе «Mod is too old» (EXP-0354). Lua-половина — _unpacked/KrinikConanArchery/ue4ss, ставится шагом install. Перед KrinikConanGameplay (до 2026-10-30 — KrinikLevelUncapped): тот должен оставаться последним.",
@@ -1100,8 +1100,8 @@
     {
       "name": "KrinikConanUI",
       "kind": "pak",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1: a talk with an NPC keeps the world at full pace and shows the NPC's answers again (issue #3); the hub's Map and Journey tabs are the game's own pages again, journeys start and the map markers work (issues #11, #12, #33)); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, ours, 2026-10-30: the build's interface as one mod — the KrinikUIFixes kit pak renamed, its Lua half and the Lua mods KrinikFpsCounter 0.2.0, KrinikHudOutline 0.2.0, KrinikPauseGameInMenu 0.13.0 as sections of one Lua folder; behaviour unchanged. Before: KrinikUIFixes 1.2.0 — button key glyphs keep their width from the first frame; the item hover tooltip keeps one layout; the corpse strip goes left only while the quick-loot window shows; «Q Забрать все (удерживайте)»)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1: a talk with an NPC keeps the world at full pace and shows the NPC's answers again (issue #3); the hub's Map and Journey tabs are the game's own pages again, journeys start and the map markers work (issues #11, #12, #33)); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, ours, 2026-10-30: the build's interface as one mod — the KrinikUIFixes kit pak renamed, its Lua half and the Lua mods KrinikFpsCounter 0.2.0, KrinikHudOutline 0.2.0, KrinikPauseGameInMenu 0.13.0 as sections of one Lua folder; behaviour unchanged. Before: KrinikUIFixes 1.2.0 — button key glyphs keep their width from the first frame; the item hover tooltip keeps one layout; the corpse strip goes left only while the quick-loot window shows; «Q Забрать все (удерживайте)»)",
       "source": {
         "folder": "_unpacked/KrinikConanUI"
       },
@@ -1129,8 +1129,8 @@
     {
       "name": "KrinikConanGameplay",
       "kind": "pak",
-      "version": "0.9.1-RC2",
-      "$comment_version": "0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, ours, 2026-10-30: the build's gameplay as one mod — the pak KrinikLevelUncapped rebuilt under the new name (10 000 levels, XP 500 × level^0.5, one attribute point every level) and the Lua mod KrinikOblivionLocomotion 0.3.0 (+3 cm/s to run, sprint and jump per Agility point) as a section of its Lua folder; behaviour unchanged; 2026-11-08: XP base 1000 — XP 1000 × level^0.5)",
+      "version": "0.9.1-RC3",
+      "$comment_version": "0.9.1-RC3 (2026-11-21: the third release candidate of 0.9.1 (the launcher 1.1.0: the update and the first install by the release's file list); no change in this mod); before: 0.9.1-RC2 (2026-11-20: the second release candidate of 0.9.1; no change in this mod); before: 0.9.1-RC1 (2026-11-20: the first release candidate of the build 0.9.1); before: 0.9.1 (2026-11-18: the build 0.9.1 for game 3.1.1, every Krinik mod at the build version, the owner's word 18:52); before: 0.9.0 (2026-11-02: the first release of the 3.0.1 build, every Krinik mod at the build version; before: 1.0.0, ours, 2026-10-30: the build's gameplay as one mod — the pak KrinikLevelUncapped rebuilt under the new name (10 000 levels, XP 500 × level^0.5, one attribute point every level) and the Lua mod KrinikOblivionLocomotion 0.3.0 (+3 cm/s to run, sprint and jump per Agility point) as a section of its Lua folder; behaviour unchanged; 2026-11-08: XP base 1000 — XP 1000 × level^0.5)",
       "source": {
         "folder": "_unpacked/KrinikConanGameplay"
       },

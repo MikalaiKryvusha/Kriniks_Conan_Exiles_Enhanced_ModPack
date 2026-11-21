@@ -56,6 +56,8 @@ static class Ui
         S("st.build", "Сборка", "Mod pack");
         S("st.files", "Файлы сборки", "Mod pack files");
         S("st.need", "Нужно скачать", "To download");
+        // Первая установка по списку файлов: размер известен только после сверки папки игры (судья 2026-11-21, круг 5, дефект 1: строка называла 0,1 МБ).
+        S("v.need.after", "лаунчер посчитает, когда сверит файлы", "the launcher counts it when it has compared the files");
         S("st.search", "Поиск игры", "Game search");
         S("st.copies", "Найдено копий", "Copies found");
         S("st.game", "Игра", "Game");
@@ -68,6 +70,7 @@ static class Ui
         S("st.mods", "Скопировано модов", "Mods copied");
         S("st.checked", "Проверено", "Checked");
         S("st.unpacked", "Распаковано", "Unpacked");
+        S("st.copied", "Скопировано", "Copied");
         S("st.latest", "Последняя сборка", "Latest mod pack");
         // --- список состояния: значения
         S("v.drive", "диск {0}", "drive {0}");
@@ -159,12 +162,19 @@ static class Ui
         S("box.update.ask", "Скачать сборку {0} ({1}) и поставить её вместо {2}?{3}\n\nАрхив скачается в папку игры, после распаковки его части удалятся.{4}\nИгру на время обновления закройте.",
                             "Download mod pack {0} ({1}) and install it in place of {2}?{3}\n\nThe archive downloads into the game folder; its parts are deleted after unpacking.{4}\nClose the game for the time of the update.");
         S("box.update.have", " Уже скачано {0}, докачка продолжится.", " {0} is already downloaded; the download continues from there.");
+        // Путь по списку файлов негоден: причина первой, вопрос в конце (судья 2026-11-21, круг 3, чистое чтение строк). Круг 4: «обновить только изменившиеся
+        // файлы» читалось двояко (не удалось обновить одни лишь изменившиеся) — «обновить сборку по изменившимся файлам».
+        S("box.update.ask.whole", "Лаунчер не смог обновить сборку по изменившимся файлам. Скачать всю сборку {0} ({1}) и поставить её вместо {2}?\n\nАрхив скачается в папку игры, после распаковки его части удалятся.{3}\nИгру на время обновления закройте.",
+                                  "The launcher could not update the mod pack by its changed files alone. Download the whole mod pack {0} ({1}) and install it in place of {2}?\n\nThe archive downloads into the game folder; its parts are deleted after unpacking.{3}\nClose the game for the time of the update.");
         S("box.update.free", " На диске {0} свободно {1}.", " Drive {0} has {1} free.");
         S("box.update.placed", "Сборка {0} поставлена. Лаунчер новой сборки лежит в {1}.", "Mod pack {0} is installed. The launcher of the new mod pack is in {1}.");
         S("box.installed", "Сборка {0} поставлена.", "Mod pack {0} is installed.");
         S("box.oldbundle.title", "Прежняя сборка", "Previous mod pack");
-        S("box.oldbundle", "Новая сборка стоит. Папка прежней сборки больше не нужна:\n{0} ({1})\n\nУдалить её?",
-                           "The new mod pack is installed. The folder of the previous one is no longer needed:\n{0} ({1})\n\nDelete it?");
+        // Вопрос последним (круг 4): сначала что освободится, потом «Удалить папку?»; «на диске» один раз.
+        S("box.oldbundle", "Новая сборка установлена. Папка прежней сборки больше не нужна:\n{0}\n\nЕсли удалить эту папку, на диске освободится {1}.{2}\n\nУдалить папку?",
+                           "The new mod pack is installed. The folder of the previous one is no longer needed:\n{0}\n\nDeleting this folder frees {1} on the disk.{2}\n\nDelete the folder?");
+        S("box.oldbundle.shared", " Файлы, которые не изменились, останутся: ими пользуется новая сборка.",
+                                  " The unchanged files stay: the new mod pack uses them.");
         S("box.crash.title", "Отчёт о падении игры", "Game crash report");
         S("box.crash", "Игра в прошлый раз закрылась с ошибкой.\n\nСобрать отчёт для автора сборки? Файл отчёта появится на рабочем столе, а в браузере " +
                        "откроется новое сообщение в разделе Issues на GitHub. Приложите к нему файл отчёта и напишите, что происходило в игре перед падением.",
@@ -195,6 +205,9 @@ static class Ui
                            "The previous mod pack was not removed. Run {0} in the game folder, then install.cmd in {1}.");
         S("u.partial", "Сборка {0} встала не полностью (код {1}). Запустите install.cmd в {2} и пришлите автору сборки снимок его окна.",
                        "Mod pack {0} was installed only in part (code {1}). Run install.cmd in {2} and send the author of the mod pack a screenshot of its window.");
+        // Остановленная первая установка по списку файлов (круг 5, дефект 2: окно молча возвращалось к началу).
+        S("u.stopped.install", "Установка остановлена, скачанное сохранено. Нажмите «Установить сборку» ещё раз, и лаунчер продолжит с того же места.",
+                               "The installation is paused; what was downloaded is kept. Press «Install mod pack» again, and the launcher continues from the same place.");
         S("u.stopped", "Обновление остановлено. Скачанное сохранено: следующее нажатие продолжит с того же места.",
                        "The update is paused. What was downloaded is kept: the next press continues from the same place.");
         S("u.failed", "Сборка не обновилась: {0}", "The mod pack was not updated: {0}");
@@ -208,6 +221,31 @@ static class Ui
                           "Release {0} has no complete mod pack archive with checksums. Download the mod pack from the release page.");
         S("u.over.self", "Сборка {0} распаковалась бы поверх папки, из которой запущен лаунчер. Скачайте её со страницы выпуска.",
                          "Mod pack {0} would unpack over the folder the launcher runs from. Download it from the release page.");
+        // --- обновление по списку файлов выпуска (KrinikConanDelta.cs, KUMM plans/57 фаза 6)
+        // Первая установка по списку файлов (KUMM plan 57 фаза 6 шаг 6): вопрос с настоящим размером после сверки папки игры (круг 5, дефект 1).
+        // Чистое чтение 2026-11-21 17:3x: «сборка» вместо второго слова «выпуск», действует лаунчер, а не «распаковка».
+        S("box.delta.install", "Установить сборку {0}?\n\nЛаунчер сверил папку игры со списком файлов сборки. Нужно скачать {1} (файлов: {2}).{3}\nИгру на время установки закройте.",
+                               "Install mod pack {0}?\n\nThe launcher compared the game folder with the mod pack's file list. It needs to download {1} ({2} files).{3}\nClose the game for the time of the installation.");
+        S("box.install.ask.whole", "Лаунчер не смог установить сборку по отдельным файлам. Скачать всю сборку {0} одним архивом ({1})?\n\nЛаунчер скачает архив в папку игры, распакует его и удалит.{2}\nИгру на время установки закройте.",
+                                   "The launcher could not install the mod pack file by file. Download the whole mod pack {0} as one archive ({1})?\n\nThe launcher downloads the archive into the game folder, unpacks it and deletes it.{2}\nClose the game for the time of the installation.");
+        S("box.delta.ask", "Обновить сборку с {3} до {0}?\n\nЛаунчер сверил файлы прежней сборки со списком файлов нового выпуска. Нужно скачать {1} (файлов: {2}). " +
+                           "Остальные файлы лаунчер возьмёт из прежней сборки.{4}\nИгру на время обновления закройте.",
+                           "Update the mod pack from {3} to {0}?\n\nThe launcher compared the files of the previous mod pack with the file list of the new release. " +
+                           "It needs to download {1} ({2} files). The launcher takes the other files from the previous mod pack.{4}\nClose the game for the time of the update.");
+        S("u.delta.missing", "В выпуске {0} нет файла {1}, который назван в списке файлов этого выпуска. Скачайте сборку со страницы выпуска.",
+                             "Release {0} lacks the file {1} named in the file list of this release. Download the mod pack from the release page.");
+        S("u.delta.differs", "В выпуске {0} файл {1} не совпадает со своей записью в списке файлов. Скачайте сборку со страницы выпуска.",
+                             "In release {0} the file {1} does not match its entry in the file list. Download the mod pack from the release page.");
+        S("u.delta.twice", "Файл {0} дважды скачался с ошибкой. Проверьте сеть и нажмите «{1}» ещё раз.",
+                           "The file {0} downloaded with an error twice. Check the network and press «{1}» again.");
+        S("u.delta.bad.list", "Лаунчер не смог прочитать список файлов выпуска {0}. Скачайте сборку со страницы выпуска.",
+                              "The launcher could not read the file list of release {0}. Download the mod pack from the release page.");
+        S("u.delta.root", "Список файлов выпуска {0} называет папку сборки {1}, которая не подходит к номеру этого выпуска. Скачайте сборку со страницы выпуска.",
+                          "The file list of release {0} names the mod pack folder {1}, which does not fit the number of this release. Download the mod pack from the release page.");
+        // Причины для u.failed — продолжение фразы после двоеточия, со строчной буквы.
+        S("u.delta.path", "в списке файлов выпуска путь файла {0} ведёт за пределы папки сборки", "in the file list of the release the path of the file {0} leads outside the mod pack folder");
+        S("u.delta.bad","контрольная сумма файла {0} новой сборки не совпала с указанной в списке файлов выпуска",
+                         "the checksum of the file {0} of the new mod pack does not match the one in the file list of the release");
         // --- итоги самообновления (SelfUpdate.Run)
         S("s.no.asset", "В выпуске лаунчера {0} нет файла {1}.", "Launcher release {0} has no file {1}.");
         S("s.no.digest", "У файла {0} в выпуске нет контрольной суммы. Файл без контрольной суммы лаунчер не скачивает.", "The file {0} of the release has no checksum. The launcher does not download a file without one.");

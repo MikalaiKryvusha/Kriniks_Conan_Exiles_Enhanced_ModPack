@@ -43,6 +43,8 @@ import sys
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.dirname(HERE))
 from game_target import GAME_DIR, PAKS_VIEW, sandbox  # noqa: E402
+sys.path.insert(0, HERE)
+import repak_tool  # noqa: E402 — repak on one thread: the same folder packs into the same bytes (2026-11-21, the launcher's delta update, step 0)
 
 TOOLS = r"D:\work\ai_sandbox\_tools"
 # retoc 0.1.5 + правка тикета trumank/retoc#72 (UE 5.8: ShaderMapHashes по 8 байт) — собран 2026-10-26 из 885a8da; 0.1.5 не читает заголовки контейнеров 3.0.1.
@@ -67,7 +69,7 @@ _spec = importlib.util.spec_from_file_location("blm", os.path.join(HERE, "build-
 
 
 def run(args):
-    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace", env=repak_tool.env_for(args))
     if r.returncode != 0:
         raise SystemExit(f"код {r.returncode}: {' '.join(args)}\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}")
     return r.stdout

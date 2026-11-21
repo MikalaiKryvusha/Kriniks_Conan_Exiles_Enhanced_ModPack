@@ -38,6 +38,7 @@ ROW = re.compile(r"^\| (\d+) \| \[(.+?)\]\((.+?)\)(<br><sub>KRINIK MODIFIED</sub
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import kit_manifest  # noqa: E402 — both manifest hashes of modinfo.json (MD5 + «<xxh128>»)
 import krinik_modinfo  # noqa: E402 — author, author URL, change note of the Krinik paks (KUMM HOUSE_RULES 40)
+import repak_tool  # noqa: E402 — repak on one thread: the same folder packs into the same bytes (2026-11-21, the launcher's delta update, step 0)
 md5 = kit_manifest.md5
 
 
@@ -66,7 +67,7 @@ def unlisted_krinik_note(pack=None):
 
 
 def run(args):
-    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace")
+    r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace", env=repak_tool.env_for(args))
     if r.returncode:
         raise RuntimeError("repak failed: %s\n%s" % (" ".join(args), r.stderr[-800:]))
     return r.stdout

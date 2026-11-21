@@ -11,10 +11,14 @@
 //   node live.mjs oldguard <dir with the exe>                     L9 (the previous-bundle delete offer refuses a folder that is not a bundle; default «Нет»)
 //   node live.mjs build   <stand JSON from stand.mjs> [--stop] [--close] [--broken] [--big] [--game-starts] [--drop-last]
 //                                                                 B1 / B2 / B5 / B4 / B3 / B7′ (the game started mid-download) / B5′
+//   node live.mjs delta   <stand JSON from stand.mjs --delta> [--decline | --stop | --first | --corrupt [--volumes] | --digest-off | --bad-list | --nolinks |
+//                         --outside | --skip (a stand from stand.mjs --delta --skip)]
+//                                                                 D1 / D2 / D3 / D4 / D5a-b / D5c / D6 / D7 / D8 / D9 (testcases/TC_conan_launcher_delta_update_2026-11-21.md)
+//   node live.mjs uninstall <stand JSON from stand.mjs> [<another launcher exe>]   U-X (KUMM bugs/115: the uninstaller's console closed by its X)
 // Prints one line per check «PASS|FAIL <what> — <observed>». Exit 0 — all PASS.
 // [NOT-TESTED]
 import { spawn, execFileSync } from 'node:child_process'
-import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, renameSync } from 'node:fs'
+import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, statSync, renameSync, copyFileSync, utimesSync } from 'node:fs'
 import { createHash } from 'node:crypto'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -328,6 +332,370 @@ async function main() {
     killPid(pid)
     pid = await start()
     check(noDialog(pid, 6) === null, 'C6 a refused crash is not asked again', '')
+    killPid(pid)
+    return
+  }
+
+  // delta (KUMM plan 57 phase 6, cases D1–D8 of testcases/TC_conan_launcher_delta_update_2026-11-21.md): the release carries a per-file manifest
+  // (stand.mjs --delta). D1: «Обновить сборку» → the files of the old bundle are hashed → the box names the real download → «Да» → only the changed
+  // assets are asked of the feed, the unchanged pak comes from the old bundle by a hardlink, the build is installed, and the new launcher's offer to
+  // delete the old bundle names the bytes the deletion frees. Flags: --decline D2 · --stop D3 (the launcher killed by PID mid-asset; the second start
+  // resumes it by Range) · --first D4 (no build installed: D4b a first install from zero by the file list, D4a a reinstall over the bundle left in the game) · --corrupt
+  // [--volumes] D5 (one asset's bytes never match its hash: the volumes, or a box when the release has none) · --bad-list D6 · --nolinks D7 (the disk
+  // gives no hardlinks: the old files are copied and counted) · --outside D8 (the installed bundle lies outside the game folder). [NOT-TESTED]
+  if (mode === 'delta') {
+    const st = JSON.parse(readFileSync(path.resolve(a1), 'utf8'))
+    const W = path.dirname(st.game)
+    TMP = path.join(W, 'tmp'); mkdirSync(TMP, { recursive: true }); writeFileSync(LOG(), '')
+    const mf = path.join(st.assets, 'manifest.json')
+    const man = JSON.parse(readFileSync(mf, 'utf8'))
+    const by = name => man.files.find(f => f.path.endsWith('/' + name))
+    const same = by('same.pak'), change = by('change.pak'), huge = by('huge.pak')
+    const unitSize = n => { for (const e of man.files) { if (e.asset === n) return e.size; for (const p of e.parts || []) if (p.asset === n) return p.size }
+      const g = (man.groups || []).find(x => x.asset === n); return g ? g.size : -1 }
+    const nb = path.join(st.game, st.stem), staging = nb + '.staging'
+    const a = path.join(st.game, 'Mods', 'ModA', 'a.txt'), b = path.join(st.game, 'Mods', 'ModB', 'b.txt')
+    const aText = () => existsSync(a) ? readFileSync(a, 'utf8').trim() : 'missing'
+    const stagings = () => readdirSync(st.game).filter(n => /\.staging$/i.test(n))
+    // «Нужно скачать 7,1 МБ» → 7.1 (MB): the stop-and-resume case compares the two boxes.
+    const mbOf = s => { const m = /Нужно скачать ([\d\s ,]+) (Б|КБ|МБ|ГБ)/.exec(s || ''); if (!m) return NaN
+      return Number(m[1].replace(/[\s ]/g, '').replace(',', '.')) * { Б: 1 / 1048576, КБ: 1 / 1024, МБ: 1, ГБ: 1024 }[m[2]] }
+    // Each case reads only its own requests: D2 and D1 share a stand, and the feed's log was appended across them (D1 then saw D2's manifest download).
+    writeFileSync(path.join(TMP, 'feed_delta.log'), '')
+    const feedLog = path.join(TMP, 'feed_delta.log')
+    const asked = () => (readFileSync(feedLog, 'utf8').match(/GET \/file\/[^ ]+/g) || []).map(s => decodeURIComponent(s.slice('GET /file/'.length)))
+    const PLATE = /новейшая 1\.0\.1 \(у нас 1\.0\.0\), для этой игры 1\.0\.1/
+
+    // D4 (plan 57 phase 6 step 6, the owner's answer C 2026-11-21 16:58: one format, the file list): no build installed; the stand's uninstaller runs
+    // first; the player's downloaded launcher lies in the game root (the guide: unpack into the game folder).
+    // D4b: a first install from ZERO — the old bundle is moved out of the game, so no file can seed — from a manifest-only release: every asset of the
+    //      list is downloaded once, the build installs, the journal and the uninstaller are written.
+    // D4a: the REINSTALL — the player uninstalls 1.0.1 and installs it again from a release with both sets; the 1.0.1 bundle folder stays in the game,
+    //      so the file list takes every file from it: only the list downloads, never the volumes.
+    // U-X2 (--leftover, judge round 4, finding 5; bugs/115): the uninstall ran outside the launcher and its console was closed by the X — the uninstaller
+    // stays in the clean game with no journal. The launcher must see no installed build (Games.Describe, BuildUpdate.Installed): the first install of D4b
+    // runs as for any clean game, and the new install writes its own journal.
+    const uninstaller = path.join(st.game, 'uninstall_krinik_build.cmd'), journal = path.join(st.game, '_kumm_backup', 'journal.txt')
+    const uninstall = () => execFileSync('cmd.exe', ['/d', '/s', '/c', `""${uninstaller}" < nul"`],
+      { stdio: 'ignore', windowsVerbatimArguments: true, env: { ...process.env, KUMM_DESKTOP_DIR: st.desk } })
+    if (flag('--first') || flag('--leftover')) {
+      const body = readFileSync(uninstaller)
+      uninstall()
+      check(!existsSync(uninstaller) && !existsSync(a), 'the stand build is uninstalled before the first install', aText())
+      if (flag('--leftover')) {
+        writeFileSync(uninstaller, body)
+        // an old time on the leftover: after the install the uninstaller must be the NEW one (judge round 5, NIT 4: the leftover alone passed the check)
+        utimesSync(uninstaller, new Date(2000, 0, 1), new Date(2000, 0, 1))
+        check(existsSync(uninstaller) && !existsSync(path.join(st.game, '_kumm_backup')), 'U-X2 the leftover uninstaller lies in the clean game, no journal', '')
+      }
+      const away = path.join(W, 'away', path.basename(st.bundleOld))
+      mkdirSync(path.dirname(away), { recursive: true }); renameSync(st.bundleOld, away)
+      const solo = path.join(st.game, 'KrinikConanLauncher.exe')
+      copyFileSync(path.join(away, 'KrinikConanLauncher.exe'), solo)
+      const allUnits = [...new Set(man.files.flatMap(e => e.asset ? [e.asset] : (e.parts || []).map(p => p.asset)).concat((man.groups || []).map(g => g.asset)))]
+      const f0 = feed(['--build', '1.0.1', '--assets', st.assets])
+      if (!await ready(f0.url)) { check(false, 'the test feed came up', 'no answer on /ready'); return }
+      let pid = launch(solo, { KRINIK_LAUNCHER_FEED: f0.url, KUMM_DESKTOP_DIR: st.desk })
+      check(!!await until(() => /новейшая 1\.0\.1 .*для этой игры 1\.0\.1/.test(logText()), 15000), 'D4b the plate saw build 1.0.1 with no build installed', logText().trim().split('\n').pop())
+      const screen = await until(() => (logText().match(/экран: found-\S+/) || [null])[0], 15000)
+      check(!!screen, 'D4b a manifest-only release is offered for a first install («Установить сборку»)', (logText().match(/экран: \S+/g) || []).join(' → '))
+      // judge round 5, defect 1: the screen named «Нужно скачать: 0,1 МБ» for a manifest-only release and no question followed
+      check(/Нужно скачать: лаунчер посчитает, когда сверит файлы/.test(screen ? logText().slice(logText().indexOf(screen)) : ''), 'D4b the screen does not name a size before the check', screen || '')
+      if (flag('--leftover')) check(!/экран: (installed|update)\b/.test(logText()), 'U-X2 the launcher never shows the leftover as an installed build', (logText().match(/экран: \S+/g) || []).join(' → '))
+      click(pid, 'Установить сборку')
+      const box0 = dialog(pid, '6', 120)
+      check(/Установить сборку 1\.0\.1\?/.test(box0) && /Нужно скачать 15,6 МБ \(файлов: 12\)/.test(box0), 'D4b after the check the box names the real size before downloading', box0)
+      const done0 = await until(() => /сборка 1\.0\.1 поставлена/.test(logText()) || null, 180000, 500)
+      check(!!done0, 'D4b the first install by the file list finishes', logText().trim().split('\n').slice(-2).join(' | '))
+      check(/по списку файлов: первая установка/.test(logText()), flag('--leftover') ? 'U-X2 the update path took the leftover for no installed build (a first install)' : 'D4b the path is a first install',
+        (logText().match(/по списку файлов: .*/) || ['no such line'])[0])
+      if (flag('--leftover')) check(statSync(uninstaller).mtimeMs > Date.UTC(2001, 0, 1), 'U-X2 the uninstaller in the game is the new install\'s, not the leftover', new Date(statSync(uninstaller).mtimeMs).toISOString())
+      const got0 = asked()
+      check(got0.filter(n => n === 'manifest.json').length === 1 && allUnits.every(n => got0.includes(n)) && got0.length === allUnits.length + 1,
+        'D4b a first install from zero downloads the list and every asset once', `${got0.length} requests for ${allUnits.length} assets`)
+      check(/из прежних сборок 0/.test((logText().match(/список 1\.0\.1: .*/) || [''])[0]), 'D4b no file came from a previous bundle', (logText().match(/список 1\.0\.1: .*/) || ['no plan line'])[0])
+      for (const e of [same, change, huge]) {
+        const g = path.join(st.game, 'Mods', 'ModA', path.basename(e.path))
+        check(existsSync(g) && sha(g) === e.sha256, `D4b the game's ${path.basename(e.path)} is the 1.0.1 file`, existsSync(g) ? sha(g).slice(0, 16) : 'missing')
+      }
+      check(aText() === 'mod A 1.0.1' && existsSync(b), 'D4b the game has build 1.0.1 (ModA 1.0.1, ModB)', aText())
+      check(existsSync(journal) && existsSync(uninstaller), 'D4b the install wrote its journal and its uninstaller', `journal ${existsSync(journal)}, uninstaller ${existsSync(uninstaller)}`)
+      check(stagings().length === 0, 'D4b no staging folder is left', stagings().join(', ') || 'none')
+      const newPid0 = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+      if (newPid0) killPid(newPid0)
+      killPid(pid); killPid(f0.pid)
+      await until(() => !alive(pid), 10000)
+      if (flag('--leftover')) return
+      // D4a: the reinstall over the bundle folder left in the game.
+      uninstall()
+      check(!existsSync(uninstaller) && !existsSync(a) && existsSync(nb), 'D4a build 1.0.1 is uninstalled, its bundle folder stays in the game', aText())
+      writeFileSync(LOG(), ''); writeFileSync(feedLog, '')
+      const f1 = feed(['--build', '1.0.1', '--assets', st.assets, '--parts', st.parts])
+      if (!await ready(f1.url)) { check(false, 'the second test feed came up', 'no answer on /ready'); return }
+      pid = launch(solo, { KRINIK_LAUNCHER_FEED: f1.url, KUMM_DESKTOP_DIR: st.desk })
+      check(!!await until(() => /новейшая 1\.0\.1 .*для этой игры 1\.0\.1/.test(logText()), 15000), 'D4a the plate saw build 1.0.1', logText().trim().split('\n').pop())
+      click(pid, 'Установить сборку')
+      const done = await until(() => /сборка 1\.0\.1 поставлена/.test(logText()) || null, 180000, 500)
+      check(!!done, 'D4a the reinstall finishes', logText().trim().split('\n').slice(-2).join(' | '))
+      const got = asked()
+      check(JSON.stringify(got) === JSON.stringify(['manifest.json']), 'D4a the reinstall downloads only the file list — every file from the bundle left in the game, no volume', got.join(', ') || 'none')
+      check(aText() === 'mod A 1.0.1' && existsSync(b) && existsSync(journal), 'D4a the game has build 1.0.1 (ModA 1.0.1, ModB) and its journal', aText())
+      const newPid = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+      if (newPid) killPid(newPid)
+      killPid(pid)
+      return
+    }
+
+    // D6 (--bad-list): the release carries the volumes AND a manifest that does not parse — the update must go by the volumes (judge R9). Judge round 2: the
+    // case rewrote the stand's manifest for good, and a later case on the same stand failed — the good list goes back on exit.
+    if (flag('--bad-list')) { const good = readFileSync(mf); writeFileSync(mf, '{"format":1}'); process.on('exit', () => writeFileSync(mf, good)) }
+    // D8 (--outside): the installed bundle moved out of the game folder — the player unpacked the archive elsewhere and installed from there (judge round 2, R6).
+    let oldDir = st.bundleOld
+    if (flag('--outside')) { oldDir = path.join(W, 'elsewhere', path.basename(st.bundleOld)); mkdirSync(path.dirname(oldDir), { recursive: true }); renameSync(st.bundleOld, oldDir) }
+    const oldFile = n => path.join(oldDir, by(n).path)
+    const sums = () => ['same.pak', 'change.pak', 'huge.pak', 'a.txt'].map(n => existsSync(oldFile(n)) ? sha(oldFile(n)) : 'missing')
+    const oldSums = sums()
+    const exe = path.join(oldDir, 'KrinikConanLauncher.exe')
+    const unitsOf = e => e.asset ? [e.asset] : e.parts ? e.parts.map(p => p.asset) : [e.group]
+
+    // D9 (--skip, a stand from stand.mjs --delta --skip; plan 57 criterion 7, the owner 2026-11-21 16:46): the player skipped 1.0.1 — the feed lists 1.0.1
+    // and 1.0.2. One press updates 1.0.0 straight to 1.0.2: only the latest release's assets of the files that differ from 1.0.0, nothing of 1.0.1's release.
+    if (flag('--skip')) {
+      const f9 = feed(['--build', st.latest, '--assets', st.assets, '--older', `${st.older.version}:${st.older.assets}`])
+      if (!await ready(f9.url)) { check(false, 'the test feed came up', 'no answer on /ready'); return }
+      const pid9 = launch(exe, { KRINIK_LAUNCHER_FEED: f9.url, KUMM_DESKTOP_DIR: st.desk })
+      check(!!await until(() => /новейшая 1\.0\.2 \(у нас 1\.0\.0\), для этой игры 1\.0\.2/.test(logText()), 15000), 'D9 the plate offers the latest 1.0.2 over 1.0.0',
+        (logText().match(/лента: .*/) || [logText().trim().split('\n').pop()])[0])
+      click(pid9, 'Обновить сборку')
+      const ask9 = dialog(pid9, '6', 120)
+      check(/Обновить сборку с 1\.0\.0 до 1\.0\.2/.test(ask9) && /Нужно скачать \d/.test(ask9), 'D9 one box updates 1.0.0 straight to 1.0.2', ask9)
+      const done9 = await until(() => /сборка 1\.0\.2 поставлена/.test(logText()) || null, 180000, 500)
+      check(!!done9, 'D9 the log says build 1.0.2 is installed', logText().trim().split('\n').slice(-2).join(' | '))
+      const got = asked()
+      check(!got.some(n => n.startsWith(`v${st.older.version}/`)), 'D9 nothing of the skipped release 1.0.1 was downloaded', got.join(', '))
+      check(!unitsOf(same).some(n => got.includes(n)), 'D9 the pak unchanged since 1.0.0 was NOT downloaded', unitsOf(same).join(', '))
+      check([change, huge].every(e => unitsOf(e).every(n => got.includes(n))), 'D9 the pak changed in 1.0.1 and the pak changed in 1.0.2 came from 1.0.2', [change, huge].map(e => unitsOf(e).join('+')).join(', '))
+      check(got.length === new Set(got).size, 'D9 no asset was downloaded twice', `${got.length} requests`)
+      for (const e of [same, change, huge]) {
+        const g = path.join(st.game, 'Mods', 'ModA', path.basename(e.path))
+        check(existsSync(g) && sha(g) === e.sha256, `D9 the game's ${path.basename(e.path)} is the 1.0.2 file`, existsSync(g) ? sha(g).slice(0, 16) : 'missing')
+      }
+      check(aText() === 'mod A 1.0.2' && existsSync(b), 'D9 the game has build 1.0.2 (ModA 1.0.2, ModB from 1.0.1)', aText())
+      const newPid9 = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+      if (newPid9) killPid(newPid9)
+      killPid(pid9)
+      return
+    }
+
+    // D5c (--digest-off, with the volumes; judge round 3, RISK 1): GitHub's digest of the changed pak differs from the manifest (the asset was re-uploaded after
+    // the list) — no download can match, so the launcher goes to the volumes at once and never asks for that asset.
+    if (flag('--digest-off')) {
+      const f5 = feed(['--build', '1.0.1', '--assets', st.assets, '--parts', st.parts, '--digest-off', 'change.pak'])
+      if (!await ready(f5.url)) { check(false, 'the test feed came up', 'no answer on /ready'); return }
+      const pid5 = launch(exe, { KRINIK_LAUNCHER_FEED: f5.url, KUMM_DESKTOP_DIR: st.desk })
+      check(!!await until(() => PLATE.test(logText()), 15000), 'D5c the plate saw build 1.0.1', logText().trim().split('\n').pop())
+      click(pid5, 'Обновить сборку')
+      // judge round 4, finding 2: every asset of the plan is compared before the question and before the first download — no «Нужно скачать» box comes
+      check(!!await until(() => /путь по списку файлов негоден, обновление идёт частями архива: .*не совпадает со своей записью/.test(logText()), 60000),
+        'D5c a digest that differs from the list falls back to the volumes', (logText().match(/путь по списку.*/) || ['no line'])[0])
+      const box = dialog(pid5, '6', 60)
+      check(/Лаунчер не смог обновить сборку по изменившимся файлам\. Скачать всю сборку 1\.0\.1/.test(box), 'D5c the archive question comes and says why first', box)
+      const done5 = await until(() => /сборка 1\.0\.1 поставлена/.test(logText()) || null, 180000, 500)
+      check(!!done5, 'D5c the build 1.0.1 is installed from the volumes', logText().trim().split('\n').slice(-2).join(' | '))
+      check(!asked().includes(change.asset), 'D5c the asset whose digest differs was never downloaded', asked().filter(n => !/\.zip\.\d{3}$/.test(n)).join(', '))
+      check(JSON.stringify(asked().filter(n => !/\.zip\.\d{3}$/.test(n))) === JSON.stringify(['manifest.json']), 'D5c no asset of the list was downloaded at all, only the list',
+        asked().filter(n => !/\.zip\.\d{3}$/.test(n)).join(', '))
+      check(stagings().length === 0, 'D5c no staging folder is left after the volumes', stagings().join(', ') || 'none')
+      check(aText() === 'mod A 1.0.1', 'D5c ModA/a.txt is the 1.0.1 file', aText())
+      const newPid5 = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+      if (newPid5) killPid(newPid5)
+      killPid(pid5)
+      return
+    }
+
+    const withParts = flag('--bad-list') || flag('--volumes')
+    const f = feed(['--build', '1.0.1', '--assets', st.assets, ...(withParts ? ['--parts', st.parts] : []), ...(flag('--stop') ? ['--slow', '4000'] : []),
+      ...(flag('--corrupt') ? ['--corrupt', 'change.pak'] : [])])
+    if (!await ready(f.url)) { check(false, 'the test feed came up', 'no answer on /ready'); return }
+    const env = { KRINIK_LAUNCHER_FEED: f.url, KUMM_DESKTOP_DIR: st.desk, ...(flag('--nolinks') ? { KRINIK_LAUNCHER_NO_HARDLINKS: '1' } : {}),
+      ...(flag('--outside') ? { KRINIK_LAUNCHER_SEARCH_ROOTS: W } : {}) }
+    let pid = launch(exe, env)
+    // D8: a launcher outside the game folder searches the drives first, and the feed line is logged before the game is chosen («для этой игры —», first
+    // run 2026-11-21 12:23) — the case waits for the chosen game and the update screen instead.
+    if (flag('--outside')) check(!!await until(() => /игра выбрана: .*\\game\r?\n[\s\S]*экран: update/.test(logText()), 40000), 'D8 the launcher outside the game folder found the game and offers the update',
+      (logText().match(/игра выбрана: .*/) || ['no game chosen'])[0])
+    else check(!!await until(() => PLATE.test(logText()), 15000), 'the plate saw build 1.0.1 for this game', logText().trim().split('\n').pop())
+    click(pid, 'Обновить сборку')
+    if (flag('--bad-list')) {
+      check(!!await until(() => /путь по списку файлов негоден, обновление идёт частями архива/.test(logText()), 30000), 'a broken manifest falls back to the volumes', (logText().match(/путь по списку.*/) || ['no line'])[0])
+      // judge round 2, defect 1: the fallback asks the archive question (with the archive's size) before the first part; round 3: it says why, first
+      const box = dialog(pid, '6', 60)
+      check(/Скачать всю сборку 1\.0\.1/.test(box), 'the fallback asks the archive question before downloading', box)
+      check(/Лаунчер не смог обновить сборку по изменившимся файлам\. Скачать всю сборку/.test(box), 'the archive question says first why the whole archive is needed', '')
+      const done = await until(() => /сборка 1\.0\.1 поставлена/.test(logText()) || null, 180000, 500)
+      check(!!done, 'the build 1.0.1 is installed from the volumes', logText().trim().split('\n').slice(-2).join(' | '))
+      check(aText() === 'mod A 1.0.1', 'ModA/a.txt is the 1.0.1 file', aText())
+      // Judge round 3: a bad list runs Tidy before FALLBACK, which already removes the empty staging; this line holds the end state only — D5a is the
+      // case whose staging held assembled files when the volumes took over.
+      check(stagings().length === 0, 'no staging folder is left after the volumes', stagings().join(', ') || 'none')
+      // waited like every other case: the new launcher starts a moment after the «поставлена» line, and a lookup at once missed it — it stayed running
+      // after the case and held its exe (the cleanup of 2026-11-21 17:2x hit EPERM on r6\B)
+      const newPid = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+      if (newPid) killPid(newPid)
+      killPid(pid)
+      return
+    }
+    const ask = dialog(pid, flag('--decline') ? '7' : '6', 120)
+    check(/Обновить сборку с 1\.0\.0 до 1\.0\.1/.test(ask) && /Нужно скачать \d/.test(ask), 'the box after the check names both versions and the download', ask)
+    if (flag('--decline')) {
+      check(!!await until(() => /отказался от обновления после сверки/.test(logText()), 20000), 'the log says the player declined after the check', logText().trim().split('\n').pop())
+      await wait(1500)
+      check(JSON.stringify(asked()) === JSON.stringify(['manifest.json']), 'only the manifest was downloaded', asked().join(', '))
+      check(aText() === 'mod A 1.0.0', 'the old build stays in the game', aText())
+      check(alive(pid), 'the launcher stays open', '')
+      // judge R11: «alive» is true under an error box too — no other box may follow the «Нет», and the log carries no update error
+      check(noDialog(pid, 5) === null, 'no other box follows the «Нет»', '')
+      check(!/обновление сборки:/.test(logText()), 'the log carries no update error', '')
+      // judge round 2: the downloaded list stayed in <bundle>.staging\.dl after «Нет»
+      check(!existsSync(staging), 'nothing of the update is left after «Нет» (no staging folder)', existsSync(staging) ? readdirSync(staging, { recursive: true }).join(', ') : 'none')
+      killPid(pid)
+      return
+    }
+    if (flag('--corrupt')) {
+      const tries = () => asked().filter(n => n === change.asset).length
+      if (flag('--volumes')) {
+        check(!!await until(() => /путь по списку файлов негоден, обновление идёт частями архива/.test(logText()), 60000),
+          'D5a an asset failing its hash twice falls back to the volumes', (logText().match(/путь по списку.*/) || ['no line'])[0])
+        const box = dialog(pid, '6', 60)
+        check(/Лаунчер не смог обновить сборку по изменившимся файлам\. Скачать всю сборку 1\.0\.1/.test(box), 'D5a the archive question comes and says why first', box)
+        const done = await until(() => /сборка 1\.0\.1 поставлена/.test(logText()) || null, 180000, 500)
+        check(!!done, 'D5a the build 1.0.1 is installed from the volumes', logText().trim().split('\n').slice(-2).join(' | '))
+        check(aText() === 'mod A 1.0.1', 'D5a ModA/a.txt is the 1.0.1 file', aText())
+        check(tries() === 2, 'D5a the broken asset was tried twice', `${tries()} requests`)
+        check(stagings().length === 0, 'D5a no staging folder is left after the volumes', stagings().join(', ') || 'none')
+        // judge round 4, finding 5: the end state alone was already true by the cleanup after the unpack — the staging must go after «Да» and before the parts
+        const L = logText(), gone = L.indexOf('убрана папка прежней попытки обновления'), firstPart = L.search(/хвост архива/)
+        check(gone >= 0 && firstPart > gone, 'D5a the staging with the assembled files went after «Да», before the volumes', gone >= 0 ? L.slice(gone, gone + 120) : 'no such line')
+        check(JSON.stringify(sums()) === JSON.stringify(oldSums), 'D5a the old bundle\'s files are untouched', sums().map(s => s.slice(0, 8)).join(' '))
+        const newPid = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+        if (newPid) killPid(newPid)
+      } else {
+        const box = dialog(pid, 'first', 60)
+        check(/дважды скачался с ошибкой/.test(box), 'D5b with no volumes the box says the file failed twice', box)
+        check(tries() === 2, 'D5b the broken asset was tried twice', `${tries()} requests`)
+        check(aText() === 'mod A 1.0.0', 'D5b the game keeps build 1.0.0', aText())
+        check(alive(pid), 'D5b the launcher stays open', '')
+        check(JSON.stringify(sums()) === JSON.stringify(oldSums), 'D5b the old bundle\'s files are untouched', sums().map(s => s.slice(0, 8)).join(' '))
+      }
+      killPid(pid)
+      return
+    }
+    // D3 (--stop, plan 57 phase 6 criterion 4): the launcher is killed by PID in the feed's pause inside the first asset — a half file stays in
+    // <bundle>.staging\.dl and the old bundle is untouched; the second start names what is left, asks for the rest by Range and finishes.
+    let half = null
+    if (flag('--stop')) {
+      half = await until(() => asked().find(n => n !== 'manifest.json'), 60000, 100)
+      await wait(1500)
+      killPid(pid)
+      await until(() => !alive(pid), 10000)
+      const part = half ? path.join(staging, '.dl', half) : ''
+      const got = part && existsSync(part) ? statSync(part).size : -1
+      check(got > 0 && got < unitSize(half), 'D3 the kill left a half asset in the staging folder', `${half}: ${got} of ${unitSize(half)} B`)
+      check(JSON.stringify(sums()) === JSON.stringify(oldSums), 'D3 the old bundle is untouched after the kill', sums().map(s => s.slice(0, 8)).join(' '))
+      check(aText() === 'mod A 1.0.0', 'D3 the game keeps build 1.0.0 after the kill', aText())
+      writeFileSync(LOG(), '')
+      pid = launch(exe, env)
+      check(!!await until(() => PLATE.test(logText()), 15000), 'D3 the second start saw build 1.0.1', logText().trim().split('\n').pop())
+      click(pid, 'Обновить сборку')
+      const again = dialog(pid, '6', 120)
+      check(mbOf(again) < mbOf(ask), 'D3 the second box names only what is left to download', `${mbOf(ask)} MB → ${mbOf(again)} MB`)
+      const plan2 = (logText().match(/список 1\.0\.1: .*/) || ['no plan line'])[0]
+      check(/уже собрано [1-9]/.test(plan2), 'D3 the second plan keeps what the first start assembled', plan2)
+    }
+    const done = await until(() => /сборка 1\.0\.1 поставлена/.test(logText()) || null, 180000, 500)
+    check(!!done, 'the log says build 1.0.1 is installed', logText().trim().split('\n').slice(-3).join(' | '))
+    const got = asked()
+    const units = e => e.asset ? [e.asset] : e.parts ? e.parts.map(p => p.asset) : [e.group]
+    check(!units(same).some(n => got.includes(n)), 'the unchanged pak was NOT downloaded', got.join(', '))
+    check(!!change.asset && got.includes(change.asset), 'the changed 2 MB pak was downloaded as its one asset', units(change).join(', '))
+    check(!!huge.parts && huge.parts.length === 2 && units(huge).every(n => got.includes(n)), 'the changed 5 MB pak was downloaded in its two parts', units(huge).join(', '))
+    check(got.includes(man.groups[0].asset), 'the group of the small files was downloaded', man.groups[0].asset)
+    if (half) {
+      // D3: the half asset is asked twice — whole, then the rest by Range from where the kill left it; every other asset once.
+      const ranged = readFileSync(feedLog, 'utf8').match(new RegExp(`GET /file/${encodeURIComponent(half).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')} .*range=bytes=[1-9]\\d*-`)) || null
+      check(!!ranged, 'D3 the half asset was resumed by Range', ranged ? ranged[0].slice(0, 160) : 'no Range request')
+      // The manifest is downloaded afresh on every start by design (judge round 1, Д2): once per start, two starts.
+      const others = got.filter(n => n !== half && n !== 'manifest.json')
+      check(others.length === new Set(others).size, 'D3 no other asset was downloaded twice', `${got.length} requests`)
+      check(got.filter(n => n === 'manifest.json').length === 2, 'D3 the file list was downloaded once per start', `${got.filter(n => n === 'manifest.json').length} times`)
+    } else check(got.length === new Set(got).size, 'no asset was downloaded twice', `${got.length} requests`)
+    const plan = (logText().match(/список 1\.0\.1: .*/) || ['no plan line'])[0]
+    check(/из прежних сборок [1-9]|уже собрано [1-9]/.test(plan), 'the plan took files from the old bundle', plan)
+    for (const e of [same, change, huge]) {
+      const g = path.join(st.game, 'Mods', 'ModA', path.basename(e.path))
+      check(existsSync(g) && sha(g) === e.sha256, `the game's ${path.basename(e.path)} is the 1.0.1 file`, existsSync(g) ? sha(g).slice(0, 16) : 'missing')
+    }
+    check(aText() === 'mod A 1.0.1', 'ModA/a.txt is the 1.0.1 file', aText())
+    check(existsSync(b), 'ModB (new in 1.0.1) is in the game', String(existsSync(b)))
+    const ino = f2 => existsSync(f2) ? statSync(f2, { bigint: true }).ino : -1n
+    const newSame = path.join(nb, same.path), oldSame = path.join(oldDir, same.path)
+    if (flag('--nolinks')) {
+      // D7: no hardlink is possible — the unchanged pak is a COPY (another file id, the same bytes), and the plan counted the copies.
+      check(/копий [1-9]/.test(plan), 'D7 the plan counted copies of the old files', plan)
+      check(ino(newSame) !== -1n && ino(newSame) !== ino(oldSame) && existsSync(newSame) && sha(newSame) === same.sha256, 'D7 the unchanged pak of the new bundle is a copy with the same bytes',
+        `${ino(newSame)} vs ${ino(oldSame)}`)
+    } else {
+      // judge R11: the SAME file as the old bundle's (one file id), not merely «some second link»
+      check(ino(newSame) !== -1n && ino(newSame) === ino(oldSame), 'the new bundle\'s unchanged pak IS the old bundle\'s file (one file id)', `${ino(newSame)} vs ${ino(oldSame)}`)
+    }
+    check(!existsSync(staging), 'the staging folder is gone (renamed into the bundle)', '')
+    check(JSON.stringify(sums()) === JSON.stringify(oldSums), 'the old bundle\'s files are untouched', sums().map(s => s.slice(0, 8)).join(' '))
+    const newPid = await until(() => pidOf(path.join(nb, 'KrinikConanLauncher.exe')), 15000)
+    check(!!newPid, 'the new bundle\'s launcher runs', `pid ${newPid}`)
+    if (newPid) {
+      // Judge round 2: the offer named the folder's size (13.7 GB) while the deletion frees only the files no other bundle shares. The box must name the
+      // bytes of the old bundle's files with one name, and say the shared files stay — or, with copies (D7), the whole size and no such line.
+      const offer = dialog(newPid, '7', 30)
+      const files = readdirSync(oldDir, { recursive: true }).map(n => path.join(oldDir, n)).filter(p => statSync(p).isFile())
+      const freed = files.filter(p => statSync(p).nlink === 1).reduce((s, p) => s + statSync(p).size, 0) / 1048576
+      const shown = (() => { const m = /освободится ([\d\s ,]+) (Б|КБ|МБ|ГБ)/.exec(offer); return m ? Number(m[1].replace(/[\s ]/g, '').replace(',', '.')) * { Б: 1 / 1048576, КБ: 1 / 1024, МБ: 1, ГБ: 1024 }[m[2]] : NaN })()
+      check(Math.abs(shown - freed) <= Math.max(0.06, freed * 0.06), 'the delete offer names the bytes the deletion frees', `shown ${shown} MB, files with one name ${freed.toFixed(2)} MB`)
+      const sharedLine = /ими пользуется новая сборка/.test(offer)
+      check(flag('--nolinks') ? !sharedLine : sharedLine, flag('--nolinks') ? 'D7 the offer has no shared-files line (nothing is shared)' : 'the offer says the shared files stay in the new bundle', offer)
+      killPid(newPid)
+    }
+    killPid(pid)
+    return
+  }
+
+  // U-X (KUMM bugs/115, issue #46): the player closes the uninstaller's console by its X at its last «pause» — its self-delete (the line after the pause)
+  // never runs. The screen must offer «Установить сборку» again, and the leftover uninstaller must go. a2 — another launcher exe (the control run).
+  if (mode === 'uninstall') {
+    const st = JSON.parse(readFileSync(path.resolve(a1), 'utf8'))
+    const exe = a2 && !a2.startsWith('--') ? path.resolve(a2) : path.join(st.bundleOld, 'KrinikConanLauncher.exe')
+    TMP = path.join(path.dirname(st.game), 'tmp'); mkdirSync(TMP, { recursive: true }); writeFileSync(LOG(), '')
+    const cmd = path.join(st.game, 'uninstall_krinik_build.cmd'), backup = path.join(st.game, '_kumm_backup'), modA = path.join(st.game, 'Mods', 'ModA', 'a.txt')
+    const last = () => logText().trim().split('\n').pop()
+    const pid = launch(exe, { ...NOFEED, KUMM_DESKTOP_DIR: st.desk })
+    check(!!await until(() => /экран: installed/.test(logText()), 20000), 'U-X the launcher shows the installed build', last())
+    click(pid, 'Удалить сборку')
+    const ask = dialog(pid, '6', 30)
+    check(/Удалить сборку Krinik/.test(ask), 'U-X the uninstall box asks and «Да» is pressed', ask)
+    check(!!await until(() => !existsSync(backup) && !existsSync(modA), 60000, 500), 'U-X the uninstaller restored the game (no _kumm_backup, no ModA)', `backup ${existsSync(backup)}, ModA ${existsSync(modA)}`)
+    const name = path.basename(cmd).replace(/'/g, "''")
+    const consoles = await until(() => {
+      const o = execFileSync('powershell', ['-NoProfile', '-Command', `Get-CimInstance Win32_Process -Filter "Name='cmd.exe'" | Where-Object { $_.CommandLine -like '*${name}*' } | ForEach-Object { $_.ProcessId }`], { encoding: 'utf8' }).trim()
+      return o ? o.split(/\s+/).map(Number) : null
+    }, 10000, 500)
+    await wait(3000)   // the shortcut line and «Готово» run before the last pause
+    check(!!consoles && existsSync(cmd), 'U-X the console waits at its last pause and the uninstaller file is still there', `console ${consoles}, cmd ${existsSync(cmd)}`)
+    for (const c of consoles || []) killPid(c)   // the player's X on the console
+    check(!!await until(() => /окно удаления сборки закрыто/.test(logText()), 15000), 'U-X the launcher saw the uninstall window close', last())
+    await wait(3000)
+    const screens = logText().match(/экран: \S+/g) || []
+    const now = screens.length ? screens[screens.length - 1].slice('экран: '.length) : 'none'
+    check(now === 'found-files', 'U-X after the X the screen offers «Установить сборку» (found-files), not «installed»', `screens ${screens.join(' → ')}`)
+    check(!existsSync(cmd), 'U-X the leftover uninstaller is gone from the game root', existsSync(cmd) ? 'still there' : (logText().match(/оставшийся деинсталлятор.*/) || ['gone'])[0])
     killPid(pid)
     return
   }

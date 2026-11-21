@@ -159,14 +159,17 @@ static class Games
         catch (Exception ex) when (ex is ArgumentException || ex is NotSupportedException || ex is PathTooLongException || ex is System.Security.SecurityException) { return null; }
     }
 
-    // Что стоит в копии: деинсталлятор сборки Krinik в корне (его кладёт только раскатка сборки); чужие моды — pak в ConanSandbox\Mods, непустой
-    // modlist.txt или UE4SS рядом с игрой.
+    // Что стоит в копии: деинсталлятор сборки Krinik в корне вместе с журналом раскатки (_kumm_backup\journal.txt) — оба кладёт только раскатка сборки;
+    // чужие моды — pak в ConanSandbox\Mods, непустой modlist.txt или UE4SS рядом с игрой.
+    // Один деинсталлятор без журнала — остаток законченного удаления: себя он стирает последней строкой, после «pause», и игрок, закрывший окно
+    // крестиком, оставлял его в чистой игре, а лаунчер показывал «сборка стоит» (KUMM bugs/115, 2026-11-21). Удачное удаление уносит папку копий с
+    // журналом, неудачное оставляет оба.
     public static GameCopy Describe(string dir, string uninstallCmd)
     {
         var c = new GameCopy { Dir = dir, Cl = ReadCl(dir) };
         try
         {
-            if (File.Exists(Path.Combine(dir, uninstallCmd)))
+            if (File.Exists(Path.Combine(dir, uninstallCmd)) && File.Exists(JournalOf(dir)))
             {
                 c.Kind = CopyKind.Krinik;
                 (c.BuildVersion, c.BuildGame) = InstalledVersion(dir);
@@ -199,6 +202,8 @@ static class Games
             string recordedGame = null, handGame = null, launcherGame = null;
             foreach (var sub in Directory.EnumerateDirectories(dir, "Krinik_*"))
             {
+                // Папка сборки по списку файлов, ещё не собранная (<корень>.staging), — не поставленная сборка (судья 2026-11-21, круг 2, R4). [NOT-TESTED]
+                if (sub.EndsWith(Delta.STAGING, StringComparison.OrdinalIgnoreCase)) continue;
                 var v = Feed.ParseVersion(Bundle.PackVersionIn(sub));
                 if (v == null) continue;
                 string gv = Bundle.GameVersionIn(sub);
@@ -213,7 +218,10 @@ static class Games
         catch (Exception ex) when (ex is IOException || ex is UnauthorizedAccessException) { return (null, null); }
     }
 
-    const string BACKUP_DIR = "_kumm_backup", PACK_VERSION_FILE = "pack_version.txt";
+    const string BACKUP_DIR = "_kumm_backup", PACK_VERSION_FILE = "pack_version.txt", JOURNAL_FILE = "journal.txt";
+
+    // Журнал раскатки сборки (KUMM Deploy-ModPack.ps1, Get-JournalPath): пока он есть, удаление сборки ещё не прошло.
+    public static string JournalOf(string dir) => Path.Combine(dir, BACKUP_DIR, JOURNAL_FILE);
 
     // Игра, в которую распакован лаунчер (или сборка с ним): игра — она, искать дальше не нужно. Для такой папки хватает ConanSandbox.exe.
     public static string Around(string here)

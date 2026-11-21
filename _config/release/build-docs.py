@@ -33,7 +33,8 @@ LAUNCHER_SRC = LAUNCHER_DIR / "KrinikConanLauncher.cs"
 LAUNCHER_UPDATES_SRC = LAUNCHER_DIR / "KrinikConanUpdates.cs"
 # Самостоятельный лаунчер (KUMM plans/57): поиск игры, слова окна на двух языках, части окна по макетам KUIPS.
 # KrinikConanVersion.cs — номер выпуска с порядком кандидатов RC1 < RC2 < 0.9.1 (KUMM plans/55 phase E; проверка — launcher/test/version_order.cs).
-LAUNCHER_MORE_SRC = [LAUNCHER_DIR / n for n in ("KrinikConanGames.cs", "KrinikConanText.cs", "KrinikConanWidgets.cs", "KrinikConanVersion.cs")]
+# KrinikConanDelta.cs — обновление по списку файлов выпуска (KUMM plans/57, фаза 6).
+LAUNCHER_MORE_SRC = [LAUNCHER_DIR / n for n in ("KrinikConanGames.cs", "KrinikConanText.cs", "KrinikConanWidgets.cs", "KrinikConanVersion.cs", "KrinikConanDelta.cs")]
 BUILD_INFO = LAUNCHER_DIR / "BuildInfo.g.cs"
 LAUNCHER_EXE = LAUNCHER_DIR / "bin" / "KrinikConanLauncher.exe"
 LAUNCHER_RES_DIR = LAUNCHER_DIR / "res"

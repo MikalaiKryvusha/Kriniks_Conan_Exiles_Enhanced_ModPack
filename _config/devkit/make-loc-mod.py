@@ -18,6 +18,7 @@
 import sys, os, json, hashlib, subprocess, shutil
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import locres
+import repak_tool  # repak on one thread: the same folder packs into the same bytes (2026-11-21, the launcher's delta update, step 0)
 
 UNREALPAK = r'F:\CEDevKit\CEUE5Devkit\Engine\Binaries\Win64\UnrealPak.exe'
 REPAK = r'D:\work\ai_sandbox\_tools\repak\repak.exe'
@@ -31,7 +32,7 @@ def md5(p):
     return h.hexdigest()
 
 def run(cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace')
+    r = subprocess.run(cmd, capture_output=True, text=True, encoding='utf-8', errors='replace', env=repak_tool.env_for(cmd))
     if r.returncode != 0:
         raise SystemExit('FAILED (%d): %s\n%s\n%s' % (r.returncode, ' '.join(cmd), r.stdout[-1500:], r.stderr[-1500:]))
     return r.stdout

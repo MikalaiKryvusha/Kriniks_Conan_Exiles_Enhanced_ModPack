@@ -4,7 +4,7 @@ echo Удаление сборки Krinik: игра вернётся в тот �
 echo Закройте игру перед удалением.
 echo.
 powershell -NoProfile -ExecutionPolicy Bypass -File "%~dp0{BACKUP}\Deploy-ModPack.ps1" -Restore -GameDir "%~dp0."
-if errorlevel 1 (
+if %errorlevel% neq 0 (
   echo.
   echo Удаление не завершено: папка копий {BACKUP} и этот файл оставлены. Пришлите автору сборки снимок этого окна.
   pause

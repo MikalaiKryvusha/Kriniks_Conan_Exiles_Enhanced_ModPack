@@ -1,0 +1,4 @@
+# Third-party paks allowed to differ from 0.9.1-RC2 in the RC3 manifest (make_manifest.py --allow-changed). One pattern per line, the reason after «#».
+# RC2's paks were packed on many repak threads (entry order = finish order), so their bytes differ from any new packing with the content unchanged; from RC3
+# on the packing is reproducible (pack 23e9015, KUMM plan 57 phase 6 step 0) and this file is not needed for the next release.
+pack/src/*  # RC2 was packed on many threads

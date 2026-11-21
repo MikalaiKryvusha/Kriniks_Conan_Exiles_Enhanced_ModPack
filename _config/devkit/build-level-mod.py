@@ -114,6 +114,7 @@ fts = load_module("fts", "feats-table.py")
 cav = load_module("cav", "caverns_loot.py")   # таблица сундуков Caverns of Set (шаг 3б; владелец 2026-11-01 08:58 «делаем сейчас 2»)
 vp = load_module("vp", os.path.join("devkit", "vanilla_patches.py"))  # правленые ванильные блюпринты (шаг 4б; владелец 2026-11-08 23:05 «(А) — правку пака скриптом»)
 kmi = load_module("kmi", os.path.join("devkit", "krinik_modinfo.py"))  # автор, URL автора, список изменений из одного источника (KUMM HOUSE_RULES 40)
+rpk = load_module("rpk", os.path.join("devkit", "repak_tool.py"))  # repak on one thread: the same folder packs into the same bytes (2026-11-21, delta update step 0)
 
 
 def say(msg):
@@ -121,6 +122,7 @@ def say(msg):
 
 
 def run(args, **kw):
+    kw.setdefault("env", rpk.env_for(args))   # no caller passes its own env today; one that does keeps it whole
     r = subprocess.run(args, capture_output=True, text=True, encoding="utf-8", errors="replace", **kw)
     if r.returncode != 0:
         raise SystemExit(f"ОШИБКА {os.path.basename(args[0])} ({r.returncode}):\n{r.stdout[-2000:]}\n{r.stderr[-2000:]}")
