@@ -118,12 +118,25 @@ local function local_hero()
     return first
 end
 
+-- Ссылка из памяти годна, только пока объект по её адресу носит имя, записанное при захвате: после выхода в меню и новой загрузки мира адрес может занять
+-- чужой объект, и IsValid() ответит «да» ему (KUMM EXP-0612; судья 2026-11-22 21:5x, круг на RC4, находка 5). [NOT-TESTED]
+local kept_names = {}   -- [ключ] = полное имя при захвате
+local function keep_name(key, o)
+    kept_names[key] = nil
+    if o and o:IsValid() then local ok, fn = pcall(o.GetFullName, o); if ok then kept_names[key] = fn end end
+end
+local function still(key, o)
+    if not (o and kept_names[key] and o:IsValid()) then return false end
+    local ok, fn = pcall(o.GetFullName, o)
+    return ok and fn == kept_names[key]
+end
+
 -- Серверные настройки — один поиск на мир: объект живёт, пока жив мир.
 local function server_settings()
-    if server_obj and server_obj:IsValid() then return server_obj end
+    if still("server", server_obj) then return server_obj end
     server_obj = nil
     local ss = FindFirstOf("BP_ServerSettings_C")
-    if ss and ss:IsValid() then server_obj = ss end
+    if ss and ss:IsValid() then server_obj = ss; keep_name("server", ss) end
     return server_obj
 end
 
@@ -141,10 +154,11 @@ local function cached_hero()
         local h = local_hero()
         if h == nil then need_find = false; hero_obj = nil; return nil end
         hero_obj = h
+        keep_name("hero", h)
         if hero_alive(h) then need_find = false end
         return hero_obj
     end
-    if hero_obj and hero_obj:IsValid() then return hero_obj end
+    if still("hero", hero_obj) then return hero_obj end
     hero_obj = nil
     return nil
 end
@@ -222,6 +236,14 @@ end
 local function tick()
     local hero = cached_hero()
     if not hero then return end
+    -- ⚠️ У ПОГИБШЕГО ГЕРОЯ НЕТ КОМПОНЕНТА ДВИЖЕНИЯ, а его Проворство читается нулём (KUMM bugs/118 соседняя находка, 2026-11-22 19:55:09, кейс A49): шаг видел
+    -- «Проворство 8 → 0», и apply() писал BrakingDecelerationWalking и JumpZVelocity в пустой объект — UE4SS дважды писал в журнал «Tried setting member
+    -- variable … but UObject instance is nullptr» на каждой смерти. Пока компонента нет, шаг ничего не читает и не пишет; новый герой после возрождения
+    -- придёт со своим именем и своим Проворством (ветка «герой появился»). [TESTED: 2026-11-22 19:59 · смерть по exec suicide с пустыми руками: строк
+    -- «[Error] … nullptr» 0 (до правки 2 в 19:55:09), «Проворство 8 → 0» нет; возрождение 19:59:41 «герой появился: Проворство 8» · KUMM bugs/118, кейс A49n]
+    local cm_live = false
+    pcall(function() local cm = hero.CharacterMovement; cm_live = cm ~= nil and cm:IsValid() end)
+    if not cm_live then return end
     local name = "?"
     pcall(function() name = hero:GetFullName() end)
     local n = read_agility(hero)
@@ -236,9 +258,12 @@ local function tick()
         apply(hero, n, ("Проворство %d → %d"):format(was, n))
     end
     -- Наблюдение для спринта: итоговая скорость, какой её поставила игра, — только при смене.
+    -- У мёртвого героя компонента движения нет, и UE4SS отдаёт вместо числа пустой объект: без проверки типа вычитание падало каждую секунду,
+    -- пока героиня лежит мёртвой (KUMM 2026-11-21 22:16, «шаг упал: …:242: attempt to perform arithmetic on a UObject», 9 строк до возрождения).
+    -- [TESTED: 2026-11-21 · смерть по exec suicide, 15 с: «шаг упал» 0 · KUMM testcases/reports/2026-11-21_conan-rc3-critical-retest.md, кейс L1]
     local mws
     pcall(function() mws = hero.CharacterMovement.MaxWalkSpeed end)
-    if mws and (last_mws == nil or math.abs(mws - last_mws) > 0.5) then
+    if type(mws) == "number" and (last_mws == nil or math.abs(mws - last_mws) > 0.5) then
         last_mws = mws
         log("скорость сменилась: MaxWalkSpeed %.1f · Проворство %d · по закону бег %d, спринт %d · множитель спринта %.4f",
             mws, n, BASE_RUN + CM_PER_POINT * n, BASE_SPRINT + CM_PER_POINT * n, sprint_fix(n))

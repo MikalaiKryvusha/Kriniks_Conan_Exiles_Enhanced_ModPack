@@ -220,9 +220,47 @@ end
 -- GAP:            перебор актёров с цепочкой вызовов без IsValid страж не видит; FindFirstOf по компоненту пропускает
 -- ON-REAL-PATH:   NOT YET
 local COMPONENT_SWEEP = "FindAllOf%s*%(%s*['\"][%w_]*Component[%w_]*['\"]"
+-- @guard no-table-delegate
+-- THREAT:         делегат, переданный в UFunction таблицей Lua ({ Object = …, FunctionName = … }), роняет UE4SS нативно через 1,5 с (pcall не ловит)
+-- PROVED-AGAINST: KUMM bugs/118 — семь падений 2026-11-22 15:48–17:45 и два повтора 19:28, 19:31 (один с выключенным модом камеры): проба
+--                 .work/tmp/esc_listen.lua, ListenForInputAction(FName("Escape"), 0, true, { Object = root, FunctionName = FName(…) }); EXP-0613
+-- GAP:            видит вызов метода `:ListenForInputAction(` (любой: делегат из Lua другим способом, чем таблицей, сюда не подать — судья 2026-11-22,
+--                 находка 2: таблица в переменной проходила старый шаблон) в команде и в файлах, которые команда грузит через dofile (формы `dofile('…')`,
+--                 `dofile "…"`, `dofile[[…]]`); вызов через точку `obj.ListenForInputAction(obj, …)`, loadfile и dofile внутри загруженного файла не видит;
+--                 строку-комментарий без двоеточия перед именем не трогает
+-- ON-REAL-PATH:   YES 2026-11-22 19:53 (прежний шаблон) — G1 команда пробы отклонена, игра жива; G2 «lua return 1+1» → 2; G3 dofile open-tab.lua
+--                 исполнен (KUMM bugs/118); нынешний шаблон — G4–G11 на Lua 5.4 (lupa) 2026-11-22 20:2x и в игре 20:25: проба по файлу отклонена,
+--                 делегат в переменной отклонён в команде, «lua return 1+1» → 2, игра жива
+local LISTEN_CALL = ":%s*ListenForInputAction%s*%("
+-- @guard no-nil-interactable (2026-11-22 20:57, KUMM bugs/84 case M2): `npc:InteractableActivate(nil, hero, 0, false)` on a BP_HumanoidDialogueNPC_C crashed the
+-- game natively (access violation 0x412fd716, stack 56 frames — crash-forensics.py named the command at once); the same call with nil passed on dungeon teleport
+-- triggers. A nil Component is not what the game passes there. GAP: only the literal «InteractableActivate(nil» is seen. ON-REAL-PATH: YES — Lua 5.4 cases
+-- G12 / G13, live at the main menu 2026-11-22 21:00 (the command refused, «lua return 1+1» → 2, the game alive).
+local NIL_ACTIVATE = ":%s*InteractableActivate%s*%(%s*nil"
+local function refuse_table_delegate(text, where)
+    if text and text:find(LISTEN_CALL) then
+        error("отказ: ListenForInputAction из Lua роняет UE4SS нативно (" .. where .. ") — KUMM bugs/118, EXP-0613")
+    end
+    if text and text:find(NIL_ACTIVATE) then
+        error("отказ: InteractableActivate с пустым компонентом уронил игру на собеседнике (" .. where .. ") — KUMM bugs/84, M2")
+    end
+end
+local DOFILE_FORMS = { "dofile%s*%(?%s*'([^']+)'", 'dofile%s*%(?%s*"([^"]+)"', "dofile%s*%(?%s*%[%[(.-)%]%]" }
 local function lua_chunk(code)
     if code:find(COMPONENT_SWEEP) then
         error("отказ: перебор компонентов (FindAllOf по классу …Component) ронял игру трижды — EXP-0330; ищи через актёра и IsValid")
+    end
+    refuse_table_delegate(code, "в команде")
+    -- файл, который команда грузит через dofile('…'), проверяется тем же правилом: проба bugs/118 жила в файле, а не в строке команды
+    for _, form in ipairs(DOFILE_FORMS) do
+        for path in code:gmatch(form) do
+            local f = io.open(path, "r")
+            if f then
+                local body = f:read("*a") or ""
+                f:close()
+                refuse_table_delegate(body, path)
+            end
+        end
     end
     local env = setmetatable({ find_widget = find_widget, log = log }, { __index = _G })
     local fn, err = load(code, "agent", "t", env)

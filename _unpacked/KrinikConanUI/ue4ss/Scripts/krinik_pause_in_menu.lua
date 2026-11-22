@@ -516,8 +516,22 @@ local armed = false
 -- ищем, только когда он умер или герой мёртв (смерть, загрузка мира), и не чаще раза в SEARCH_EVERY опросов (2 с).
 local SEARCH_EVERY = 8
 local hero_obj, gmc_obj = nil, nil
+local hero_name, gmc_name = nil, nil   -- полные имена при захвате: ссылка годна, пока объект по ней носит то же имя (same_obj)
 local hero_wait, gmc_wait = 0, 0
 local searches = 0
+
+-- После выхода в меню и новой загрузки мира прежний объект уничтожен, его адрес может занять чужой, и IsValid() отвечает «да» уже чужому: вызов на нём
+-- срывался бы на каждом опросе, а новый контроллер интерфейса не искался бы — меню перестали бы замедлять мир (KUMM EXP-0612; судья 2026-11-22 21:5x, круг
+-- на RC4, находка 5). Опрос раз в 250 мс: два GetFullName на опрос. [NOT-TESTED]
+local function same_obj(o, name)
+    if not (o and name and o:IsValid()) then return false end
+    local ok, fn = pcall(o.GetFullName, o)
+    return ok and fn == name
+end
+local function full_name(o)
+    local ok, fn = pcall(o.GetFullName, o)
+    return ok and fn or nil
+end
 
 local function hero_hp(p)
     local hp = 0
@@ -526,43 +540,104 @@ local function hero_hp(p)
 end
 
 local function hero_in_world()
-    if hero_obj and hero_obj:IsValid() and hero_hp(hero_obj) > 0 then return true end
-    hero_obj = nil
+    if same_obj(hero_obj, hero_name) and hero_hp(hero_obj) > 0 then return true end
+    hero_obj, hero_name = nil, nil
     if hero_wait > 0 then hero_wait = hero_wait - 1; return false end
     hero_wait = SEARCH_EVERY
     searches = searches + 1
     for _, p in ipairs(FindAllOf("BasePlayerChar_C") or {}) do
-        if p and p:IsValid() and hero_hp(p) > 0 then hero_obj = p; return true end
+        if p and p:IsValid() and hero_hp(p) > 0 then hero_obj, hero_name = p, full_name(p); return true end
     end
     return false
 end
 
 local function cached_gmc()
-    if gmc_obj and gmc_obj:IsValid() then return gmc_obj end
-    gmc_obj = nil
+    if same_obj(gmc_obj, gmc_name) then return gmc_obj end
+    gmc_obj, gmc_name = nil, nil
     if gmc_wait > 0 then gmc_wait = gmc_wait - 1; return nil end
     gmc_wait = SEARCH_EVERY
     searches = searches + 1
     local g = FindFirstOf("GUIModuleController")
-    if g and g:IsValid() then gmc_obj = g end
+    if g and g:IsValid() then gmc_obj, gmc_name = g, full_name(g) end
     return gmc_obj
 end
 
-local loading_obj, loading_wait = nil, 0
-local function loading_screen_up()
-    if not (loading_obj and loading_obj:IsValid()) then
-        loading_obj = nil
-        if loading_wait > 0 then loading_wait = loading_wait - 1; return false end
-        loading_wait = SEARCH_EVERY
-        searches = searches + 1
-        for _, w in ipairs(FindAllOf("W_IngameLoadingScreen_C") or {}) do
-            if w and w:IsValid() and not w:GetFName():ToString():find("Default__", 1, true) then loading_obj = w; break end
-        end
-        if not loading_obj then return false end
+local loading_wait = 0
+local fs_on_polls = 0              -- сколько опросов подряд полноэкранный интерфейс открыт
+local FS_LOADING_LOOK_POLLS = 8    -- первые 8 опросов (2 с) после открытия экран загрузки ищется на КАЖДОМ опросе
+local FS_PAUSE_FROM_POLL = 2       -- пауза меню — со второго опроса: на первом виджет экрана загрузки может быть ещё не найден
+-- 🩹 Баг 79, телепорт пультом (KUMM bugs/79, зонд R21c 2026-11-22 13:17): во время загрузки живут ДВА экземпляра W_IngameLoadingScreen_C. Один остался от
+-- прошлой загрузки: он ещё жив, но уже не в окне. Второй, новый, стоит на экране. Поиск мог первым найти старый: IsInViewport() отвечал «нет», и пауза меню
+-- ставила мир на 0.03 за экраном загрузки, пока старый не соберётся (0,3–3 с). Игра создаёт новый виджет на каждую загрузку, и мод держит до трёх
+-- последних экземпляров, узнавая о них по событию рождения, без поиска по сцене. Шесть ответов (EFFICIENT_CODE §1): событие — рождение виджета (раз на
+-- загрузку) и прежний опрос, только пока открыт полноэкранный интерфейс; вход — до трёх объектов; работа — не больше трёх IsInViewport. Поиск остаётся запасным
+-- путём на случай, когда события ещё не было (мод загружен посреди мира). [TESTED: 2026-11-22 · телепорт пультом R21d (вход в подземелье на этой
+-- версии не прогнан), меню N1 · KUMM testcases/TC_conan_loading_screen_waystone_dungeon_2026-11-22.md]
+-- Судья 2026-11-22 (круг 1): при входе в мир рождаются три экземпляра подряд, и самый новый не обязательно тот, что на экране, — мод держит до
+-- LOADING_KEEP последних рождений и спрашивает каждое; мёртвые выбрасываются. Запасной поиск ничего не запоминает: экземпляр не в окне не доказательство.
+local LOADING_CLASS = "/Game/UI/HUD/W_IngameLoadingScreen.W_IngameLoadingScreen_C"
+local LOADING_KEEP = 3
+local loading_recent = {}   -- последние рождения экрана загрузки, самое новое в конце
+local loading_births = 0
+local function watch_loading_screen()
+    local ok, e = pcall(function()
+        NotifyOnNewObject(LOADING_CLASS, function(w)
+            local okn, fn = pcall(function() return w:GetFullName() end)
+            if okn and fn and not fn:find("Default__", 1, true) and not fn:find(":WidgetTree.", 1, true) then
+                loading_recent[#loading_recent + 1] = { w = w, name = fn }   -- полное имя при рождении — опознание ссылки (ниже)
+                if #loading_recent > LOADING_KEEP then table.remove(loading_recent, 1) end
+                loading_births = loading_births + 1
+                if loading_births <= 5 then log("экран загрузки родился (%d): пауза смотрит на него", loading_births) end
+            end
+        end)
+    end)
+    log("рождение экрана загрузки: слежка %s", ok and "встала" or ("НЕ встала: " .. tostring(e)))
+end
+-- ⚠️ Ссылка на экран загрузки живёт дольше самого экрана (увидено живьём 2026-11-22 16:00:55 при охоте за падением KUMM bugs/118, issue #50: через 7 с после входа
+-- в мир одна из трёх ссылок указывала уже на W_HotkeyIcon_C). Экраны загрузки, рождённые при входе в мир, игра потом уничтожает, а их память занимают новые
+-- объекты. Обёртка Lua хранит адрес: когда на нём стоит ДРУГОЙ живой объект, IsValid() отвечает «да», и IsInViewport() виджета шёл бы на чужом объекте. Поэтому
+-- перед вызовом объект по ссылке обязан всё ещё быть ТЕМ экраном загрузки: его полное имя совпадает с записанным при рождении (имя несёт класс и номер
+-- экземпляра; производный класс экрана загрузки проходит — судья 2026-11-22, круг 1, находка 7); иначе ссылка выбрасывается. GetFullName() чужого живого
+-- объекта безопасен — объект настоящий. Падение bugs/118 деление модов пополам свело к моду камеры: с выключенным Lua этого мода игра всё равно
+-- падала (падение 6); причина в самой камере ещё не найдена, bugs/118 открыт. [NOT-TESTED]
+local foreign_drops = 0
+local function still_loading_screen(e)
+    local same, now = false, nil
+    pcall(function() if e.w:IsValid() then now = e.w:GetFullName(); same = now == e.name end end)
+    if same then return true end
+    if now then
+        foreign_drops = foreign_drops + 1
+        if foreign_drops <= 5 then log("экран загрузки по ссылке уже не он: на его месте %s — ссылка выброшена (%d)", tostring(now), foreign_drops) end
     end
-    local up = false
-    pcall(function() up = loading_obj:IsInViewport() end)
-    return up
+    return false
+end
+local function loading_screen_up()
+    if loading_births > 0 then   -- рождения видны: не больше LOADING_KEEP вопросов, поиск по сцене не нужен
+        for i = #loading_recent, 1, -1 do
+            local e = loading_recent[i]
+            local w = e.w
+            if not still_loading_screen(e) then
+                table.remove(loading_recent, i)
+            else
+                local shown = false
+                pcall(function() shown = w:IsInViewport() end)
+                if shown then return true end
+            end
+        end
+        return false
+    end
+    -- запасной путь (рождений ещё не было: мод загружен посреди мира): поиск не чаще раза в SEARCH_EVERY опросов, верим только экземпляру в окне
+    if loading_wait > 0 then loading_wait = loading_wait - 1; return false end
+    loading_wait = SEARCH_EVERY
+    searches = searches + 1
+    for _, w in ipairs(FindAllOf("W_IngameLoadingScreen_C") or {}) do
+        if w and w:IsValid() and not w:GetFName():ToString():find("Default__", 1, true) then
+            local shown = false
+            pcall(function() shown = w:IsInViewport() end)
+            if shown then return true end
+        end
+    end
+    return false
 end
 
 -- 💥 ОПЛАЧЕНО КРЭШЕМ 16.09.2026 21:49. Здесь стоял опрос нативной gmc:IsModuleActive(name) раз в
@@ -586,23 +661,36 @@ local function poll()
     local on = false
     local ok = pcall(function() on = gmc:IsFullscreenGUIActive() end)
     if not ok then return end
+    -- 🩹 Баг 79, путь подземелья (KUMM bugs/79, 2026-11-22 10:53): поиск экрана загрузки ограничен разом на SEARCH_EVERY опросов (8 × 250 мс), и счётчик
+    -- оставался от прошлых окон — на первом опросе с открытым полноэкранным интерфейсом экран загрузки подземелья не нашёлся, и мир шёл в 0.03 ≈ 2 с за
+    -- экраном загрузки. Повтор 10:57: и с первым взглядом сразу телепорт пультом шёл в 0.03 ≈ 3 с — на первом опросе виджет ещё не находится. Поэтому
+    -- первые FS_LOADING_LOOK_POLLS опросов после открытия поиск идёт на каждом опросе, а пауза ставится только с FS_PAUSE_FROM_POLL-го: меню замедляет
+    -- мир на 250 мс позже — глазу незаметно. Поиск по-прежнему только при открытом интерфейсе. [NOT-TESTED]
+    if on then fs_on_polls = fs_on_polls + 1 else fs_on_polls = 0 end
+    if on and fs_on_polls <= FS_LOADING_LOOK_POLLS then loading_wait = 0 end
     local in_world = hero_in_world()
     if on and not in_world then on = false end
     -- 🩹 Баг 79 (KUMM bugs/79, 2026-11-03): экран загрузки В МИРЕ (телепорт, путевой камень, возрождение) — тоже полноэкранный, а герой жив.
     -- Мод замедлял мир до 0.03, и загрузка вставала: герой висел в воздухе, пока время не вернули руками. Экран загрузки — не наше меню:
     -- время не трогаем и снимаем взвод, как при загрузке мира. Объект экрана ищется только при открытом полноэкранном интерфейсе и не
     -- чаще раза в SEARCH_EVERY опросов. [NOT-TESTED]
-    if on and loading_screen_up() then on = false; armed = false end
+    local loading = on and loading_screen_up()
+    if loading then on = false; armed = false end
     -- ⚠️ СНАЧАЛА УВИДЕТЬ ЗАКРЫТЫМ. Оплачено 13.09 23:06: экран ЗАГРУЗКИ мира тоже полноэкранный, а живой
     -- герой в этот момент уже есть — мод замедлил время, и загрузка встала на 82 %. Поэтому пауза
     -- «взводится» только после того, как в мире полноэкранный интерфейс хоть раз увиден закрытым;
     -- новый герой (смерть, загрузка) снимает взвод.
     if not in_world then armed = false end
-    if in_world and not on and not armed then
+    -- пока стоит экран загрузки, интерфейс не «увиден закрытым»: взвод ждёт, когда экран уйдёт. До 2026-11-22 тот же опрос снимал взвод и сразу ставил
+    -- его снова: экран загрузки сам взводил паузу в обход защиты 13.09 23:06, а строка «взведено» шла в журнал на каждом опросе (судья, KUMM bugs/79)
+    if in_world and not on and not armed and not loading then
         armed = true
         log("взведено: герой в мире, интерфейс закрыт — дальше меню ставит паузу")
     end
     if on and not armed then on = false end
+    -- баг 79 (2026-11-22): пауза меню — не раньше FS_PAUSE_FROM_POLL-го опроса открытого интерфейса. Стоит ПОСЛЕ взвода: взвод видит настоящий флаг,
+    -- иначе отложенный первый опрос «увидел бы интерфейс закрытым» и взвёл паузу на экране загрузки мира (13.09 23:06).
+    if on and fs_on_polls < FS_PAUSE_FROM_POLL then on = false end
     -- 🩹 Баг 12: пока игра держит свою модалку — время НЕ наше. Ход времени возвращается
     -- на 1.0 и удерживается, а как только модалка закрыта, пауза меню встаёт обратно сама.
     local modal, modal_name = false, nil
@@ -727,6 +815,7 @@ end)
 log("перехват GUIModuleController.ActivateModule %s", (not HOOK_MODULES) and "ВЫКЛЮЧЕН флагом" or (hook_ok and "встал" or ("НЕ встал: " .. tostring(hook_err))))
 hook_carousel()   -- 0.8.0: родной класс загружен всегда — перехват ставится сразу
 watch_character_display()   -- 0.9.0
+watch_loading_screen()      -- баг 79, 2026-11-22: самый новый экран загрузки — по его рождению
 
 -- Счёт через минуту и через пять — конечная цепочка, не цикл (EXP-0052).
 ExecuteInGameThreadWithDelay(60000, function() log("СЧЁТ через 1 мин: вызовов ActivateModule %d", hook_calls) end)

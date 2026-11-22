@@ -307,7 +307,14 @@ sealed class Launcher
         main.Click += (s, e) => mainAction?.Invoke();
         cancel.Click += (s, e) => { stop = true; cancel.Enabled = false; MetalWindow.Log("нажата «Отменить»"); };
         guide.Click += (s, e) => { var pdf = GuidePdf(); if (pdf != null) Process.Start(new ProcessStartInfo(pdf) { UseShellExecute = true }); };
-        feedback.Click += (s, e) => report.Visible = !report.Visible;
+        // «Отзыв» открывает и закрывает табличку; замер нажатия и кадр таблички — для стенда (кейс perf-report, баг 110: владелец 2026-11-22 15:06 назвал
+        // это окно медленным). [NOT-TESTED]
+        feedback.Click += (s, e) =>
+        {
+            using (MetalWindow.Perf("Feedback.Toggle")) report.Visible = !report.Visible;
+            MetalWindow.Log("отзыв: табличка " + (report.Visible ? "открыта" : "закрыта") + " · окно " + Form.ClientSize.Width + "x" + Form.ClientSize.Height);
+            SaveFrame(screen + (report.Visible ? "-report" : "-noreport"));
+        };
         uninstall.Click += (s, e) => Uninstall();
         gameNotes.Click += (s, e) => KrinikConanLauncher.Open(Bundle.GameNotes(here));
         packNotes.Click += (s, e) => KrinikConanLauncher.Open(BuildRelease()?.Page is string page && page.Length > 0 ? page : feed?.Build?.Page ?? Feed.LatestBuildPage);
@@ -1289,6 +1296,19 @@ static class Metal
     // Масштаб экрана для части окна: его знает окно (DPI своего монитора), без окна — DPI самого элемента.
     public static float Zoom(Control c) => c.FindForm() is MetalWindow w ? w.Zoom : c.DeviceDpi / 96f;
 
+    // Кусок готовой картинки 1:1 в пикселях: приёмник и источник заданы пикселями (DrawImageUnscaled мерил бы картинку дюймами её DPI), без сглаживания и
+    // сдвига на полпикселя — копия пиксель в пиксель. [NOT-TESTED]
+    public static void Blit(Graphics g, Bitmap image, Rectangle part)
+    {
+        var im = g.InterpolationMode;
+        var po = g.PixelOffsetMode;
+        g.InterpolationMode = InterpolationMode.NearestNeighbor;
+        g.PixelOffsetMode = PixelOffsetMode.Half;
+        g.DrawImage(image, part, part, GraphicsUnit.Pixel);
+        g.InterpolationMode = im;
+        g.PixelOffsetMode = po;
+    }
+
     // Прямоугольник со срезанными углами — как табличка «ENHANCED» на логотипе.
     public static GraphicsPath Chamfer(RectangleF r, float c)
     {
@@ -1371,12 +1391,42 @@ class OutlinedLabel : Label
         return new Size((int)Math.Ceiling(size.Width) + 2 * pad + 1, (int)Math.Ceiling(size.Height) + 2 * pad);
     }
 
+    // Готовая надпись (буквы, обводка, тень) — картинка под ключом её входов: текст, шрифт, цвет, размер, DPI; перерисовка только копирует её. До кэша
+    // каждая перерисовка строила контур букв и обводила его широким пером заново, ≈ 9 мс на строку при 300 % (баг 110, кейс perf-report стенда,
+    // 2026-11-22). Картинка рисуется тем же кодом, что и прямо на экране; промежуточный слой с премультиплицированной альфой даёт отличие края букв не
+    // больше 1/255 (сверка кадров до и после, судья 2026-11-22, круг 1, находка 5). [TESTED: 2026-11-22 · perf-report FB0–FB2, кадры · KUMM testcases/reports/2026-11-22_conan-launcher-feedback-window.md]
+    Bitmap face;
+    string faceKey;
+
     protected override void OnPaint(PaintEventArgs e)
     {
-        var g = e.Graphics;
+        using (MetalWindow.Perf("OutlinedLabel.OnPaint"))
+        {
+            var inv = System.Globalization.CultureInfo.InvariantCulture;
+            float dpi = e.Graphics.DpiY;
+            string key = string.Join("|", Text, Font.Name, Font.Size.ToString(inv), (int)Font.Style, (int)Font.Unit, ForeColor.ToArgb(), Width, Height, dpi.ToString(inv));
+            if (face == null || key != faceKey)
+            {
+                face?.Dispose();
+                face = new Bitmap(Math.Max(1, Width), Math.Max(1, Height), PixelFormat.Format32bppPArgb);
+                using (var g = Graphics.FromImage(face)) DrawText(g, dpi);
+                faceKey = key;
+            }
+            Metal.Blit(e.Graphics, face, new Rectangle(Point.Empty, face.Size));
+        }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) { face?.Dispose(); face = null; }
+        base.Dispose(disposing);
+    }
+
+    void DrawText(Graphics g, float dpi)
+    {
         g.SmoothingMode = SmoothingMode.AntiAlias;
         g.PixelOffsetMode = PixelOffsetMode.HighQuality;
-        float dpi = g.DpiY, outline = Outline(dpi), scale = dpi / 96f;
+        float outline = Outline(dpi), scale = dpi / 96f;
         int pad = Pad(dpi);
         var layout = new RectangleF(pad, pad, Width - 2 * pad + 1, Height - 2 * pad + 1);
         using (var path = new GraphicsPath())
@@ -1411,11 +1461,37 @@ sealed class ReportPlaque : FlowLayoutPanel
         AutoSizeMode = AutoSizeMode.GrowAndShrink; // по умолчанию только растёт: ширина до переноса строк осталась бы и заехала под столбик
     }
 
+    // Железо таблички — картинка под ключом размера и масштаба, рисуется один раз и дальше только копируется своим куском. Надписи таблички прозрачны, и
+    // Windows Forms рисует фон родителя под каждой: до кэша табличка рисовалась восемь раз на одно открытие (сама, шесть надписей, кнопка), ≈ 23 мс при
+    // 300 % (баг 110, кейс perf-report стенда, 2026-11-22). Под табличкой остаётся картина окна (base — прозрачный фон). [NOT-TESTED]
+    Bitmap face;
+    string faceKey;
+
     protected override void OnPaintBackground(PaintEventArgs e)
     {
-        base.OnPaintBackground(e);
-        Metal.Plaque(e.Graphics, new Rectangle(0, 0, Width, Height), Metal.Zoom(this), true,
-                     Color.FromArgb(238, 0x2a, 0x21, 0x18), Color.FromArgb(238, 0x12, 0x0e, 0x0a));
+        using (MetalWindow.Perf("ReportPlaque.Background"))
+        {
+            base.OnPaintBackground(e);
+            float zoom = Metal.Zoom(this);
+            string key = Width + "x" + Height + "|" + zoom.ToString(System.Globalization.CultureInfo.InvariantCulture);
+            if (face == null || key != faceKey)
+            {
+                face?.Dispose();
+                face = new Bitmap(Math.Max(1, Width), Math.Max(1, Height), PixelFormat.Format32bppPArgb);
+                using (var g = Graphics.FromImage(face))
+                    Metal.Plaque(g, new Rectangle(0, 0, Width, Height), zoom, true, Color.FromArgb(238, 0x2a, 0x21, 0x18), Color.FromArgb(238, 0x12, 0x0e, 0x0a));
+                faceKey = key;
+            }
+            // ClipRectangle — в координатах таблички и тогда, когда фон рисуется под надписью (Windows Forms сдвигает Graphics на её место).
+            var part = Rectangle.Intersect(e.ClipRectangle, new Rectangle(Point.Empty, face.Size));
+            if (part.Width > 0 && part.Height > 0) Metal.Blit(e.Graphics, face, part);
+        }
+    }
+
+    protected override void Dispose(bool disposing)
+    {
+        if (disposing) { face?.Dispose(); face = null; }
+        base.Dispose(disposing);
     }
 }
 

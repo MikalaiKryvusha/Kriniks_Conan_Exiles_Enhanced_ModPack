@@ -631,6 +631,12 @@ async function main() {
     } else check(got.length === new Set(got).size, 'no asset was downloaded twice', `${got.length} requests`)
     const plan = (logText().match(/список 1\.0\.1: .*/) || ['no plan line'])[0]
     check(/из прежних сборок [1-9]|уже собрано [1-9]/.test(plan), 'the plan took files from the old bundle', plan)
+    // plan 57 phase 6 step 8 (pack 6891744): with links the rewrite is only the joined parts and the group's files — the 2 MB change.pak goes in as a
+    // hardlink of its asset; without links (D7) the asset is copied too. Run 14 logs: D1 «скачать 13193496 Б, переписать 10950508 Б», D7 13047660 Б.
+    const space = /скачать (\d+) Б, переписать (\d+) Б/.exec(logText())
+    const [dlB, rwB] = space ? [Number(space[1]), Number(space[2])] : [NaN, NaN]
+    if (flag('--nolinks')) check(rwB >= change.size + huge.size, 'D7 without links the space check counts the asset copies too', space ? space[0] : 'no space line')
+    else check(rwB < dlB && rwB >= huge.size, 'the space check counts as rewritten only the joined parts and the group, not the linked asset', space ? space[0] : 'no space line')
     for (const e of [same, change, huge]) {
       const g = path.join(st.game, 'Mods', 'ModA', path.basename(e.path))
       check(existsSync(g) && sha(g) === e.sha256, `the game's ${path.basename(e.path)} is the 1.0.1 file`, existsSync(g) ? sha(g).slice(0, 16) : 'missing')

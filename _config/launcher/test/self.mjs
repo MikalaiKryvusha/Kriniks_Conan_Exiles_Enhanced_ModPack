@@ -8,7 +8,7 @@
 //
 //   node self.mjs <case> <work dir> <launcher exe> [--stand <stand.json from stand.mjs>] [--dpi N] [--lang ru|en]
 //   cases: none · steam · steam-old · games · pf · many · scan · unknown · around · fresh-feed · fresh-beside · fresh-local · fresh-cut · fresh-stop ·
-//          fresh-416 · fresh-429 · perf · offline · lang · refused · rc · never · removing · title · shot:<screen>
+//          fresh-416 · fresh-429 · perf · perf-report · offline · lang · refused · rc · never · removing · title · shot:<screen>
 // Prints one line per check «PASS|FAIL <what> — <observed>». Exit 0 — all PASS. [NOT-TESTED]
 import { spawn, execFileSync } from 'node:child_process'
 import { existsSync, readFileSync, writeFileSync, mkdirSync, readdirSync, copyFileSync, cpSync, unlinkSync, rmdirSync } from 'node:fs'
@@ -418,6 +418,46 @@ const cases = {
   // (at birth and when the found game's version appears under its logo), P2 every screen refresh after the first fits one 60 Hz frame (16 ms), P3 every
   // repaint of the state list during the download after its first fits 16 ms. To be seen red on the pre-fix build (a timed copy of its sources).
   async perf() { await freshCase({ rate: 600000, extraEnv: { KRINIK_LAUNCHER_PERF: '1' } }); perfBudget() },
+  // FB (bug 110, the owner 2026-11-22 15:06: fast everywhere except the window that explains feedback): on the found screen «Отзыв» opens and closes
+  // the plaque six times with the timers on; each press is the toggle (Feedback.Toggle — the relayout) plus the picture the player then sees, drawn
+  // by the frame of the press (MetalWindow.Render when the picture's key changed, the plaque's background, its labels). FB0 the timers exist: one toggle per
+  // press, and every open drew the plaque and its six labels (without them every sum is 0 and the budget passes on any build — judge 2026-11-22, round 1,
+  // finding 2). FB1 a whole later press — toggle + plaque + labels — fits FRAME_MS (one interaction, one budget: finding 1; the plaque's own button has no
+  // timer and is not counted). FB2 no press renders the whole picture: the window keeps its size when the plaque opens (a size change would re-render it on
+  // every press). The first open is printed, not budgeted: it creates the plaque's windows and draws the faces once (≈ 100 ms, bug 110 — owed). The
+  // off-screen stand window gets no WM_PAINT: the frame IS the paint. The feed is offline here (no feed in the case), so the presses land on the «offline»
+  // screen of the found game. [NOT-TESTED]
+  async 'perf-report'() {
+    const [d] = roots('driveD'); game(path.join(d, 'Games', 'Conan Exiles'))
+    const pid = launch(lone(), { KRINIK_LAUNCHER_SEARCH_ROOTS: d, KRINIK_LAUNCHER_PERF: '1' })
+    check(!!await screenIs('offline', 25000), 'FB the found game with the feed offline — the screen «offline» with «Отзыв»', last(/экран:/))
+    await wait(2000)
+    const presses = []
+    for (let i = 0; i < 6; i++) {
+      const from = logText().length, framesBefore = frameCount(/-(no)?report_/)
+      const r = click(pid, 'Отзыв')
+      check(/^pressed/.test(r), `FB press ${i + 1} on «Отзыв»`, r)
+      const done = await until(() => /отзыв: табличка/.test(logText().slice(from)) && frameCount(/-(no)?report_/) > framesBefore, 8000)
+      await wait(700)   // the frame of the press is written after the log line
+      const part = logText().slice(from)
+      const spans = [...part.matchAll(/perf: \d+ (\S+) ([\d.]+) ms/g)].map(m => ({ what: m[1], ms: Number(m[2]) }))
+      const sum = w => spans.filter(s => s.what === w).reduce((a, s) => a + s.ms, 0)
+      const n = w => spans.filter(s => s.what === w).length
+      presses.push({ i: i + 1, line: (part.match(/отзыв: табличка [^\r\n]*/) || ['no line'])[0], toggle: sum('Feedback.Toggle'), render: n('MetalWindow.Render'),
+                     renderMs: sum('MetalWindow.Render'), bg: n('ReportPlaque.Background'), bgMs: sum('ReportPlaque.Background'),
+                     labels: n('OutlinedLabel.OnPaint'), labelMs: sum('OutlinedLabel.OnPaint'), toggles: n('Feedback.Toggle'), done: !!done })
+    }
+    killPid(pid)
+    for (const p of presses) console.log(`FB· press ${p.i}: ${p.line} · toggle ${p.toggle.toFixed(1)} ms · render ×${p.render} ${p.renderMs.toFixed(1)} ms · plaque ×${p.bg} ${p.bgMs.toFixed(1)} ms · labels ×${p.labels} ${p.labelMs.toFixed(1)} ms`)
+    const total = p => p.toggle + p.renderMs + p.bgMs + p.labelMs
+    const opens = presses.filter(p => p.i % 2 === 1)
+    check(presses.every(p => p.done), 'FB every press reached the plaque and its frame', presses.map(p => p.done).join(', '))
+    check(presses.every(p => p.toggles === 1) && opens.every(p => p.bg >= 1 && p.labels >= 6), 'FB0 the timers exist: one toggle per press, every open drew the plaque and 6 labels',
+          presses.map(p => `${p.toggles}/${p.bg}/${p.labels}`).join(', '))
+    console.log(`FB· the first open (not budgeted): ${total(presses[0]).toFixed(1)} ms`)
+    check(presses.slice(1).every(p => total(p) <= FRAME_MS), `FB1 every press after the first — toggle + drawing — fits ${FRAME_MS} ms`, presses.map(p => total(p).toFixed(1)).join(', '))
+    check(presses.every(p => p.render === 0), 'FB2 no press renders the whole picture (the window keeps its size)', presses.map(p => p.render).join(', '))
+  },
   // D6b (same finding): 429 «too many requests» and 408 «request timeout» pass by themselves — each is a broken connection («neterror», «Продолжить
   // скачивание»), not a final error.
   // Four error answers in a row, each one a «Продолжить скачивание» that must reach the server again. This case does NOT guard the connection leak of the

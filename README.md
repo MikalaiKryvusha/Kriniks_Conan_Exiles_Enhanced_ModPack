@@ -6,7 +6,7 @@
 
 # Krinik's Conan Exiles Enhanced ModPack
 
-<h3 align="center"><em>Сборка модов Krinik Mod Pack 0.9.1-RC3 для Conan Exiles Enhanced 3.1.1</em></h3>
+<h3 align="center"><em>Сборка модов Krinik Mod Pack 0.9.1-RC4 для Conan Exiles Enhanced 3.1.1</em></h3>
 
 <p align="center">
   <a href="#russian"><img src="https://img.shields.io/badge/Русский-C0392B?style=for-the-badge" alt="Русский"></a>
@@ -15,7 +15,7 @@
 </p>
 
 [![Лицензия: MIT](https://img.shields.io/badge/Лицензия-MIT-FF1A8C.svg?style=flat-square)](LICENSE)
-[![Версия сборки](https://img.shields.io/badge/Версия_сборки-0.9.1--RC3-FF1A8C.svg?style=flat-square)](#1-общие-сведения)
+[![Версия сборки](https://img.shields.io/badge/Версия_сборки-0.9.1--RC4-FF1A8C.svg?style=flat-square)](#1-общие-сведения)
 [![Игра](https://img.shields.io/badge/Conan_Exiles_Enhanced-3.1.1-brightgreen.svg?style=flat-square)](#3-установка)
 [![Моды](https://img.shields.io/badge/Модов-9_+_63-8E44AD.svg?style=flat-square)](#2-состав-сборки)
 
@@ -47,7 +47,7 @@
 
 ### 1.1. О сборке
 
-1. Версия сборки 0.9.1-RC3 собрана для Conan Exiles Enhanced 3.1.1 (билд CL-383549). Номер с окончанием RC и цифрой носит тестовая сборка: например, сборка 0.9.1-RC1 выходит перед версией 0.9.1, чтобы автор мог проверить весь путь установки. Версия 0.9.0 от 2 ноября 2026 года стала первым выпуском сборки для Conan Exiles Enhanced 3.0.1 (билд CL-379176). Затем сборка перешла на версию игры 3.1.0, а 17 ноября 2026 года на 3.1.1. Раньше автор готовил сборку под версии игры 2.1.1 и 2.2.3. Номер 1.0.0 у сборки встречается дважды: так называлась ранняя бета-версия для игры 2.2.3, и так будет называться первый полноценный выпуск сборки. Что в сборке ещё не доделано и что автор собирается сделать к этому выпуску, перечислено в главе «Известные проблемы и планы на 1.0.0» руководства пользователя.
+1. Версия сборки 0.9.1-RC4 собрана для Conan Exiles Enhanced 3.1.1 (билд CL-383549). Номер с окончанием RC и цифрой носит тестовая сборка: например, сборка 0.9.1-RC1 выходит перед версией 0.9.1, чтобы автор мог проверить весь путь установки. Версия 0.9.0 от 2 ноября 2026 года стала первым выпуском сборки для Conan Exiles Enhanced 3.0.1 (билд CL-379176). Затем сборка перешла на версию игры 3.1.0, а 17 ноября 2026 года на 3.1.1. Раньше автор готовил сборку под версии игры 2.1.1 и 2.2.3. Номер 1.0.0 у сборки встречается дважды: так называлась ранняя бета-версия для игры 2.2.3, и так будет называться первый полноценный выпуск сборки. Что в сборке ещё не доделано и что автор собирается сделать к этому выпуску, перечислено в главе «Известные проблемы и планы на 1.0.0» руководства пользователя.
 2. Состав сборки и порядок загрузки модов задаёт манифест `modpack.json`. Файлы сборки по папке игры раскладывает движок [KUMM](https://github.com/MikalaiKryvusha/kumm).
 3. Все моды сборки переведены на русский язык, и термины для перевода взяты из русской версии игры.
 4. Руководство пользователя лежит в файле [docs/guide/Krinik-Conan-3.1.1-guide.pdf](docs/guide/Krinik-Conan-3.1.1-guide.pdf). В нём описаны возможности сборки, клавиши, состав и история версий.
@@ -223,7 +223,7 @@
 
 # Krinik's Conan Exiles Enhanced ModPack
 
-<h3 align="center"><em>Krinik Mod Pack 0.9.1-RC3 for Conan Exiles Enhanced 3.1.1</em></h3>
+<h3 align="center"><em>Krinik Mod Pack 0.9.1-RC4 for Conan Exiles Enhanced 3.1.1</em></h3>
 
 <p align="center">
   <a href="#russian"><img src="https://img.shields.io/badge/Русский-C0392B?style=for-the-badge" alt="Русский"></a>
@@ -232,7 +232,7 @@
 </p>
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-FF1A8C.svg?style=flat-square)](LICENSE)
-[![Pack version](https://img.shields.io/badge/Pack_version-0.9.1--RC3-FF1A8C.svg?style=flat-square)](#1-general)
+[![Pack version](https://img.shields.io/badge/Pack_version-0.9.1--RC4-FF1A8C.svg?style=flat-square)](#1-general)
 [![Game](https://img.shields.io/badge/Conan_Exiles_Enhanced-3.1.1-brightgreen.svg?style=flat-square)](#3-installation)
 [![Mods](https://img.shields.io/badge/Mods-9_+_63-8E44AD.svg?style=flat-square)](#2-contents-of-the-pack)
 
@@ -264,7 +264,7 @@ From a single launcher window you can install, update and remove the pack and st
 
 ### 1.1. About the pack
 
-1. Pack version 0.9.1-RC3 is built for Conan Exiles Enhanced 3.1.1 (build CL-383549). A version number that ends in RC and a digit marks a test build: 0.9.1-RC1, for example, comes out before version 0.9.1 so that the author can test the whole installation path. Version 0.9.0, released on 2 November 2026, was the first release of the pack for Conan Exiles Enhanced 3.0.1 (build CL-379176); the pack then moved to game version 3.1.0 and, on 17 November 2026, to 3.1.1. Before that, the author built the pack for game versions 2.1.1 and 2.2.3. The number 1.0.0 appears twice in the pack's history: the early beta for game version 2.2.3 was released as 1.0.0, and the first full release of the pack will carry that number too. The user guide's chapter “Известные проблемы и планы на 1.0.0” (Known issues and plans for 1.0.0) lists what is not finished yet and what the author plans for that release.
+1. Pack version 0.9.1-RC4 is built for Conan Exiles Enhanced 3.1.1 (build CL-383549). A version number that ends in RC and a digit marks a test build: 0.9.1-RC1, for example, comes out before version 0.9.1 so that the author can test the whole installation path. Version 0.9.0, released on 2 November 2026, was the first release of the pack for Conan Exiles Enhanced 3.0.1 (build CL-379176); the pack then moved to game version 3.1.0 and, on 17 November 2026, to 3.1.1. Before that, the author built the pack for game versions 2.1.1 and 2.2.3. The number 1.0.0 appears twice in the pack's history: the early beta for game version 2.2.3 was released as 1.0.0, and the first full release of the pack will carry that number too. The user guide's chapter “Известные проблемы и планы на 1.0.0” (Known issues and plans for 1.0.0) lists what is not finished yet and what the author plans for that release.
 2. The manifest `modpack.json` defines what the pack contains and the order in which the mods load. The [KUMM](https://github.com/MikalaiKryvusha/kumm) engine deploys the pack into the game folder.
 3. Every mod in the pack is translated into Russian using the terminology of the game's Russian version.
 4. The user guide, [docs/guide/Krinik-Conan-3.1.1-guide.pdf](docs/guide/Krinik-Conan-3.1.1-guide.pdf) (in Russian), covers the pack's features, keys, contents and version history.

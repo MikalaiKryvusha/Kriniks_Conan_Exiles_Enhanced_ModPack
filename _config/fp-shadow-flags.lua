@@ -25,8 +25,10 @@ local function walk(c, depth)
     seen = seen + 1
     if c:IsA(prim) then
         local o = c:GetOwner()
-        out[#out + 1] = string.format('%s%s · %s · %s', string.rep('  ', depth), o and o:IsValid() and o:GetFName():ToString() or '?',
-            c:GetFName():ToString(), flags(c))
+        local sock = '?'
+        pcall(function() sock = c.AttachSocketName:ToString() end)   -- 2026-11-22: which socket holds it (a hand = held, the back / hip = sheathed)
+        out[#out + 1] = string.format('%s%s · %s · sock %s · %s', string.rep('  ', depth), o and o:IsValid() and o:GetFName():ToString() or '?',
+            c:GetFName():ToString(), sock, flags(c))
     end
     pcall(function() c.AttachChildren:ForEach(function(_, e) walk(e:get(), depth + 1) end) end)
 end

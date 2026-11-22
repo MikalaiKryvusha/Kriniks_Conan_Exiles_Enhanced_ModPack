@@ -1,0 +1,2 @@
+# The kept release file lists must stay byte-equal to the uploaded asset (release_checklist.py compares the GitHub digest).
+_config/release/published_*/manifest.json -text

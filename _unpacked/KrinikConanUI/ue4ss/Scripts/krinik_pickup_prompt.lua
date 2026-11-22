@@ -52,6 +52,20 @@ local TEXT_COLOR = { R = 0.94, G = 0.93, B = 0.89, A = 1.0 }
 
 local function log(fmt, ...) print(("[%s] " .. fmt .. "\n"):format(MOD, ...)) end
 local function valid(o) return o ~= nil and o:IsValid() end
+-- Ссылка, которую раздел держит между событиями (плашка, рамка E, контроллер, модуль интерфейса), годна, только пока объект по её адресу носит имя,
+-- записанное при захвате: после выхода в меню и новой загрузки мира адрес может занять чужой объект, и IsValid() ответит «да» ему (KUMM EXP-0612;
+-- судья 2026-11-22 21:5x, круг на RC4, находка 5). [NOT-TESTED]
+local names = {}   -- [ключ ссылки] = полное имя при захвате
+local function keep(key, o)
+    names[key] = nil
+    if o ~= nil and o:IsValid() then local ok, fn = pcall(o.GetFullName, o); if ok then names[key] = fn end end
+    return o
+end
+local function kept(key, o)
+    if not (o ~= nil and names[key] and o:IsValid()) then return false end
+    local ok, fn = pcall(o.GetFullName, o)
+    return ok and fn == names[key]
+end
 
 local plate = nil                    -- корень плашки внутри прицела; nil — прицела ещё нет
 local key_rim = nil                  -- рамка клавиши E: её контур затухание не берёт (см. set_rim)
@@ -123,7 +137,7 @@ local function build(cross)
     place(row)
     row:SetRenderOpacity(0.0)                         -- первое появление — тоже с нуля
     row:SetVisibility(1)                              -- Collapsed, пока нечего взять
-    plate, key_rim, shown = row, key, false
+    plate, key_rim, shown = keep("plate", row), keep("rim", key), false
     log("плашка «E %s» в прицеле", TEXT)
 end
 
@@ -137,14 +151,14 @@ local fade_gen = 0
 -- его альфа ведётся тем же числом, что прозрачность плашки. [TESTED: 2026-11-02 · кадр при прозрачности 0 — рамка была белой, теперь её нет; альфа рамки
 -- 0.90 → 0 вместе с плашкой · KUMM testcases/reports/2026-11-02_conan-pickup-native-probe.md]
 local function set_rim(k)
-    if not valid(key_rim) then return end
+    if not kept("rim", key_rim) then return end
     local b = key_rim.Background
     b.OutlineSettings.Color = { SpecifiedColor = { R = KEY_RIM.R, G = KEY_RIM.G, B = KEY_RIM.B, A = KEY_RIM.A * k }, ColorUseRule = 0 }
     key_rim:SetBrush(b)
 end
 
 local function show(on)
-    if on == shown or not valid(plate) then return end
+    if on == shown or not kept("plate", plate) then return end
     shown = on
     fade_gen = fade_gen + 1
     local gen = fade_gen
@@ -152,7 +166,7 @@ local function show(on)
     if on then plate:SetRenderOpacity(from); set_rim(from); plate:SetVisibility(3) end   -- HitTestInvisible
     local t0 = os.clock()
     local function step()
-        if gen ~= fade_gen or not valid(plate) then return end   -- сменили направление — эта ступень уже не наша
+        if gen ~= fade_gen or not kept("plate", plate) then return end   -- сменили направление — эта ступень уже не наша
         local k = math.min(1.0, (os.clock() - t0) / FADE_S)
         local target = on and 1.0 or 0.0
         local o = from + (target - from) * k
@@ -172,18 +186,29 @@ end
 -- Контроллер, библиотека и модуль интерфейса — в кэше; героя берём у контроллера на каждой проверке (actors ниже).
 local pc_cached, lib_cached, gui_cached = nil, nil, nil
 local CONTAINER_MODULE = FName("ContainerInfo")   -- модуль плашки трупа и окна быстрого лута (карта игры, «Плашка над трупом»)
-local strips = {}                                 -- живые WBP_ContainerInfo_C (плашка трупа/сундука), по рождению
-NotifyOnNewObject("/Game/UI/Widgets/HUD/Interact/WBP_ContainerInfo.WBP_ContainerInfo_C", function(w) strips[#strips + 1] = w end)
+-- Ссылка живёт дольше своего виджета: игра уничтожает плашку, а её память занимает новый объект, и valid() отвечает «да» уже ЧУЖОМУ объекту — IsInViewport()
+-- пошёл бы на нём (увидено живьём 2026-11-22 в разделе паузы: ссылка на экран загрузки указывала на W_HotkeyIcon_C, KUMM bugs/118). Поэтому при рождении
+-- запоминается полное имя плашки, и ссылка годится, только пока у объекта по ней то же имя (имя несёт класс и номер экземпляра; судья 2026-11-22, круг 1,
+-- находки 7, 8). Плашка не из окна (шаблон, не Transient) в список не берётся. [NOT-TESTED]
+local strips = {}                                 -- { w, name }: живые плашки взаимодействия по рождению
+local function strip_born(w)
+    local ok, fn = pcall(w.GetFullName, w)
+    if ok and fn and fn:find("Transient", 1, true) then strips[#strips + 1] = { w = w, name = fn } end
+end
+NotifyOnNewObject("/Game/UI/Widgets/HUD/Interact/WBP_ContainerInfo.WBP_ContainerInfo_C", strip_born)
 -- Остальные подсказки взаимодействия — собеседник, постройка, простой предмет, раб, павший союзник (KUMM bugs/83, карта игры «The other interaction
 -- prompts»): цель-актор под прицелом, E достанется ей, а не кусту. Кадр 2026-11-06 08:54: «Нажмите E, чтобы говорить» и наша «E Взять» горели вместе. [NOT-TESTED]
 for _, n in ipairs({ "W_DialogueNPCInfo", "W_PlaceableInfo", "W_SimpleInfo", "W_ThrallInfo", "W_DBNORevive" }) do
-    NotifyOnNewObject("/Game/UI/HUD/FloatingNames/" .. n .. "." .. n .. "_C", function(w) strips[#strips + 1] = w end)
+    NotifyOnNewObject("/Game/UI/HUD/FloatingNames/" .. n .. "." .. n .. "_C", strip_born)
 end
 local function strip_on_screen()
     for i = #strips, 1, -1 do
-        local w = strips[i]
-        if not valid(w) then table.remove(strips, i)
-        elseif w:GetFullName():find("Transient", 1, true) and w:IsInViewport() and w:IsVisible() then return true end
+        local e = strips[i]
+        local w = e.w
+        local same = false
+        if valid(w) then local ok, fn = pcall(w.GetFullName, w); same = ok and fn == e.name end
+        if not same then table.remove(strips, i)
+        elseif w:IsInViewport() and w:IsVisible() then return true end
     end
     return false
 end
@@ -195,8 +220,10 @@ end
 local hero_cls = nil
 local hero_cls_warned = false
 local function actors()
-    if not valid(pc_cached) then pc_cached = FindFirstOf("FunCombat_PlayerController_C") end
-    local hero = valid(pc_cached) and pc_cached:K2_GetPawn() or nil
+    -- одна сверка по имени на проверку (судья, второй круг на RC4, находка 4): только что найденный — свой по определению
+    local pc_ok = kept("pc", pc_cached)
+    if not pc_ok then pc_cached = keep("pc", FindFirstOf("FunCombat_PlayerController_C")); pc_ok = valid(pc_cached) end
+    local hero = pc_ok and pc_cached:K2_GetPawn() or nil
     -- класс героя — блюпринт (нативного /Script/ConanSandbox.BasePlayerChar в 3.0.1 нет: судья, раунд 4; тот же путь у krinik_bow_sprint.lua)
     if not valid(hero_cls) then
         hero_cls = StaticFindObject("/Game/Characters/BasePlayerChar.BasePlayerChar_C")
@@ -307,9 +334,10 @@ local function check()
     -- (KUMM bugs/80, байткод контроллера). Плашку трупа показывает модуль ContainerInfo — пока он открыт, наша «E Взять» не горит
     -- (`[OWNER]` 2026-11-03 19:57 «нужно ту плашку показывать, которая сработает»). [NOT-TESTED]
     -- Флаг модуля один не ловит плашку (aim-sweep.lua, 2026-11-03 20:4x) — смотрим и на сам виджет, запомненный при рождении (без поиска).
-    if not valid(gui_cached) then gui_cached = FindFirstOf("GUIModuleController") end
+    local gui_ok = kept("gui", gui_cached)
+    if not gui_ok then gui_cached = keep("gui", FindFirstOf("GUIModuleController")); gui_ok = valid(gui_cached) end
     local ts = os.clock()
-    local strip = (valid(gui_cached) and gui_cached:IsModuleActive(CONTAINER_MODULE)) or strip_on_screen()
+    local strip = (gui_ok and gui_cached:IsModuleActive(CONTAINER_MODULE)) or strip_on_screen()
     part_ms.strips = part_ms.strips + (os.clock() - ts) * 1000.0
     if strip then show(false); return end
     -- Активность CameraThirdPerson НЕ спрашиваем, хотя игра её спрашивает (байткод 3.0.1): игра ищет цель только в миг нажатия E, когда настоящий
@@ -349,7 +377,7 @@ local stat_ticks, stat_err = 0, 0
 local stat_t0 = os.clock()
 local STAT_EVERY_S = 60
 local function tick()
-    if valid(plate) then
+    if kept("plate", plate) then
         stat_ticks = stat_ticks + 1
         local t0 = os.clock()
         local ok, err = pcall(check)
@@ -394,7 +422,7 @@ end)
 -- «Сохранить» в хабе: плашка встаёт на новое место сразу (событие хранилища, не опрос)
 settings.on_change(function(changed)
     if changed.ui_pickup_x == nil and changed.ui_pickup_y == nil then return end
-    if valid(plate) then
+    if kept("plate", plate) then
         local ok, err = pcall(place, plate)
         log(ok and "место плашки: %s %%, %s %%" or "место плашки не применено: %s", ok and settings.get("ui_pickup_x", PLATE_X_DEFAULT) or tostring(err),
             settings.get("ui_pickup_y", PLATE_Y_DEFAULT))

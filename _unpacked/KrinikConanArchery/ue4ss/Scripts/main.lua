@@ -1083,18 +1083,46 @@ local ATTACK_EVENT = "/Game/Characters/BasePlayerChar.BasePlayerChar_C:OnSubstat
 local BOW_MONTAGE_HINT, STRING_CHARGE_HINT = "2h_bow", "string_heavy_charge"
 local settle_hooked, settle_fixed = false, 0
 
-local function bow_string_of(pawn)
-    for _, a in ipairs(FindAllOf("BP_bow_2h_C") or {}) do
-        if a:IsValid() and a:GetAttachParentActor() == pawn then
-            local m = a:GetComponentByClass(StaticFindObject("/Script/Engine.SkeletalMeshComponent"))
-            if m and m:IsValid() then return m end
+-- Лук — среди акторов, прицепленных к самому герою (как bow_in_hand ниже): прежний поиск FindAllOf("BP_bow_2h_C") по всем объектам мира шёл через 100 мс
+-- после КАЖДОГО конца атаки, удары топором и мечом включительно, — работа не по изменению (судья 2026-11-22 21:5x, круг на RC4, находка 1; HOUSE_RULES 41).
+-- Шесть ответов EFFICIENT_CODE: событие — конец атаки героя; вход — прицепленные к герою акторы (их единицы); N — они же, без мира; постоянное — класс
+-- сетки (один раз); бюджет — доли миллисекунды на событие; замер — проверка тетивы B1 на стенде. [NOT-TESTED]
+-- Главный блок у предела Lua в 200 локальных: имя класса и класс сетки живут внутри do … end (судья, второй круг на RC4, находка 3). Чужие герои в
+-- совместной игре проверяются, как прежде: AnimNotify правит копию лука на ЭТОЙ машине (второй круг, находка 2). Лук узнаётся по цепочке классов, как его
+-- находил FindAllOf: тот отдаёт и наследников класса (карта игры, FindAllOf('HumanoidNPCCharacter_C') → BP_HumanoidDialogueNPC_C) — лук мода, выведенный
+-- из BP_bow_2h_C, тоже лук (судья, третий круг на RC4, находка 1). Цепочка — до SUPER_DEPTH родителей, акторов на герое единицы.
+local bow_string_of
+do
+    local BOW_CLASS_NAME, SUPER_DEPTH = "BP_bow_2h_C", 8
+    local skel_class = nil
+    local function is_bow(a)
+        local k, n = a:GetClass(), 0
+        while k and k:IsValid() and n <= SUPER_DEPTH do
+            if k:GetFName():ToString() == BOW_CLASS_NAME then return true end
+            k, n = k:GetSuperStruct(), n + 1
+        end
+        return false
+    end
+    bow_string_of = function(pawn)
+        local arr = {}
+        pawn:GetAttachedActors(arr, true, false)
+        for i = 1, #arr do
+            local a = arr[i]:get()
+            if a:IsValid() and is_bow(a) then
+                skel_class = skel_class or StaticFindObject("/Script/Engine.SkeletalMeshComponent")
+                local m = a:GetComponentByClass(skel_class)
+                if m and m:IsValid() then return m end
+            end
         end
     end
 end
 
 local function settle_if_stuck(pawn)
     if not (pawn and pawn:IsValid()) then return end
-    local anim = pawn.Mesh:GetAnimInstance()
+    local mesh = pawn.Mesh   -- смерть посреди натяжения: сетки уже нет (issue #49; судья 2026-11-22, круг 1, находка 10)
+    if not (mesh and mesh:IsValid()) then return end
+    local anim = mesh:GetAnimInstance()
+    if not (anim and anim:IsValid()) then return end
     local mont = anim:GetCurrentActiveMontage()
     if mont and mont:IsValid() and mont:GetFName():ToString():find(BOW_MONTAGE_HINT, 1, true) then return end
     local sm = bow_string_of(pawn)
@@ -1706,7 +1734,11 @@ local function on_end_power_charge(ctx)
     local hero = ctx:get()
     if not (hero and hero:IsValid() and hero:IsPlayerControlled()) then return end
     draw_montage = nil
-    if d.anim:IsValid() and d.montage:IsValid() then d.anim:Montage_SetPlayRate(d.montage, 1.0) end
+    -- Запомненный экземпляр анимации сверяется по полному имени: героиня могла погибнуть посреди натяжения, и на адресе её анимации стоит чужой живой
+    -- объект (EXP-0612; судья 2026-11-22, круг 1, находка 13). [NOT-TESTED]
+    local same = false
+    pcall(function() same = d.anim:IsValid() and d.anim:GetFullName() == d.anim_name and d.montage:IsValid() end)
+    if same then d.anim:Montage_SetPlayRate(d.montage, 1.0) end
     -- «Дзинь» — здесь: EndPowerCharge ставит отметку конца заряда в конце уведомления, то есть в миг полного заряда; ранний выстрел обрывает
     -- уведомление раньше — доля меньше 1, звука нет (отложенный звук по сроку молчал: отметка конца уже стояла, прогон 22:12). [NOT-TESTED]
     local ts = hero.PowerChargeTimeScale
@@ -1736,7 +1768,7 @@ local function on_set_power_charge(ctx)
     local montage = anim and anim:IsValid() and anim:GetCurrentActiveMontage() or nil
     if montage and montage:IsValid() then
         anim:Montage_SetPlayRate(montage, rate)
-        draw_montage = { anim = anim, montage = montage }
+        draw_montage = { anim = anim, montage = montage, anim_name = anim:GetFullName() }
     end
     if draw_logged < CFG.log_shots then
         draw_logged = draw_logged + 1
@@ -1800,7 +1832,7 @@ end
 --   залипнуть нечему (судья 2026-11-14: счётчик заряда залипал при смерти посреди натяжения, а уведомление заряда приходит на 0,51 с позже начала).
 -- Класс ставится при переходе к первому лицу или при рождении героя уже в первом лице (смена вида скрывает перестройку анимации —
 -- SetOverridePostProcessAnimBP пересобирает основной экземпляр, ReinitAnimInstances); при взятии лука или конце натяжения — никогда.
--- Раздел — внутри do … end: его локальные освобождаются в конце блока (пик главного куска — 188 из 200 внутри блока, 171 вне его; судья, luac -l -l).
+-- Раздел — внутри do … end: его локальные освобождаются в конце блока (пик главного куска — 191 из 200 внутри блока на 2026-11-22; судья, luac -l -l: новая помощь — полем таблицы, не локальной).
 -- [TESTED: 2026-11-14 · KUMM testcases/TC_conan_fp_bow_visible_2026-11-13.md S3e, C3, C4 · judge round 2 fixes (hero key, flag, no class in update) — see the TC]
 do
     local ASSET = "/Game/Mods/KrinikConanArchery/ABP_KrinikFirstPersonLook.ABP_KrinikFirstPersonLook"
@@ -1835,9 +1867,14 @@ do
         return false
     end
     local function ours(pp) return pp and pp:IsValid() and pp:GetClass():GetFName():ToString() == CLASS_NAME end
+    -- Сетка героя или nil. Отложенные шаги раздела (сокет через 1,5 с после уборки оружия, конец натяжения через 30 мс) приходят и после смерти: игра
+    -- убирает оружие из рук погибшей героини, а её сетка к этому шагу уже недействительна — ошибка «GetPostProcessInstance» в журнале при смерти
+    -- (issue #49, прогон 2026-11-22 10:29). Нет сетки — шаг ничего не делает; новый герой начинает с нуля (for_hero). [NOT-TESTED]
+    local function mesh_of(h) local m = h.Mesh; return m and m:IsValid() and m or nil end
     local function set_class(h)
         if not CFG.fp_body_look or S.failed then return false end   -- выключатель раздела; класс не загрузился — не пробуем на каждом событии
-        local mesh = h.Mesh
+        local mesh = mesh_of(h)
+        if not mesh then return false end
         if ours(mesh:GetPostProcessInstance()) then return true end
         local cls = StaticFindObject(CLASS)
         if not (cls and cls:IsValid()) then LoadAsset(ASSET); cls = StaticFindObject(CLASS) end   -- ПОЛНЫЙ путь объекта (2026-11-13 16:0x)
@@ -1856,7 +1893,9 @@ do
         if S.first == nil then local ok, v = pcall(function() return h.AdjustableCamera:IsActive() end); S.first = ok and v == true end
         if S.armed == nil then S.armed = bow_in_hand(h) end
         local want = S.first and S.armed and not S.drawing
-        local pp = h.Mesh:GetPostProcessInstance()
+        local mesh = mesh_of(h)
+        if not mesh then return end
+        local pp = mesh:GetPostProcessInstance()
         if not ours(pp) then return end   -- класс ставят только смена вида и рождение героя: здесь — взятие лука или конец натяжения (судья, раунд 2)
         if want then pp.NeckShare, pp.SpineUndo = CFG.fpl_neck, CFG.fpl_spine end   -- доли — каждый раз: класс мог поставить пульт стенда
         if pp.Active ~= want then
@@ -1884,7 +1923,8 @@ do
             ExecuteInGameThreadWithDelay(ATTACK_SETTLE_MS, function()
                 local ok, e = pcall(function()
                     if not h:IsValid() then return end
-                    local anim = h.Mesh:GetAnimInstance()
+                    local mesh = mesh_of(h)
+                    local anim = mesh and mesh:GetAnimInstance()
                     local was = S.drawing
                     S.drawing = anim and anim:IsValid() and anim.isAttacking == true or false
                     if was and not S.drawing then S.armed = bow_in_hand(h) end   -- конец атаки: лук в руках — правда сокета (путь без события взятия)

@@ -292,9 +292,17 @@ local defaults = {
 -- через tostring(), и таблица превратилась бы в "table: 0x...". Наружу вынесен
 -- один выключатель mute_foreign_camera; имена классов - факт о чужом моде, а
 -- не настройка владельца, и меняются вместе с кодом.
+-- Поля таблицы (не отдельные локальные: главный кусок у предела Lua в 200 локальных): paths — полный путь класса для слежки за рождением (пути — из
+-- контейнера EAA, `retoc list --path`, 2026-11-22), reg — реестр рождённых компонентов { c, name, cname }, hooked — слежка за классом уже стоит.
 local FOREIGN_CAM_CLASSES = {
     "EAA_CamDistance_C",   -- висит на BasePlayerChar: GetCameraArm, SetZoom, ShouldZoom
     "EAA_Zoom_C",          -- висит на актёре EAA_MC_C: AdjustCamDistForWheel
+    paths = {
+        EAA_CamDistance_C = "/Game/Mods/EnhancedArmoryAndArsenal/Cam/EAA_CamDistance.EAA_CamDistance_C",
+        EAA_Zoom_C = "/Game/Mods/EnhancedArmoryAndArsenal/Cam/EAA_Zoom.EAA_Zoom_C",
+    },
+    reg = {},
+    hooked = {},
 }
 
 local cfg = {}
@@ -449,6 +457,7 @@ end
 -- ------------------------------------------------------- поиск компонента
 local arm = nil          -- найденный SpringArm
 local arm_name = ""
+local arm_full = nil     -- полное имя штанги при захвате: опознание ссылки каждый тик сторожа (судья 2026-11-22, круг 2, находка C1; EXP-0612)
 
 -- Печатает, КТО такой персонаж игрока на КЛИЕНТЕ. Имя класса BasePlayerChar
 -- взято из СЕРВЕРНОГО дампа другого билда и может не совпасть; без этой печати
@@ -986,20 +995,46 @@ local function mute_one(c, cname)
     end
 end
 
+-- ПОИСК ПО ВСЕЙ ИГРЕ РАЗ В СЕКУНДУ ЗАМЕНЁН СОБЫТИЕМ РОЖДЕНИЯ (2026-11-22, KUMM bugs/118, issue #50). Здесь стоял FindAllOf по двум классам компонентов EAA
+-- и вызовы их методов на всём найденном. Его заменили, когда искали падение UE4SS с окном EAA поверх хаба, но причиной падения он НЕ был: 2026-11-22 19:31
+-- доказано, что игру роняла отладочная проба агента (KUMM .work/tmp/esc_listen.lua, ListenForInputAction с делегатом-таблицей), в том числе с выключенным
+-- модом камеры. Замена осталась, потому что событие дешевле поиска по сцене (EFFICIENT_CODE §2.6). Слежка за рождением зовёт Lua в момент создания
+-- объекта, на том потоке, где его создают (судья, круг 2, находка A2): обходной путь через героя и актёра EAA_MC_C в игровом потоке в долгу. Теперь компонент приходит событием рождения
+-- (NotifyOnNewObject — как только класс EAA загружен; раз за сессию один поиск подхватывает рождённых до слежки), лежит в реестре с полным именем, и перед
+-- любым вызовом объект сверяется по имени: на адресе умершего компонента может стоять чужой живой объект (EXP-0612). Раз в секунду проверяется только реестр
+-- (1–3 записи), без поиска по сцене. [NOT-TESTED]
+FOREIGN_CAM_CLASSES.born = function(c, cname)
+    local ok, fn = pcall(function() return c:GetFullName() end)
+    if not (ok and fn) or fn:find("Default__", 1, true) or fn:find("_GEN_VARIABLE", 1, true) then return end
+    local reg = FOREIGN_CAM_CLASSES.reg
+    for _, e in ipairs(reg) do if e.name == fn then return end end   -- уже в реестре (рождение и разовый поиск видят один объект)
+    reg[#reg + 1] = { c = c, name = fn, cname = cname }
+end
 local function mute_foreign_camera()
     if not cfg.mute_foreign_camera then return end
     local now = os.clock()
     if now - last_mute_check < 1.0 then return end
     last_mute_check = now
-    for _, cname in ipairs(FOREIGN_CAM_CLASSES) do
-        local list
-        if pcall(function() list = FindAllOf(cname) end) and list then
-            for _, c in ipairs(list) do
-                local alive = false
-                pcall(function() alive = c:IsValid() end)
-                if alive then mute_one(c, cname) end
+    local F = FOREIGN_CAM_CLASSES
+    for _, cname in ipairs(F) do
+        if not F.hooked[cname] then
+            local cls = StaticFindObject(F.paths[cname])
+            if cls and cls:IsValid() then
+                local ok, e = pcall(NotifyOnNewObject, F.paths[cname], function(c) pcall(F.born, c, cname) end)
+                F.hooked[cname] = ok   -- не встала — следующая секунда попробует вновь (судья, круг 2, находка A3)
+                log("глушение %s: слежка за рождением %s", cname, ok and "встала" or ("НЕ встала: " .. tostring(e)))
+                if ok then   -- один раз за сессию: рождённые до слежки
+                    pcall(function() for _, c in ipairs(FindAllOf(cname) or {}) do pcall(F.born, c, cname) end end)
+                end
             end
         end
+    end
+    local reg = F.reg
+    for i = #reg, 1, -1 do
+        local e = reg[i]
+        local same = false
+        pcall(function() same = e.c:IsValid() and e.c:GetFullName() == e.name end)
+        if same then mute_one(e.c, e.cname) else table.remove(reg, i) end
     end
 end
 
@@ -1077,6 +1112,14 @@ local function keep_target_body()
     do
         local an = nil
         pcall(function() an = arm:GetFullName() end)
+        -- На адресе умершей штанги может стоять чужой живой объект: IsValid() выше отвечает «да», и GetOwner() ниже шёл бы на нём каждые 30 мс
+        -- (то же, что падение 2026-10-26 23:13 ниже). Другое полное имя — та же ветка: отцепиться и найти камеру заново. [NOT-TESTED]
+        if an and arm_full and an ~= arm_full then
+            log("штанга по ссылке уже не та (%s) - отцепляюсь и ищу настоящую", an)
+            arm, arm_name, arm_full = nil, nil, nil
+            target_owned = false
+            return
+        end
         if an and an:find(DEAD_CAM_MARK, 1, true) then
             log("держал штангу камеры смерти - отцепляюсь и ищу настоящую")
             arm, arm_name = nil, nil
@@ -1793,6 +1836,8 @@ local function adopt_arm(c, name)
     end
     ever_adopted = true
     arm, arm_name = c, name
+    arm_full = nil
+    pcall(function() arm_full = c:GetFullName() end)
 
     -- ⚠️ ПЕРЕХВАТ ЗУМА ВЕШАЕМ ЗДЕСЬ, А НЕ ПО СОБЫТИЮ ПОЯВЛЕНИЯ ПЕРСОНАЖА.
     -- Измерено 09.09.2026 23:43: строк про перехват в журнале НОЛЬ - то есть
@@ -2001,19 +2046,98 @@ pcall(function()
     end)
 end)
 
--- ШЕЯ ОТ ПЕРВОГО ЛИЦА. Камера первого лица висит на кости b_headcam, при взгляде вверх она внутри шеи — весь экран
--- кожа (KUMM bugs/69, владелец 2026-10-29: «камера проникает в текстуру героя» · «нужно выбрать более простое решение»).
--- Прячем кость b_neck_1 (с ней голова и b_headcam как дети) у своей модели на переходе в первое лицо и возвращаем на
--- переходе в третье. Скрытие — только отрисовка на этой машине: другие игроки рисуют своего героя сами. Кость не
--- движется — камера на месте (пульт 2026-10-29 10:50: координаты камеры до и после совпали, кадр — небо).
--- Перехват ставится один раз, когда класс героя уже загружен (появление героя). [NOT-TESTED]
+-- ШЕЯ И ВОРОТ ДОСПЕХА ОТ ПЕРВОГО ЛИЦА — КАМЕРА ОТХОДИТ ВПЕРЁД ПО ВЗГЛЯДУ, НИЧЕГО НЕ ПРЯЧЕТСЯ (2026-11-22 13:3x). До этого здесь пряталась кость
+-- b_neck_1 (KUMM bugs/69: при взгляде вверх камера видела шею изнутри; с 2026-11-22 утра — только круче 70°). Скрытая кость схлопывает шею, голову и волосы
+-- вместе с их тенью от любого света — солнца, факела, костра; владелец 2026-11-22 13:10: это костыль, тень должна быть всегда (KUMM bugs/114).
+-- Замер пультом 2026-11-22 13:2x (KUMM .work/fp_nosee, листы e, f, i, j): без доспеха открытая шея в кадр не входит на 74–85° ни с луком, ни с топором;
+-- входит ВОРОТ нагрудника (52442 «Нагрудник егеря» — мех слева и снизу кадра на 78° и 85°; утренняя «кожа шеи» на 78–85° снята в среднем доспехе) и уходит
+-- из кадра, когда камера на 5 см впереди по взгляду (10, 15, 20 см — тоже чисто); подъём ближней плоскости отсечения режет руку уже с 20 см — отвергнут.
+-- Приём сообщества (KUMM researches/first-person-body-camera §4; форум Epic «camera attached to the head socket, nudged forward»): камера первого лица
+-- (AdjustableCamera, ребёнок пружины FirstPersonCameraArm, своё положение 0 0 0) отходит вперёд вдоль оси X пружины плавно с углом взгляда: 0 до CAM_PUSH_FROM,
+-- CAM_PUSH_CM с CAM_PUSH_FULL. Вне первого лица и у нового героя — исходное положение. Только своя камера, только кадр игрока: тень и другие игроки этого
+-- не видят; положение камеры — начало луча взаимодействия игры (UpdateHighlightTarget, «E Взять»), и при взгляде вверх круче 55° оно на ≤ 10 см
+-- впереди — для луча длиной в метры это ничто (судья 2026-11-22, круг 1). Работа: чтение угла и положения камеры на кадр (свойства, единицы мкс),
+-- запись положения — только при расхождении больше CAM_PUSH_EPS.
+-- [TESTED: 2026-11-22 · кейсы S1–S7 прошли на версиях v1 и v2; на итоговой v4 прогнаны S1, вынос (85° дают 10 см, 0° дают 0), S5, S6 · KUMM
+-- testcases/reports/2026-11-22_conan-fp-shadow-always-owner-no-see.md]
 local HERO_BP = "/Game/Characters/BasePlayerChar.BasePlayerChar_C"
-local FP_HIDDEN_BONE = "b_neck_1"
-local function set_neck_hidden(ctx, hidden)
-    local hero = ctx:get()
-    if not hero or not hero:IsValid() then return end
-    if hidden then hero.Mesh:HideBoneByName(FName(FP_HIDDEN_BONE), 0)   -- 0 = PBO_None: физику не трогать
-    else hero.Mesh:UnHideBoneByName(FName(FP_HIDDEN_BONE)) end
+local FP_NECK_BONE = "b_neck_1"   -- больше не прячется; имя нужно, чтобы открыть кость, скрытую прежней версией мода в этой же сессии
+local CAM_PUSH_FROM, CAM_PUSH_FULL = 55, 75   -- градусы взгляда вверх: начало выноса и полный вынос
+local CAM_PUSH_CM = 10                        -- полный вынос, см: вороту 52442 хватило 5 — запас на высокие вороты тяжёлых доспехов
+local CAM_PUSH_EPS = 0.5                      -- см: расхождение меньше этого не пишется (запись — вызов функции движка)
+local CAM_REPORT_S = 60
+local per_frame_running = false   -- ставит start_per_frame (покадровое удержание)
+-- Ссылка на объект годна, только пока объект по её адресу носит имя, записанное при захвате: после выхода в меню и новой загрузки мира прежний объект
+-- уничтожен, его адрес может занять чужой, и IsValid() отвечает «да» уже чужому (KUMM EXP-0612; судья 2026-11-22 21:5x, круг на RC4, находки 3 и 4 — камера
+-- и контроллер первого лица, локальный контроллер). Полное имя несёт класс и номер экземпляра. [NOT-TESTED]
+local function same_obj(o, name)
+    if not (o and name and o:IsValid()) then return false end
+    local ok, fn = pcall(o.GetFullName, o)
+    return ok and fn == name
+end
+local fp_pc, fp_cam, fp_pawn_addr = nil, nil, nil
+local fp_cam_name = nil   -- полное имя камеры при захвате в sync_view (same_obj)
+-- Положение камеры без выноса — постоянное 0 0 0: так у AdjustableCamera всегда (пульт 2026-11-22 13:2x, обычный и боевой режим, после смерти и
+-- возрождения). Чтение «исходного» при входе в первое лицо (круг 2, находка 4) взяло бы уже выдвинутое положение после перезагрузки мода во взгляде вверх
+-- и оставило бы камеру впереди навсегда (судья, круг 3) — постоянное значение перезагрузку переживает. Текущий вынос каждый кадр читается у самой камеры
+-- (судья, круг 1, находка 5); ось — X пружины FirstPersonCameraArm, на конце которой сидит камера.
+local cam_base = { X = 0, Y = 0, Z = 0 }
+local cam_cost, cam_calls, cam_report_at = 0, 0, 0
+local function set_cam_push(cam, cm)
+    cam:K2_SetRelativeLocation({ X = cam_base.X + cm, Y = cam_base.Y, Z = cam_base.Z }, false, {}, false)
+end
+local function cam_push_for(pitch)
+    if pitch <= CAM_PUSH_FROM then return 0 end
+    if pitch >= CAM_PUSH_FULL then return CAM_PUSH_CM end
+    return CAM_PUSH_CM * (pitch - CAM_PUSH_FROM) / (CAM_PUSH_FULL - CAM_PUSH_FROM)
+end
+-- вернуть камеру на место (выход из первого лица, новый герой); cam — камера героя (по умолчанию запомненная); безопасно на мёртвой камере
+local function cam_push_reset(cam)
+    if cam == nil then
+        if not same_obj(fp_cam, fp_cam_name) then return end   -- запомненная камера — только та же самая (её адрес мог занять чужой объект)
+        cam = fp_cam
+    end
+    if cam:IsValid() then pcall(function() if cam.RelativeLocation.X ~= cam_base.X then set_cam_push(cam, 0) end end) end
+end
+-- зовётся покадровым циклом только в первом лице (fp_cam_on)
+local fp_cam_on = false
+-- полное имя своего героя, пока игрок видит его из первого лица; nil — третье лицо, облёт или нет героя. Ведёт его ТОЛЬКО sync_view; по нему повторные
+-- проходы после смены оружия знают, что герой в первом лице (судья, круг 1, находка 2). Объявлено выше места использования: объявление ниже делало
+-- присваивание глобальным (судья 2026-11-22, круг 3; luac -l: SETTABUP _ENV "fp_hero_name").
+local fp_hero_name = nil
+local function fp_cam_tick()
+    local c0 = os.clock()
+    -- на кадре — только IsValid: после выгрузки мира ссылки сбрасывает перехват загрузки карты (блок после player_hero), после возрождения — ветка
+    -- нового героя ниже (судья, второй круг на RC4, находка 1: два GetFullName на кадр ≈ 20 мкс)
+    if not (fp_pc and fp_pc:IsValid() and fp_cam and fp_cam:IsValid()) then fp_cam_on, fp_cam, fp_pc = false, nil, nil; return end
+    -- контроллер у другой пешки (смерть — труп с камерой ещё жив; посадка на зверя): камера героя — на место, и ждём; цикл жив, пока жива камера,
+    -- и продолжит, когда контроллер вернётся к герою (судья, круг 1, находка 7; круг 2, находка 2)
+    local pawn = fp_pc.Pawn
+    if not (pawn and pawn:IsValid() and pawn:GetAddress() == fp_pawn_addr) then
+        if fp_cam.RelativeLocation.X ~= cam_base.X then set_cam_push(fp_cam, 0) end
+        -- контроллер получил НОВОГО героя (возрождение в третьем лице — sync_view для него не звался): камера прежнего героя больше не наша, цикл встаёт
+        -- до следующей смены вида; иначе после уборки трупа её адрес займёт чужой компонент (судья, третий круг на RC4, находка 3)
+        if pawn and pawn:IsValid() then
+            local okc, cn = pcall(function() return pawn:GetClass():GetFName():ToString() end)
+            if okc and cn == "BasePlayerChar_C" then fp_cam_on, fp_cam, fp_pc = false, nil, nil end
+        end
+        return
+    end
+    -- свойство, а не функция: 1.5 мкс против 17 мкс у GetControlRotation() (замер пультом 2026-11-22 10:2x, 2000 чтений подряд)
+    local p = fp_pc.ControlRotation.Pitch
+    if p > 180 then p = p - 360 end
+    local want = cam_push_for(p)
+    local cur = fp_cam.RelativeLocation.X - cam_base.X
+    if math.abs(want - cur) > CAM_PUSH_EPS or (want == 0 and cur ~= 0) then set_cam_push(fp_cam, want) end
+    local dt = os.clock() - c0
+    cam_cost, cam_calls = cam_cost + dt, cam_calls + 1
+    if c0 >= cam_report_at then
+        if cam_calls > 1 then
+            -- os.clock здесь шагает по 1 мс: сумма — оценка по шагам часов; точная цена — пакетом на стенде (судья 2026-11-22, круг 3)
+            log("камера от первого лица: проверок угла %d за минуту, сумма по шагам часов %.0f мс (оценка), вынос сейчас %.1f см", cam_calls, cam_cost * 1000, cur)
+        end
+        cam_cost, cam_calls, cam_report_at = 0, 0, c0 + CAM_REPORT_S
+    end
 end
 -- ТЕНЬ ОТ ПЕРВОГО ЛИЦА (KUMM bugs/98; владелец 2026-11-13 16:06 «от стрелы тень есть, а где от всего остального?»). Игра в SwitchToFirstPersonCamera
 -- ВЫКЛЮЧАЕТ CastShadow у всех частей тела, у лука и стрелы в нём (замер пультом 17:16, _config/fp-shadow-flags.lua; от третьего лица — включено).
@@ -2023,11 +2147,13 @@ end
 -- тени); в перехвате SwitchToFirstPersonCamera (тело уже выключило) тень сразу включается тем записанным сеткам, у которых она сейчас выключена.
 -- Сетки, тёмные по замыслу (огонь факела, застрявшие в герое стрелы врагов, эффекты баффов), в запись не попадают и остаются тёмными. Запись — по
 -- полному имени героя (чужая пешка не путает) и по полным именам сеток (за время между записью и возвратом предмет могут сменить; мёртвый объект из
--- Lua роняет игру мимо pcall). Тень невидимых частей (CastHiddenShadow) не ставим: голова схлопнута скрытием кости шеи, её тень вернёт план 52.
--- Предмет, взятый в руки после записи, получит тень после следующей записи (переключения в третье лицо). [NOT-TESTED]
+-- Lua роняет игру мимо pcall). Тень невидимых частей (голова, волосы) и убранного оружия — в fp_pass ниже (2026-11-22).
+-- Предмет, взятый в руки после записи, получает тень главной сетки в fp_pass (пункт 3 ниже). [NOT-TESTED]
 local FP_WALK_DEPTH, FP_WALK_MAX = 6, 80
 local mesh_classes = nil
 local tp_shadow_names = {}   -- [полное имя героя] = { [полное имя сетки] = true }
+local tp_body_names = {}     -- [полное имя героя] = { [полное имя сетки] = true } — СВОИ сетки героя, видимые в третьем лице (тело, голова, волосы)
+local tp_dark_names = {}     -- [полное имя героя] = { [полное имя сетки] = true } — сетки БЕЗ тени в третьем лице: тёмные по замыслу, первое лицо их не зажигает
 local function fp_mesh_classes()
     if not mesh_classes then
         local list = {}
@@ -2041,7 +2167,8 @@ local function fp_mesh_classes()
 end
 -- обход сеток героя и надетого: fn(c) на каждой сетке; ошибка одной ветки (и самого взятия ребёнка) не обрывает соседей — считается, первая пишется
 -- в журнал; упор в FP_WALK_MAX отмечается (дальше сетки не просмотрены)
-local function walk_hero_meshes(hero, fn)
+-- roots — корни обхода вместо всей сетки героя (корневые компоненты прицепленных предметов: смена оружия, судья 2026-11-22, круг на RC4, находка 2)
+local function walk_hero_meshes(hero, fn, roots)
     local classes, seen, errors, first_err, capped = fp_mesh_classes(), 0, 0, nil, false
     local function walk(c, depth)
         if not c or not c:IsValid() or depth > FP_WALK_DEPTH then return end
@@ -2057,7 +2184,7 @@ local function walk_hero_meshes(hero, fn)
         end) end)
         if not ok2 then errors = errors + 1; first_err = first_err or tostring(err2) end
     end
-    walk(hero.Mesh, 0)
+    if roots then for _, r in ipairs(roots) do walk(r, 1) end else walk(hero.Mesh, 0) end
     return seen, errors, first_err, capped
 end
 local function walk_note(seen, errors, err, capped, t0)
@@ -2068,11 +2195,21 @@ end
 local function record_tp_shadows(hero, why)
     if not hero or not hero:IsValid() then return end
     local t0, names, n = os.clock(), {}, 0
+    local hname, leader = hero:GetFullName(), hero.Mesh:GetFullName()
+    local body, nb, dark = {}, 0, {}
     local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
-        if c.CastShadow then names[c:GetFullName()] = true; n = n + 1 end
+        local name = c:GetFullName()
+        if c.CastShadow then names[name] = true; n = n + 1 else dark[name] = true end
+        -- свои видимые сетки героя (без невидимой ведущей позы CharacterMesh0): в первом лице игра делает невидимыми голову и волосы из них
+        if name ~= leader and c:IsVisible() then
+            local o = c:GetOwner()
+            if o and o:IsValid() and o:GetFullName() == hname then body[name] = true; nb = nb + 1 end
+        end
     end)
-    tp_shadow_names[hero:GetFullName()] = names
-    log("тень: записано сеток с тенью %d (%s); %s", n, why, walk_note(seen, errors, err, capped, t0))
+    tp_shadow_names[hname] = names
+    tp_body_names[hname] = body
+    tp_dark_names[hname] = dark
+    log("тень: записано сеток с тенью %d, своих видимых %d (%s); %s", n, nb, why, walk_note(seen, errors, err, capped, t0))
 end
 local function restore_fp_shadows(hero)
     if not hero or not hero:IsValid() then log("тень от первого лица: героя нет — пропуск"); return end
@@ -2084,36 +2221,326 @@ local function restore_fp_shadows(hero)
     end)
     log("тень от первого лица: игра выключила, мы вернули %d; %s", lit, walk_note(seen, errors, err, capped, t0))
 end
+
+-- ГОЛОВА В ТЕНИ И УБРАННОЕ ОРУЖИЕ ВНЕ ОБЗОРА — ОТ ПЕРВОГО ЛИЦА (2026-11-22; KUMM bugs/114, issue #13 — тень без головы; issue #4 — «от первого лица видно
+-- лук на спине», владелец 2026-11-20 18:4x и 2026-11-22 09:40 «и лук на спине — попадающий в поле зрения игрока от первого лица с топором в руках?»).
+-- Приём индустрии (researches/first-person-body-camera §4): часть, которую камера игрока видеть не должна, а тень её нужна, — не видна ВЛАДЕЛЬЦУ
+-- (OwnerNoSee) и бросает тень невидимых (CastHiddenShadow); другие игроки, другие камеры и тень видят её как есть (владелец 2026-11-22 13:11: игра
+-- сетевая, лук и все части тела другим видны всегда). Утренняя проба 10:0x сочетала OwnerNoSee с одной CastShadow — тень пропала, как и положено движку;
+-- пара OwnerNoSee + CastHiddenShadow тень держит (пульт 2026-11-22 13:2x, лист KUMM .work/fp_nosee/sheet_c.jpg).
+--   1) Голова и волосы: игра в первом лице делает невидимыми свои сетки героя; те из них, что были видимы в третьем лице (tp_body_names), получают
+--      тень невидимых. Тень включается только тому, у кого она была в третьем лице (tp_shadow_names): тёмное по замыслу остаётся тёмным.
+--   2) Убранное оружие: видимая сетка на гнезде «sheath_*» (лук за спиной — sheath_bow) или под ним получает OwnerNoSee и тень невидимых — всегда, без
+--      записи третьего лица (лук, взятый после записи, оставался без тени); имя записывается — OwnerNoSee снимается ТОЛЬКО с записанного: когда оружие
+--      снова в руке (гнездо уже не sheath) и при выходе из первого лица. Если игра сама прячет убранное (настройка VisibleSheathedWeapons = None), сетка
+--      невидима — флагов ей не ставим, а поставленные раньше (настройку сменили посреди первого лица) снимаем.
+--   3) Предмет в руке (сетка, чей владелец — предмет инвентаря InventoryItemBase: оружие, щит, факел, инструмент): игра в первом лице гасит его тень
+--      (топор в руке — cast false, пульт 13:2x); видимому возвращается CastShadow.
+-- ЧТО ТАКОЕ «ПЕРВОЕ ЛИЦО» — СПРАШИВАЕМ ИГРУ: not GetIsInThirdPerson() на событии EventOnThirdPersonChange. Флаг по одним перехватам Switch*Camera врал:
+-- облёт камеры при бездействии (SwitchToVanityCamera, ≈ 4 мин без ввода) уводит в третье лицо мимо SwitchToThirdPersonCamera — пульт 2026-11-22 10:1x:
+-- зовутся EventOnThirdPersonChange / HandleThirdPersonChange / SetThirdPerson (tp = true), а лук за спиной оставался невидимым, у героини при облёте
+-- не было и головы (кость шеи оставалась скрытой — дыра и прежнего кода).
+-- Когда ещё: OnWeaponEquip / OnWeaponUnequip (зовутся на каждую смену оружия в руке, взятие лука и уборку). Взятое в руку уже на месте к OnWeaponEquip;
+-- за спину лук уходит через 0.3–1 с после OnWeaponUnequip — поэтому ещё два прохода спустя SHEATH_RECHECK_S: сроки проверяет покадровый цикл
+-- удержания (новых отложенных действий нет — UE4SS пропускает готовое действие, пока исполняется другое, и самоперезапускающиеся цепочки мода
+-- обрывались бы молча; судья 2026-11-22, находка 4). Только в сборке UE4SS без покадрового цикла (запасной путь, в нашей сборке его нет) повторы
+-- идут через ExecuteInGameThreadWithDelay и этот риск остаётся. Отложенное хранит ИМЯ героя и находит его заново (мёртвый объект из Lua роняет игру
+-- мимо pcall; судья, находка 2). Действуем только для своего героя (player_hero): чужая пешка в сетевой игре не сбивает состояние (судья, находка 1).
+-- Работа: обходы дерева сеток героя (≤ FP_WALK_MAX узлов) только на события — вход в первое лицо даёт три обхода (возврат теней, проход на смене
+-- лица и проход после SwitchToFirstPersonCamera), смена оружия — один сразу и два повтора; не каждый кадр (EFFICIENT_CODE §1). [NOT-TESTED]
+local SHEATH_SOCKET_TAG = "sheath"
+local SHEATH_RECHECK_S = { 0.8, 1.6 }
+local fp_hidden_items = {}   -- [полное имя героя] = { [полное имя сетки] = true } — что скрыли от глаз владельца МЫ (OwnerNoSee)
+local fp_item_class = nil    -- InventoryItemBase: nil — ещё не искали, false — не найден
+local fp_recheck = {}        -- сроки (os.clock) ещё двух проходов после смены оружия; проверяет покадровый цикл (fp_recheck_tick)
+local fp_recheck_why = ""
+-- Свой герой — пешка ЛОКАЛЬНОГО контроллера (2026-11-22, владелец 13:11: игра сетевая). У хозяина сервера в совместной игре живут контроллеры всех
+-- игроков, и FindFirstOf мог вернуть чужой — мод спрятал бы части чужого героя в своём кадре. Контроллер держится, пока жив; ищется заново, когда умер.
+-- Поиск — не чаще раза в LOCAL_PC_RETRY_S: перехваты блюпринта зовутся для пешек всех игроков, и без найденного контроллера каждый звал бы FindAllOf
+-- (судья, круг 1); неудача пишется в журнал один раз.
+local LOCAL_PC_RETRY_S = 1.0
+local local_pc, local_pc_tried, local_pc_warned = nil, -1e9, false
+local local_pc_name = nil   -- полное имя при захвате: после новой загрузки мира прежний адрес может носить чужой объект (same_obj, находка 3)
 local function player_hero()
-    local pc = FindFirstOf("FunCombat_PlayerController_C")
-    local hero = pc and pc:IsValid() and pc:K2_GetPawn() or nil
+    if not same_obj(local_pc, local_pc_name) then
+        local_pc, local_pc_name = nil, nil
+        local now = os.clock()
+        if now - local_pc_tried < LOCAL_PC_RETRY_S then return nil end
+        local_pc_tried = now
+        for _, pc in ipairs(FindAllOf("FunCombat_PlayerController_C") or {}) do
+            if pc:IsValid() and not pc:GetFullName():find("Default__", 1, true) then
+                local ok, mine = pcall(function() return pc:IsLocalController() end)
+                if ok and mine then local_pc, local_pc_name = pc, pc:GetFullName(); break end
+            end
+        end
+        if not local_pc and not local_pc_warned then
+            local_pc_warned = true
+            log("первое лицо: локальный контроллер игрока не найден — проход первого лица ждёт его (повтор не чаще раза в %.0f с)", LOCAL_PC_RETRY_S)
+        end
+    end
+    local hero = local_pc and local_pc:K2_GetPawn() or nil
     return hero and hero:IsValid() and hero or nil
 end
-local function install_fp_neck_hooks()
+-- Выгрузка мира (выход в главное меню, загрузка другого мира): ссылки первого лица и локальный контроллер забываются ДО того, как адреса прежних объектов
+-- займут чужие. Перехват UE4SS RegisterLoadMapPreHook срабатывает в этой игре и на входе в мир (проба пультом 2026-11-22 22:09: «LoadMap pre 1» в 22:09:23,
+-- «post 1» в 22:09:30). Камера первого лица возвращается на место, только пока она ещё та же. [NOT-TESTED]
+do
+    local okh, errh = pcall(RegisterLoadMapPreHook, function()
+        pcall(cam_push_reset)
+        fp_cam_on, fp_cam, fp_pc, fp_cam_name, fp_pawn_addr = false, nil, nil, nil, nil
+        local_pc, local_pc_name = nil, nil
+        fp_hero_name, fp_recheck = nil, {}
+        log("загрузка карты: ссылки первого лица и контроллер игрока забыты")
+    end)
+    if not okh then log("первое лицо: перехват загрузки карты не встал — %s", tostring(errh)) end
+end
+-- свой ли это герой (перехваты блюпринта зовутся для любой BasePlayerChar_C)
+local function own_hero(h)
+    if not (h and h:IsValid()) then return nil end
+    local me = player_hero()
+    if me and me:GetFullName() == h:GetFullName() then return me end
+    return nil
+end
+local function on_sheath(c, leader_name)
+    local p, n = c, 0
+    while p and p:IsValid() and n < 4 do
+        if p:GetFullName() == leader_name then return false end
+        local s = "None"
+        pcall(function() s = p.AttachSocketName:ToString() end)
+        if s:find(SHEATH_SOCKET_TAG, 1, true) then return true end
+        p = p.AttachParent
+        n = n + 1
+    end
+    return false
+end
+-- items_only — смена оружия: обходятся только сетки предметов, прицепленных к герою (тело при смене оружия не меняется). Полный обход — 25–27 узлов,
+-- 0–2 мс на проход по шагу часов, два прохода на смену и два повтора (замер 2026-11-22 22:10, смена 1 ↔ 2 в первом лице, журнал UE4SS); бой со сменой
+-- оружия выходил за 1 мс на кадр для всех модов (MASTER_PLAN, судья, круг на RC4, находка 2). Шесть ответов EFFICIENT_CODE: событие — OnWeaponEquip /
+-- OnWeaponUnequip и два повтора; вход — прицепленные к герою предметы; N — их сетки (единицы); постоянное — класс предметов (один раз); бюджет — доля
+-- миллисекунды; замер — «просмотрено N» в строке журнала прохода. Вход в первое лицо и выход из него обходят всё дерево, как прежде. [NOT-TESTED]
+-- Корни — у ВСЕХ прицепленных к герою акторов: ветка ножен в fp_pass не требует предмета инвентаря (колчан или ножны мода — тоже на сокете sheath*);
+-- свои компоненты героя GetAttachedActors не отдаёт, тело в обход не попадает (судья, третий круг на RC4, находка 2).
+local function item_roots(hero)
+    local roots, arr = {}, {}
+    hero:GetAttachedActors(arr, true, false)
+    for i = 1, #arr do
+        local a = arr[i]:get()
+        if a and a:IsValid() then
+            local r = a.RootComponent
+            if r and r:IsValid() then roots[#roots + 1] = r end
+        end
+    end
+    return roots
+end
+local function fp_pass(hero, fp, why, items_only)
+    if not hero or not hero:IsValid() then return end
+    local hname, leader = hero:GetFullName(), hero.Mesh:GetFullName()
+    local body = tp_body_names[hname]
+    local had_shadow = tp_shadow_names[hname] or {}
+    local dark = tp_dark_names[hname] or {}
+    -- Без записи третьего лица (возрождение сразу в первом лице: запись при рождении HUD пропускается в первом лице — пульт 2026-11-22 10:29,
+    -- «невидимым своим дана тень 0» у нового героя): свои скелетные сетки героя, кроме ведущей позы, считаются телом и все получают тень. Отличить
+    -- погашенное игрой от тёмного по замыслу без записи нельзя; окно этого пути — до первого перехода в третье лицо (судья, круг 4).
+    local no_record = (body == nil)
+    local skinned = no_record and StaticFindObject("/Script/Engine.SkinnedMeshComponent") or nil
+    local hidden = fp_hidden_items[hname] or {}
+    fp_hidden_items[hname] = hidden
+    local t0, heads, hid, shown, body_lit, held_lit = os.clock(), 0, 0, 0, 0, 0
+    if fp_item_class == nil then   -- родной класс предметов инвентаря, загружен всегда; ищется один раз
+        local k = StaticFindObject("/Script/ConanSandbox.InventoryItemBase")
+        fp_item_class = (k and k:IsValid()) and k or false
+        if not fp_item_class then log("первое лицо: класс InventoryItemBase не найден — тень предметам в руке не возвращается") end
+    end
+    local item_class = fp_item_class or nil
+    -- items_only: true — корни всех прицепленных к герою акторов (item_roots); таблица — готовые корни; сбой списка — полный обход
+    local roots = nil
+    if type(items_only) == "table" then
+        roots = items_only
+    elseif items_only then
+        local okr, r = pcall(item_roots, hero)
+        if okr then roots = r end
+    end
+    local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
+        local name = c:GetFullName()
+        local own = body and body[name]
+        if no_record and name ~= leader and skinned and c:IsA(skinned) then
+            local o = c:GetOwner()
+            if o and o:IsValid() and o:GetFullName() == hname then own = true; had_shadow[name] = true end
+        end
+        if own then   -- своя сетка героя
+            -- без записи третьего лица restore_fp_shadows не знает, кому вернуть тень, — видимому телу её возвращаем здесь (bugs/98 после возрождения)
+            if fp and no_record and c:IsVisible() and not c.CastShadow then c:SetCastShadow(true); body_lit = body_lit + 1 end
+            if fp and not c:IsVisible() then
+                if had_shadow[name] then
+                    if not c.CastShadow then c:SetCastShadow(true) end
+                    if not c.bCastHiddenShadow then c:SetCastHiddenShadow(true); heads = heads + 1 end
+                end
+            elseif not fp and c.bCastHiddenShadow then
+                c:SetCastHiddenShadow(false)
+            end
+            return
+        end
+        local o = c:GetOwner()
+        local item = item_class and o and o:IsValid() and o:IsA(item_class)
+        -- главная сетка предмета (корень актёра): только ей тень включается без записи третьего лица — огонь факела и прочие дочерние сетки,
+        -- тёмные по замыслу, остаются тёмными (судья, круг 1, находка 3)
+        local main = false
+        if item then
+            local r = o.RootComponent
+            main = (r ~= nil and r:IsValid() and r:GetAddress() == c:GetAddress())
+        end
+        -- видна ли сетка вообще: своя видимость (IsVisible учитывает и HiddenInGame) и не спрятан ли игрой весь актёр (находка 4)
+        local shown_now = c:IsVisible() and not (o and o:IsValid() and o.bHidden)
+        if fp and on_sheath(c, leader) then
+            -- запись потеряна (перезагрузка мода): пара флагов OwnerNoSee + CastHiddenShadow — метка мода, сетка снова наша (находка 1)
+            if not hidden[name] and c.bOwnerNoSee and c.bCastHiddenShadow then hidden[name] = true end
+            if shown_now then
+                -- видимое убранное: не видно только владельцу (2); тень невидимых — всегда, сама тень — тому, у кого была, и главной сетке
+                if not hidden[name] and not c.bOwnerNoSee then c:SetOwnerNoSee(true); hidden[name] = true; hid = hid + 1 end
+                if hidden[name] then
+                    if not c.bCastHiddenShadow then c:SetCastHiddenShadow(true) end
+                    if not c.CastShadow and (had_shadow[name] or main) then c:SetCastShadow(true) end
+                end
+            elseif hidden[name] then   -- игра спрятала убранное своей настройкой: наши флаги снять, тени у невидимого быть не должно
+                c:SetOwnerNoSee(false); c:SetCastHiddenShadow(false); hidden[name] = nil; shown = shown + 1
+            end
+            return
+        end
+        -- снова в руке или вне первого лица: OwnerNoSee снимается только с записанного — пару флагов, поставленную игрой или другим модом не на
+        -- убранном, мод не трогает (судья, круг 2, находка 3); запись после перезагрузки мода восстанавливает проход на ножнах (install_fp_hooks)
+        if hidden[name] then
+            c:SetOwnerNoSee(false); c:SetCastHiddenShadow(false); hidden[name] = nil; shown = shown + 1
+        end
+        -- предмет в руке (3): тень его главной сетки, погашенная игрой в первом лице, — назад; тёмную и в третьем лице не зажигаем (судья, круг 2,
+        -- находка 5); третье лицо игра освещает сама
+        if fp and main and shown_now and not c.CastShadow and not dark[name] then c:SetCastShadow(true); held_lit = held_lit + 1 end
+    end, roots)
+    if heads + hid + shown + body_lit + held_lit > 0 or why:find("вид", 1, true) then
+        log("первое лицо (%s%s): невидимым своим дана тень %d · телу возвращена тень %d · убранного скрыто от глаз %d · возвращено %d · предметам в руке тень %d; %s%s",
+            why, no_record and ", без записи третьего лица" or "", heads, body_lit, hid, shown, held_lit,
+            roots and ("корней обхода " .. #roots .. "; ") or "", walk_note(seen, errors, err, capped, t0))
+    end
+end
+-- вид сменился (событие игры): первое лицо — проход и вынос камеры по углу; иначе — всё вернуть
+local function sync_view(h, why)
+    local hero = own_hero(h)
+    if not hero then return end
+    local tp = true
+    pcall(function() tp = hero:GetIsInThirdPerson() end)
+    local name = hero:GetFullName()
+    if not tp then
+        fp_hero_name = name
+        local ok, e = pcall(fp_pass, hero, true, "вид: " .. why)
+        if not ok then log("первое лицо: проход не удался — %s", tostring(e)) end
+        -- кость шеи, скрытую версией мода до 2026-11-22 13:3x в этой же сессии, — открыть (своим pcall: сбой не мешает камере; судья, круг 3)
+        pcall(function()
+            if hero.Mesh:IsBoneHiddenByName(FName(FP_NECK_BONE)) then hero.Mesh:UnHideBoneByName(FName(FP_NECK_BONE)) end
+        end)
+        pcall(function()
+            local cam = hero.AdjustableCamera
+            local cam_name = cam:GetFullName()
+            if not (same_obj(fp_cam, fp_cam_name) and fp_cam_name == cam_name) then cam_push_reset() end   -- прежняя камера (прежний герой) — на место, если ещё та же
+            local pc = hero:GetController()
+            fp_cam, fp_pc, fp_pawn_addr = cam, pc, hero:GetAddress()
+            fp_cam_name = cam_name
+            if per_frame_running and not fp_cam_on then
+                fp_cam_on = true
+                cam_cost, cam_calls, cam_report_at = 0, 0, os.clock() + CAM_REPORT_S
+            end
+            -- без покадрового цикла (другая сборка UE4SS) камера не выносится: шея и ворот могут войти в кадр при взгляде вверх, тень — всегда
+        end)
+    else
+        -- третье лицо или облёт: камера первого лица на место, шея открыта (перезапуск мода в первом лице; судья, круг 2)
+        pcall(function()
+            if hero.Mesh:IsBoneHiddenByName(FName(FP_NECK_BONE)) then hero.Mesh:UnHideBoneByName(FName(FP_NECK_BONE)) end
+        end)
+        -- камера ЭТОГО героя — на место, даже если мод её уже забыл (перезагрузка, смена пешки; судья, круг 2, находка 2)
+        local cam = nil
+        pcall(function() cam = hero.AdjustableCamera end)
+        cam_push_reset(cam)
+        -- проверка угла выключается всегда (судья, круг 3)
+        fp_cam_on = false
+        -- возврат — на каждом выходе своего героя из первого лица, а не только при совпадении записанного имени (судья 2026-11-22, круг 1, находка 2);
+        -- снимается записанное — после перезагрузки мода запись восстанавливает проход по убранному (метка мода на ножнах, install_fp_hooks); обход
+        -- ≤ FP_WALK_MAX узлов, только на событие
+        if fp_hero_name == name then fp_hero_name = nil; fp_recheck = {} end
+        local ok, e = pcall(fp_pass, hero, false, "вид: " .. why)
+        if not ok then log("первое лицо: возврат не удался — %s", tostring(e)) end
+    end
+end
+local function fp_recheck_pass()
+    local hero = player_hero()
+    if hero and fp_hero_name == hero:GetFullName() then
+        local ok, e = pcall(fp_pass, hero, true, fp_recheck_why .. " (повтор)", true)
+        if not ok then log("первое лицо: повтор не удался — %s", tostring(e)) end
+    end
+end
+-- зовётся покадровым циклом, пока есть сроки: одно сравнение часов на кадр
+local function fp_recheck_tick()
+    if fp_recheck[1] and os.clock() >= fp_recheck[1] then
+        table.remove(fp_recheck, 1)
+        fp_recheck_pass()
+    end
+end
+local function fp_weapon_changed(h, why)
+    local hero = own_hero(h)
+    if not (hero and fp_hero_name == hero:GetFullName()) then return end
+    local ok, e = pcall(fp_pass, hero, true, why, true)
+    if not ok then log("первое лицо: проход не удался — %s", tostring(e)) end
+    fp_recheck_why = why
+    if per_frame_running then
+        local now = os.clock()
+        fp_recheck = {}
+        for _, s in ipairs(SHEATH_RECHECK_S) do fp_recheck[#fp_recheck + 1] = now + s end
+    else
+        for _, s in ipairs(SHEATH_RECHECK_S) do ExecuteInGameThreadWithDelay(math.floor(s * 1000), fp_recheck_pass) end
+    end
+end
+
+local function install_fp_hooks()
     -- запись при каждом появлении героя (и после смерти), если он сейчас не в первом лице — до установки перехватов, которые ставятся один раз
     local hero = player_hero()
     if hero then
         local fp = false
         pcall(function() fp = hero.AdjustableCamera:IsActive() end)
         if not fp then pcall(record_tp_shadows, hero, "появление героя") end
+        -- перезагрузка мода в первом лице: события смены вида не будет — проход и вынос камеры запускаются здесь (судья, круг 2, находка 1); та же
+        -- проверка бывает и при появлении любого героя рядом (другой игрок) — проход повторяется по событию, это дёшево
+        if fp then pcall(sync_view, hero, "появление героя или загрузка мода") end
     end
-    if _G.__conan_cam_fp_neck then return end
+    if _G.__conan_cam_fp_hooks then return end
     local ok1 = pcall(function()
         RegisterHook(HERO_BP .. ":SwitchToFirstPersonCamera", function(ctx)
-            pcall(set_neck_hidden, ctx, true)
-            local ok, e = pcall(restore_fp_shadows, ctx:get())
+            local h = ctx:get()
+            if not own_hero(h) then return end
+            local ok, e = pcall(restore_fp_shadows, h)
             if not ok then log("тень от первого лица: возврат не удался — %s", tostring(e)) end
+            -- голову игра прячет в теле этой функции, после EventOnThirdPersonChange — проход ещё раз, уже с невидимой головой
+            sync_view(h, "первое лицо")
         end)
     end)
     local ok2 = pcall(function()
         RegisterHook(HERO_BP .. ":SwitchToThirdPersonCamera", function(ctx)
-            pcall(set_neck_hidden, ctx, false)
-            local ok, e = pcall(record_tp_shadows, ctx:get(), "третье лицо")
+            local h = ctx:get()
+            if not own_hero(h) then return end
+            -- сначала снять с убранного оружия OwnerNoSee и тень невидимых, потом запись: запись берёт то, что видно в третьем лице
+            sync_view(h, "третье лицо")
+            local ok, e = pcall(record_tp_shadows, h, "третье лицо")
             if not ok then log("тень: запись не удалась — %s", tostring(e)) end
         end)
     end)
-    _G.__conan_cam_fp_neck = ok1 and ok2
-    log("шея от первого лица: перехват %s", (ok1 and ok2) and "встал" or "НЕ встал")
+    -- любая смена лица, облёт камеры при бездействии тоже
+    local ok3 = pcall(function()
+        RegisterHook(HERO_BP .. ":EventOnThirdPersonChange", function(ctx) sync_view(ctx:get(), "смена лица") end)
+    end)
+    -- смена оружия в первом лице: взятое из-за спины — снова видно владельцу, убранное — не видно ему, тень у него есть
+    local ok4 = pcall(function()
+        RegisterHook(HERO_BP .. ":OnWeaponEquip", function(ctx) fp_weapon_changed(ctx:get(), "оружие взято") end)
+        RegisterHook(HERO_BP .. ":OnWeaponUnequip", function(ctx) fp_weapon_changed(ctx:get(), "оружие убрано") end)
+    end)
+    _G.__conan_cam_fp_hooks = ok1 and ok2
+    log("первое лицо: перехваты — переключения %s, смена лица %s, смена оружия %s", (ok1 and ok2) and "встали" or "НЕ встали",
+        ok3 and "встала" or "НЕ встала", ok4 and "встала" or "НЕ встала")
 end
 
 -- Запись сеток с тенью, когда герой собран и мир загружен: рождение HUD героя (Hosav, `W_NewHealthUI_C` — тот же признак у секций KrinikConanUI).
@@ -2127,6 +2554,8 @@ NotifyOnNewObject("/Game/Mods/UIMod_Hosav/W_NewHealthUI.W_NewHealthUI_C", functi
         local fp = false
         if h then pcall(function() fp = h.AdjustableCamera:IsActive() end) end
         if h and not fp then pcall(record_tp_shadows, h, "HUD героя") end
+        -- возрождение сразу в первом лице: герой собран только теперь (проход при создании видит недостроенное дерево — пульт 2026-11-22 10:32)
+        if h and fp then pcall(sync_view, h, "HUD героя") end
     end)
 end)
 
@@ -2135,11 +2564,11 @@ end)
 -- пересбор по клавише (Numpad 0) и строки dump_candidates в журнале.
 NotifyOnNewObject("/Script/ConanSandbox.BasePlayerChar", function()
     ExecuteInGameThreadWithDelay(1500, rescan)
-    -- Клавиши нумпада (bugs/85) — в ТОМ ЖЕ отложенном действии, что и шея: своё отдельное действие с той же задержкой 2026-11-07 21:39 не
+    -- Клавиши нумпада (bugs/85) — в ТОМ ЖЕ отложенном действии, что и перехваты первого лица: своё отдельное действие с той же задержкой 2026-11-07 21:39 не
     -- исполнилось ни разу (ни строки в журнале), а шея встала — UE4SS пропускает готовое действие, пока исполняется другое (LuaMod.cpp
     -- сборки 8333063, m_is_currently_executing_game_action). [NOT-TESTED]
     ExecuteInGameThreadWithDelay(1600, function()
-        pcall(install_fp_neck_hooks)
+        pcall(install_fp_hooks)
         local ok, err = pcall(install_key_hook)
         if not ok then log("клавиши камеры: ошибка подписки %s", tostring(err)) end
     end)
@@ -3044,7 +3473,15 @@ local HOOK_CANDIDATES = {
 -- падаем на прежний путь: хук, а не выйдет - таймер.
 local function start_per_frame()
     rate_limit = false
-    LoopInGameThreadAfterFrames(1, function() pcall(hold_camera) end)
+    per_frame_running = true   -- камера первого лица выносится по углу взгляда в этом же цикле (fp_cam_tick)
+    LoopInGameThreadAfterFrames(1, function()
+        if fp_cam_on then
+            local ok, e = pcall(fp_cam_tick)
+            if not ok then fp_cam_on = false; log("камера от первого лица: ошибка в покадровой проверке — выключена до смены вида: %s", tostring(e)) end
+        end
+        if fp_recheck[1] then pcall(fp_recheck_tick) end   -- повторные проходы после смены оружия (убранный лук ложится за спину с задержкой)
+        pcall(hold_camera)
+    end)
     log("удержание ПОКАДРОВОЕ: по разу на кадр, ограничитель снят")
 end
 
@@ -3184,9 +3621,9 @@ local zoom_hook_tries = 0
 -- надёжнее всего. Теперь вешаем на все и СЧИТАЕМ СРАБАТЫВАНИЯ по каждому:
 -- журнал сам назовёт того, через кого на самом деле идёт колесо.
 try_install_zoom_hook = function()
-    -- Перехват шеи от первого лица — здесь же: сюда доходят, когда класс героя уже загружен (подписка на появление
+    -- Перехваты первого лица (тень, убранное оружие, вынос камеры) — здесь же: сюда доходят, когда класс героя уже загружен (подписка на появление
     -- героя в этой сборке не срабатывает — прогон 2026-10-29 10:52: перехват зума встал, строки о шее не было). [NOT-TESTED]
-    pcall(install_fp_neck_hooks)
+    pcall(install_fp_hooks)
     -- Клавиши нумпада (bugs/85) — тоже здесь: из события появления героя 2026-11-07 не встали ни отдельным, ни общим с шеей действием (22:05).
     local okk, errk = pcall(install_key_hook)
     if not okk then log("клавиши камеры: ошибка подписки %s", tostring(errk)) end
