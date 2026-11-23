@@ -328,7 +328,15 @@ sealed class Launcher
         // Кадр раскрытого списка — для сверки с экраном «language» макета; окно ушло в фон — список закрывается, как у выпадающих списков Windows.
         lang.Opened += () => SaveFrame(screen + "-langlist");
         Form.Deactivate += (s, e) => lang.Close();
-        Ui.Changed += () => { Refresh(); Form.Relayout(); MetalWindow.Log("экран после смены языка: " + screen + " · " + panel.TextForLog()); SaveFrame(screen + "-lang"); };
+        Ui.Changed += () => { Refresh(); Form.Relayout(); MetalWindow.Log("экран после смены языка: " + screen + " · " + panel.TextForLog()); SaveFrame(screen + "-lang"); ScheduleWarm(); };
+        // Табличка «Отзыв» готовится заранее, через REPORT_WARM_MS после показа окна, когда окно уже нарисовано и игрок ещё ничего не нажал (issue #43),
+        // и заново — после каждой новой картины окна (её кусок запечён в табличку), смены плашки обновлений (от неё зависит, влезет ли табличка) и
+        // смены языка (тексты): таймер перезапускается, подготовка идёт одна, в простое, не внутри щелчка (судья RC5, круг 1, находки 1, 10).
+        warmTimer.Tick += (s, e) => { warmTimer.Stop(); WarmReport(); };
+        Form.Shown += (s, e) => ScheduleWarm();
+        Form.BackdropRendered += ScheduleWarm;
+        plate.VisibleChanged += (s, e) => ScheduleWarm();
+        plate.SizeChanged += (s, e) => ScheduleWarm();   // плашка выросла, окно нет — влезает ли табличка, решается заново (судья RC5, круг 2, R4)
         tick.Tick += (s, e) => Tick();
 
         // Пока идёт установка или обновление, окно не закрывается: закрытие посреди снятия сборки оставило бы игру без сборки (судья 2026-11-17).
@@ -361,6 +369,37 @@ sealed class Launcher
     }
 
     // --- тексты
+
+    // Первое открытие таблички «Отзыв» после запуска стоило у владельца 0,13–0,39 с (issue #43, баг 110): окна таблички и её надписей создавались,
+    // раскладывались и рисовались с нуля в момент нажатия. Теперь это делается заранее, в простое: окна (Handle), размеры и место (PrepareAside),
+    // готовые картинки железа с картиной окна под ним и надписей. Нажатие только показывает готовое. Табличка не влезает в окно (оно вырастет при
+    // открытии) — не готовится, первое открытие рисует её само. Шесть ответов EFFICIENT_CODE: событие — показ окна и смена языка; входы — тексты,
+    // шрифты, масштаб, размер окна; N — табличка и её семь частей, один раз; постоянное — вся табличка; бюджет — открытие в один кадр, 16 мс на 300 %;
+    // замер — Feedback.Warm и спаны первого открытия (KRINIK_LAUNCHER_PERF, кейс perf-report стенда). [NOT-TESTED]
+    const int REPORT_WARM_MS = 1000;
+    readonly System.Windows.Forms.Timer warmTimer = new System.Windows.Forms.Timer { Interval = REPORT_WARM_MS };
+
+    void ScheduleWarm()
+    {
+        warmTimer.Stop();
+        warmTimer.Start();
+    }
+
+    void WarmReport()
+    {
+        if (report.IsDisposed || report.Visible || !Form.IsHandleCreated) return;
+        bool placed;
+        using (MetalWindow.Perf("Feedback.Warm"))
+        {
+            var created = report.Handle;
+            foreach (Control c in report.Controls) { var h = c.Handle; }
+            placed = Form.PrepareAside(out bool sized);
+            if (placed) report.EnsureFace();   // железо с картиной окна — только на известном месте
+            if (sized) foreach (Control c in report.Controls) (c as OutlinedLabel)?.Warm();   // надписи от места не зависят
+        }
+        MetalWindow.Log(placed ? "отзыв: табличка подготовлена заранее · " + report.Width + "x" + report.Height + " в " + report.Left + "," + report.Top
+                               : "отзыв: табличка подготовлена без места — при открытии окно вырастет");
+    }
 
     void BuildReport()
     {
@@ -1402,18 +1441,31 @@ class OutlinedLabel : Label
     {
         using (MetalWindow.Perf("OutlinedLabel.OnPaint"))
         {
-            var inv = System.Globalization.CultureInfo.InvariantCulture;
-            float dpi = e.Graphics.DpiY;
-            string key = string.Join("|", Text, Font.Name, Font.Size.ToString(inv), (int)Font.Style, (int)Font.Unit, ForeColor.ToArgb(), Width, Height, dpi.ToString(inv));
-            if (face == null || key != faceKey)
-            {
-                face?.Dispose();
-                face = new Bitmap(Math.Max(1, Width), Math.Max(1, Height), PixelFormat.Format32bppPArgb);
-                using (var g = Graphics.FromImage(face)) DrawText(g, dpi);
-                faceKey = key;
-            }
+            EnsureFace(e.Graphics.DpiY);
             Metal.Blit(e.Graphics, face, new Rectangle(Point.Empty, face.Size));
         }
+    }
+
+    void EnsureFace(float dpi)
+    {
+        var inv = System.Globalization.CultureInfo.InvariantCulture;
+        string key = string.Join("|", Text, Font.Name, Font.Size.ToString(inv), (int)Font.Style, (int)Font.Unit, ForeColor.ToArgb(), Width, Height, dpi.ToString(inv));
+        if (face != null && key == faceKey) return;
+        using (MetalWindow.Perf("OutlinedLabel.Face"))   // пересборка — своим спаном: стенд считает их в первом открытии (кейс FB5)
+        {
+            face?.Dispose();
+            face = new Bitmap(Math.Max(1, Width), Math.Max(1, Height), PixelFormat.Format32bppPArgb);
+            using (var g = Graphics.FromImage(face)) DrawText(g, dpi);
+            faceKey = key;
+        }
+    }
+
+    // Готовая надпись заранее, до первого показа (табличка «Отзыв» в простое лаунчера, issue #43): DPI — того же устройства, что у WM_PAINT окна, и ключ
+    // совпадёт с ключом первой перерисовки, если размер надписи к тому времени тот же. [NOT-TESTED]
+    public void Warm()
+    {
+        if (!IsHandleCreated) return;
+        using (var g = CreateGraphics()) EnsureFace(g.DpiY);
     }
 
     protected override void Dispose(bool disposing)
@@ -1463,29 +1515,53 @@ sealed class ReportPlaque : FlowLayoutPanel
 
     // Железо таблички — картинка под ключом размера и масштаба, рисуется один раз и дальше только копируется своим куском. Надписи таблички прозрачны, и
     // Windows Forms рисует фон родителя под каждой: до кэша табличка рисовалась восемь раз на одно открытие (сама, шесть надписей, кнопка), ≈ 23 мс при
-    // 300 % (баг 110, кейс perf-report стенда, 2026-11-22). Под табличкой остаётся картина окна (base — прозрачный фон). [NOT-TESTED]
+    // 300 % (баг 110, кейс perf-report стенда, 2026-11-22).
+    // С issue #43 (2026-11-23) в картинку входит и картина окна под табличкой (её срезанные углы и полупрозрачное железо): раньше каждая перерисовка
+    // сперва рисовала фон окна (base.OnPaintBackground, ≈ 10 мс на 300 % у владельца), потом железо. Ключ — размер, масштаб, место таблички в окне и
+    // номер картины окна (MetalWindow.BackdropVersion растёт с каждой новой картиной). Табличка вне MetalWindow рисуется по-старому. [NOT-TESTED]
     Bitmap face;
     string faceKey;
+
+    public void EnsureFace()
+    {
+        var w = Parent as MetalWindow;
+        // картина окна — свежая ДО ключа: иначе её перерисовка внутри DrawBackdrop подняла бы номер после ключа, и готовая картинка
+        // пересобиралась бы при первом показе (судья RC5, круг 1, находка 2)
+        w?.EnsureBackdrop();
+        float zoom = Metal.Zoom(this);
+        string key = Width + "x" + Height + "|" + zoom.ToString(System.Globalization.CultureInfo.InvariantCulture) +
+                     (w != null ? "|" + Left + "," + Top + "|" + w.BackdropVersion : "|-");
+        if (face != null && key == faceKey) return;
+        using (MetalWindow.Perf("ReportPlaque.Face"))
+        {
+            face?.Dispose();
+            face = new Bitmap(Math.Max(1, Width), Math.Max(1, Height), PixelFormat.Format32bppPArgb);
+            using (var g = Graphics.FromImage(face))
+            {
+                w?.DrawBackdrop(g, Bounds);
+                Metal.Plaque(g, new Rectangle(0, 0, Width, Height), zoom, true, Color.FromArgb(238, 0x2a, 0x21, 0x18), Color.FromArgb(238, 0x12, 0x0e, 0x0a));
+            }
+            faceKey = key;
+        }
+    }
 
     protected override void OnPaintBackground(PaintEventArgs e)
     {
         using (MetalWindow.Perf("ReportPlaque.Background"))
         {
-            base.OnPaintBackground(e);
-            float zoom = Metal.Zoom(this);
-            string key = Width + "x" + Height + "|" + zoom.ToString(System.Globalization.CultureInfo.InvariantCulture);
-            if (face == null || key != faceKey)
-            {
-                face?.Dispose();
-                face = new Bitmap(Math.Max(1, Width), Math.Max(1, Height), PixelFormat.Format32bppPArgb);
-                using (var g = Graphics.FromImage(face))
-                    Metal.Plaque(g, new Rectangle(0, 0, Width, Height), zoom, true, Color.FromArgb(238, 0x2a, 0x21, 0x18), Color.FromArgb(238, 0x12, 0x0e, 0x0a));
-                faceKey = key;
-            }
+            if (!(Parent is MetalWindow)) base.OnPaintBackground(e);
+            EnsureFace();
             // ClipRectangle — в координатах таблички и тогда, когда фон рисуется под надписью (Windows Forms сдвигает Graphics на её место).
             var part = Rectangle.Intersect(e.ClipRectangle, new Rectangle(Point.Empty, face.Size));
             if (part.Width > 0 && part.Height > 0) Metal.Blit(e.Graphics, face, part);
         }
+    }
+
+    // В картинке таблички — картина окна под ЭТИМ местом: табличку подвинули — перерисовать её целиком, а не сдвинуть старые пиксели. [NOT-TESTED]
+    protected override void OnLocationChanged(EventArgs e)
+    {
+        base.OnLocationChanged(e);
+        if (Visible) Invalidate(true);
     }
 
     protected override void Dispose(bool disposing)
@@ -2055,6 +2131,34 @@ sealed class MetalWindow : Form
     const float LVER_TOP = 60f, LVER_W = 82f, LVER_H = 20f, LVER_RIM = 1.5f, LVER_PAD = 7f, LVER_CUT = 5f, LANG_RIGHT = 110f;
     Rectangle lverRect;
 
+    // Табличка «Отзыв»: ширина, высота окна, которой она требует, и её место. Одни и те же правила для Relayout (табличка открыта) и PrepareAside
+    // (табличка готовится заранее) — у двух копий формул место таблички разошлось бы с готовой картинкой. [NOT-TESTED]
+    float asideTitleBottom;   // низ шапки (и плашки обновлений) в последней раскладке
+    int AsideWidth() => Px(WIN_W) - Px(COL_RIGHT) - Px(COL_W) - Px(ASIDE_GAP) - Px(LINKS_LEFT);
+    float AsideNeed(float titleBottom, float s, float linksH) => titleBottom + (ASIDE_BELOW_TITLE + ASIDE_ABOVE_LINKS + LINKS_BOTTOM) * s + aside.Height + linksH;
+    Point AsideAt(int h, float s, float linksH) =>
+        new Point(Px(LINKS_LEFT), (int)Math.Round(h - LINKS_BOTTOM * s - linksH - ASIDE_ABOVE_LINKS * s) - aside.Height);
+
+    // Табличка «Отзыв» к первому открытию, не показывая её (баг 110, issue #43: первое открытие после запуска — 0,13–0,39 с у владельца, повторное —
+    // 0,02–0,04 с): шрифты, ширина, размер и место — те, что даст Relayout, когда табличку откроют. Окно при этом не меняется. false — табличка не
+    // влезает в окно (при открытии окно вырастет и её место сменится) или её уже открыли: тогда первое открытие готовит её само, как раньше. [NOT-TESTED]
+    // sized — размеры частей посчитаны (их картинки можно готовить, даже если табличка не влезает и место её сменится; судья RC5, круг 2, R4).
+    public bool PrepareAside(out bool sized)
+    {
+        sized = false;
+        if (aside == null || aside.Visible || panel == null || !IsHandleCreated || canvas.Height <= 0) return false;
+        float s = Zoom;
+        ScaleTree(aside, s);
+        KrinikConanLauncher.FitWidth(aside, AsideWidth());
+        aside.PerformLayout();
+        aside.Size = aside.GetPreferredSize(Size.Empty);
+        sized = true;
+        float linksH = Links.Length * LINK_PX * LINK_LINE * s;
+        if (AsideNeed(asideTitleBottom, s, linksH) > canvas.Height) return false;
+        aside.Location = AsideAt(canvas.Height, s, linksH);
+        return true;
+    }
+
     // Раскладка в пикселях экрана: шапка сверху слева, плашка обновлений под ней, столбик справа — главная наверху, панель, середина, низ у нижнего
     // края; ссылки слева внизу; раскрытый «Отзыв» — слева от столбика над ссылками; не влезло — окно растёт вниз, картина его заполняет.
     public void Relayout()
@@ -2088,11 +2192,12 @@ sealed class MetalWindow : Form
                 titleBottom = plate.Bottom;
             }
             if (aside != null) ScaleTree(aside, s);
+            asideTitleBottom = titleBottom;
             bool asideOn = aside != null && aside.Visible;
             if (asideOn)
             {
-                KrinikConanLauncher.FitWidth(aside, colX - Px(ASIDE_GAP) - Px(LINKS_LEFT));
-                float need = titleBottom + (ASIDE_BELOW_TITLE + ASIDE_ABOVE_LINKS + LINKS_BOTTOM) * s + aside.Height + linksH;
+                KrinikConanLauncher.FitWidth(aside, AsideWidth());
+                float need = AsideNeed(titleBottom, s, linksH);
                 if (need > h) h = (int)Math.Ceiling(need);
             }
             else if (plate != null && plate.Visible)
@@ -2130,7 +2235,7 @@ sealed class MetalWindow : Form
                 LayoutLinks(linksTop, s);
                 linksKey = lk.ToString();
             }
-            if (asideOn) aside.Location = new Point(Px(LINKS_LEFT), (int)Math.Round(linksTop - ASIDE_ABOVE_LINKS * s) - aside.Height);
+            if (asideOn) aside.Location = AsideAt(h, s, linksH);
 
             var size = new Size(Px(CAP_W), Px(CAP_H));
             close.Bounds = new Rectangle(w - Px(CAPS_RIGHT) - size.Width, Px(CAPS_TOP), size.Width, size.Height);
@@ -2354,6 +2459,33 @@ sealed class MetalWindow : Form
         e.Graphics.DrawImage(cache, r, r, GraphicsUnit.Pixel);
     }
 
+    // Номер картины окна: растёт с каждой новой картиной (RenderNow). Часть окна, запёкшая в себя кусок картины (табличка «Отзыв», ReportPlaque),
+    // сверяет по нему, свежий ли её кусок; событие BackdropRendered — сигнал подготовить такую часть заново (лаунчер, issue #43). [NOT-TESTED]
+    public int BackdropVersion { get; private set; }
+    public event Action BackdropRendered;
+
+    // Картина окна — свежая (нарисовать, если её сбросили или окно сменило размер). [NOT-TESTED]
+    public void EnsureBackdrop()
+    {
+        if (canvas.Width > 0 && canvas.Height > 0 && (cache == null || cache.Size != canvas)) Render();
+    }
+
+    // Кусок картины окна r (координаты окна) — в g с точки (0, 0), пиксель в пиксель, как его рисует OnPaintBackground под прозрачной частью. [NOT-TESTED]
+    public void DrawBackdrop(Graphics g, Rectangle r)
+    {
+        if (canvas.Width <= 0 || canvas.Height <= 0) return;
+        EnsureBackdrop();
+        var src = Rectangle.Intersect(r, new Rectangle(Point.Empty, cache.Size));
+        if (src.Width <= 0 || src.Height <= 0) return;
+        var im = g.InterpolationMode;
+        var po = g.PixelOffsetMode;
+        g.InterpolationMode = InterpolationMode.NearestNeighbor;
+        g.PixelOffsetMode = PixelOffsetMode.Half;
+        g.DrawImage(cache, new Rectangle(src.X - r.X, src.Y - r.Y, src.Width, src.Height), src, GraphicsUnit.Pixel);
+        g.InterpolationMode = im;
+        g.PixelOffsetMode = po;
+    }
+
     // Под мышью ссылка светлеет: поверх золота из кэша — те же буквы белым.
     // [NOT-TESTED] — подсветка глазом не снята: мышь владельца не трогаю, а поддельный WM_MOUSEMOVE сразу гасится WM_MOUSELEAVE.
     // Попадание по ссылке проверено: WM_NCHITTEST над адресом — HTCLIENT, над картиной и над «Почта:» — HTCAPTION.
@@ -2380,6 +2512,7 @@ sealed class MetalWindow : Form
         if (baseLayer == null || bk != baseKey) { baseLayer?.Dispose(); baseLayer = RenderBase(w, h); baseKey = bk; }
         cache?.Dispose();
         cache = new Bitmap(w, h, PixelFormat.Format32bppPArgb);
+        BackdropVersion++;
         using (var g = Graphics.FromImage(cache))
         {
             g.CompositingMode = CompositingMode.SourceCopy;
@@ -2390,6 +2523,7 @@ sealed class MetalWindow : Form
             DrawLettering(g, linkBlock);
             DrawVersionPlate(g);
         }
+        BackdropRendered?.Invoke();   // подписчик только ставит таймер: никакой работы внутри перерисовки (лаунчер, ScheduleWarm)
     }
 
     Bitmap RenderBase(int w, int h)

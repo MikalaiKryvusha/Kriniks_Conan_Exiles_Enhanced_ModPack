@@ -37,6 +37,10 @@ const SHIPPING = path.join(GAME, 'ConanSandbox', 'Binaries', 'Win64', 'ConanSand
 execFileSync('python', ['-I', '-X', 'utf8', path.join(HERE, 'make_stub.py'), SHIPPING, 'game', process.env.STAND_GAME_CL || '383549'], { stdio: 'ignore' })
 
 // One pack folder per version: the manifest, the mods' folders, the launcher and the uninstaller template as extras / template.
+// ModB's manifest NAME carries an em dash, like «MSCasaDesFlores — Weapons & Armors» of the real build (issue #47, KUMM EXP-0602): Windows PowerShell 5.1
+// writes the installer's redirected lines in the console code page, the dash arrives as «-», and the launcher before 1.1.2 counted «1 из 2». Every
+// install case that checks «модов в строках установщика 2 из 2» is its guard. The folder stays ModB — only the name the installer prints differs.
+const SHOWN = { ModB: 'ModB — dashed' }
 function pack(version, mods) {
   const dir = path.join(W, `pack_${version.replace(/\./g, '_')}`)
   for (const [name, files] of Object.entries(mods)) {
@@ -53,7 +57,7 @@ function pack(version, mods) {
     uninstall: { cmd: 'uninstall_krinik_build.cmd', template: 'uninstall.cmd' },
     shortcut: { name: 'Krinik fixture', target: 'KrinikConanLauncher.exe' },
     extras: ['KrinikConanLauncher.exe'],
-    mods: Object.keys(mods).map(name => ({ name, kind: 'files', source: { folder: `src/${name}` }, install: [{ from: '.', to: `Mods/${name}` }],
+    mods: Object.keys(mods).map(name => ({ name: SHOWN[name] || name, kind: 'files', source: { folder: `src/${name}` }, install: [{ from: '.', to: `Mods/${name}` }],
       verify: [`Mods/${name}/${Object.keys(mods[name])[0]}`] })),
   }, null, 2))
   return dir
@@ -91,7 +95,7 @@ if (MID) appendFileSync(path.join(MID, 'KrinikConanLauncher.exe'), Buffer.from('
 // --broken (case B4): build 1.0.1 checks a file it does not ship — its deploy ends with exit 1, yet writes the uninstaller (the judge's finding 2).
 if (args.includes('--broken')) {
   const mf = path.join(NEW, 'modpack.json'), m = JSON.parse(readFileSync(mf, 'utf8'))
-  m.mods.find(x => x.name === 'ModB').verify = ['Mods/ModB/b_missing.txt']
+  m.mods.find(x => x.name === SHOWN.ModB).verify = ['Mods/ModB/b_missing.txt']
   writeFileSync(mf, JSON.stringify(m, null, 2))
 }
 

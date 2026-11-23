@@ -2211,16 +2211,7 @@ local function record_tp_shadows(hero, why)
     tp_dark_names[hname] = dark
     log("тень: записано сеток с тенью %d, своих видимых %d (%s); %s", n, nb, why, walk_note(seen, errors, err, capped, t0))
 end
-local function restore_fp_shadows(hero)
-    if not hero or not hero:IsValid() then log("тень от первого лица: героя нет — пропуск"); return end
-    local names = tp_shadow_names[hero:GetFullName()]
-    if not names then log("тень от первого лица: записи третьего лица нет — пропуск"); return end
-    local t0, lit = os.clock(), 0
-    local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
-        if not c.CastShadow and names[c:GetFullName()] then c:SetCastShadow(true); lit = lit + 1 end
-    end)
-    log("тень от первого лица: игра выключила, мы вернули %d; %s", lit, walk_note(seen, errors, err, capped, t0))
-end
+-- Возврат теней, погашенных игрой в первом лице, — в fp_pass, тем же обходом (до issue #53 — отдельный обход restore_fp_shadows здесь).
 
 -- ГОЛОВА В ТЕНИ И УБРАННОЕ ОРУЖИЕ ВНЕ ОБЗОРА — ОТ ПЕРВОГО ЛИЦА (2026-11-22; KUMM bugs/114, issue #13 — тень без головы; issue #4 — «от первого лица видно
 -- лук на спине», владелец 2026-11-20 18:4x и 2026-11-22 09:40 «и лук на спине — попадающий в поле зрения игрока от первого лица с топором в руках?»).
@@ -2245,15 +2236,31 @@ end
 -- удержания (новых отложенных действий нет — UE4SS пропускает готовое действие, пока исполняется другое, и самоперезапускающиеся цепочки мода
 -- обрывались бы молча; судья 2026-11-22, находка 4). Только в сборке UE4SS без покадрового цикла (запасной путь, в нашей сборке его нет) повторы
 -- идут через ExecuteInGameThreadWithDelay и этот риск остаётся. Отложенное хранит ИМЯ героя и находит его заново (мёртвый объект из Lua роняет игру
--- мимо pcall; судья, находка 2). Действуем только для своего героя (player_hero): чужая пешка в сетевой игре не сбивает состояние (судья, находка 1).
--- Работа: обходы дерева сеток героя (≤ FP_WALK_MAX узлов) только на события — вход в первое лицо даёт три обхода (возврат теней, проход на смене
--- лица и проход после SwitchToFirstPersonCamera), смена оружия — один сразу и два повтора; не каждый кадр (EFFICIENT_CODE §1). [NOT-TESTED]
+-- мимо pcall; судья, находка 2); исключение — отложенное событие смены лица (view.pending): оно держит объект героя view.SETTLE_S, трогает его только
+-- после сверки по данным и через same_obj, а загрузка карты его забывает (судья RC5, круг 2, R1). Действуем только для своего героя (player_hero):
+-- чужая пешка в сетевой игре не сбивает состояние (судья, находка 1).
+-- Работа: обходы дерева сеток героя (≤ FP_WALK_MAX узлов) только на события — смена вида даёт один обход (блок «ОДИН ОБХОД НА СМЕНУ ВИДА» ниже;
+-- до issue #53 их было три), смена оружия — один сразу и два повтора по прицепленным предметам; не каждый кадр (EFFICIENT_CODE §1). [NOT-TESTED]
 local SHEATH_SOCKET_TAG = "sheath"
 local SHEATH_RECHECK_S = { 0.8, 1.6 }
 local fp_hidden_items = {}   -- [полное имя героя] = { [полное имя сетки] = true } — что скрыли от глаз владельца МЫ (OwnerNoSee)
 local fp_item_class = nil    -- InventoryItemBase: nil — ещё не искали, false — не найден
 local fp_recheck = {}        -- сроки (os.clock) ещё двух проходов после смены оружия; проверяет покадровый цикл (fp_recheck_tick)
 local fp_recheck_why = ""
+-- ОДИН ОБХОД НА СМЕНУ ВИДА (issue #53, 2026-11-23: первое включение вида от первого лица после входа в мир — 2–4,5 мс по журналу при бюджете 1 мс
+-- на все моды в кадре игры, MASTER_PLAN). Было три обхода дерева сеток героя в одном событии и в одну сторону, и в другую: проход на событии
+-- EventOnThirdPersonChange, которое игра зовёт ВНУТРИ SwitchToFirstPersonCamera / SwitchToThirdPersonCamera (до того, как спрячет голову или
+-- вернёт тени), возврат теней (restore_fp_shadows) или запись третьего лица (record_tp_shadows) и проход после тела Switch*. Теперь: возврат теней
+-- и запись идут в том же обходе, что и проход (fp_pass), а событие смены лица ждёт view.SETTLE_S в покадровом цикле и отменяется, если Switch*
+-- уже сделала свой проход для того же героя и того же вида (view.last). Смена лица без Switch* (облёт камеры при бездействии) проходит через
+-- view.SETTLE_S одним обходом. Без покадрового цикла (запасной путь UE4SS) событие делает проход сразу, как раньше. Шесть ответов EFFICIENT_CODE:
+-- событие — смена вида; входы — дерево сеток героя и запись третьего лица; N — ≤ FP_WALK_MAX узлов один раз на смену; постоянное — запись;
+-- бюджет — 1 мс в кадре; замер — «просмотрено N; … мс» в строке прохода. Всё состояние — одна таблица: главный блок файла упирается в предел Lua
+-- в 200 локальных имён. [NOT-TESTED]
+--   view.pending — { name = полное имя героя, at = os.clock() }: смена лица ждёт, не сделает ли проход сама Switch*;
+--   view.pending.obj — сам герой (держится не дольше view.SETTLE_S, загрузка карты его забывает);
+--   view.last — { name, tp, at }: последний проход sync_view; view.on_event, view.tick — ниже, после sync_view.
+local view = { SETTLE_S = 0.1, pending = nil, last = nil }
 -- Свой герой — пешка ЛОКАЛЬНОГО контроллера (2026-11-22, владелец 13:11: игра сетевая). У хозяина сервера в совместной игре живут контроллеры всех
 -- игроков, и FindFirstOf мог вернуть чужой — мод спрятал бы части чужого героя в своём кадре. Контроллер держится, пока жив; ищется заново, когда умер.
 -- Поиск — не чаще раза в LOCAL_PC_RETRY_S: перехваты блюпринта зовутся для пешек всех игроков, и без найденного контроллера каждый звал бы FindAllOf
@@ -2290,6 +2297,7 @@ do
         fp_cam_on, fp_cam, fp_pc, fp_cam_name, fp_pawn_addr = false, nil, nil, nil, nil
         local_pc, local_pc_name = nil, nil
         fp_hero_name, fp_recheck = nil, {}
+        view.pending, view.last = nil, nil   -- объект героя отложенного события не переживает выгрузку мира (судья RC5, круг 2, R1)
         log("загрузка карты: ссылки первого лица и контроллер игрока забыты")
     end)
     if not okh then log("первое лицо: перехват загрузки карты не встал — %s", tostring(errh)) end
@@ -2317,7 +2325,8 @@ end
 -- 0–2 мс на проход по шагу часов, два прохода на смену и два повтора (замер 2026-11-22 22:10, смена 1 ↔ 2 в первом лице, журнал UE4SS); бой со сменой
 -- оружия выходил за 1 мс на кадр для всех модов (MASTER_PLAN, судья, круг на RC4, находка 2). Шесть ответов EFFICIENT_CODE: событие — OnWeaponEquip /
 -- OnWeaponUnequip и два повтора; вход — прицепленные к герою предметы; N — их сетки (единицы); постоянное — класс предметов (один раз); бюджет — доля
--- миллисекунды; замер — «просмотрено N» в строке журнала прохода. Вход в первое лицо и выход из него обходят всё дерево, как прежде. [NOT-TESTED]
+-- миллисекунды; замер — «просмотрено N» в строке журнала прохода. Вход в первое лицо и выход из него обходят всё дерево, одним обходом на смену
+-- вида (issue #53). [NOT-TESTED]
 -- Корни — у ВСЕХ прицепленных к герою акторов: ветка ножен в fp_pass не требует предмета инвентаря (колчан или ножны мода — тоже на сокете sheath*);
 -- свои компоненты героя GetAttachedActors не отдаёт, тело в обход не попадает (судья, третий круг на RC4, находка 2).
 local function item_roots(hero)
@@ -2332,12 +2341,17 @@ local function item_roots(hero)
     end
     return roots
 end
-local function fp_pass(hero, fp, why, items_only)
+-- record — в этом же обходе записать третье лицо (бывший отдельный обход record_tp_shadows после прохода; issue #53): что с тенью, свои видимые
+-- сетки, тёмные по замыслу. Запись — только полного обхода (roots == nil). Тень, погашенная игрой в первом лице, возвращается записанным сеткам в
+-- каждом проходе первого лица (бывший отдельный обход restore_fp_shadows перед проходом). [NOT-TESTED]
+local function fp_pass(hero, fp, why, items_only, record)
     if not hero or not hero:IsValid() then return end
     local hname, leader = hero:GetFullName(), hero.Mesh:GetFullName()
     local body = tp_body_names[hname]
-    local had_shadow = tp_shadow_names[hname] or {}
+    local recorded = tp_shadow_names[hname]
+    local had_shadow = recorded or {}
     local dark = tp_dark_names[hname] or {}
+    local restored, rec_names, rec_body, rec_dark, rec_n, rec_nb = 0, {}, {}, {}, 0, 0
     -- Без записи третьего лица (возрождение сразу в первом лице: запись при рождении HUD пропускается в первом лице — пульт 2026-11-22 10:29,
     -- «невидимым своим дана тень 0» у нового героя): свои скелетные сетки героя, кроме ведущей позы, считаются телом и все получают тень. Отличить
     -- погашенное игрой от тёмного по замыслу без записи нельзя; окно этого пути — до первого перехода в третье лицо (судья, круг 4).
@@ -2360,15 +2374,14 @@ local function fp_pass(hero, fp, why, items_only)
         local okr, r = pcall(item_roots, hero)
         if okr then roots = r end
     end
-    local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
-        local name = c:GetFullName()
+    local function work(c, name)
         local own = body and body[name]
         if no_record and name ~= leader and skinned and c:IsA(skinned) then
             local o = c:GetOwner()
             if o and o:IsValid() and o:GetFullName() == hname then own = true; had_shadow[name] = true end
         end
         if own then   -- своя сетка героя
-            -- без записи третьего лица restore_fp_shadows не знает, кому вернуть тень, — видимому телу её возвращаем здесь (bugs/98 после возрождения)
+            -- без записи третьего лица возврат теней не знает, кому вернуть тень, — видимому телу её возвращаем здесь (bugs/98 после возрождения)
             if fp and no_record and c:IsVisible() and not c.CastShadow then c:SetCastShadow(true); body_lit = body_lit + 1 end
             if fp and not c:IsVisible() then
                 if had_shadow[name] then
@@ -2414,24 +2427,53 @@ local function fp_pass(hero, fp, why, items_only)
         -- предмет в руке (3): тень его главной сетки, погашенная игрой в первом лице, — назад; тёмную и в третьем лице не зажигаем (судья, круг 2,
         -- находка 5); третье лицо игра освещает сама
         if fp and main and shown_now and not c.CastShadow and not dark[name] then c:SetCastShadow(true); held_lit = held_lit + 1 end
+    end
+    local seen, errors, err, capped = walk_hero_meshes(hero, function(c)
+        local name = c:GetFullName()
+        local okw, ew = pcall(function()
+            -- тень, которую игра в SwitchToFirstPersonCamera погасила телу, луку и стреле, — тем, у кого она была в третьем лице (запись); внутри
+            -- защищённого вызова: сбой на этой сетке не отнимает у неё запись (судья RC5, круг 1, находка 12)
+            if fp and recorded and recorded[name] and not c.CastShadow then c:SetCastShadow(true); restored = restored + 1 end
+            work(c, name)
+        end)
+        -- запись — после прохода по этой сетке: проход снимает OwnerNoSee и тень невидимых, запись берёт то, что видно в третьем лице
+        if record then
+            if c.CastShadow then rec_names[name] = true; rec_n = rec_n + 1 else rec_dark[name] = true end
+            if name ~= leader and c:IsVisible() then
+                local o = c:GetOwner()
+                if o and o:IsValid() and o:GetFullName() == hname then rec_body[name] = true; rec_nb = rec_nb + 1 end
+            end
+        end
+        if not okw then error(ew, 0) end   -- ошибку считает обход (walk_hero_meshes), соседние сетки идут дальше
     end, roots)
-    if heads + hid + shown + body_lit + held_lit > 0 or why:find("вид", 1, true) then
-        log("первое лицо (%s%s): невидимым своим дана тень %d · телу возвращена тень %d · убранного скрыто от глаз %d · возвращено %d · предметам в руке тень %d; %s%s",
-            why, no_record and ", без записи третьего лица" or "", heads, body_lit, hid, shown, held_lit,
+    if record and not roots then
+        tp_shadow_names[hname], tp_body_names[hname], tp_dark_names[hname] = rec_names, rec_body, rec_dark
+        log("тень: записано сеток с тенью %d, своих видимых %d (%s, в том же обходе)", rec_n, rec_nb, why)
+    end
+    if restored + heads + hid + shown + body_lit + held_lit > 0 or why:find("вид", 1, true) then
+        log("первое лицо (%s%s): тень возвращена %d · невидимым своим дана тень %d · телу возвращена тень %d · убранного скрыто от глаз %d · возвращено %d · предметам в руке тень %d; %s%s",
+            why, no_record and ", без записи третьего лица" or "", restored, heads, body_lit, hid, shown, held_lit,
             roots and ("корней обхода " .. #roots .. "; ") or "", walk_note(seen, errors, err, capped, t0))
     end
 end
 -- вид сменился (событие игры): первое лицо — проход и вынос камеры по углу; иначе — всё вернуть
-local function sync_view(h, why)
-    local hero = own_hero(h)
+-- record — запись третьего лица в том же обходе (перехват SwitchToThirdPersonCamera; issue #53)
+-- known — герой уже узнан как свой (отложенное событие смены лица проверило его при событии; за view.SETTLE_S контроллер мог сменить пешку —
+-- посадка верхом, смерть, — и own_hero отверг бы своего героя, а флаги первого лица остались бы на нём; судья RC5, круг 1, находка 3)
+local function sync_view(h, why, record, known)
+    local hero = known and h or own_hero(h)
     if not hero then return end
     local tp = true
     pcall(function() tp = hero:GetIsInThirdPerson() end)
     local name = hero:GetFullName()
+    view.last = { name = name, tp = tp, at = os.clock() }
     if not tp then
         fp_hero_name = name
         local ok, e = pcall(fp_pass, hero, true, "вид: " .. why)
         if not ok then log("первое лицо: проход не удался — %s", tostring(e)) end
+        -- запись третьего лица заказана, а игра говорит «первое лицо»: прежний код писал запись без условия ПОСЛЕ прохода — так и здесь
+        -- (судья RC5, круг 1, находка 4)
+        if record then pcall(record_tp_shadows, hero, why) end
         -- кость шеи, скрытую версией мода до 2026-11-22 13:3x в этой же сессии, — открыть (своим pcall: сбой не мешает камере; судья, круг 3)
         pcall(function()
             if hero.Mesh:IsBoneHiddenByName(FName(FP_NECK_BONE)) then hero.Mesh:UnHideBoneByName(FName(FP_NECK_BONE)) end
@@ -2464,9 +2506,29 @@ local function sync_view(h, why)
         -- снимается записанное — после перезагрузки мода запись восстанавливает проход по убранному (метка мода на ножнах, install_fp_hooks); обход
         -- ≤ FP_WALK_MAX узлов, только на событие
         if fp_hero_name == name then fp_hero_name = nil; fp_recheck = {} end
-        local ok, e = pcall(fp_pass, hero, false, "вид: " .. why)
+        local ok, e = pcall(fp_pass, hero, false, "вид: " .. why, nil, record)
         if not ok then log("первое лицо: возврат не удался — %s", tostring(e)) end
     end
+end
+-- Событие смены лица (EventOnThirdPersonChange): с покадровым циклом — ждёт view.SETTLE_S (блок «ОДИН ОБХОД НА СМЕНУ ВИДА» выше). [NOT-TESTED]
+function view.on_event(h)
+    if not per_frame_running then sync_view(h, "смена лица"); return end
+    local hero = own_hero(h)
+    if not hero then return end
+    view.pending = { name = hero:GetFullName(), at = os.clock(), obj = hero }
+end
+-- зовётся покадровым циклом, пока событие ждёт: одно сравнение часов на кадр. Герой — тот, кого событие застало своим: объект держится
+-- view.SETTLE_S и проверяется полным именем (same_obj), а не пешкой контроллера сейчас (судья RC5, круг 1, находка 3).
+function view.tick()
+    local p = view.pending
+    if not p or os.clock() - p.at < view.SETTLE_S then return end
+    view.pending = nil
+    -- Switch* уже сделала проход для этого героя — после события или прямо перед ним: событие было её внутренним, второго обхода не нужно.
+    -- Сверка — по одним данным, до первого касания объекта (судья RC5, круг 2, R1).
+    local last = view.last
+    if last and last.name == p.name and p.at - last.at < view.SETTLE_S then return end
+    if not same_obj(p.obj, p.name) then log("смена лица: отложенный проход отменён — герой события уже не тот объект"); return end
+    sync_view(p.obj, "смена лица", nil, true)
 end
 local function fp_recheck_pass()
     local hero = player_hero()
@@ -2513,9 +2575,8 @@ local function install_fp_hooks()
         RegisterHook(HERO_BP .. ":SwitchToFirstPersonCamera", function(ctx)
             local h = ctx:get()
             if not own_hero(h) then return end
-            local ok, e = pcall(restore_fp_shadows, h)
-            if not ok then log("тень от первого лица: возврат не удался — %s", tostring(e)) end
-            -- голову игра прячет в теле этой функции, после EventOnThirdPersonChange — проход ещё раз, уже с невидимой головой
+            -- голову игра прячет в теле этой функции, после EventOnThirdPersonChange: проход здесь, уже с невидимой головой, и в нём же возврат теней,
+            -- погашенных игрой (один обход; событие смены лица отменится — view.tick)
             sync_view(h, "первое лицо")
         end)
     end)
@@ -2523,15 +2584,13 @@ local function install_fp_hooks()
         RegisterHook(HERO_BP .. ":SwitchToThirdPersonCamera", function(ctx)
             local h = ctx:get()
             if not own_hero(h) then return end
-            -- сначала снять с убранного оружия OwnerNoSee и тень невидимых, потом запись: запись берёт то, что видно в третьем лице
-            sync_view(h, "третье лицо")
-            local ok, e = pcall(record_tp_shadows, h, "третье лицо")
-            if not ok then log("тень: запись не удалась — %s", tostring(e)) end
+            -- снять с убранного оружия OwnerNoSee и тень невидимых и в том же обходе записать то, что видно в третьем лице (по сетке: проход, потом запись)
+            sync_view(h, "третье лицо", true)
         end)
     end)
     -- любая смена лица, облёт камеры при бездействии тоже
     local ok3 = pcall(function()
-        RegisterHook(HERO_BP .. ":EventOnThirdPersonChange", function(ctx) sync_view(ctx:get(), "смена лица") end)
+        RegisterHook(HERO_BP .. ":EventOnThirdPersonChange", function(ctx) view.on_event(ctx:get()) end)
     end)
     -- смена оружия в первом лице: взятое из-за спины — снова видно владельцу, убранное — не видно ему, тень у него есть
     local ok4 = pcall(function()
@@ -3480,6 +3539,10 @@ local function start_per_frame()
             if not ok then fp_cam_on = false; log("камера от первого лица: ошибка в покадровой проверке — выключена до смены вида: %s", tostring(e)) end
         end
         if fp_recheck[1] then pcall(fp_recheck_tick) end   -- повторные проходы после смены оружия (убранный лук ложится за спину с задержкой)
+        if view.pending then   -- смена лица без Switch* (облёт камеры) — один проход через view.SETTLE_S (issue #53)
+            local okv, ev = pcall(view.tick)
+            if not okv then view.pending = nil; log("смена лица: отложенный проход не удался — %s", tostring(ev)) end
+        end
         pcall(hold_camera)
     end)
     log("удержание ПОКАДРОВОЕ: по разу на кадр, ограничитель снят")

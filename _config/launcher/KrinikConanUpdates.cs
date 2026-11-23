@@ -1134,9 +1134,19 @@ sealed class BuildUpdate
         return names;
     }
 
+    // Строки установщика приходят через перенаправленный вывод Windows PowerShell 5.1 в кодовой странице консоли: длинное тире «—» в имени мода
+    // приходит дефисом, и лаунчер не засчитывал «MSCasaDesFlores — Weapons & Armors» и «— Nails Station» («72 из 74» при «74/74 mods» установщика;
+    // issue #47 и его повтор #15, KUMM EXP-0602). Имена сравниваются после того, как тире, кавычки и неразрывный пробел, которые кодовая страница
+    // может потерять, сведены к ASCII с обеих сторон. [NOT-TESTED]
+    internal static string FoldForCodePage(string s) => s
+        .Replace('—', '-').Replace('–', '-').Replace('‒', '-').Replace('−', '-')
+        .Replace('«', '"').Replace('»', '"').Replace('“', '"').Replace('”', '"').Replace('„', '"')
+        .Replace('‘', '\'').Replace('’', '\'').Replace(' ', ' ');
+
     int RunInstaller(string ps1, Job job)
     {
         var names = ModNames(BundleDir);
+        var folded = names.ConvertAll(FoldForCodePage);
         var seen = new HashSet<string>(StringComparer.Ordinal);
         job.ModsTotal = names.Count;
         job.ModsDone = 0;
@@ -1156,13 +1166,16 @@ sealed class BuildUpdate
                 MetalWindow.Log("установщик: " + e.Data);
                 var m = MOD_LINE.Match(e.Data);
                 if (!m.Success) return;
-                string rest = m.Groups["rest"].Value;
-                foreach (var n in names)
+                string rest = FoldForCodePage(m.Groups["rest"].Value);
+                for (int i = 0; i < folded.Count; i++)
+                {
+                    string n = folded[i];
                     if (rest.StartsWith(n + " ", StringComparison.Ordinal) || rest.StartsWith(n + ":", StringComparison.Ordinal) || rest == n)
                     {
-                        lock (seen) if (seen.Add(n)) job.ModsDone = seen.Count;
+                        lock (seen) if (seen.Add(names[i])) job.ModsDone = seen.Count;
                         break;
                     }
+                }
             };
             p.OutputDataReceived += line;
             p.ErrorDataReceived += line;

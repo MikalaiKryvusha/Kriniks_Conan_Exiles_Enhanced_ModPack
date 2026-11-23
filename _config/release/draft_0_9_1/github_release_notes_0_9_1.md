@@ -3,42 +3,40 @@
   The first line is the launcher's marker: it matches this release to the game (modpack.json launcher.gameVersion 3.1.1, builtFor CL-383549). Keep it the FIRST line.
   This file is the body of the GitHub release page: a paragraph is ONE line (GitHub Releases keeps single line breaks).
   Check before publishing: no two non-empty lines in a row outside lists and tables.
-  2026-11-20 16:2x: «What's new» rebuilt by large features after the owner's reading of the published RC1 page (KUMM PROJECT_HISTORY entries 2026-11-20 16:19 and
-  16:23–16:25): every big work with its facts and numbers, private details folded into their feature. Sources of the numbers: KUMM testcases/reports
-  2026-11-09_conan-quickwin-n1-async-navmesh.md (−48 % hitches, −43 % worst frame, 1 % low +12 %), 2026-11-09_conan-quickwins-shaders-on-load.md (−31 %),
-  2026-11-06_conan-quickwin-chaos-queue.md (−28 %), 2026-11-09_conan-water-fps-after-ram-tuning.md (+4.7 %), 2026-11-07_conan-palm-shadow-wpo-bound-fix.md
-  (12–16 % → 0.06–0.44 %), 2026-11-09_conan-water-reflections-five-scenes.md (≈ −1.5 %); researches/conan-hitch-profiler (≈ 24 % of the game thread).
-  The release date line is added at publication. Once the volumes are built, make_release.sh step 4b fills {{ARCHIVE_SIZE}} (the RU half) and
-  {{ARCHIVE_SIZE_EN}} (the EN half) with the total size of the parts in a copy of these notes; this draft keeps both placeholders for the next RC.
-  While the public main stays at the 0.9.0 tree, the logo is that tree's _config/branding/ path and the README links point to the README top;
-  the 0.9.1 tree moves the logo to art/logos/ (pack commit 6240a47). The cover of 0.9.1 (V2 «Реализм», _config/release/draft_0_9_1/nexus_media/cover_0_9_1.webp)
-  is wired in place of the logo once its public path is fixed (KUMM plans/55 D-art).
-  The launcher KrinikConanLauncher.exe and the parts Krinik_Mod_Pack_0_9_1_RC1.zip.001 … are assets of this release (KUMM plans/55 criterion 8, R7).
+  The FINAL 0.9.1 (the owner 2026-11-23 13:47 «собирать не пятого кандидата, а финальный релиз 0.9.1» · 13:51 «релиз ноутсы полностью поднобно написать, как
+  было в RC1 но с учетом всех правок»; 0.9.1 gets no later update, the next version is 1.0.0 — 13:48). The RC1 form of 2026-11-20 16:2x (every big work with
+  its facts and numbers) with every change of RC2–RC4 and of the final folded in: the launcher section is the guide's (guide-3.1.1.html «Лаунчер 1.1.2», one
+  text in both places — HOUSE_RULES 42); «Исправлено за время тестовых сборок» lists the fixes of RC2 (#3, #11, #12, #33), RC3 (bug 115 / #46), RC4 (#4, #13,
+  #21, #48, #49, #51) and the final (#16, #47 / #15, #43, #53). Sources of the numbers: as in RC1 (KUMM testcases/reports 2026-11-09_conan-quickwin-n1-async-navmesh.md,
+  2026-11-09_conan-quickwins-shaders-on-load.md, 2026-11-06_conan-quickwin-chaos-queue.md, 2026-11-07_conan-palm-shadow-wpo-bound-fix.md,
+  2026-11-09_conan-water-reflections-five-scenes.md, researches/conan-hitch-profiler); 2026-11-23_conan-rc5-fixes.md (the view switch ≈ 1 ms, three walks
+  ≈ 3–4.5 ms; 12.8 GB of the game's copies — issue #16); the plaque: the owner saw its first open still slow on 1.1.2 (2026-11-23 14:27) — a known issue, not a fix.
+  The release date line is added at publication. make_release.sh step 4b fills {{ARCHIVE_SIZE}} (RU) and {{ARCHIVE_SIZE_EN}} (EN) with the total size of the
+  parts in a copy of these notes. The launcher KrinikConanLauncher.exe, the parts Krinik_Mod_Pack_0_9_1.zip.001 … and the per-file assets of the update are
+  assets of this release (KUMM plans/55 criterion 8, R7; plans/57 phase 6).
 -->
 
 <p align="center">
   <img src="https://raw.githubusercontent.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/main/art/logos/krinik-modpack-logo.webp" alt="Krinik Mod Pack" width="560">
 </p>
 
-<h3 align="center"><em>Krinik Mod Pack 0.9.1-RC1 · Conan Exiles Enhanced 3.1.1</em></h3>
-
-> **Тестовая сборка / Test build**
+<h3 align="center"><em>Krinik Mod Pack 0.9.1 · Conan Exiles Enhanced 3.1.1</em></h3>
 
 <a name="русский"></a>
 ## Русский · [English](#english)
 
-**Коротко.** Krinik Mod Pack 0.9.1-RC1 — это тестовая версия сборки 0.9.1 для Conan Exiles Enhanced 3.1.1 (билд CL-383549). Автор выпускает её перед версией 0.9.1, чтобы проверить установку сборки от начала до конца. Если при установке или в игре что-то пошло не так, сообщите об этом автору сборки, как описано в разделе «Отзывы» ниже.
+**Коротко.** Krinik Mod Pack 0.9.1 — это сборка модов для Conan Exiles Enhanced 3.1.1 (билд CL-383549). Перед версией 0.9.1 вышли тестовые сборки 0.9.1-RC1, 0.9.1-RC2, 0.9.1-RC3 и 0.9.1-RC4. В версию 0.9.1 вошли все их исправления и ещё четыре исправления, сделанные после RC4. Следующей версией сборки будет 1.0.0.
 
 Главное в версии 0.9.1:
 
-- Лаунчер 1.0.0 сам находит игру на компьютере, скачивает сборку с GitHub и устанавливает её.
+- Лаунчер 1.1.2 сам находит игру на компьютере, скачивает сборку с GitHub и устанавливает её. При обновлении сборки лаунчер скачивает только файлы, которые изменились.
 - Новый мод KrinikConanEngineTweaks устраняет три причины, по которым игра замирала на миг.
-- Тени от листвы больше не мерцают, и солнце движется по небу плавно.
+- Тени от листвы почти не мерцают, и солнце движется по небу плавно.
 - Вода отражает дальний берег, скалы и арки.
 - Атрибуты героя прокачиваются без предела.
 - С новым модом KrinikConanLocomotion герой отталкивается прыжком от стен и бежит спринтом с натянутым луком.
 
-Ниже перечислено только то, что изменилось с версии 0.9.0. Возможности сборки, её состав, авторы модов и правообладатели описаны в [README](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack). Руководство пользователя `Krinik-Conan-3.1.1-guide.pdf` приложено к выпуску и лежит в архиве сборки.
+Ниже перечислено то, что изменилось с версии 0.9.0. Возможности сборки, её состав, авторы модов и правообладатели описаны в [README](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack). Руководство пользователя `Krinik-Conan-3.1.1-guide.pdf` приложено к выпуску и лежит в архиве сборки.
 
 ---
 
@@ -48,13 +46,13 @@
 
 Сборка перешла на Conan Exiles Enhanced 3.1.1 (билд CL-383549).
 
-**Лаунчер 1.0.0**
+**Лаунчер 1.1.2**
 
-Лаунчер KrinikConanLauncher обновлён до версии 1.0.0 и ставит сборку сам, от начала до конца. Он находит игру на компьютере, скачивает части архива сборки с GitHub, проверяет их и устанавливает сборку. Пока идут скачивание и установка, лаунчер показывает, сколько процентов готово, скорость, сколько времени прошло и сколько осталось. Если скачивание прервалось, лаунчер продолжит его с того места, где оно остановилось.
+Лаунчер KrinikConanLauncher обновлён до версии 1.1.2 и ставит сборку сам, от начала до конца. Он находит игру на компьютере, скачивает файлы сборки с GitHub, проверяет каждый файл и устанавливает сборку. Пока идут скачивание и установка, лаунчер показывает, сколько процентов готово, скорость, сколько времени прошло и сколько осталось. Если скачивание прервалось, лаунчер продолжит его с того места, где оно остановилось.
 
-Когда выходит новая версия сборки или самого лаунчера, лаунчер показывает это в своём окне, и новая версия ставится одной кнопкой: «Обновить сборку» или «Обновить лаунчер». Настройки и сохранения игрока после обновления сборки остаются на месте. Кнопка «Что нового» под версией игры открывает новость об обновлении игры в Steam, а кнопка под версией сборки открывает описание последнего выпуска сборки на GitHub. Если игра упала, лаунчер при следующем запуске предлагает собрать отчёт и открывает на GitHub форму нового сообщения в разделе Issues.
+Когда выходит новая версия сборки или самого лаунчера, лаунчер сообщает о ней в своём окне, и поставить новую версию можно одной кнопкой: «Обновить сборку» или «Обновить лаунчер». При обновлении сборки лаунчер скачивает только файлы, которые изменились, даже если игрок пропустил несколько выпусков. Настройки и сохранения игрока после обновления сборки остаются на месте. Кнопка «Что нового» под версией игры открывает новость об обновлении игры в Steam, а кнопка под версией сборки открывает описание последнего выпуска сборки на GitHub. Если игра упала, лаунчер при следующем запуске предлагает собрать отчёт и открывает на GitHub форму нового сообщения в разделе Issues.
 
-Лаунчер поддерживает мультиязычность: в поле «Язык окна» можно выбрать русский или английский язык.
+Лаунчер поддерживает мультиязычность: в поле «Язык окна» можно выбрать русский или английский.
 
 **Производительность**
 
@@ -68,7 +66,7 @@
 
 **Тени и движение солнца**
 
-В Conan Exiles Enhanced тени от листьев пальм и другой листвы мерцают, когда солнце движется по небу. В сборке 0.9.0 солнце сдвигалось редкими шагами, чтобы тени не мерцали, и раз в несколько секунд тени скачком меняли положение. Автор сборки нашёл причину мерцания в материале листвы самой игры. В материале не задано, насколько далеко ветер отклоняет листья, и в части кадров отклонённые ветром листья пропадают из тени. Мод KrinikConanGraphics исправляет материал листвы. Теперь солнце и тени движутся плавно, без скачков, и мерцания больше нет. Под пальмой на ветру мерцало от 12 % до 16 % точек тени на земле, а после правки мерцает меньше 0,5 %.
+В Conan Exiles Enhanced тени от листьев пальм и другой листвы мерцают, когда солнце движется по небу. В сборке 0.9.0 солнце сдвигалось редкими шагами, чтобы тени не мерцали, и раз в несколько секунд тени скачком меняли положение. Автор сборки нашёл причину мерцания в материале листвы самой игры. В материале не задано, насколько далеко ветер отклоняет листья, и в части кадров отклонённые ветром листья пропадают из тени. Мод KrinikConanGraphics исправляет материал листвы. Теперь солнце и тени движутся плавно, без скачков, и тени почти не мерцают. Под пальмой на ветру мерцало от 12 % до 16 % точек тени на земле, а после правки мерцает меньше 0,5 %.
 
 **Отражения в воде**
 
@@ -102,6 +100,23 @@
 - Описания черт на вкладке «Хар-ки» больше не наползают друг на друга и прокручиваются колесом мыши.
 - При переключении вкладок хаба по экрану больше не пробегает тёмная волна. Когда игрок переходит на вкладку «Снаряжение» или уходит с неё, сквозь страницу хаба больше не виден игровой мир.
 
+**Исправлено за время тестовых сборок**
+
+Эти ошибки нашлись в тестовых сборках 0.9.1-RC1 – 0.9.1-RC4, и в версии 0.9.1 они исправлены.
+
+- Метка на карте в хабе встаёт туда, где щёлкнул игрок, вторая метка ставится, и сброс меток работает.
+- На вкладке «Путешествие» кнопка начала путешествия запускает его, и вкладка больше не показывает закрытыми те путешествия, которые уже открылись.
+- Пока открыт разговор с NPC, мир идёт с обычной скоростью. Раньше во время разговора мир замирал, как в меню.
+- Когда игрок выбрал реплику в разговоре, текст ответа NPC появляется на экране вместе с голосом.
+- В виде от первого лица тень героя целая, с головой.
+- В виде от первого лица оружие за спиной героя не попадает в кадр, и тень оружия по-прежнему падает на землю.
+- После экрана загрузки при входе в подземелье и при выходе из него мир идёт с обычной скоростью. Раньше сборка принимала такой экран загрузки за открытое меню и ставила игру на паузу.
+- Пока герой мёртв, моды KrinikConanLocomotion и KrinikConanArchery не пишут ошибок в журнал UE4SS.
+- Мод KrinikConanCamera быстрее переключает вид от первого лица на вид от третьего лица и обратно. Раньше мод при каждом переключении трижды перебирал все части модели героя, и переключение занимало 3–4,5 мс процессорного времени. Теперь мод перебирает части модели героя один раз, и переключение занимает около 1 мс.
+- Удаляя сборку, лаунчер теперь стирает и копии её паков (файлов модов), которые игра сама делает в папке `ConanSandbox/Saved/ExtractedMods`. Раньше эти копии оставались в папке игры и занимали около 12,8 ГБ. Копии тех паков, которые игрок поставил сам, лаунчер не трогает.
+- Когда удаление закончилось и окно удаления закрыли крестиком, лаунчер видит игру без сборки и показывает кнопку «Установить сборку». Раньше в этом случае лаунчер показывал сборку установленной.
+- Строка «Моды» лаунчера к концу установки доходит до «74 из 74». Раньше лаунчер останавливал её на «72 из 74», хотя все 74 мода были установлены: лаунчер не узнавал два мода с длинным тире в названии, «MSCasaDesFlores — Weapons & Armors» и «MSCasaDesFlores — Nails Station».
+
 ---
 
 ### ⚠️ Известные проблемы
@@ -113,6 +128,9 @@
 - В окнах настроек некоторых модов русский текст местами не помещается в кнопки и поля, например в окне «Система аксессуаров».
 - Названия и описания классов на карточках Enhanced Armory and Arsenal остались английскими: текст нарисован прямо на картинках.
 - В обучении маркерам Simple Minimap строки появляются с большой задержкой, а место под слайды остаётся чёрным.
+- Первое открытие таблички «Как прислать отзыв или отчёт о падении» после запуска лаунчера идёт медленно.
+
+Все известные ошибки сборки, и крупные, и мелкие, перечислены в разделе [Issues](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/issues) репозитория сборки. Там же можно сообщить о новой ошибке.
 
 ### 🗺️ Планы на 1.0.0
 
@@ -128,12 +146,14 @@
 
 1. Убедитесь, что установлена игра Conan Exiles Enhanced 3.1.1 (билд CL-383549).
 2. Скачайте из списка **Assets** внизу страницы лаунчер `KrinikConanLauncher.exe` и запустите его. Лаунчер сам найдёт игру на компьютере.
-3. Нажмите «Установить сборку». Лаунчер скачает части архива сборки, проверит их и установит сборку.
+3. Нажмите «Установить сборку». Лаунчер скачает файлы сборки, проверит их и установит сборку.
 4. Нажмите «Играть».
 
-Если лаунчер не нашёл игру, нажмите «Указать папку игры» и выберите папку, где лежит `ConanSandbox.exe`. Части архива `Krinik_Mod_Pack_0_9_1_RC1.zip.001`, `Krinik_Mod_Pack_0_9_1_RC1.zip.002` и следующие, всего {{ARCHIVE_SIZE}}, можно скачать и самому. Положите их в ту же папку, где лежит лаунчер, и лаунчер установит сборку из них, ничего не скачивая.
+Если лаунчер не нашёл игру, нажмите «Указать папку игры» и выберите папку, где лежит `ConanSandbox.exe`. Части архива `Krinik_Mod_Pack_0_9_1.zip.001`, `Krinik_Mod_Pack_0_9_1.zip.002` и следующие, всего {{ARCHIVE_SIZE}}, можно скачать и самому. Положите их в ту же папку, где лежит лаунчер, и лаунчер установит сборку из них, ничего не скачивая.
 
-Сборку можно поставить и прямо из архива. Проводник Windows не открывает архив, разбитый на части. Откройте первую часть, `Krinik_Mod_Pack_0_9_1_RC1.zip.001`, в 7-Zip или WinRAR и распакуйте сборку в папку игры, где лежит `ConanSandbox.exe`. Затем запустите `KrinikConanLauncher.exe` из папки сборки `Krinik_Mod_Pack_0_9_1_RC1`, которая появится в папке игры, и нажмите «Установить сборку».
+Сборку можно поставить и прямо из архива. Проводник Windows не открывает архив, разбитый на части. Откройте первую часть, `Krinik_Mod_Pack_0_9_1.zip.001`, в 7-Zip или WinRAR и распакуйте сборку в папку игры, где лежит `ConanSandbox.exe`. Затем запустите `KrinikConanLauncher.exe` из папки сборки `Krinik_Mod_Pack_0_9_1`, которая появится в папке игры, и нажмите «Установить сборку».
+
+Если у вас установлена одна из тестовых сборок 0.9.1-RC1 – 0.9.1-RC4, запустите её лаунчер. Лаунчер покажет плашку «Вышел лаунчер 1.1.2». Нажмите на плашке кнопку «Обновить лаунчер». Когда лаунчер обновится, нажмите кнопку «Обновить сборку».
 
 Чтобы удалить сборку, закройте игру, запустите `KrinikConanLauncher.exe`, нажмите «Удалить сборку» и подтвердите удаление. Игра вернётся в то состояние, в котором была до установки сборки.
 
@@ -152,18 +172,18 @@
 <a name="english"></a>
 ## English · [Русский](#русский)
 
-**In short.** Krinik Mod Pack 0.9.1-RC1 is a test build of version 0.9.1 for Conan Exiles Enhanced 3.1.1 (build CL-383549). It comes out ahead of 0.9.1 so that the whole installation path of the pack can be tested. If anything goes wrong during installation or in the game, please let the pack author know: the Feedback section below explains how.
+**In short.** Krinik Mod Pack 0.9.1 is a mod pack for Conan Exiles Enhanced 3.1.1 (build CL-383549). The test builds 0.9.1-RC1, 0.9.1-RC2, 0.9.1-RC3 and 0.9.1-RC4 came out before version 0.9.1. Version 0.9.1 includes all of their fixes and four more fixes made after RC4. The next version of the pack will be 1.0.0.
 
 The highlights of 0.9.1:
 
-- Launcher 1.0.0 finds the game on your computer, downloads the pack from GitHub and installs it.
+- Launcher 1.1.2 finds the game on your computer, downloads the pack from GitHub and installs it. A pack update makes the launcher download only the files that changed.
 - The new mod KrinikConanEngineTweaks fixes three causes of the brief freezes in the game's engine.
-- Foliage shadows no longer flicker, and the sun moves smoothly across the sky.
+- Foliage shadows hardly flicker any more, and the sun moves smoothly across the sky.
 - The water reflects the far shore, the cliffs and the arches.
 - Hero attributes have no cap.
 - With the new mod KrinikConanLocomotion the hero pushes off walls with a jump and sprints with a drawn bow.
 
-Only the changes since 0.9.0 are listed below. The [README](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack) describes what the pack does and what it contains, and names the mod authors and the rights holders. The user guide `Krinik-Conan-3.1.1-guide.pdf` (in Russian) is attached to this release and is also included in the pack archive.
+The changes since 0.9.0 are listed below. The [README](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack) describes what the pack does and what it contains, and names the mod authors and the rights holders. The user guide `Krinik-Conan-3.1.1-guide.pdf` (in Russian) is attached to this release and is also included in the pack archive.
 
 ---
 
@@ -173,11 +193,11 @@ Only the changes since 0.9.0 are listed below. The [README](https://github.com/M
 
 The pack now runs on Conan Exiles Enhanced 3.1.1 (build CL-383549).
 
-**Launcher 1.0.0**
+**Launcher 1.1.2**
 
-The launcher, KrinikConanLauncher, has been updated to version 1.0.0 and installs the pack on its own from start to finish. It finds the game on your computer, downloads the pack archive parts from GitHub, verifies them and installs the pack. It shows the download and installation progress as a percentage together with the speed, the time left and the time elapsed. An interrupted download resumes where it left off.
+The launcher, KrinikConanLauncher, has been updated to version 1.1.2 and installs the pack on its own from start to finish. It finds the game on your computer, downloads the pack's files from GitHub, verifies every file and installs the pack. It shows the download and installation progress as a percentage together with the speed, the time elapsed and the time left. An interrupted download resumes where it left off.
 
-When a new version of the pack or of the launcher itself is out, the launcher tells you, and each one installs with a single button: “Update mod pack” or “Update launcher”. Your settings and saves stay in place after a pack update. The “What's new” buttons under the game and pack versions open the game update's news post on Steam and the description of the latest pack release on GitHub. If the game crashes, the launcher offers to collect a report the next time it starts and opens a new issue on GitHub.
+When a new version of the pack or of the launcher itself is out, the launcher tells you in its window, and each one installs with a single button: “Update mod pack” or “Update launcher”. A pack update downloads only the files that changed, even if you skipped several releases. Your settings and saves stay in place after a pack update. The “What's new” buttons under the game and pack versions open the game update's news post on Steam and the description of the latest pack release on GitHub. If the game crashes, the launcher offers to collect a report the next time it starts and opens a new issue on GitHub.
 
 The launcher supports several languages: pick Russian or English in the “Window language” field.
 
@@ -193,7 +213,7 @@ The draw distance is lowered from 2.0 to 1.5. The game shows about 5 percent mor
 
 **Shadows and the sun**
 
-In Conan Exiles Enhanced the shadows of palm leaves and other foliage flicker while the sun moves across the sky. Pack 0.9.0 moved the sun in rare steps to hide the flicker, so the shadows jumped after the sun every few seconds. The pack author found the cause of the flicker in the game's own foliage material. The material does not tell the engine how far the wind bends the leaves, and on some frames the engine drops the bent leaves from the shadow. The KrinikConanGraphics mod fixes the foliage material. The sun and the shadows now move smoothly, without jumps, and the foliage shadows no longer flicker. Under a palm in the wind, 12–16 percent of the shadow's pixels on the ground used to flicker; after the fix, fewer than 0.5 percent do.
+In Conan Exiles Enhanced the shadows of palm leaves and other foliage flicker while the sun moves across the sky. Pack 0.9.0 moved the sun in rare steps to hide the flicker, so the shadows jumped after the sun every few seconds. The pack author found the cause of the flicker in the game's own foliage material. The material does not tell the engine how far the wind bends the leaves, and on some frames the engine drops the bent leaves from the shadow. The KrinikConanGraphics mod fixes the foliage material. The sun and the shadows now move smoothly, without jumps, and the foliage shadows hardly flicker any more. Under a palm in the wind, 12–16 percent of the shadow's pixels on the ground used to flicker; after the fix, fewer than 0.5 percent do.
 
 **Water reflections**
 
@@ -227,6 +247,23 @@ Hero attributes have no cap: each attribute can take more than 20 points. An att
 - Perk descriptions on the “Хар-ки” (Attributes) tab no longer overlap and scroll with the mouse wheel.
 - Switching hub tabs no longer sends a dark wave across the screen. Switching to or from the “Снаряжение” (Equipment) tab no longer lets the game world show through the hub page.
 
+**Fixed during the test builds**
+
+These bugs were found in the test builds 0.9.1-RC1 to 0.9.1-RC4, and version 0.9.1 fixes them.
+
+- A marker on the hub map lands where you clicked, a second marker can be placed, and resetting the markers works.
+- On the “Путешествие” (Journey) tab the button that starts a journey starts it, and the tab no longer shows journeys that are already open as closed.
+- While a conversation with an NPC is open, the world keeps its normal pace. Before, the world froze during a conversation, as it does in a menu.
+- After you pick a line in a conversation, the NPC's answer appears on screen together with the voice.
+- In first-person view the hero casts a whole shadow, head included.
+- In first-person view a weapon on the hero's back stays out of the frame, and it still casts its shadow on the ground.
+- After the loading screen on entering or leaving a dungeon, the world runs at its normal pace. The pack used to take such a loading screen for an open menu and pause the game.
+- While the hero is dead, the KrinikConanLocomotion and KrinikConanArchery mods write no errors to the UE4SS log.
+- The KrinikConanCamera mod switches between first-person and third-person view faster. Before, the mod went through every part of the hero's model three times on every switch, and a switch took 3–4.5 ms of CPU time. The mod now goes through them once, and a switch takes about 1 ms.
+- When it uninstalls the pack, the launcher now also deletes the copies of the pack's paks (mod files) that the game makes on its own in `ConanSandbox/Saved/ExtractedMods`. These copies, about 12.8 GB, used to stay in the game folder. Copies of the paks you installed yourself are left alone.
+- When the uninstall has finished and its window is closed with the cross, the launcher sees the game without the pack and shows the “Install mod pack” button. Before, the launcher showed the pack as installed in this case.
+- The launcher's “Mods” line reaches “74 of 74” at the end of an install. Before, the launcher stopped it at “72 of 74”, although all 74 mods had been installed: the launcher did not recognise two mods with a long dash in their names, “MSCasaDesFlores — Weapons & Armors” and “MSCasaDesFlores — Nails Station”.
+
 ---
 
 ### ⚠️ Known issues
@@ -238,6 +275,9 @@ Hero attributes have no cap: each attribute can take more than 20 points. An att
 - In the settings windows of some mods the Russian text does not always fit the buttons and fields, for example in the “Система аксессуаров” (Accessory system) window.
 - Class names and descriptions on the Enhanced Armory and Arsenal cards are still in English: the text is baked into the images.
 - In the Simple Minimap marker tutorial the lines appear with a long delay, and the slide area stays black.
+- The first open of the “How to send feedback or a crash report” panel after the launcher starts is slow.
+
+Every known bug of the pack, large or small, is listed in the [Issues](https://github.com/MikalaiKryvusha/Kriniks_Conan_Exiles_Enhanced_ModPack/issues) section of the pack repository. You can report a new bug there too.
 
 ### 🗺️ Plans for 1.0.0
 
@@ -253,12 +293,14 @@ Hero attributes have no cap: each attribute can take more than 20 points. An att
 
 1. Make sure Conan Exiles Enhanced 3.1.1 (build CL-383549) is installed.
 2. Download the launcher `KrinikConanLauncher.exe` from the **Assets** list at the bottom of this page and run it. The launcher finds the game on your computer by itself.
-3. Press “Install mod pack”. The launcher downloads the pack archive parts, verifies them and installs the pack.
+3. Press “Install mod pack”. The launcher downloads the pack's files, verifies them and installs the pack.
 4. Press “Play”.
 
-If the launcher cannot find the game, press “Choose game folder” and pick the folder that contains `ConanSandbox.exe`. You can also download the archive parts `Krinik_Mod_Pack_0_9_1_RC1.zip.001`, `Krinik_Mod_Pack_0_9_1_RC1.zip.002` and the rest ({{ARCHIVE_SIZE_EN}} in total) manually: put them in the same folder as the launcher, and the launcher installs the pack from them without downloading anything.
+If the launcher cannot find the game, press “Choose game folder” and pick the folder that contains `ConanSandbox.exe`. You can also download the archive parts `Krinik_Mod_Pack_0_9_1.zip.001`, `Krinik_Mod_Pack_0_9_1.zip.002` and the rest ({{ARCHIVE_SIZE_EN}} in total) manually: put them in the same folder as the launcher, and the launcher installs the pack from them without downloading anything.
 
-You can also install the pack straight from the archive. Windows Explorer cannot open the parts of this archive, so open the first part, `Krinik_Mod_Pack_0_9_1_RC1.zip.001`, in 7-Zip or WinRAR and extract the pack into the game folder, the one that contains `ConanSandbox.exe`. Then run `KrinikConanLauncher.exe` from the pack folder `Krinik_Mod_Pack_0_9_1_RC1` that appears in the game folder, and press “Install mod pack”.
+You can also install the pack straight from the archive. Windows Explorer cannot open the parts of this archive, so open the first part, `Krinik_Mod_Pack_0_9_1.zip.001`, in 7-Zip or WinRAR and extract the pack into the game folder, the one that contains `ConanSandbox.exe`. Then run `KrinikConanLauncher.exe` from the pack folder `Krinik_Mod_Pack_0_9_1` that appears in the game folder, and press “Install mod pack”.
+
+If you have one of the test builds 0.9.1-RC1 to 0.9.1-RC4, run its launcher. The launcher shows the notice “Launcher 1.1.2 is out”. Press “Update launcher” on the notice. When the launcher has updated, press “Update mod pack”.
 
 To remove the pack, close the game, run `KrinikConanLauncher.exe`, press “Remove mod pack” and confirm. The game returns to the state it was in before the pack was installed.
 

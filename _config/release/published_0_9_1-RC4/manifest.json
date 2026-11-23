@@ -1,0 +1,1149 @@
+{
+ "format": 1,
+ "version": "0.9.1-RC4",
+ "tag": "v0.9.1-RC4",
+ "root": "Krinik_Mod_Pack_0_9_1_RC4",
+ "files": [
+  {
+   "path": "Deploy-ModPack.ps1",
+   "size": 141062,
+   "sha256": "c60e35aaf19957b01c15f00ad0471e3a44224fc710ea4e367b2d43104082664d",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "Krinik-Conan-3.1.1-guide.pdf",
+   "size": 17536611,
+   "sha256": "09a7d930d5ebd396563a76c5463aeb2676bec3e14aff80e395c7774273769e23",
+   "asset": "09a7d930d5ebd396-Krinik-Conan-3.1.1-guide.pdf"
+  },
+  {
+   "path": "KrinikConanLauncher.exe",
+   "size": 5706240,
+   "sha256": "daf9c0e6cb47187763b4c84df84faaf9244447eb1f64589a4dc0c52ee7cc321f",
+   "asset": "daf9c0e6cb471877-KrinikConanLauncher.exe"
+  },
+  {
+   "path": "README.txt",
+   "size": 1049,
+   "sha256": "6a2f93f12f8ab73f41123354c7e2288c46952db01f29f2adfce21189f39ed170",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "collect_report.cmd",
+   "size": 232,
+   "sha256": "31111dfeff23cb7e5352134d021028c5e6cf92127bc4976e021a09716ed1aeed",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "collect_report.ps1",
+   "size": 19877,
+   "sha256": "6f1d3eeb43b4d26de717a9c1e1edb9dc4757f333f2912b2450abcb5d694fd1d2",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "feedback_howto.txt",
+   "size": 3152,
+   "sha256": "2f07987c1dced60bc0e1009f1e0e5b25d9c62bf0dd61caac539ce02d270c739b",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "install.cmd",
+   "size": 100,
+   "sha256": "09ed56b6be12aa037113ad9f5a232f094c74ba7e6bd83b57d332c2fc1e64e52c",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "install.ps1",
+   "size": 2806,
+   "sha256": "02c2c00afac54b44268e65cd150eea87cbc22b5ba9dca28751990cba2eedd2ae",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "krinik_build_icon_1.ico",
+   "size": 177673,
+   "sha256": "160a38390dccf36d594923321fb7d794a5ef0132fb89fe92021328c04f69a423",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "krinik_build_icon_2.ico",
+   "size": 177914,
+   "sha256": "53ca20cbd2cbd34b41d61b541cda70b3e86f58bf88a4d48b447d915c84ce5b5c",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/_config/uninstall/uninstall.cmd",
+   "size": 992,
+   "sha256": "625cb626d5ec0cdc3774e18f3c5d5122d9cef4bdb51d7fc93e849ef40621384f",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/_unpacked/KrinikConanGraphics/Engine.ini",
+   "size": 32239,
+   "sha256": "d78deb27467e5b5b1b599a3d4cc3237d9736aa5e0a8cc2b40143f32db2b82b1e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/modpack.json",
+   "size": 205138,
+   "sha256": "81cc333eadd886eb02c7e41b8300a3172407e532afb3c97e424a54203340d7f9",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Al-Merayah_Reborn/AlMerayah_Reborn.pak",
+   "size": 9634314,
+   "sha256": "f9ef3351a62dd2cb1600976a54d2e11f277c5afd2f1f84129d071a0a300be17b",
+   "asset": "f9ef3351a62dd2cb-AlMerayah_Reborn.pak"
+  },
+  {
+   "path": "pack/src/Ancient_Civilization/Asghaard_Ancient_Civilization.pak",
+   "size": 1180989075,
+   "sha256": "abdf492bbb2ac3411517c2b5cb35acb7dcdba1c9ffc2bfa8d8b4df40681bd3ea",
+   "asset": "abdf492bbb2ac341-Asghaard_Ancient_Civilization.pak"
+  },
+  {
+   "path": "pack/src/Arrow_Quick_Swap/ArrowQuickSwap.pak",
+   "size": 1036845,
+   "sha256": "75f7e665b3bc7f3966d7c2f1146c748f7d8d2006d3593320212cad5459228014",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Automatic_Fish_Trap/automatic_fish_trap_enhanced.pak",
+   "size": 1836489,
+   "sha256": "5579e238c1b6eebafd770c37f1dcd2700db49c099cc17d1a3b6e6d103360eb74",
+   "asset": "5579e238c1b6eeba-automatic_fish_trap_enhanced.pak"
+  },
+  {
+   "path": "pack/src/Better_Tavern_PATRONS/Better_Tavern_PATRONS_E.pak",
+   "size": 6402763,
+   "sha256": "17b219d38e3859ba923994da025b2b2749d5254e52e2c22cb2931bd0badd283d",
+   "asset": "17b219d38e3859ba-Better_Tavern_PATRONS_E.pak"
+  },
+  {
+   "path": "pack/src/Beyond_Decor_Rustic_Edition/Beyond_Decor_II.pak",
+   "size": 1536956062,
+   "sha256": "201fbe799cf4bd68ce66bcd3431f99fa5a8ec9004f165049bb33f0ad6f88d2a5",
+   "asset": "201fbe799cf4bd68-Beyond_Decor_II.pak"
+  },
+  {
+   "path": "pack/src/Bosses_My_New_Besties/BossesMyNewBesties.pak",
+   "size": 3998433,
+   "sha256": "791d52fca160c617591d1b695c6016e60745e5c5a64313830e92f3d95474e8b6",
+   "asset": "791d52fca160c617-BossesMyNewBesties.pak"
+  },
+  {
+   "path": "pack/src/Caverns_of_Set/Mines_of_Set.pak",
+   "size": 1633126557,
+   "sha256": "52943ef7c6d6adff61b76da674b1fb4cf0f89a25b4cd341db1abd36377088033",
+   "asset": "52943ef7c6d6adff-Mines_of_Set.pak"
+  },
+  {
+   "path": "pack/src/Chest_Labels/ChestLabels.pak",
+   "size": 1189173,
+   "sha256": "867977bccc67a14fc7b6c4d4e17abf4d978326a5f0b76b576be5e380736989a8",
+   "asset": "867977bccc67a14f-ChestLabels.pak"
+  },
+  {
+   "path": "pack/src/Corpse_Stripper/CorpseStripper.pak",
+   "size": 932273,
+   "sha256": "cd48bb366d9f8e5c4a0cf00b33e7d0f7d0c664a6adcd854c89022c5d01047630",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Diverse_Barkeeps/DiverseBarkeepers.pak",
+   "size": 460424,
+   "sha256": "b6c90bae2b68dd12826dce37aa09e0c2f92122f5ee6c9563a05c4578b58f2e1d",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Double_Storage_Space/double_storage_space.pak",
+   "size": 294210,
+   "sha256": "e183bfdb3e3094ef3731e40ff983194146e76c395342e98fa9b78ea1df4737f5",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/EAA_Lv50_Thralls/EAA_ThrallLevelIncrease.pak",
+   "size": 721231,
+   "sha256": "a7bf85375b44b380d32303d87ebd1753c6047548c914c69d9ff1880307752ea2",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Edit_Appearance/IdeaPoet_EditAppearance.pak",
+   "size": 5107955,
+   "sha256": "56624148b320c503b00fb87776382fb0814fe8cfefbfe672a4b9c6ccf89d744e",
+   "asset": "56624148b320c503-IdeaPoet_EditAppearance.pak"
+  },
+  {
+   "path": "pack/src/Emberlight/Emberlight.pak",
+   "size": 370088473,
+   "sha256": "0631ac1fd02e973bf73ba71520e601eb1210f751014d8b7ac8f9d41097029679",
+   "asset": "0631ac1fd02e973b-Emberlight.pak"
+  },
+  {
+   "path": "pack/src/Enhanced_Armory_and_Arsenal/EnhancedArmoryAndArsenal.pak",
+   "size": 127946126,
+   "sha256": "eec424f4e1d83de503bb6f73c023059b08a4e87b66faa0b4353ae685657c48b6",
+   "asset": "eec424f4e1d83de5-EnhancedArmoryAndArsenal.pak"
+  },
+  {
+   "path": "pack/src/Era_of_Trials/EraOfTrials.pak",
+   "size": 236817870,
+   "sha256": "129e17a3eaf9bd7d00cf5bd8edd0d38650f5d5758d70e39751d2d556aa9c23ea",
+   "asset": "129e17a3eaf9bd7d-EraOfTrials.pak"
+  },
+  {
+   "path": "pack/src/Exiles_Fishing/JaarFishing.pak",
+   "size": 219396233,
+   "sha256": "6f4c7175325618efc2d526e25eabe8c510156a9f179b7097a87adff489d8321c",
+   "asset": "6f4c7175325618ef-JaarFishing.pak"
+  },
+  {
+   "path": "pack/src/Extended_Thrall_Stats/ExtendedThrallStatsEnhanced.pak",
+   "size": 616532,
+   "sha256": "de183855c3b2c101cfae4831de48f0c25c7d5c25d9c16b871e438e150cdc7692",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Faster_Elevator/FasterElevator.pak",
+   "size": 1331455,
+   "sha256": "736a3278a3d21200ea6d18709f2b587b19687da47808c6264b181d1fdab0e998",
+   "asset": "736a3278a3d21200-FasterElevator.pak"
+  },
+  {
+   "path": "pack/src/Female_New_Faces/femaleNewFaces_enhanced.pak",
+   "size": 183919360,
+   "sha256": "d190790d2599320d6a0e47ab85803c06e686126f8ede43ff574a65269bd4e4ca",
+   "asset": "d190790d2599320d-femaleNewFaces_enhanced.pak"
+  },
+  {
+   "path": "pack/src/Hair_We_Go/DeaHair.pak",
+   "size": 918713665,
+   "sha256": "d512c6e0d790320a4057fb24339c96145e5c0ea5006d5e044d8dffa7ba4ad608",
+   "asset": "d512c6e0d790320a-DeaHair.pak"
+  },
+  {
+   "path": "pack/src/Heritage/Heritage.pak",
+   "size": 1670241,
+   "sha256": "be1769612ce89b232daf61fb694e863df3a1114ff5fb7ae6cb87956bf6fae780",
+   "asset": "be1769612ce89b23-Heritage.pak"
+  },
+  {
+   "path": "pack/src/Highmane_s_Arsenal/HighmanesArsenal.pak",
+   "size": 1305961341,
+   "sha256": "1f7fcb3b463cb3a77929f6b3b12be0c63b88a1e442336efb6e8de09540af4d4f",
+   "asset": "1f7fcb3b463cb3a7-HighmanesArsenal.pak"
+  },
+  {
+   "path": "pack/src/Hosav_s_Custom_UI/UIMod_Hosav.pak",
+   "size": 26599644,
+   "sha256": "dfb9e49b535e1f3fdeadecad7ff4b028ce32714aa0077c53c48eeb2acf731c04",
+   "asset": "dfb9e49b535e1f3f-UIMod_Hosav.pak"
+  },
+  {
+   "path": "pack/src/Immersive_Warriors_Enhanced/IMM_WAR.pak",
+   "size": 253381295,
+   "sha256": "1957024edc2ee4d13639ea803ab86611cc0e8d08eb1f7738bbda6d80e496d6ea",
+   "asset": "1957024edc2ee4d1-IMM_WAR.pak"
+  },
+  {
+   "path": "pack/src/Inventory_Compactor/Inventory_compactor.pak",
+   "size": 1255728,
+   "sha256": "3ecdbd0e22b4e5c490be720d741552367bf79b68849a2661d9244b1950aeb252",
+   "asset": "3ecdbd0e22b4e5c4-Inventory_compactor.pak"
+  },
+  {
+   "path": "pack/src/Ironlight-Settlements-RPG/Ironlight-Settlements-RPG.pak",
+   "size": 1264176,
+   "sha256": "bf571660a9463769bd5a3aa2de13c9c70ca85973d1f999226f03343136cb93fe",
+   "asset": "bf571660a9463769-Ironlight-Settlements-RPG.pak"
+  },
+  {
+   "path": "pack/src/Ironlight-Settlements/Ironlight-Core.pak",
+   "size": 20928064,
+   "sha256": "9a55aeeb1caaecf38bc631c995db8f4e32a43527acec164542de202c8daf3555",
+   "asset": "9a55aeeb1caaecf3-Ironlight-Core.pak"
+  },
+  {
+   "path": "pack/src/KrinikConanArchery/KrinikConanArchery.pak",
+   "size": 427866,
+   "sha256": "b4a640fe72db774e63207d71f809f88fad2d90a9b6beba198ff51e1008a2aaf4",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanArchery/kit/CookInfo.ini",
+   "size": 279,
+   "sha256": "ea8cff490ccb8064e4711a86f18ed566251b58c39f1892cbe003b90d2d9216b5",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanArchery/kit/modinfo.json",
+   "size": 565,
+   "sha256": "d0ee216ee9c3e11cba5a63a892a46ef857f50d6bd6fa9b61e371fa9c3d0330fd",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanArchery/ue4ss/Scripts/main.lua",
+   "size": 174790,
+   "sha256": "4900a81f077fe3d553581f58c28fd44f0d8580897d3732072d7e2553014efc0a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanArchery/ue4ss/enabled.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanArchery/ue4ss/sounds/charge_full.wav",
+   "size": 221114,
+   "sha256": "e76d42c7359384c39cfb69ce04e7b061fdd33377d1fc643df300802bb4c1dd4c",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanCamera/Scripts/main.lua",
+   "size": 287272,
+   "sha256": "336db11e44ca365fffaf30bb2fa98cc5e403bb2372b1f3372c0e311856905114",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanCamera/config.lua",
+   "size": 1403,
+   "sha256": "29ea2dd8a8e7bb38b0d364c7b03120ad0bf9a944f3864c5b192670ee99227582",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanCamera/enabled.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanEngineTweaks/Engine.tweaks.ini",
+   "size": 2041,
+   "sha256": "6c705ffdfd52d5115e3e5b6607346ae48d04b8e11689196a3cb20447bad63c93",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanGameplay/KrinikConanGameplay.pak",
+   "size": 1101488,
+   "sha256": "d675a9bc3d055db26de15b74856428aa79c7bebc081cd1b2052de979eda6a7e9",
+   "asset": "d675a9bc3d055db2-KrinikConanGameplay.pak"
+  },
+  {
+   "path": "pack/src/KrinikConanGraphics/Engine.ini",
+   "size": 32239,
+   "sha256": "d78deb27467e5b5b1b599a3d4cc3237d9736aa5e0a8cc2b40143f32db2b82b1e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanGraphics/KrinikConanGraphics.pak",
+   "size": 1345473,
+   "sha256": "d9b7e13b11161bc04d09b31c1e7ae79835c81993a46b5baa009ce43d3a177caa",
+   "asset": "d9b7e13b11161bc0-KrinikConanGraphics.pak"
+  },
+  {
+   "path": "pack/src/KrinikConanGraphics/kit/CookInfo.ini",
+   "size": 83,
+   "sha256": "336fcb0daae7212493a023b0bfe2984cdde0eb73f9da57970b135b3e60e95907",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanGraphics/kit/modinfo.json",
+   "size": 591,
+   "sha256": "2c336245248034b34cc18d75f61ab68af138c04ced9d2c0312c10fb720be84fe",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanGraphics/ue4ss/Scripts/main.lua",
+   "size": 18236,
+   "sha256": "0e4b250372fc8db1a922042258111a02ffbec10d7fafefd5ff6083be7cfe85b6",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanGraphics/ue4ss/enabled.txt",
+   "size": 2,
+   "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanLocomotion/ue4ss/Scripts/krinik_air_combat.lua",
+   "size": 16192,
+   "sha256": "4ca468ce0a834b5260aaf71d79a582b81d10d3954622b3be27391f23e5eb14db",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanLocomotion/ue4ss/Scripts/krinik_bow_sprint.lua",
+   "size": 21226,
+   "sha256": "8411bf6ff08de0f717f3c5b9dc38eb1c1da08f7507a0395d9ef7f13a87412aaf",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanLocomotion/ue4ss/Scripts/krinik_oblivion_locomotion.lua",
+   "size": 25645,
+   "sha256": "bef7596af7b0e2f5b9d6d0939ebbb4a52ad943afb18295bef9a2df83e6a69602",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanLocomotion/ue4ss/Scripts/krinik_wall_jump.lua",
+   "size": 43628,
+   "sha256": "eacc832437b39b108c56759cdbe1d6bc0a4f262269f8ce727796eb4078744c96",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanLocomotion/ue4ss/Scripts/main.lua",
+   "size": 1677,
+   "sha256": "0cd850bd3fd29c237fb5cc5d4968c28606840bdd828be1f8e3b18a824f141e6e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanLocomotion/ue4ss/enabled.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanModPackManager/intro/KrinikIntro.mp4",
+   "size": 7651216,
+   "sha256": "750bc9846e45b52638fcda92e85c7a21ef7a6a3c434d4bed90342cb56e3033fa",
+   "asset": "750bc9846e45b526-KrinikIntro.mp4"
+  },
+  {
+   "path": "pack/src/KrinikConanModPackManager/ue4ss/Scripts/main.lua",
+   "size": 86727,
+   "sha256": "f6a6b6fece68fd4b4872f0c95cc5861d80fdaf77e93af2b444daa5201834491a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanModPackManager/ue4ss/config.lua",
+   "size": 12900,
+   "sha256": "dd40f5cc79ec50ea92a4f93ad634fbe43dc7847d01689ae07c18bfa7cdef0d25",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanModPackManager/ue4ss/enabled.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanRussianTranslation/Game.locmeta",
+   "size": 68,
+   "sha256": "7e65f32c3230054a0e187841aca35347db63e55887f2bffe34c7ba1ab25f5dc8",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanRussianTranslation/en/Game.locres",
+   "size": 26656,
+   "sha256": "2d9bb8916b6eec57a19d5c64305ad3b5a8f2537c6b700c9eb182c015874dfb59",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanRussianTranslation/ru/Game.locres",
+   "size": 5027260,
+   "sha256": "4c4e9979e6cb49b2ae4dab8ab76b156cdb1d1f068ff3a7ad2baff8d642ca02eb",
+   "asset": "4c4e9979e6cb49b2-Game.locres"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/KrinikConanUI.pak",
+   "size": 12710885,
+   "sha256": "5aa3bbd0807692c4867d8ab4b3bf2e9a2edb23f6263b9926e1c8738e291f5d00",
+   "asset": "5aa3bbd0807692c4-KrinikConanUI.pak"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/kit/CookInfo.ini",
+   "size": 2727,
+   "sha256": "d7706a888b512a2f0563ad8bbb3687231b1634a12f53f45477fe437a01a12193",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/kit/modinfo.json",
+   "size": 585,
+   "sha256": "3b546d85eef524855977fcb8d2e51c37b2fbff384a819cad26963026fe6158a8",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_attr_pips.lua",
+   "size": 8556,
+   "sha256": "1c678de42e028f274f8a55348991ea2cf90f5288d422f223ba48f03ad9dcc84b",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_click.lua",
+   "size": 5673,
+   "sha256": "ff94d530c543329fcd96ce9438ce16420edd16725d84c994ea159516af0f0701",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_feedback.lua",
+   "size": 5672,
+   "sha256": "cd6aa6a25954e29e5eaf735dbb662184a02ad4fbf8479b6176370889a025fea2",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_fps_counter.lua",
+   "size": 9809,
+   "sha256": "b8eb1a79f5612d30ea9092fd12008a51d4c6954e931099427fca42930daa394e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_hub_controller.lua",
+   "size": 26524,
+   "sha256": "864a35e8bad95bf3f9927dca642b87c801682328bb977fce1fd236807b704ca3",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_hud_blink.lua",
+   "size": 14347,
+   "sha256": "7b7a4b30e5aedf940e9d2212e848f9541ea6728020786c597287e819b099d9ae",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_hud_outline.lua",
+   "size": 26707,
+   "sha256": "a1ca385942738b1bc2e869acb7292e2cccf46b59932dc5c33a650e216b6d2e81",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_loot_rim.lua",
+   "size": 9116,
+   "sha256": "2d0a6a0a1463391cae09c22e23041a7cfccfc239947d4979fd2ee2d5f51ba5ba",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_minimap_coords.lua",
+   "size": 7315,
+   "sha256": "55877a03ebe25d1eea8e06441c8ce240e87ec3267edd20c1182e546637bdeb34",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_mod_settings.lua",
+   "size": 108239,
+   "sha256": "bf95d79f6ada3b912a10a7442b56760b81352e81047b03276e536a848ca34b84",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_mods_button.lua",
+   "size": 26448,
+   "sha256": "c31b46c5386787230b943103b91bbf6b63e32578c6f63c6e2ba7550365f6162a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_pause_in_menu.lua",
+   "size": 82457,
+   "sha256": "35318b7427f1fde6199d7ae00a922775b7a3ec5d5350003d9af552e341b64cfb",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_pickup_prompt.lua",
+   "size": 41145,
+   "sha256": "c2f13d42ad050c6a95d5dd8df334ec469ab1602630dbcb391287eda6fa69defd",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_settings.lua",
+   "size": 4180,
+   "sha256": "99d4f5b2bf49d39920d8978cf403c260335c5effab0b370c805b1159473eff40",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_shout_fade.lua",
+   "size": 13152,
+   "sha256": "5106bca536e7837955ef8240f23f1d073d18d5a27fe26a344fa0902c7ae2c08f",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_ui_fixes.lua",
+   "size": 24246,
+   "sha256": "364155bbb14e953e2be04f44598f6ef8308064cb7bc228cc0014cf05890488bf",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/krinik_vignette.lua",
+   "size": 9779,
+   "sha256": "17edc5f5d29cc473d44a8e43521f9207a479e47bd69d43570940a6fe6a4fc538",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/Scripts/main.lua",
+   "size": 3478,
+   "sha256": "12d3ada80cddd5826ecd3df1f4e30301b1ce14926b83beb69a2f487fd42f4c3e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/enabled.txt",
+   "size": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/KrinikConanUI/ue4ss/feedback/collect_report.ps1",
+   "size": 19513,
+   "sha256": "72d970c79224f0f7acb603e438c0a96f50381121c808d3774da145113a9b2cb8",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/LegitReligious/LegitReligious_Enhanced.pak",
+   "size": 1810167,
+   "sha256": "543cdf5562687ea848ccaf40727472c35526486be2832d86305168ae5ca9f65c",
+   "asset": "543cdf5562687ea8-LegitReligious_Enhanced.pak"
+  },
+  {
+   "path": "pack/src/Less_Building_Placement_Restrictions/No_Building_Placement_Restrictions.pak",
+   "size": 3698077,
+   "sha256": "a70377b210e3b145d566386895e323a05a94167c7871a91e03082ca76f9afa0d",
+   "asset": "a70377b210e3b145-No_Building_Placement_Restrictions.pak"
+  },
+  {
+   "path": "pack/src/Lore_Loot_Highlight/LLHighlight.pak",
+   "size": 1832677,
+   "sha256": "fcaaa298332b1e3c2a8b746a1a29c019178cf1764a76a166d2b6c3193ed7613f",
+   "asset": "fcaaa298332b1e3c-LLHighlight.pak"
+  },
+  {
+   "path": "pack/src/MSCasaDesFlores_Nails_Station/MSCasaDesFlores_Nails_Enhanced.pak",
+   "size": 87852195,
+   "sha256": "c5af04273da54b5b76542078994eb149352bb7f5a12e5a3eeae220f2ade90320",
+   "asset": "c5af04273da54b5b-MSCasaDesFlores_Nails_Enhanced.pak"
+  },
+  {
+   "path": "pack/src/MSCasaDesFlores_Weapons_Armors/MSCasaDesFlores_Weapons_Enhanced.pak",
+   "size": 263458509,
+   "sha256": "0b4a03f12037d92128ff2e57a655a21d1c5f8b7e84a9f69dc2def29e4129a74f",
+   "asset": "0b4a03f12037d921-MSCasaDesFlores_Weapons_Enhanced.pak"
+  },
+  {
+   "path": "pack/src/More_Katanas/MoreKatanas.pak",
+   "size": 3013819,
+   "sha256": "95c047fdb68c7463d3080015eb14277a0cb7c677ca36607cc516b3cd6dd0c2a1",
+   "asset": "95c047fdb68c7463-MoreKatanas.pak"
+  },
+  {
+   "path": "pack/src/My_Absolutely_Unnecessary_Thrall_Army/MyAUThrallArmy.pak",
+   "size": 1519226,
+   "sha256": "e036b78efff4fee9ebe6df0de94ba12433ed243e57f48d4d8f426289326826b7",
+   "asset": "e036b78efff4fee9-MyAUThrallArmy.pak"
+  },
+  {
+   "path": "pack/src/Night_Terrors/NightTerrors.pak",
+   "size": 10219063,
+   "sha256": "4f9bd3081af52c65fbfcd12e9366a28a8c2486a0023f3228833db3edcc706303",
+   "asset": "4f9bd3081af52c65-NightTerrors.pak"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Exiles Cinematic Intro.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Funcom Splash.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Inflexion_Logo.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Inflexion_Logo_1080.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Intro_Cinematic_Siptah.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Nvidia_Splash.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/SplashScreenMiddlewareLogos.mp4",
+   "size": 1285,
+   "sha256": "7d90c01e5db7484ea5a4e4fc052614e4f4816add1ba2f552ae3be34f20ad405e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/Splash_Inflexion.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/StartupNvidia.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/StartupUE.mp4",
+   "size": 1285,
+   "sha256": "7d90c01e5db7484ea5a4e4fc052614e4f4816add1ba2f552ae3be34f20ad405e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Movies/StartupUnreal.bk2",
+   "size": 392,
+   "sha256": "862353cee5eaf290fff81272455e8fe66b2518e7fa5ef0444dc975b5eb17e714",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ConanSandbox/Content/Splash/Splash.bmp",
+   "size": 4,
+   "sha256": "a3926a333e20349c7228dcea0e7cb28d29ad1883847d7c915e5bd7560183afac",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/No-Intro-Splash/ReadMe.txt",
+   "size": 141,
+   "sha256": "dea821fc60ab09b8e29f2f578476d9f6cebfb6e4ed1b61f84c6a25bf76b0043a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Organizer_Sorting_Chest/SortingBox.pak",
+   "size": 8535557,
+   "sha256": "882a71f4fe8e2b956590abb35f5bfe11c91a0b563e3109c47ac2f11ea778f626",
+   "asset": "882a71f4fe8e2b95-SortingBox.pak"
+  },
+  {
+   "path": "pack/src/Ostavar_Salon/OstavarSalon.pak",
+   "size": 745804410,
+   "sha256": "4837db786cfdd6839417d195f70f3b16b00c2e44922f4bb8a431023e3b017ede",
+   "asset": "4837db786cfdd683-OstavarSalon.pak"
+  },
+  {
+   "path": "pack/src/PackRat_Helper/PackRat_Helper.pak",
+   "size": 1389347,
+   "sha256": "69fc3000b4c158d70f419db9ffe8e414f34eefb218c032ea8ef3e63ee42c9ff1",
+   "asset": "69fc3000b4c158d7-PackRat_Helper.pak"
+  },
+  {
+   "path": "pack/src/Pickup/Pickup+.pak",
+   "size": 1365064,
+   "sha256": "abb41a212534a17e14272f86aaa3488660025cdc70e67fe6be5434aeffd545d9",
+   "asset": "abb41a212534a17e-Pickup_.pak"
+  },
+  {
+   "path": "pack/src/Player_Ignores_Follower_Collision/EnhancedPlayerIgnoresFollowerCollision.pak",
+   "size": 1559400,
+   "sha256": "3839e8f41259bb4ef82d18219c3b5facec2e941f50a3135b72ffa776b079f93d",
+   "asset": "3839e8f41259bb4e-EnhancedPlayerIgnoresFollowerCollision.pak"
+  },
+  {
+   "path": "pack/src/Proximity_Party/ProximityParty.pak",
+   "size": 1437778,
+   "sha256": "269b7c6db924d9778caa71d99283fce12f243b35e53237a0f0fd991e96f26ac2",
+   "asset": "269b7c6db924d977-ProximityParty.pak"
+  },
+  {
+   "path": "pack/src/PvE_Plus_Ambush/PvEPlusAmbush.pak",
+   "size": 5128511,
+   "sha256": "8394daa6a1c8d7b1eb36b0053188f7a670ce146261297e1e948165b4a28bbcf2",
+   "asset": "8394daa6a1c8d7b1-PvEPlusAmbush.pak"
+  },
+  {
+   "path": "pack/src/RNF_NPC_Distribution/RNF_Distribution.pak",
+   "size": 701366,
+   "sha256": "143fdc46452edfb33023c62f251c325f020a6847aa671234e686175d1b01dcd6",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Ragnar_s_New_Factions/RagnarsNewFactions.pak",
+   "size": 94109283,
+   "sha256": "50fd5ed08953c87d9a2b7a3d15ed37c705a796ba5c70dc8df04e50307fadd0a6",
+   "asset": "50fd5ed08953c87d-RagnarsNewFactions.pak"
+  },
+  {
+   "path": "pack/src/Reliable_Meteor_Showers/Frequent_meteors.pak",
+   "size": 348594,
+   "sha256": "4011c59a2799cd651ffa9f9bfe1bd90b5214d784b1e0e8298471123af66c7c8a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Resource_Stimulus_Package/ResourceStimulusPackage.pak",
+   "size": 537715,
+   "sha256": "73e044b51151ff7ddc7d51717c15499ab9f8e568847ec7ae86c382cb3270e41a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Rideable_Pets/RideablePets.pak",
+   "size": 81402955,
+   "sha256": "7b7f978091fac77219ce55df4c39fdcaa4498f8a687a5edf01b223b1dd86d025",
+   "asset": "7b7f978091fac772-RideablePets.pak"
+  },
+  {
+   "path": "pack/src/Riding_Thralls/WO_RidingThralls.pak",
+   "size": 91407465,
+   "sha256": "715e21491921291cabafca451d4c5c9c874b6cc59701924649536c8d507abff8",
+   "asset": "715e21491921291c-WO_RidingThralls.pak"
+  },
+  {
+   "path": "pack/src/Severe_Weather_Enhanced/SevereWeatherEnhanced.pak",
+   "size": 10399254,
+   "sha256": "1c561c078c1a947477cd4472921252f1c3d0d049c752b3e74dca906162457be0",
+   "asset": "1c561c078c1a9474-SevereWeatherEnhanced.pak"
+  },
+  {
+   "path": "pack/src/Shemite_City_State/Shemite_City_State.pak",
+   "size": 2396312301,
+   "sha256": "e145a4de7bbb466c095ecb98b0f8bebfb620b230b2a9579e338fab73c7456313",
+   "parts": [
+    {
+     "asset": "e145a4de7bbb466c-Shemite_City_State.pak.p1",
+     "size": 1992294400,
+     "sha256": "a215ea3e0b5383944edbaf33ebafec96127528de92d5c9cde9a6c4db48ae0410"
+    },
+    {
+     "asset": "e145a4de7bbb466c-Shemite_City_State.pak.p2",
+     "size": 404017901,
+     "sha256": "cb16015bbc3ef226eaab2c263c1c19187ddf3bdd35cb40b28b7f6c568cb0604d"
+    }
+   ]
+  },
+  {
+   "path": "pack/src/Simple_Minimap/Simple_Minimap.pak",
+   "size": 4671610,
+   "sha256": "ab130a3f4ebf95f730df88cff8c3b37112786bb1afe129e512af7d842f835efe",
+   "asset": "ab130a3f4ebf95f7-Simple_Minimap.pak"
+  },
+  {
+   "path": "pack/src/Simple_Modlist/SimpleModlist.pak",
+   "size": 572954,
+   "sha256": "1c47b6ad62e7af4e97eb3283d36cee9e6f175e2021d5baa6e6b81aa590003322",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Storage_Reach_Expanded/StorageReachExpanded.pak",
+   "size": 320318,
+   "sha256": "e6d93473d77cad1d130af39280cc5bc6b1c79b0855cfdf22643a7a4a5b24515e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/TDI_LegendaryRepair/TDI_LegendaryRepair.pak",
+   "size": 320374,
+   "sha256": "ed139c4b36839a08ad5bdb138037f73b1dd0058e519c505439decd31750cbcaf",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/The_Damage_Meter/DamageNumber.pak",
+   "size": 6075809,
+   "sha256": "2e88e203fe89023092ee76fc79ef317398de9069953bfc0eb3c6e2464861d76c",
+   "asset": "2e88e203fe890230-DamageNumber.pak"
+  },
+  {
+   "path": "pack/src/Thrall_Inventory_x2/Thrall_Inventory_x2.pak",
+   "size": 306225,
+   "sha256": "25dd27567a04df97995dd98e070185748a63bcce72d8f0bbd2c1f8c3f74c1c6b",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Thrall_Peeper/Thrall_Scanner.pak",
+   "size": 52316,
+   "sha256": "fd1fe8214e3afa4fcafb851d22cd20655182b8f4887a14c3a0c5d597bdc5be51",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/True_Hair_Colors/TrueHairColorsEnhanced.pak",
+   "size": 313782,
+   "sha256": "29094b2b23ae525af739009740a55e3756dbb21dfea79a1d8a227077f7cf9990",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/dwmapi.dll",
+   "size": 279552,
+   "sha256": "93b9431a5a4f32c675d269c5da1c9b3ec6f88552ec20c282ab435f411e9271fb",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/LICENSE",
+   "size": 1085,
+   "sha256": "99e1d8f8b7cb68e8b2313380ae3b0c8115e39dfbc443fcf21fd67ab74ce1d57e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/BPML_GenericFunctions/Scripts/main.lua",
+   "size": 2950,
+   "sha256": "df87c361cdfc231ac8017ff9b930c323fac09f436ca4c41d48e952ff4b38d38f",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/BPModLoaderMod/Scripts/main.lua",
+   "size": 11254,
+   "sha256": "c4d6602dc57559029e0e709650e43f33354bcb23f1a5df2ebe84d4651ebd08a3",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/BPModLoaderMod/load_order.txt",
+   "size": 265,
+   "sha256": "e260b9b0d8d472ee3ebab77204c838f3d2aad8a9d5f08b9b8cb6b42b7b5418b9",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/CheatManagerEnablerMod/Scripts/main.lua",
+   "size": 1439,
+   "sha256": "15c7722168eb8966ed454e900e04de4b0ade42657905d8016c0e0660c119cd9e",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/ConsoleCommandsMod/Scripts/dump_object.lua",
+   "size": 13093,
+   "sha256": "365b7e8a803f8ae917f54f6c852854c681e388227dd1f94b0ea3f6fb938b5086",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/ConsoleCommandsMod/Scripts/main.lua",
+   "size": 297,
+   "sha256": "5bf33cd4ef9f6a155fe5f7842218a6486c2c227858ffd99806e75d81d0da9f27",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/ConsoleCommandsMod/Scripts/set.lua",
+   "size": 2056,
+   "sha256": "876e7de49f0e30a4329c081472bc7d5e1948459c774b7abbb8be4b6323f16ec8",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/ConsoleCommandsMod/Scripts/summon_unloaded_assets.lua",
+   "size": 489,
+   "sha256": "194b557404b6078767f8b57b836aa44d084cf6f3f2cbde71a6831857567f8103",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/ConsoleEnablerMod/Scripts/main.lua",
+   "size": 4596,
+   "sha256": "4455bf19d498b74747ea17e61e118464fa3a010b8ecfebc9c92804ecb73357ab",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/Keybinds/Scripts/main.lua",
+   "size": 4190,
+   "sha256": "297dd6f7f560e1cebc15cd4509ad481495d9179f5758a8034be4c417a369803a",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/LineTraceMod/Scripts/main.lua",
+   "size": 2721,
+   "sha256": "05c181a5cc3cb24e0bd7496d6bbc14a1111d0a1e731a2526203b41b07d972dae",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/SplitScreenMod/Scripts/main.lua",
+   "size": 4380,
+   "sha256": "05094ab61f016ebfcb651a0271a4c614884881b847090e6a74e6a51754e088db",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/mods.json",
+   "size": 683,
+   "sha256": "b09bd14e654e5e8caa0af4348e547196bcc05ebe9d2ff183e579cccbe9c63371",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/mods.txt",
+   "size": 207,
+   "sha256": "19784570b7a18bca4addb96082b385de66e39bdc11979b70f54505ab0720f0da",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/Mods/shared/UEHelpers/UEHelpers.lua",
+   "size": 10237,
+   "sha256": "7476f02eef0c87bfeab169f2ffe2e704363faeaae4bf9f1bda574b1e34f4a0e9",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/UE4SS-settings.ini",
+   "size": 9575,
+   "sha256": "539c138a4846da5aa3671cf43dd3934c6c9f16691443714ca7ff575fd5229ca2",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/UE4SS.dll",
+   "size": 20640768,
+   "sha256": "ce5e3c46a920cc00b2817ac61e438c9162830290379d0b5b9c4dfc2b29459290",
+   "asset": "ce5e3c46a920cc00-UE4SS.dll"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/UE4SS_SDK_Backends/UE4SS.json",
+   "size": 8032,
+   "sha256": "6b8c1725ff59a318b812d5952f63107778b4ceb22b882b297a3666ee9e06c8ff",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/UE4SS/ue4ss/VTableLayout.ini",
+   "size": 54954,
+   "sha256": "b58d8b924ec9ec2eb0dc81a81726f275722dd28fc17052a9c9cb6ea16f5d1ef1",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/Waystones_Enhanced/WaystonesEnhanced.pak",
+   "size": 2322929,
+   "sha256": "a844cb4851ce83c4ef87440147c97e07f3a4ab72890bfd1a791c887bcf5d1717",
+   "asset": "a844cb4851ce83c4-WaystonesEnhanced.pak"
+  },
+  {
+   "path": "pack/src/Ymir_s_Respite/Ymirs_Respite.pak",
+   "size": 1682408748,
+   "sha256": "1f89030998cb8990fbc9add3f6684f3704a4f0e369e3f3012444fe879ebb2d2e",
+   "asset": "1f89030998cb8990-Ymirs_Respite.pak"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/Config/Windows/Engine.ini",
+   "size": 6544,
+   "sha256": "48dc76b089d4187886bbcbf504c9372dc0d471d8f2e07ba0f628027efe02ec1c",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/Config/Windows/Game.ini",
+   "size": 1765,
+   "sha256": "e5ca34be150f943c9fbe9daf86199f5f63082cf4d365d92f4dc264623ef7332d",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/Config/Windows/GameUserSettings.ini",
+   "size": 538,
+   "sha256": "07b71a5e8c1f4248f375fca7309232370296d5aba431cfb0a0384b5c64cdcd48",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/Config/Windows/Input.ini",
+   "size": 43102,
+   "sha256": "35fa3d94845e33f1f06819d1b2940259248ddb4043c2e68200bc5bb35179ee24",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/Config/Windows/ServerSettings.ini",
+   "size": 6613,
+   "sha256": "a97ab62be318c14633eda1890250f091e9680c0cb896b6f35e80ff94b0f605f3",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/SaveGames/DamageMeter.sav",
+   "size": 2577,
+   "sha256": "f6c19a8f1022e3116ede26b673a05ed76ffef554f266623bc94b718b07538bb5",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/SaveGames/HosavUISave_New.sav",
+   "size": 2180,
+   "sha256": "cfd6742cca719d9aa0ce21eafacd11cc95e2736a4b324a60b1bfc261b79a93c1",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/SaveGames/ProximityParty.sav",
+   "size": 2179,
+   "sha256": "cfe4b4b330a75f4df193cd940cca13b257fd0beb5275e078b12e2a32eacc82c5",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "pack/src/_game-config/ConanSandbox/Saved/SaveGames/SimpleMinimap.sav",
+   "size": 2462,
+   "sha256": "90fde45727d428d627082bbd57ea8eeaac46d092e551fc0ad7640861105cc779",
+   "group": "small-0df5158767356ba5.zip"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V1_1080p_1920x1080.jpg",
+   "size": 1649303,
+   "sha256": "b79a1dc8b8a6f3be56cca635a79181d4329a929f3534647cce9b81e048bf7952",
+   "asset": "b79a1dc8b8a6f3be-Krinik_Conan_Exiles_Wallpaper_V1_1080p_1920x1080.jpg"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V1_2K_2560x1440.jpg",
+   "size": 2608036,
+   "sha256": "36b83e3e0f20f61486616c9f6e455cc3a33e3118e07aa1145e041a65b0b8a199",
+   "asset": "36b83e3e0f20f614-Krinik_Conan_Exiles_Wallpaper_V1_2K_2560x1440.jpg"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V1_4K_3840x2160.jpg",
+   "size": 5019143,
+   "sha256": "5ba7c9c98bb52158928c308c76a6a159bfeba81d06316fe4334f6a1c72b770f4",
+   "asset": "5ba7c9c98bb52158-Krinik_Conan_Exiles_Wallpaper_V1_4K_3840x2160.jpg"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_Realism_1080p_1920x1080.png",
+   "size": 3381444,
+   "sha256": "ad3475a0a81ebea1863186270635dc71b675b3acbf9578bb3d4a3a7a8c95176e",
+   "asset": "ad3475a0a81ebea1-Krinik_Conan_Exiles_Wallpaper_V2_Realism_1080p_1920x1080.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_Realism_2K_2560x1440.png",
+   "size": 5521222,
+   "sha256": "ccd4e31d800d8cee28e161fc5dc8342fb04697ca2f48278917bc059e6c391ab4",
+   "asset": "ccd4e31d800d8cee-Krinik_Conan_Exiles_Wallpaper_V2_Realism_2K_2560x1440.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_Realism_4K_3840x2160.png",
+   "size": 11016858,
+   "sha256": "749e526af95709e64381e8161c4ca0d15b0785345d77a70e88ff883d753302d9",
+   "asset": "749e526af95709e6-Krinik_Conan_Exiles_Wallpaper_V2_Realism_4K_3840x2160.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_Warm_1080p_1920x1080.png",
+   "size": 3313053,
+   "sha256": "8b73657d0e09b740acd3805cb5fc030d903f0e77c0098622ab5ed3cb6cdbac10",
+   "asset": "8b73657d0e09b740-Krinik_Conan_Exiles_Wallpaper_V2_Warm_1080p_1920x1080.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_Warm_2K_2560x1440.png",
+   "size": 5409487,
+   "sha256": "1f537668e8d692ffcf5c7b44626ad960b8293014a4582e4b166cd25ecc311e7d",
+   "asset": "1f537668e8d692ff-Krinik_Conan_Exiles_Wallpaper_V2_Warm_2K_2560x1440.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_Warm_4K_3840x2160.png",
+   "size": 10806230,
+   "sha256": "09ba46261fdc872c27d89047fff21e3d4e8b223b3f32d4255ba000d7569bc4fe",
+   "asset": "09ba46261fdc872c-Krinik_Conan_Exiles_Wallpaper_V2_Warm_4K_3840x2160.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Realism_1080p_1920x1080.png",
+   "size": 3149416,
+   "sha256": "dc03a5eeff72e37da420d43fab76ffab747def5fe7e16228bf54a32a42d798d6",
+   "asset": "dc03a5eeff72e37d-Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Realism_1080p_1920x1080.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Realism_2K_2560x1440.png",
+   "size": 5105192,
+   "sha256": "28c85df09bc82cc59468ea6c8e4aa60f30a0f1c8c4aba767bc0274ff7e4ecebf",
+   "asset": "28c85df09bc82cc5-Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Realism_2K_2560x1440.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Realism_4K_3840x2160.png",
+   "size": 10130782,
+   "sha256": "054d18ff08c20437992442ac33198c3e9981ff4464887fd01cc58aad925f6cf7",
+   "asset": "054d18ff08c20437-Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Realism_4K_3840x2160.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Warm_1080p_1920x1080.png",
+   "size": 3067930,
+   "sha256": "9e871931f0be1d5f979fe9484d682d36fd3f1cdf7b7db4a737701558b5ffbeae",
+   "asset": "9e871931f0be1d5f-Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Warm_1080p_1920x1080.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Warm_2K_2560x1440.png",
+   "size": 4975816,
+   "sha256": "54bb7757321bbee37568544b7945446b4c4adde523ad6c89661635db36bdcda0",
+   "asset": "54bb7757321bbee3-Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Warm_2K_2560x1440.png"
+  },
+  {
+   "path": "wallpapers/Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Warm_4K_3840x2160.png",
+   "size": 9892898,
+   "sha256": "a9467b6ef6b6dd46e6e4877af0d654d7469002b3cbf630452975b3bdefc917a8",
+   "asset": "a9467b6ef6b6dd46-Krinik_Conan_Exiles_Wallpaper_V2_female_beta_Warm_4K_3840x2160.png"
+  }
+ ],
+ "groups": [
+  {
+   "asset": "small-0df5158767356ba5.zip",
+   "size": 10655627,
+   "sha256": "0df5158767356ba52f0f25de88d6ea21750755d8d92b97e9a03e92228ad9fe16",
+   "files": 117
+  }
+ ]
+}
